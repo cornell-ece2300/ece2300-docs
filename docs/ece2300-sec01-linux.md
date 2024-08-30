@@ -168,7 +168,7 @@ Install the Verilog HDL extension on the `ecelinux` servers. You only
 need to do this once, and then next time this extension will already be
 installed on the `ecelinux` servers.
 
-### 1.2. Using VS Code
+### 2.2. Using VS Code
 
 VS Code includes an integrated file explorer which makes it very
 productive to browse and open files. Choose _View > Explorer_ from the
@@ -210,7 +210,7 @@ for all of the lab assignments. The heart of the Linux operating system
 is the Linux command line. This is a text-based console where you can
 enter commands to interact with the operating system.
 
-### 2.1 Hello World
+### 3.1 Hello World
 
 We begin with the ubiquitous "Hello, World" example. To display the
 message "Hello, World" we will use the `echo` command. The `echo` command
@@ -225,7 +225,7 @@ argument_. We use command line arguments to tell commands what they
 should operate on. Again, note that you do not need to enter `%`
 character.
 
-### 2.2. Manual Pages
+### 3.2. Manual Pages
 
 You can learn more about any Linux command by using the `man` command.
 Try using this to learn more about the `echo` command.
@@ -238,7 +238,7 @@ You can use the up/down keys to scroll the manual one line at a time, the
 space bar to scroll down one page at a time, and the `q` key to quit
 viewing the manual.
 
-### 2.3. Create, View, and List Files
+### 3.3. Create, View, and List Files
 
 We can use the echo command and a feature called _command output
 redirection_ to create simple text files. Command output redirection is
@@ -292,7 +292,7 @@ line, and we can we can use the `-l` (i.e., a dash followed by the letter
 l) command line option to provide a longer listing with more information
 about each file.
 
-### 2.4. Create, Change, and List Directories
+### 3.4. Create, Change, and List Directories
 
 Obviously, having all files in a single location would be hard to manage
 effectively. We can use directories (also called folders) to logically
@@ -381,7 +381,7 @@ current working directory.
 % pwd
 ```
 
-### 2.5. Copy, Move, and Remove Files and Directories
+### 3.5. Copy, Move, and Remove Files and Directories
 
 We can use the `cp` command to copy files. The first argument is the name
 of the file you want to copy, and the second argument is the new name to
@@ -431,7 +431,7 @@ corresponding to the two files you deleted. We highly recommend always
 using the `trash` command instead of `rm` since this avoids accidentally
 deleting your work.
 
-### 2.6. Using VS Code to Work with Files
+### 3.6. Using VS Code to Work with Files
 
 VS Code makes it easy to create and open files for editing from the
 command line. To open an existing file for editing use the `code` command
@@ -463,7 +463,7 @@ Enter some text, save the file, and use `cat` to verify your chagnes
 through the command line. You can also use VS Code's integrated file
 explorer to create files and open files for editing.
 
-3. GitHub Account Setup
+4. GitHub Account Setup
 --------------------------------------------------------------------------
 
 We will be using GitHub for centralized repository hosting. You can check
@@ -521,7 +521,7 @@ new key. Just enter `yes`. The GitHub server should output some text
 including your GitHub ID. Verify that the GitHub ID is correct, and then
 you should be all set.
 
-4. Git Version Control System
+5. Git Version Control System
 --------------------------------------------------------------------------
 
 In this course, we will be using Git as our revision control and source
@@ -529,7 +529,7 @@ code management system. Git will enable us to adopt an agile development
 methodology so you (and your group) can rapidly collaborate and iterate
 on the design, verification, and evaluation of the assignments.
 
-### 4.1. Fork and Clone a Repo from GitHub
+### 5.1. Fork and Clone a Repo from GitHub
 
 Fork'ing a repo means making a copy of that repo for your own local use.
 We won't actually be forking repos for the lab assignments, but
@@ -555,7 +555,7 @@ Where `githubid` is your GitHubID. Now let's clone your new repo to the
 
 Where `githubid` is your GitHubID.
 
-### 4.2. Adding and Committing Files to Local Repository
+### 5.2. Adding and Committing Files to Local Repository
 
 Now let's add some new files to the repository. Use VS Code to create a
 file named `warm-colors.txt`:
@@ -648,7 +648,7 @@ commits in your local repository.
 % git log
 ```
 
-### 4.3. Pushing Files to GitHub
+### 5.3. Pushing Files to GitHub
 
 Note that nothing has happened on GitHub yet. GitHub does _not_ know
 anything about these local changes. We need to explicitly "push" our new
@@ -664,7 +664,7 @@ that there are two new files.
 
  - `https://github.com/githubid/ece2300-sec01`
 
-### 4.4. Pulling Files from GitHub
+### 5.4. Pulling Files from GitHub
 
 Let's try making a change to this repository through the GitHub
 web interface.
