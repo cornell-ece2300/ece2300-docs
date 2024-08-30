@@ -70,22 +70,7 @@ You can also use _auto setup_ which will automatically source the course
 setup for you when you log in. Note that if the environment for ECE 2300
 conflicts with the environment required by a different course then you
 will need to manually source the setup script when you are working on
-this course. Enter the following command on the command line to use
-auto setup:
-
-```bash
-% source setup-ece2300.sh --enable-auto-setup
-```
-
-Now close the terminal using the X icon in the upper right-hand corner of
-the terminal window. Reopen a new terminal window. You should see `ECE
-2300` in the prompt meaning your environment is automatically setup for
-the course. If at anytime you need to disable auto setup you can use the
-following command:
-
-```bash
-% source setup-ece2300.sh --disable-auto-setup
-```
+this course.
 
 2. Logging Into ecelinux with VS Code
 --------------------------------------------------------------------------
@@ -561,7 +546,7 @@ Now let's add some new files to the repository. Use VS Code to create a
 file named `warm-colors.txt`:
 
 ```bash
-% cd ~/ece2300
+% cd ~/ece2300/sec01
 % code warm-colors.txt
 ```
 
@@ -575,8 +560,8 @@ Add three warm colors and save the file.
 Now use VS Code to create a file named `cool-colors.txt`:
 
 ```bash
-% cd ~/ece2300
-% code warm-colors.txt
+% cd ~/ece2300/sec01
+% code cool-colors.txt
 ```
 
 Add three cool colors and save the file.
