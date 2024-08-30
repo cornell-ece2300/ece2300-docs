@@ -1,0 +1,68 @@
+#=========================================================================
+# mkdocs Configuration
+#=========================================================================
+
+site_name:   'ECE 2300 Digital Logic and Computer Organization'
+site_author: 'Christopher Batten'
+
+# Repository
+
+repo_name:   'cornell-ece2300/ece2300-docs'
+repo_url:    'https://github.com/cornell-ece2300/ece2300-docs'
+
+# Copyright
+
+copyright:   'Copyright &copy; 2024 Christopher Batten'
+
+# Configuration
+
+theme:
+  name:       'material'
+  custom_dir: 'theme/'
+  language:   'en'
+  favicon:    'img/favicon.ico'
+#  font:
+#    text: 'Ubuntu'
+#    code: 'Ubuntu Mono'
+  palette:
+    primary:  'blue'
+    accent:   'indigo'
+  features:
+    - navigation.tabs
+    - content.code.copy
+
+# Extensions
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+# markdown_extensions:
+#   - pymdownx.arithmatex
+#   - pymdownx.details
+#   - toc:
+#       permalink: true
+#   - admonition
+#   - codehilite:
+#       linenums: true
+
+# Extras
+
+extra_css:
+  - 'stylesheets/extra.css'
+
+extra_javascript:
+  - 'js/extras.js'
+  - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
+
+# Pages
+
+nav:
+  - 'Discussion Section':
+    - 'Section 1: Linux Development Environment': ece2300-sec01-linux.md
+
