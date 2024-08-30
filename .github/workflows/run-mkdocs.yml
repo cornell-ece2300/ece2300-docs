@@ -2,7 +2,7 @@
 # run-mkdocs.yml
 #=========================================================================
 
-name: ci 
+name: run-mkdocs
 on:
   push:
     branches:
