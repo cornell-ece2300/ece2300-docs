@@ -340,7 +340,7 @@ command to create a new file in this child directory.
 
 ```bash
 % cd /home/netid/ece2300/test
-% echo "Digital Logic and Computer Organization" > ece2300-test.txt
+% echo "Digital Logic and Computer Organization" > ece2300-sec01.txt
 % mkdir dirA
 % ls
 ```
