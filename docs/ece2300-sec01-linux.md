@@ -23,12 +23,9 @@ Terminal if you are using a Mac OS X) if VS Code stops working.
 
 ### 1.1. Logging into `ecelinux` Servers with PowerShell
 
-To start PowerShell click the _Start_ menu then choose _Windows
-PowerShell > Windows PowerShell_, or click the _Start_ menu, type
-_PowerShell_, and choose _Windows PowerShell_.
-
-After starting PowerShell, type in the following command at the prompt to
-log into the ecelinux servers using SSH.
+To start PowerShell click the _Start_ menu then search for _Windows
+PowerShell_. After starting PowerShell, type in the following command at
+the prompt to log into the ecelinux servers using SSH.
 
 ```bash
 % ssh netid@ecelinux.ece.cornell.edu
@@ -114,13 +111,11 @@ discussion section.
 
 ### 2.1. Logging into `ecelinux` Servers with VS Code
 
-To start VS Code click the _Start_ menu then choose _VS Code > VS Code_,
-or click the _Start_ menu, type _VS Code_, and choose _VS Code_.
-
-The key to VS Code is installing the correct extensions. We want to start
-by installing a special extension for the Verilog hardware description
-language (HDL). We also want to install a special extension which will
-enable remotely accessing the `ecelinux` servers using SSH.
+To start VS Code click the _Start_ menu then search for _Visual Studio
+Code_. The key to VS Code is installing the correct extensions. We want
+to start by installing a special extension for the Verilog hardware
+description language (HDL). We also want to install a special extension
+which will enable remotely accessing the `ecelinux` servers using SSH.
 Choose _View > Extensions_ from the menubar. Enter the name of the
 extension in the "Search Extensions in Marketplace" and then click the
 blue Install button. Here are the names of the extensions to install:
