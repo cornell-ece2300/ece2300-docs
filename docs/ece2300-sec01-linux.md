@@ -120,9 +120,9 @@ blue Install button. Here are the names of the extensions to install:
  - Remote - SSH (use the one from Microsoft)
  - Verilog (use the one from Masahiro Hiramori)
 
-![](img/sec01-vscode-remote-ssh.png)
+![](img/tut00-vscode-remote-ssh.png)
 
-![](img/sec01-vscode-verilog.png)
+![](img/tut00-vscode-verilog.png)
 
 Now we need to log into the `ecelinux` servers. Choose _View > Command
 Palette_ from the menubar. This will cause a little "command palette" to
@@ -160,7 +160,7 @@ the pop up dialog box goes away and you see _SSH:
 ecelinux.ece.cornell.edu_ in the lower left-hand corner of VS Code then
 you know you are connected to the ecelinux servers.
 
-![](img/sec01-vscode-connected.png)
+![](img/tut00-vscode-connected.png)
 
 The final step is to make sure your extensions for the Verilog HDL are
 also installed on the server. Choose _View > Extensions_ from the

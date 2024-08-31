@@ -63,6 +63,8 @@ extra_javascript:
 # Pages
 
 nav:
-  - 'Discussion Section':
+  - 'Tutorials':
+    - 'Tutorial 0: ECE Linux Server Remote Access': ece2300-tut00-remote-access.md
+  - 'Discussion Sections':
     - 'Section 1: Linux Development Environment': ece2300-sec01-linux.md
 
