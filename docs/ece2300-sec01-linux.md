@@ -66,11 +66,23 @@ You should now see `ECE 2300` in your prompt which means your environment
 is setup for the course.
 
 It can be tedious to always remember to source the course setup script.
-You can also use _auto setup_ which will automatically source the course
+You can also use auto setup which will automatically source the course
 setup for you when you log in. Note that if the environment for ECE 2300
 conflicts with the environment required by a different course then you
 will need to manually source the setup script when you are working on
-this course.
+this course. Enter the following command on the command line to use auto
+setup:
+
+```bash
+% source setup-ece2300.sh --enable-auto-setup
+```
+
+If at anytime you need to disable auto setup you can use the following
+command:
+
+```bash
+% source setup-ece2300.sh --disable-auto-setup
+```
 
 2. Logging Into ecelinux with VS Code
 --------------------------------------------------------------------------
@@ -106,7 +118,11 @@ extension in the "Search Extensions in Marketplace" and then click the
 blue Install button. Here are the names of the extensions to install:
 
  - Remote - SSH (use the one from Microsoft)
- - Verilog (use the one from mshr-h)
+ - Verilog (use the one from Masahiro Hiramori)
+
+![](img/sec01-vscode-remote-ssh.png)
+
+![](img/sec01-vscode-verilog.png)
 
 Now we need to log into the `ecelinux` servers. Choose _View > Command
 Palette_ from the menubar. This will cause a little "command palette" to
@@ -141,13 +157,15 @@ a pop up dialog box in the lower right-hand corner which says _Setting up
 SSH host ecelinux.ece.cornell.edu (details) Initializing...._ It might
 take up to a minute for everything to be setup; please be patient! Once
 the pop up dialog box goes away and you see _SSH:
-ecelinux.ece.cornell.edu_ in green in the lower left-hand corner of VS
-Code then you know you are connected to the ecelinux servers.
+ecelinux.ece.cornell.edu_ in the lower left-hand corner of VS Code then
+you know you are connected to the ecelinux servers.
+
+![](img/sec01-vscode-connected.png)
 
 The final step is to make sure your extensions for the Verilog HDL are
-also installed on the server. Choose _View > Command Palette_ from the
-menubar. Search for the same Verilog hardware design extensions we
-installed earlier. When you find these extensions instead of saying
+also installed on the server. Choose _View > Extensions_ from the
+menubar. Use the "Search Extensions in Marketplace" to search for the
+same Verilog HDL extensions that we installed earlier. Instead of saying
 _Install_ it should now say _Install in SSH: ecelinux.ece.cornell.edu_.
 Install the Verilog HDL extension on the `ecelinux` servers. You only
 need to do this once, and then next time this extension will already be
@@ -174,13 +192,12 @@ Terminal_ from the menubar. You should see the same kind of Linux command
 line prompt that you saw when using PowerShell.
 
 Remember, the very first thing you need to do after logging into the
-`ecelinux` servers is source the course setup script. If you used
-`--enable-auto-setup` in the last section, then the setup script is
-already sourced for you automatically when you log into the `ecelinux`
-servers. If not, you will need to enter the following command on the
-command line:
+ecelinux servers is source the course setup script. If you used
+--enable-auto-setup in the last section, then the setup script is already
+sourced for you automatically when you log into the ecelinux servers. If
+not, you will need to enter the following command on the command line:
 
-```bash
+```
 % source setup-ece2300.sh
 ```
 
@@ -472,8 +489,8 @@ profile photo.
 
  - <https://github.com/settings/profile>
 
-Once you have a GitHub ID, please fill out the following online so the
-instructors know the mapping from NetID to GitHub ID:
+Once you have a GitHub username, please fill out the following online so
+the instructors know the mapping from NetID to GitHub username:
 
  - <http://www.csl.cornell.edu/courses/ece2300/githubid>
 
@@ -503,8 +520,8 @@ following command:
 You may see a warning about the authenticity of the host. Don’t worry,
 this is supposed to happen the first time you access GitHub using your
 new key. Just enter `yes`. The GitHub server should output some text
-including your GitHub ID. Verify that the GitHub ID is correct, and then
-you should be all set.
+including your GitHub username. Verify that the GitHub username is
+correct, and then you should be all set.
 
 5. Git Version Control System
 --------------------------------------------------------------------------
@@ -532,6 +549,7 @@ Where `githubid` is your GitHubID. Now let's clone your new repo to the
 `ecelinux` machine.
 
 ```bash
+% mkdir -p ece2300
 % cd ~/ece2300
 % git clone git@github.com:githubid/ece2300-sec01 sec01
 % cd sec01
