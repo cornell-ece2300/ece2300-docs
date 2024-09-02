@@ -119,10 +119,13 @@ blue Install button. Here are the names of the extensions to install:
 
  - Remote - SSH (use the one from Microsoft)
  - Verilog (use the one from Masahiro Hiramori)
+ - Surfer (use the one from surfer-project)
 
 ![](img/tut00-vscode-remote-ssh.png)
 
 ![](img/tut00-vscode-verilog.png)
+
+![](img/tut00-vscode-surfer.png)
 
 Now we need to log into the `ecelinux` servers. Choose _View > Command
 Palette_ from the menubar. This will cause a little "command palette" to

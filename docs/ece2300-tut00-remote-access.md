@@ -198,10 +198,13 @@ names of the extensions to install:
 
  - Remote - SSH (use the one from Microsoft)
  - Verilog (use the one from Masahiro Hiramori)
+ - Surfer (use the one from surfer-project)
 
 ![](img/tut00-vscode-remote-ssh.png)
 
 ![](img/tut00-vscode-verilog.png)
+
+![](img/tut00-vscode-surfer.png)
 
 ### 3.3. Logging into `ecelinux` Servers with VS Code
 

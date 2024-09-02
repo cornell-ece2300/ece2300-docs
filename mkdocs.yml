@@ -34,6 +34,8 @@ theme:
 # Extensions
 
 markdown_extensions:
+  - admonition
+  - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -47,7 +49,6 @@ markdown_extensions:
 #   - pymdownx.details
 #   - toc:
 #       permalink: true
-#   - admonition
 #   - codehilite:
 #       linenums: true
 
@@ -63,8 +64,11 @@ extra_javascript:
 # Pages
 
 nav:
+
   - 'Tutorials':
     - 'Tutorial 0: ECE Linux Server Remote Access': ece2300-tut00-remote-access.md
+    - 'Tutorial 1: Linux Development Environment':  ece2300-tut01-linux.md
+
   - 'Discussion Sections':
-    - 'Section 1: Linux Development Environment': ece2300-sec01-linux.md
+    - 'Section 1: Linux Development Environment':   ece2300-sec01-linux.md
 
