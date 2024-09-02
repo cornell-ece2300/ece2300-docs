@@ -67,8 +67,9 @@ nav:
 
   - 'Tutorials':
     - 'Tutorial 0: ECE Linux Server Remote Access': ece2300-tut00-remote-access.md
-    - 'Tutorial 1: Linux Development Environment':  ece2300-tut01-linux.md
+    - 'Tutorial 1: Linux Development Environment': ece2300-tut01-linux.md
+    - 'Tutorial 2: Git Distributed Version Control System': ece2300-tut02-git.md
 
   - 'Discussion Sections':
-    - 'Section 1: Linux Development Environment':   ece2300-sec01-linux.md
+    - 'Section 1: Linux Development Environment': ece2300-sec01-linux.md
 

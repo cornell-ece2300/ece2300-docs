@@ -548,8 +548,8 @@ copy of this repo in your own person GitHub workspace:
 
  - `https://github.com/githubid/ece2300-sec01`
 
-Where `githubid` is your GitHubID. Now let's clone your new repo to the
-`ecelinux` machine.
+Where `githubid` is your username on the public version of GitHub. Now
+let's clone your new repo to the `ecelinux` machine.
 
 ```bash
 % mkdir -p ece2300
@@ -559,7 +559,7 @@ Where `githubid` is your GitHubID. Now let's clone your new repo to the
 % cat README.md
 ```
 
-Where `githubid` is your GitHubID.
+Where `githubid` is your username on the public version of GitHub.
 
 ### 5.2. Adding and Committing Files to Local Repository
 
