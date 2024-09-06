@@ -72,4 +72,5 @@ nav:
 
   - 'Discussion Sections':
     - 'Section 1: Linux Development Environment': ece2300-sec01-linux.md
+    - 'Section 2: Verilog Combinational Gate-Level Design': ece2300-sec02-verilog-gl.md
 
