@@ -127,7 +127,7 @@ network:
 
 !!! info "Code Re-Use"
 
-    This gate-level netlist should look familiar; we already wrote the
+    This gate-level network should look familiar; we already wrote the
     Verilog model for this in Topic 2, on page 19. Feel free to re-use
     your code from there
 
