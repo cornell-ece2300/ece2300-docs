@@ -26,11 +26,13 @@ Note that installing the Surfer extension is new from last time.
 
 ![](img/tut00-vscode-surfer.png)
 
-Now fork the GitHub repo we will be using in this discussion section. As
-mentioned last week, we won't actually be forking repos for the lab
-assignments, but it is an easy way for you to grab some example code for
-this discussion section and also to see how GitHub actions work. Go to
-the example repo here:
+You need to install the Surfer extension on _both_ your local machine
+_and_ the server. So you might need to disconnect from the server using
+_File > Close Remote Connection_. Now fork the GitHub repo we will be
+using in this discussion section. As mentioned last week, we won't
+actually be forking repos for the lab assignments, but it is an easy way
+for you to grab some example code for this discussion section and also to
+see how GitHub actions work. Go to the example repo here:
 
  - <https://github.com/cornell-ece2300/ece2300-sec02>
 
