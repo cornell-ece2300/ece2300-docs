@@ -123,13 +123,15 @@ LED signals!
 In this section, we'll add logic corresponding to the following gate-level
 network:
 
-![](img/lab1-primer-gate-network.png)
+![](img/sec02-pair-triple-gl-network.jpg)
 
 !!! info "Code Re-Use"
 
-    This gate-level network should look familiar; we already wrote the
-    Verilog model for this in Topic 2, on page 19. Feel free to re-use
-    your code from there
+    This gate-level network should look familiar; we used this in
+    [Section 2](./ece2300-sec02-verilog-gl.md). Feel free to re-use your
+    code from then; if you haven't already, make sure to try out the
+    [Boolean Equations](./ece2300-sec02-verilog-gl.md#7-to-do-on-your-own),
+    as we'll be using them in Lab 1 and beyond.
 
 To add our own logic, we'll create a new module, and instantiate it within
 our top-level module. It's good practice to have only one module in a file
@@ -143,7 +145,8 @@ To create a new file within your Quartus project:
  - Go to _File -> New_
  - Click on _Verilog HDL File_, then select _OK_
  - You should now see a blank Verilog file. Go to _File -> Save As_, and
-   save this file as `AwesomeBlock.v` within your `lab1_primer` directory
+   save this file as `PairTripleDetector.v` within your `lab1_primer` 
+   directory
 
 We now have a new Verilog file that's included as part of our design - 
 from here, we can add or new logic inside of it
@@ -159,11 +162,12 @@ When we add new blocks of logic, we want to add them as _modules_. This
 involves first creating the module, and then instantiating it wherever we
 want that logic.
 
-First, let's define our module. In `AwesomeBlock.v`, define a module named
-`AwesomeBlock` that represents the gate-level network above. As a hint, it
-should have three inputs (`a`, `b`, and `c`), and one output `y`. From
-there, write the logic inside the module so that the same logic occurs as
-is represented by our gate-level netlist. Make sure to save the file when
+First, let's define our module. In `PairTripleDetector.v`, define a module
+named `PairTripleDetector` that represents the gate-level network above, 
+exactly as done in [section](https://github.com/cornell-ece2300/ece2300-sec02).
+Make sure that it has three inputs (`in0`, `in1`, and `in2`), and one
+output (`out`). Make sure that it contains the logic to implement the
+gate-level network above. Lastly, make sure to save the file when
 you're done (_File -> Save_)
 
 From here, we can _instantiate_ this module - create an instance of the
@@ -171,20 +175,21 @@ hardware it represents. In your `DE0_CV_golden_top.v` (which contains
 the top-level `DE0_CV_golden_top` module), if you scroll to the bottom,
 you'll notice the module is currently empty - it doesn't contain any
 logic yet. Let's add some functionality by _instantiating_ our
-`AwesomeBlock` within the module - let's give it the name
-`my_awesome_block`.
+`PairTripleDetector` module within the `DE0_CV_golden_top` module - let's
+give it the name `my_detector`.
 
 !!! info "Instantiation Syntax"
 
     If you don't quite remember how to instantiate modules, feel free to
-    reference Topic 2, page 18 for a good example.
+    reference [Topic 2, page 18](https://www.csl.cornell.edu/courses/ece2300/handouts/ece2300-T02-logic-gates.pdf#page=18) 
+    for a good example.
 
 The module should have the following connections:
 
- - `a` should be connected to the 0th switch (`SW[0]`)
- - `b` should be connected to the 1st switch (`SW[1]`)
- - `c` should be connected to the 2nd switch (`SW[2]`)
- - `y` should be connected to the 0th LED (`LEDR[0]`)
+ - `in0` should be connected to the 0th switch (`SW[0]`)
+ - `in1` should be connected to the 1st switch (`SW[1]`)
+ - `in2` should be connected to the 2nd switch (`SW[2]`)
+ - `out` should be connected to the 0th LED (`LEDR[0]`)
 
 Make sure to save this file as well. From there, we should be all ready to
 put our design on the FPGA!
@@ -223,7 +228,7 @@ errors (errors in the logic of your design), as it doesn't know the
 correct logic - that's up to you as a designer.
 
 If you get no errors, after a few minutes, you should see the following
-output:
+output in the log produced at the bottom of Quartus:
 
 ```text
 Quartus Prime full compilation was successful
@@ -250,7 +255,6 @@ the FPGA:
    design, so all this step needs to do is communicate that information
    to the FPGA
 
-Once that's done, your FPGA should now replicate your design! See if you
-can find two sets of inputs; one that should have `y` as a logical 1, and
-one that should have `y` as a logical 0. Set these to your switches, and
-make sure that the LED lights up accordingly.
+Once that's done, your FPGA should now replicate your design! You should
+verify this; try having one, two, or three of the first three switches as
+"up" - what does the output LED show?
