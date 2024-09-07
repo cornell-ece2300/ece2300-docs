@@ -165,9 +165,9 @@ you know you are connected to the ecelinux servers.
 
 ![](img/tut00-vscode-connected.png)
 
-The final step is to make sure your extensions for the Verilog HDL are
-also installed on the server. Choose _View > Extensions_ from the
-menubar. Use the "Search Extensions in Marketplace" to search for the
+The final step is to make sure your extensions for the Verilog HDL and
+Surfer are also installed on the server. Choose _View > Extensions_ from
+the menubar. Use the "Search Extensions in Marketplace" to search for the
 same Verilog HDL extensions that we installed earlier. Instead of saying
 _Install_ it should now say _Install in SSH: ecelinux.ece.cornell.edu_.
 Install the Verilog HDL extension on the `ecelinux` servers. You only
