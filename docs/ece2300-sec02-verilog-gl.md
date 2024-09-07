@@ -18,6 +18,7 @@ detail in the last discussion section):
  - Use _View > Command Palette_ to execute _Remote-SSH: Connect Current
     Window to Host..._
  - Enter `netid@ecelinux.ece.cornell.edu`
+ - Install the Verilog and Surfer extensions on the server
  - Use _View > Explorer_ to open your home directory on `ecelinux`
  - Use _View > Terminal_ to open a terminal on `ecelinux`
 
@@ -57,7 +58,7 @@ repo includes the following files:
 
  - `ece2300-stdlib.v` : ECE 2300 standard library
  - `PairTripleDetector.v` : Verilog for simple hardware module
- - `PairTripleDetector_adhoc_test.v` : adhoc test for hardware module
+ - `PairTripleDetector_adhoc.v` : adhoc test for hardware module
  - `PairTripleDetector_test.v` : test cases for hardware module
 
 2. Background on a Pair/Triple Detector
@@ -85,7 +86,8 @@ gate-level network that implements this truth table.
 
 ![](img/sec02-pair-triple-gl-network.jpg)
 
-Fill in the following simulation table.
+Here is an example of an incomplete simulation table for this gate-level
+network.
 
 | in0 | in1 | in2 | w   | x   | y   | out |
 |-----|-----|-----|-----|-----|-----|-----|
@@ -94,9 +96,16 @@ Fill in the following simulation table.
 | 0   | 1   | 0   |     |     |     |     |
 | 1   | 1   | 1   |     |     |     |     |
 
-Complete the following waveform. Assume a zero delay model.
+Here is an example of an incomplete waveform which corresponds to the
+above simulation table.
 
 ![](img/sec02-pair-triple-waveform.jpg)
+
+!!! question "Activity 1: Simulation Tables and Waveforms"
+
+    Complete the above simulation table and waveform. Assume a zero delay
+    model.
+
 
 3. Implementing and Linting a Pair/Triple Detector in Verilog
 --------------------------------------------------------------------------
@@ -106,7 +115,12 @@ linting the detector to check for errors.
 
 ### 3.1. Implementing a Verilog Design
 
-We have provided you with the interface for the pair/triple defector in
+Before implementing the pair/triple detector, you might want to review
+how to instantiate our primitive logic gates in Verilog.
+
+![](img/sec02-verilog-gates.png)
+
+We have provided you with the interface for the pair/triple detector in
 `PairTripleDetector.v`. Open this file using VS Code.
 
 ```bash
@@ -114,12 +128,11 @@ We have provided you with the interface for the pair/triple defector in
 % code PairTripleDetector.v
 ```
 
-Create a Verilog hardware design that implements a pair/triple detector
-by declaring wires, instantiating primitive logic gates, and connecting
-the wires and gates appropriately. The corresponding page from the
-lecture handout is included below for reference.
+!!! question "Activity 2: Implement a Pair/Triple Detector"
 
-![](img/sec02-verilog-gates.png)
+    Create a Verilog hardware design that implements a pair/triple
+    detector by declaring wires, instantiating primitive logic gates, and
+    connecting the wires and gates appropriately.
 
 ### 3.2. Linting a Verilog Design
 
@@ -199,11 +212,11 @@ When using Verilog for test benches, we can use any part of the Verilog
 language we want; our goal is not to model hardware but to test hardware.
 
 We have provided you a simple ad-hoc test bench in
-`PairTripleDetector_adhoc_test.v`. Take a look at this file in VS Code.
+`PairTripleDetector_adhoc.v`. Take a look at this file in VS Code.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% code PairTripleDetector_adhoc_test.v
+% code PairTripleDetector_adhoc.v
 ```
 
 ```verilog
@@ -290,16 +303,16 @@ based on our pair/triple hardware design and test bench.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% iverilog -Wall -g2012 -o PairTripleDetector_adhoc_test \
-    PairTripleDetector_adhoc_test.v PairTripleDetector.v
+% iverilog -Wall -g2012 -o PairTripleDetector_adhoc \
+    PairTripleDetector_adhoc.v PairTripleDetector.v
 ```
 
 If there are no errors you should now have a simulator named
-`PairTripleDetector_adhoc_test`. Go ahead and execute the simulator.
+`PairTripleDetector_adhoc`. Go ahead and execute the simulator.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% ./PairTripleDetector_adhoc_test
+% ./PairTripleDetector_adhoc
 ```
 
 The ad-hoc test will print out a simulation table. Compare it to the
@@ -308,7 +321,7 @@ You can also view the corresponding waveforms using the Surfer extension.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% code PairTripleDetector_adhoc_test.vcd
+% code PairTripleDetector_adhoc.vcd
 ```
 
 Find the _Scopes_ panel and click on the arrow next to _Top_. Click on
@@ -381,13 +394,9 @@ design, and the correct output values we want to check for. The task then
 sets the input, waits for some amount of time, displays the input and
 output values, and then checks that the output is as expected. We then
 declare one or more test case tasks. Each test case task has a sequence
-of checks.
+of checks. Here is the basic test case.
 
 ```verilog
-  //----------------------------------------------------------------------
-  // test_case_1_basic
-  //----------------------------------------------------------------------
-
   task test_case_1_basic();
     $display( "\ntest_case_1_basic" );
     t.reset_sequence();
@@ -398,32 +407,10 @@ of checks.
     check( 1, 1, 1, 1 );
 
   endtask
-
-  //----------------------------------------------------------------------
-  // test_case_2_exhaustive
-  //----------------------------------------------------------------------
-
-  task test_case_2_exhaustive();
-    $display( "\ntest_case_2_exhaustive" );
-    t.reset_sequence();
-
-    check( 0, 0, 0, 0 );
-    check( 0, 0, 1, 0 );
-    check( 0, 1, 0, 0 );
-    check( 0, 1, 1, 1 );
-
-    check( 1, 0, 0, 0 );
-    check( 1, 0, 1, 1 );
-    check( 1, 1, 0, 1 );
-    check( 1, 1, 1, 1 );
-
-  endtask
 ```
 
-Our first test case reproduces what we were testing in our ad-hoc
-testing. Our second test case uses _exhaustive testing_, which simply
-means we try all outputs. Finally, our test bench uses an initial block
-to decide which test cases to run.
+Finally, our test bench uses an initial block to decide which test cases
+to run.
 
 ```verilog
   initial begin
@@ -460,11 +447,19 @@ waveforms (with `+dump-vcd=waveform.vcd`).
 % cd ${HOME}/ece2300/sec02
 % ./PairTripleDetector_test +test-case=-1
 % ./PairTripleDetector_test +test-case=1
-% ./PairTripleDetector_test +test-case=2
-% ./PairTripleDetector_test +test-case=2 +dump-vcd=PairTripleDetector_test.vcd
+% ./PairTripleDetector_test +test-case=1 +dump-vcd=PairTripleDetector_test.vcd
 ```
 
 Open up the waveforms in surfer.
+
+!!! question "Activity 3: Exhaustive Testing"
+
+    Finish the second test case which should use exhaustive testing.
+    Exhaustive testing simply means we test all possible input values.
+    You can refer to the truth table from earlier in the discussion
+    section and simply have one check for every row in the truth table.
+    When you have finished rerun the the test using `+test-case=2` to
+    make sure your test bench is testing what you think it is.
 
 6. Using GitHub Actions for Continuous Integration
 --------------------------------------------------------------------------
@@ -586,4 +581,3 @@ detector. All three are equivalent with our original implementation.
 Modify your implementation in `PairTripleDetector.v` based on one of
 these new approach and then rerun the ad-hoc and system tests to verify
 your new implementation is correct.
-
