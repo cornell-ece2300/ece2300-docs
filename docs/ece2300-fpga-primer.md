@@ -466,6 +466,13 @@ This will generate a timing report for our design:
    longer than needed because we told the tools that logic can take up to
    20 nanoseconds. If we wanted to be more representative, we'd push the
    tools to fit the logic in less time. We'll explore this more in Lab 1.
+
+!!! warning "No Paths"
+
+    If Quartus didn't find any paths, it's likely that you may have
+    missed something in the pop-up window, or in your `timing.sdc` file.
+    Make sure to go back and double-check them!
+
  - Click on the critical path, then look at the _Data Arrival Path_ panel.
    This panel shows how long it takes _in nanoseconds_ for the signal to
    reach each portion of the logic:
