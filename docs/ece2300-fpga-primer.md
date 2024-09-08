@@ -1,5 +1,5 @@
 
-Lab 1 Intro: FPGA Development Primer
+FPGA Development Primer
 ==========================================================================
 
 Before jumping into Lab 1, it's important to understand the tools we'll be
@@ -53,14 +53,22 @@ menu:
 
  - __Directory, Name, Top-Level Entity__:
     - Using the file searcher, create a new directory for your project
-      in your Documents. Name it `lab1_primer`. Select this as the 
+      in your Documents. Name it `lab1-primer`. Select this as the 
       "working directory" for your project - the path should look like
-      `C:/Users/netid/Documents/lab1_primer`
-    - Name your project `lab1_primer` by typing in the appropriate field.
+      `C:/Users/netid/Documents/lab1-primer`
+    - Name your project `lab1-primer` by typing in the appropriate field.
       The "top-level design entity" should be automatically filled 
       appropriately
     - Click _Next_
    ![](img/lab1-primer-quartus-directory.png)
+
+!!! warning "Incorrect Folder"
+
+    If Quartus gives an error that it can't create the project, make sure
+    that you're creating the project in your `Documents` folder. Quartus
+    will give a default location of its installation folder - make sure
+    to change this.
+
  - __Project Type__:
     - Select "Empty Project
     - Click _Next_
@@ -164,7 +172,7 @@ To create a new file within your Quartus project:
  - Go to _File -> New_
  - Click on _Verilog HDL File_, then select _OK_
  - You should now see a blank Verilog file. Go to _File -> Save As_, and
-   save this file as `PairTripleDetector.v` within your `lab1_primer` 
+   save this file as `PairTripleDetector_GL.v` within your `lab1-primer` 
    directory
 
 We now have a new Verilog file that's included as part of our design - 
@@ -183,9 +191,24 @@ When we add new blocks of logic, we want to add them as _modules_. This
 involves first creating the module, and then instantiating it wherever we
 want that logic.
 
-First, let's define our module. In `PairTripleDetector.v`, define a module
-named `PairTripleDetector` that represents the gate-level network above, 
+First, let's define our module. In `PairTripleDetector_GL.v`, define a module
+named `PairTripleDetector_GL` that represents the gate-level network above, 
 exactly as done in [section](https://github.com/cornell-ece2300/ece2300-sec02).
+
+```verilog
+module PairTripleDetector_GL
+(
+  input  wire in0,
+  input  wire in1,
+  input  wire in2,
+  output wire out
+);
+
+  ...
+
+endmodule
+```
+
 Make sure that it has three inputs (`in0`, `in1`, and `in2`), and one
 output (`out`). Make sure that it contains the logic to implement the
 gate-level network above. Lastly, make sure to save the file when
@@ -198,14 +221,8 @@ hardware it represents. In your `DE0_CV_golden_top.v` (which contains
 the top-level `DE0_CV_golden_top` module), if you scroll to the bottom,
 you'll notice the module is currently empty - it doesn't contain any
 logic yet. Let's add some functionality by _instantiating_ our
-`PairTripleDetector` module within the `DE0_CV_golden_top` module - let's
-give it the name `my_detector`.
-
-!!! info "Instantiation Syntax"
-
-    If you don't quite remember how to instantiate modules, feel free to
-    reference [Topic 2, page 18](https://www.csl.cornell.edu/courses/ece2300/handouts/ece2300-T02-logic-gates.pdf#page=18) 
-    for a good example.
+`PairTripleDetector_GL` module within the `DE0_CV_golden_top` module - let's
+give it the name `detector`.
 
 The module should have the following connections:
 
@@ -221,7 +238,7 @@ module DE0_CV_golden_top (
   ...
 );
 
-  PairTripleDetector my_detector (
+  PairTripleDetector_GL detector (
     .in0 (SW[0]),
     .in1 (SW[1]),
     .in2 (SW[2]),
@@ -232,14 +249,6 @@ endmodule
 ```
 
 Make sure to save this file as well.
-
-!!! tip "Module Re-Use"
-
-    One of the biggest benefits of modules is that, once they're defined,
-    they can be instantiated _multiple_ times. This is super nice for us
-    as designers - we can achieve high amounts of code re-use through
-    this modularity. This will be a theme in the course, and you'll get
-    your first taste of it in Lab 1
 
 ### 2.2. Adding Timing Information
 
@@ -273,7 +282,7 @@ set_output_delay -add_delay -clock { CLOCK_50 } -min 0 [get_ports LEDR*]
     that our logic paths should take no longer than 20 nanoseconds.
 
  - Go to _File -> Save As_, and save this file as `timing.sdc` within your
-   `lab1_primer` directory
+   `lab1-primer` directory
 
 With the timing information and our design logic, we should be good to
 start putting our design on the FPGA!
@@ -332,7 +341,8 @@ and outputs to an LED.
 Our modules are initially represented as boxes (abstracting away the
 internal logic), but we can also click the "+" to open up the design
 and see the underlying gate-level network that Quartus mapped our
-design to
+design to. Compare this gate-level network to the one above - they should
+be the same!
 
 ![](img/lab1-primer-rtl-gates.png)
 
@@ -351,7 +361,7 @@ _Technology Map Viewer_ can help us with this.
     - Click the "+" at the top to open up a new tab.
     - In the "Netlist Navigator" panel on the left-hand side, under
       *DE0_CV_golden_top -> Instances*, drag the instance of 
-      _PairTripleDetector_ to the new tab
+      *PairTripleDetector_GL* to the new tab
  - Click the "+" on the module instance to show the underlying FPGA
    resources
 
@@ -383,7 +393,7 @@ used - each of these rectangles is a _"LAB"_ (Logic Array Block)
 We can also see what each of these LABs are doing. The upper LAB
 was a ground signal that Quartus created, but the other LAB was the
 reconfigurable truth table that Quartus used to implement our design.
-Zoom on on this block (hold `Ctrl` and use the mouse wheel), and click
+Zoom on on this block (_View -> Zoom In_, or `Ctrl + Space`), and click
 on the highlighted portion within it. The smaller highlighted portion
 is an _"ALM"_ (Adaptive Logic Module) - each LAB contains multiple ALMs.
 Each ALM contains multiple reconfigurable truth tables - you can start
@@ -405,7 +415,7 @@ design. The first one we'll look at is the _area report_ - we want to know
 how many resources our design needs. For this class, we'll approximate a
 design's area by how many FPGA resources it uses.
 
-Navigate to _Processing -> Compilation Reports_. In the tab that opens up,
+Navigate to _Processing -> Compilation Report_. In the tab that opens up,
 under _Fitter -> Resource Section_, click on _Resource Usage Summary_.
 This will open up a report that shows you how many resources are being
 used on the FPGA. Here, we can see that 1 ALM is needed for our logic, and
@@ -494,5 +504,5 @@ the FPGA:
    to the FPGA
 
 Once that's done, your FPGA should now replicate your design! You should
-verify this; try having one, two, or three of the first three switches as
-"up" - what does the first output LED show?
+verify this; try all possible switch combinations, and create the truth
+table that they represent. Does this match what you expect?

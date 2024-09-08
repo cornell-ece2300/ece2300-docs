@@ -75,5 +75,5 @@ nav:
     - 'Section 2: Verilog Combinational Gate-Level Design': ece2300-sec02-verilog-gl.md
 
   - 'Lab Assignments':
-    - 'Lab 1 Intro: FPGA Development Primer': ece2300-lab1-primer.md
+    - 'FPGA Development Primer': ece2300-fpga-primer.md
 
