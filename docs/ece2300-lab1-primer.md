@@ -59,12 +59,15 @@ menu:
     - Name your project `lab1_primer` by typing in the appropriate field.
       The "top-level design entity" should be automatically filled 
       appropriately
+    - Click _Next_
    ![](img/lab1-primer-quartus-directory.png)
  - __Project Type__:
     - Select "Empty Project
+    - Click _Next_
    ![](img/lab1-primer-quartus-projecttype.png)
  - __Add Files__:
     - Skip this for now; we'll add our design files later
+    - Click _Next_
  - __Family, Device & Board Settings__:
     - Switch to the _Board_ tab:
        - Make sure "Family" is set to _Cyclone V_ and "Development Kit" is
@@ -72,10 +75,12 @@ menu:
        - Select _DE0-CV Development Board_ (this is the FPGA board for the
          class)
        - Make sure "Create top-level design file" is checked
+    - Click _Next_
    ![](img/lab1-primer-quartus-board.png)
  - __EDA Tool Settings__:
     - Skip this section for now. These are extra tools that can be used
       to analyze your design, but we won't be using them
+    - Click _Next_
  - __Summary__:
     - Click _Finish_ to finish creating your project
 
@@ -226,8 +231,7 @@ module DE0_CV_golden_top (
 endmodule
 ```
 
-Make sure to save this file as well. From there, we should be all ready to
-put our design on the FPGA!
+Make sure to save this file as well.
 
 !!! tip "Module Re-Use"
 
@@ -236,6 +240,39 @@ put our design on the FPGA!
     as designers - we can achieve high amounts of code re-use through
     this modularity. This will be a theme in the course, and you'll get
     your first taste of it in Lab 1
+
+### 2.2. Adding Timing Information
+
+In addition to the above, we need to give Quartus information about our
+timing constraints, so that it can properly analyze the timing of our
+design and analyze the critical path.
+
+ - Similar to before, go to _File -> New_ to create a new file. This time,
+   select "Synopsys Design Constraints File"
+ - Inside the file, add the following Tcl commands:
+
+```tcl
+set_time_format -unit ns -decimal_places 3
+create_clock -period 20 [get_ports {CLOCK_50}]
+
+set_input_delay -add_delay -clock { CLOCK_50 } -max 0 [get_ports SW*]
+set_input_delay -add_delay -clock { CLOCK_50 } -min 0 [get_ports SW*]
+
+set_output_delay -add_delay -clock { CLOCK_50 } -max 0 [get_ports LEDR*]
+set_output_delay -add_delay -clock { CLOCK_50 } -min 0 [get_ports LEDR*]
+```
+
+!!! note "Timing Commands"
+
+    We won't delve into these commands too much, but at a high-level,
+    we're telling Quartus to not factor in delay from these ports, so out
+    timing results should only represent the delay in our design.
+
+ - Go to _File -> Save As_, and save this file as `timing.sdc` within your
+   `lab1_primer` directory
+
+With the timing information and our design logic, we should be good to
+start putting our design on the FPGA!
 
 3. Synthesizing a Hardware Design using Quartus
 --------------------------------------------------------------------------
