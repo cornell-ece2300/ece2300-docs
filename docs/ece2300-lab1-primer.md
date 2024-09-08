@@ -272,7 +272,84 @@ Quartus Prime Full Compilation was successful
 4. Analyzing a Hardware Design using Quartus
 --------------------------------------------------------------------------
 
-<insert report-viewing stuff here>
+Once we've synthesized our design, Quartus will also give us some reports
+about our design. These are _CRITICAL_ for us as designers to understand
+the tradeoffs between our different designs, and can help us analyze which
+one might be "better" in different circumstances.
+
+### 4.1. RTL Viewer
+
+First, Quartus can help us visualize what logic our RTL design maps to.
+Go to _Tools -> Netlist Viewers -> RTL Viewer_. This should open up a
+new window to view how Quartus implemented our design.
+
+![](img/lab1-primer-rtl-top.png)
+
+We can see that our RTL design takes in some of the switches as inputs,
+and outputs to an LED.
+
+Our modules are initially represented as boxes (abstracting away the
+internal logic), but we can also click the "+" to open up the design
+and see the underlying gate-level network that Quartus mapped our
+design to
+
+![](img/lab1-primer-rtl-gates.png)
+
+When you're finished, you can close this pop-up window.
+
+### 4.2. Technology Map Viewer
+
+The RTL Viewer showed us the gate-level network, but what if we want to
+visualize exactly which resources were used on the FPGA? The 
+_Technology Map Viewer_ can help us with this.
+
+ - Go to _Tools -> Netlist Viewers -> Technology Map Viewer (Post-Fitting)_.
+   This should open up a pop-up window that shows our _entire_ design that
+   came with our template top-level module.
+ - To focus on our design:
+    - Click the "+" at the top to open up a new tab.
+    - In the "Netlist Navigator" panel on the left-hand side, under
+      *DE0_CV_golden_top -> Instances*, drag the instance of 
+      _PairTripleDetector_ to the new tab
+ - Click the "+" on the module instance to show the underlying FPGA
+   resources
+
+You should see only one block that makes up the logic. This is known as a
+"LUT" (Look-Up Table), but we'll reference this as a 
+_reconfigurable truth table_. When we configure our FPGA, we tell this
+table what outputs it should have for every input, to represent our
+design. This design is relatively simple, so it only needs one truth
+table, but later designs will require more due to increasing complexity.
+
+![](img/lab1-primer-tech-mapper.png)
+
+When you're finished, you can close this pop-up window.
+
+### 4.3. Chip Planner
+
+Next, let's see if we can visualize exactly which portions of the FPGA are
+being used! Navigate to _Tools -> Chip Planner_ to open up the Chip
+Planner window.
+
+![](img/lab1-primer-planner-top.png)
+
+This helps us visualize exactly which portions of the chip are being
+utilized - the highlighted portions are being used for our design.
+Our design isn't too large, so very few resources are being used.
+
+We can also see what each of these blocks are doing. The upper block
+was a ground signal that Quartus created, but the other block was the
+reconfigurable truth table that Quartus used to implement our design.
+Zoom on on this block (hold `Ctrl` and use the mouse wheel), and click
+on the highlighted portion. On the side, you should be able to see what
+the block is used for (indicated in the name), as well as the Boolean
+logic equation that it implements.
+
+![](img/lab1-primer-planner-lut.png)
+
+### 4.4. Area Reports
+
+### 4.5. Timing Reports
 
 5. Configuring a Hardware Design onto the FPGA
 --------------------------------------------------------------------------
@@ -297,4 +374,4 @@ the FPGA:
 
 Once that's done, your FPGA should now replicate your design! You should
 verify this; try having one, two, or three of the first three switches as
-"up" - what does the output LED show?
+"up" - what does the first output LED show?
