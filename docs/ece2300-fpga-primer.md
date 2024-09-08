@@ -5,8 +5,8 @@ FPGA Development Primer
 Before jumping into Lab 1, it's important to understand the tools we'll be
 working with. All lab assignments will include an FPGA component, where
 you'll emulate your design. FPGAs (short for Field Programmable Gate
-Arrays) are a special type of hardware that can be programmed to represent
-any digital logic function. When we program an FPGA to represent a
+Arrays) are a special type of hardware that can be configured to represent
+any digital logic function. When we configure an FPGA to represent a
 specific piece of hardware, the FPGA is _emulating_ our design, and will
 perform the same logic functions. Because of this, FPGAs are used
 extensively for early prototyping of designs; since they are actual
@@ -19,7 +19,7 @@ familiar with using FPGAs by emulating a design from lecture.
 
 FPGAs often come with _development environments_. These environments are
 large pieces of software that help get your design from a hardware
-description language to something that can be programmed on the FPGA. This
+description language to something that can be configured on the FPGA. This
 includes:
 
  - Determining what resources are needed to represent your design (known
@@ -297,7 +297,7 @@ step includes:
  - __placement__ (determining which FPGA resources will be used)
  - __routing__ (connecting the FPGA resources as appropriate)
 
-At the end, we'll be left with a compiled version that can be immediately
+At the end, we'll be left with a synthesized version that can be immediately
 put on the FPGA - this is known as a _bitstream_.
 
 In Quartus, you can perform the synthesis step by going to
@@ -497,7 +497,7 @@ the FPGA:
  - Click on _Hardware Setup_. Under "Currently selected hardware", you
    should see your FPGA as an option (appearing as _USB Blaster [USB-0]_). 
    Select your FPGA, then click _Close_
- - Click on _Start_. This should program the FPGA - notice how this is a
+ - Click on _Start_. This should configure the FPGA - notice how this is a
    lot quicker than the compilation step. Quartus has already done the
    difficult part of figuring out _how_ the FPGA should represent our
    design, so all this step needs to do is communicate that information
