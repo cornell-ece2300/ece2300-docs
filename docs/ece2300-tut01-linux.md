@@ -813,6 +813,49 @@ rebooted.
     does illustrate how many commands (e.g., `grep`) can take their input
     specified as a command line argument or through a pipe.
 
+### 1.14. Bash Shell Scripts
+
+If you find yourself continually having to use the same complex commands
+over and over, consider creating a Bash shell script to automatically
+execute those commands. A Bash shell script is just a text file with a
+list of commands that you can run using the `source` command.
+
+For example, let's create a Bash shell script to automatically grep for
+information about the processor and memory in a single step. Use VS Code
+to open a new file called `get-processor-memory-info.sh` (note that by
+convention we usually use the `.sh` extension for Bash shell scripts).
+
+```
+% cd ${HOME}/ece2300/tut01
+% code get-processor-memory-info.sh
+```
+
+Then enter the following commands into this new Bash shell script.
+
+```
+grep "processor" /proc/cpuinfo
+grep "vendor_id" /proc/cpuinfo
+grep "cpu MHz"   /proc/cpuinfo
+grep "MemTotal"  /proc/meminfo
+```
+
+Then save the Bash shell script and execute it using the `source`
+command.
+
+```
+% cd ${HOME}/ece2300/tut01
+% source get-processor-memory-info.sh
+```
+
+!!! question "Activity 13: Experimenting with Bash Shell Scripts"
+
+    Create a new Bash shell script named `wget-and-grep.sh`. The Bash
+    shell script should use `wget` to get the `overview.txt` file for the
+    course and then uses grep to find instances of the workd "digital
+    logic" in this file. See earlier examples in this tutorial for the
+    commands required for both steps. Then use `source` to execute the
+    new Bash shell script.
+
 ### 1.15. Aliases, Wildcards, Command History, and Tab Completion
 
 In this section, we describe some miscellaneous features of the Bash

@@ -475,8 +475,54 @@ Open up the waveforms in surfer.
     inject a bug (e.g., change an OR gate to a NOR gate) to see if the
     test bench fails.
 
-6. Using GitHub Actions for Continuous Integration
+6. Automating the Development Process
 --------------------------------------------------------------------------
+
+The key to being a productive hardware designer is to automate as much of
+the process as possible. We will learn how to use a real build system in
+the next discussion section to help automate linting, compiling,
+simulating, and testing hardware designs. In this discussion section, we
+will briefly discuss two other wayts to automate the development process.
+
+### 6.1. Using Bash Shell Scripts for Testing
+
+If you find yourself continually having to use the same complex commands
+over and over, consider creating a Bash shell script to automatically
+execute those commands. A Bash shell script is just a text file with a
+list of commands that you can run using the `source` command.
+
+For example, let's create a Bash shell script to automatically lint,
+compile, and run the systematic test bench developed earlier in the
+discussion section. VS Code to open a new file called
+`PairTripleDetector_GL-test.sh` (note that by convention we usually use
+the `.sh` extension for Bash shell scripts).
+
+```
+% cd ${HOME}/ece2300/sec02
+% code PairTripleDetector_GL-test.sh
+```
+
+Then enter the following commands into this new Bash shell script.
+
+```
+verilator -Wall --lint-only PairTripleDetector_GL.v
+iverilog -Wall -g2012 -o PairTripleDetector_GL-test PairTripleDetector_GL-test.v
+./PairTripleDetector_GL-test
+```
+
+Then save the Bash shell script and execute it using the `source`
+command.
+
+```
+% cd ${HOME}/ece2300/tut01
+% source PairTripleDetector_GL-test.sh
+```
+
+The script will automatically lint your design, compile your design with
+the test bench into a simulator, and then run the simulator to test your
+design all in a single step.
+
+### 6.2. Using GitHub Actions for Continuous Integration
 
 We will be using GitHub Actions for continuous integration which means
 that GitHub Actions will run all of your tests in the cloud every time
