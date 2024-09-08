@@ -480,8 +480,10 @@ Cornell hosted GitHub!** You will need to create one here:
 
  - <https://github.com/join>
 
-Your NetID makes a great GitHub username on `github.com`. Be sure to use
-your Cornell University email address.
+Your NetID makes a great GitHub username on `github.com`. If you are
+creating a new GitHub account, then be sure to use your Cornell email
+address. If you have an existing account it is fine for it to use a
+non-Cornell email address.
 
 Once your account is setup, please make sure you set your full name so we
 can know who you are on GitHub. Please also consider uploading a profile

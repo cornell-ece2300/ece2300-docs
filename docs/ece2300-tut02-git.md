@@ -56,13 +56,15 @@ one here:
 
  - <https://github.com/join>
 
-Your NetID makes a great GitHub username. Be sure to use your Cornell
-University email address. Once your account is setup, please make sure
-you set your full name so we can know who you are on GitHub. Please also
-consider uploading a profile photo to GitHub; it makes it more fun to
-interact on GitHub if we all know what each other look like. Go to the
-following page and enter your first and last name in the _Name_ field,
-and then consider uploading a profile photo.
+Your NetID makes a great GitHub username. If you are creating a new
+GitHub account, then be sure to use your Cornell email address. If you
+have an existing account it is fine for it to use a non-Cornell email
+address. Once your account is setup, please make sure you set your full
+name so we can know who you are on GitHub. Please also consider uploading
+a profile photo to GitHub; it makes it more fun to interact on GitHub if
+we all know what each other look like. Go to the following page and enter
+your first and last name in the _Name_ field, and then consider uploading
+a profile photo.
 
  - <https://github.com/settings/profile>
 
