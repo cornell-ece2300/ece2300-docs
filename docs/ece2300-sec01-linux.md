@@ -541,12 +541,12 @@ We won't actually be forking repos for the lab assignments, but
 it is an easy way for you to grab some example code for the discussion
 section. Go to the example repo here:
 
- - <https://github.com/cornell-ece2300/ece2300-sec01>
+ - <https://github.com/cornell-ece2300/ece2300-sec01-linux>
 
 Click on the "Fork" button. Wait a few seconds and then visit the new
 copy of this repo in your own person GitHub workspace:
 
- - `https://github.com/githubid/ece2300-sec01`
+ - `https://github.com/githubid/ece2300-sec01-linux`
 
 Where `githubid` is your username on the public version of GitHub. Now
 let's clone your new repo to the `ecelinux` machine.
@@ -554,7 +554,7 @@ let's clone your new repo to the `ecelinux` machine.
 ```bash
 % mkdir -p ece2300
 % cd ~/ece2300
-% git clone git@github.com:githubid/ece2300-sec01 sec01
+% git clone git@github.com:githubid/ece2300-sec01-linux sec01
 % cd sec01
 % cat README.md
 ```
@@ -668,14 +668,14 @@ commits up to GitHub like this:
 Now go to the repository page using the GitHub web interface and verify
 that there are two new files.
 
- - `https://github.com/githubid/ece2300-sec01`
+ - `https://github.com/githubid/ece2300-sec01-linux`
 
 ### 5.4. Pulling Files from GitHub
 
 Let's try making a change to this repository through the GitHub
 web interface.
 
- - `https://github.com/githubid/ece2300-sec01`
+ - `https://github.com/githubid/ece2300-sec01-linux`
 
 Click on _Add file_ and then _Create new file_. Name the file
 `logic-gates.txt` and add a list of logic gates:
