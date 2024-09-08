@@ -505,12 +505,12 @@ the FPGA:
    should see your FPGA as an option (appearing as _USB Blaster [USB-0]_). 
    Select your FPGA, then click _Close_
  - Click on _Start_. This should configure the FPGA - notice how this is a
-   lot quicker than the compilation step. Quartus has already done the
+   lot quicker than the synthesis step. Quartus has already done the
    difficult part of figuring out _how_ the FPGA should represent our
    design, so all this step needs to do is communicate that information
    to the FPGA. You can check when it's done by looking at the "Progress"
    bar in the top-right.
 
-Once that's done, your FPGA should now replicate your design! You should
+Once that's done, your FPGA should now emulate your design! You should
 verify this; try all possible switch combinations, and create the truth
 table that they represent. Does this match what you expect?
