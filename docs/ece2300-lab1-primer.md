@@ -336,16 +336,22 @@ Planner window.
 This helps us visualize exactly which portions of the chip are being
 utilized - the highlighted portions are being used for our design.
 Our design isn't too large, so very few resources are being used.
-Quartus also has different granulatiry for utilization; each of the
-rectangles is a "LAB".
+Quartus also has different granularities for how much logic is being
+used - each of these rectangles is a _"LAB"_ (Logic Array Block)
 
-We can also see what each of these blocks are doing. The upper block
-was a ground signal that Quartus created, but the other block was the
+We can also see what each of these LABs are doing. The upper LAB
+was a ground signal that Quartus created, but the other LAB was the
 reconfigurable truth table that Quartus used to implement our design.
 Zoom on on this block (hold `Ctrl` and use the mouse wheel), and click
-on the highlighted portion. On the side, you should be able to see what
-the block is used for (indicated in the name), as well as the Boolean
-logic equation that it implements.
+on the highlighted portion within it. The smaller highlighted portion
+is an _"ALM"_ (Adaptive Logic Module) - each LAB contains multiple ALMs.
+Each ALM contains multiple reconfigurable truth tables - you can start
+to get a sense of how much logic our FPGA can represent!
+
+On the side, you should be able to see what the ALM is used for
+(indicated in the name), as well as the Boolean logic equation that it
+implements. In this case, our ALM is determining what the `out` port of
+our `my_detector` module should be.
 
 ![](img/lab1-primer-planner-lut.png)
 
@@ -360,7 +366,14 @@ design's area by how many FPGA resources it uses.
 
 Navigate to _Processing -> Compilation Reports_. In the tab that opens up,
 under _Fitter -> Resource Section_, click on _Resource Usage Summary_.
-This will open up a report that 
+This will open up a report that shows you how many resources are being
+used on the FPGA. Here, we can see that 1 ALM is needed for our logic, and
+2 LABs are used for logic, matching what we saw in the Chip Planner. While
+we could tell our utilization from the Chip Planner in this case, this
+report will be much more useful later on when our designs become more
+complicated and use more resources.
+
+![](img/lab1-primer-area-report.png)
 
 
 ### 4.5. Timing Reports
