@@ -508,7 +508,8 @@ the FPGA:
    lot quicker than the compilation step. Quartus has already done the
    difficult part of figuring out _how_ the FPGA should represent our
    design, so all this step needs to do is communicate that information
-   to the FPGA
+   to the FPGA. You can check when it's done by looking at the "Progress"
+   bar in the top-right.
 
 Once that's done, your FPGA should now replicate your design! You should
 verify this; try all possible switch combinations, and create the truth
