@@ -216,7 +216,7 @@ module DE0_CV_golden_top (
   ...
 );
 
-  PairTripleDetectory my_detector (
+  PairTripleDetector my_detector (
     .in0 (SW[0]),
     .in1 (SW[1]),
     .in2 (SW[2]),
@@ -336,6 +336,8 @@ Planner window.
 This helps us visualize exactly which portions of the chip are being
 utilized - the highlighted portions are being used for our design.
 Our design isn't too large, so very few resources are being used.
+Quartus also has different granulatiry for utilization; each of the
+rectangles is a "LAB".
 
 We can also see what each of these blocks are doing. The upper block
 was a ground signal that Quartus created, but the other block was the
@@ -347,7 +349,19 @@ logic equation that it implements.
 
 ![](img/lab1-primer-planner-lut.png)
 
+When you're finished, you can close this pop-up window.
+
 ### 4.4. Area Reports
+
+Quartus also generates reports for us to gain numerical results for our
+design. The first one we'll look at is the _area report_ - we want to know
+how many resources our design needs. For this class, we'll approximate a
+design's area by how many FPGA resources it uses.
+
+Navigate to _Processing -> Compilation Reports_. In the tab that opens up,
+under _Fitter -> Resource Section_, click on _Resource Usage Summary_.
+This will open up a report that 
+
 
 ### 4.5. Timing Reports
 
