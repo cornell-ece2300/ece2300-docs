@@ -14,7 +14,7 @@ hardware, they can run much faster than simulations and without forcing
 a designer to fabricate their design. In this primer, we'll become
 familiar with using FPGAs by emulating a design from lecture.
 
-1. Getting Started with Quartus
+1. Setting up a Quartus Project
 --------------------------------------------------------------------------
 
 FPGAs often come with _development environments_. These environments are
@@ -34,22 +34,35 @@ For this class, we will be using Quartus as our development environment.
 Quartus is installed on all lab machines, and will be used during the
 FPGA portions of lab assignments to put your design on the FPGA.
 
-### 1.1. Creating a Quartus Project
+### 1.1. Creating a New Quartus Project
 
 First, let's use Quartus to create our project. To start Quartus, click
 the _Start_ menu, then search for _Quartus_.
+
+!!! info "Quartus Start-Up"
+
+    You may see the following prompt when starting Quartus:
+    ![](img/lab1-primer-quartus-start.png)
+    Select "Run the Quartus Prime software", then click _OK_. We've found
+    that Quartus often quits the first time after this, so you may need to
+    re-open the application.
 
 After starting Quartus, go to _File -> New Project Wizard_. This will
 start an interactive prompt menu to help create your project. In the
 menu:
 
  - __Directory, Name, Top-Level Entity__:
-    - Using the file searcher, create a new directory for your project.
-      Name it `lab1_primer`
-    - Name your project `lab1_primer`. The "top-level design entity"
-      should be automatically filled appropriately
+    - Using the file searcher, create a new directory for your project
+      in your Documents. Name it `lab1_primer`. Select this as the 
+      "working directory" for your project - the path should look like
+      `C:/Users/netid/Documents/lab1_primer`
+    - Name your project `lab1_primer` by typing in the appropriate field.
+      The "top-level design entity" should be automatically filled 
+      appropriately
+   ![](img/lab1-primer-quartus-directory.png)
  - __Project Type__:
     - Select "Empty Project
+   ![](img/lab1-primer-quartus-projecttype.png)
  - __Add Files__:
     - Skip this for now; we'll add our design files later
  - __Family, Device & Board Settings__:
@@ -59,6 +72,7 @@ menu:
        - Select _DE0-CV Development Board_ (this is the FPGA board for the
          class)
        - Make sure "Create top-level design file" is checked
+   ![](img/lab1-primer-quartus-board.png)
  - __EDA Tool Settings__:
     - Skip this section for now. These are extra tools that can be used
       to analyze your design, but we won't be using them
@@ -117,7 +131,7 @@ and(LEDR[0], SW[0], SW[1]);
 Let's make a module so that we can perform logic with our switch and
 LED signals!
 
-2. Adding Our Own Logic
+2. Integrating a Hardware Design into Quartus
 --------------------------------------------------------------------------
 
 In this section, we'll add logic corresponding to the following gate-level
@@ -138,7 +152,7 @@ our top-level module. It's good practice to have only one module in a file
 (with the filename being the same as the name of the module it contains),
 so let's first add a new file to our project
 
-### 2.1. Adding a New File
+### 2.1. Implementing Hardware Directly within Quartus
 
 To create a new file within your Quartus project:
 
@@ -153,10 +167,12 @@ from here, we can add or new logic inside of it
 
 !!! info "Existing Files"
 
-    Later on, you may wish to add files that already exist. This can be
-    done by going to _Project -> Add/Remove Files in Project_
-
-### 2.2. Adding New Logic
+    For this primer, we'll be creating and editing our design files
+    directly within Quartus. However, this won't be the case for the
+    labs, where you will be downloading and using the design you've
+    already simulated/tested on `ecelinux`. Later on, when you wish to add
+    files that already exist, you can do so by going to 
+    _Project -> Add/Remove Files in Project_
 
 When we add new blocks of logic, we want to add them as _modules_. This
 involves first creating the module, and then instantiating it wherever we
@@ -169,6 +185,8 @@ Make sure that it has three inputs (`in0`, `in1`, and `in2`), and one
 output (`out`). Make sure that it contains the logic to implement the
 gate-level network above. Lastly, make sure to save the file when
 you're done (_File -> Save_)
+
+### 2.2. Connecting to the Top-Level Module
 
 From here, we can _instantiate_ this module - create an instance of the
 hardware it represents. In your `DE0_CV_golden_top.v` (which contains
@@ -191,6 +209,23 @@ The module should have the following connections:
  - `in2` should be connected to the 2nd switch (`SW[2]`)
  - `out` should be connected to the 0th LED (`LEDR[0]`)
 
+Once you're done, your top-level module should look like the following:
+
+```verilog
+module DE0_CV_golden_top (
+  ...
+);
+
+  PairTripleDetectory my_detector (
+    .in0 (SW[0]),
+    .in1 (SW[1]),
+    .in2 (SW[2]),
+    .out (LEDR[0])
+  );
+
+endmodule
+```
+
 Make sure to save this file as well. From there, we should be all ready to
 put our design on the FPGA!
 
@@ -202,53 +237,58 @@ put our design on the FPGA!
     this modularity. This will be a theme in the course, and you'll get
     your first taste of it in Lab 1
 
-3. Putting our Design on the FPGA
+3. Synthesizing a Hardware Design using Quartus
 --------------------------------------------------------------------------
 
-The last step is to put our final design onto the FPGA. This involves
-programming the FPGA to tell it exactly how to emulate our hardware.
-Luckily, Quartus can help us out with this.
+From here, we can "synthesize" our design for the FPGA. The "synthesis"
+step includes:
 
-### 3.1. Compiling our Design
+ - __synthesis__ (determining what resources we need for our design)
+ - __placement__ (determining which FPGA resources will be used)
+ - __routing__ (connecting the FPGA resources as appropriate)
 
-The first thing we need to do is _compile_ our design. This step involves
-synthesizing our design, and placing/routing it for the FPGA. At the end,
-we'll be left with a compiled version that can be immediately put on the
-FPGA - this is known as a _bitstream_.
+At the end, we'll be left with a compiled version that can be immediately
+put on the FPGA - this is known as a _bitstream_.
 
-To compile our design, click on _Processing -> Start Compilation_, or
-click the blue "play" button in the top toolbar. This will start
-compilation - here, the FPGA is using many complicated tools, so the
-entire process may take a few minutes. You can keep track of the progress
-in the _Tasks_ bar on the left-hand side, as well as with the verbose
-output log in the bottom. If you made any design errors (such as
-incorrect syntax, or mixing up inputs and outputs), this is where Quartus
-will let you know with an errors. However, it can't check for logical
-errors (errors in the logic of your design), as it doesn't know the
-correct logic - that's up to you as a designer.
+In Quartus, you can perform the synthesis step by going to
+_Processing -> Start Compilation_, or clicking the blue "play" button in
+the top toolbar. This will start the synthesis step - here, the FPGA is 
+using many complicated tools, so the entire process may take a few
+minutes. You can keep track of the progress in the _Tasks_ bar on the 
+left-hand side, as well as with the verbose output log in the bottom. If 
+you made any static errors (such as incorrect syntax, or mixing up inputs
+and outputs), this is where Quartus will let you know with an errors. 
+However, it can't check for dynamic behavior (errors in the logic of your
+design), as it doesn't know the correct logic - that's up to you as a
+designer.
 
 If you get no errors, after a few minutes, you should see the following
 output in the log produced at the bottom of Quartus:
 
 ```text
-Quartus Prime full compilation was successful
+Quartus Prime Full Compilation was successful
 ```
 
-### 3.2. Viewing Reports
+4. Analyzing a Hardware Design using Quartus
+--------------------------------------------------------------------------
 
 <insert report-viewing stuff here>
 
-### 3.3. Programming the FPGA
+5. Configuring a Hardware Design onto the FPGA
+--------------------------------------------------------------------------
 
-With our design compiled, all that's left is to program our FPGA with our
-design. First, make sure your FPGA is turned on and plugged into the
+With our design synthesized, all that's left is to configure our FPGA for
+our design. First, make sure your FPGA is turned on and plugged into the
 workstation via the USB Blaster.
 
-Go to _Tools -> Programmer_. This should open a new window for programming
+![](img/lab1-primer-fpga-setup.png)
+
+Go to _Tools -> Programmer_. This should open a new window for configuring
 the FPGA:
 
  - Click on _Hardware Setup_. Under "Currently selected hardware", you
-   should see your FPGA as an option. Select your FPGA, then click "OK"
+   should see your FPGA as an option (appearing as _USB Blaster [USB-0]_). 
+   Select your FPGA, then click _Close_
  - Click on _Start_. This should program the FPGA - notice how this is a
    lot quicker than the compilation step. Quartus has already done the
    difficult part of figuring out _how_ the FPGA should represent our
