@@ -34,12 +34,12 @@ actually be forking repos for the lab assignments, but it is an easy way
 for you to grab some example code for this discussion section and also to
 see how GitHub actions work. Go to the example repo here:
 
- - <https://github.com/cornell-ece2300/ece2300-sec02>
+ - <https://github.com/cornell-ece2300/ece2300-sec02-verilog-gl>
 
 Click on the "Fork" button. Wait a few seconds and then visit the new
 copy of this repo in your own person GitHub workspace:
 
- - <https://github.com/githubid/ece2300-sec02>
+ - <https://github.com/githubid/ece2300-sec02-verilog-gl>
 
 where `githubid` is your username on the public version of GitHub. Enable
 GitHub Actions on this repo. Click on the _Actions_ tab in your
@@ -50,7 +50,7 @@ enable them_. Now let's clone your new repo to the `ecelinux` machine.
 % source setup-ece2300.sh
 % mkdir -p ${HOME}/ece2300
 % cd ${HOME}/ece2300
-% git clone git@github.com:githubid/ece2300-sec02 sec02
+% git clone git@github.com:githubid/ece2300-sec02-verilog-gl sec02
 % cd sec02
 % tree
 ```
@@ -59,15 +59,15 @@ Where `githubid` is your username on the public version of GitHub. The
 repo includes the following files:
 
  - `ece2300-stdlib.v` : ECE 2300 standard library
- - `PairTripleDetector.v` : Verilog for simple hardware module
- - `PairTripleDetector_adhoc.v` : adhoc test for hardware module
- - `PairTripleDetector_test.v` : test cases for hardware module
+ - `PairTripleDetectorGL.v` : Verilog for simple hardware module
+ - `PairTripleDetectorGL-adhoc.v` : adhoc test for hardware module
+ - `PairTripleDetectorGL-test.v` : test cases for hardware module
 
 2. Background on a Pair/Triple Detector
 --------------------------------------------------------------------------
 
-We will be using a Pair/Triple detector as the target hardware in this
-discussion section. A Pair/Triple detector has some number of input ports
+We will be using a pair/triple detector as the target hardware in this
+discussion section. A pair/triple detector has some number of input ports
 and one output port. The output is one if either two or three of the
 inputs are one, and is the output should be zero otherwise. Here is a
 truth table for a three-bit pair/triple detector.
@@ -108,7 +108,6 @@ above simulation table.
     Complete the above simulation table and waveform. Assume a zero delay
     model.
 
-
 3. Implementing and Linting a Pair/Triple Detector in Verilog
 --------------------------------------------------------------------------
 
@@ -123,11 +122,15 @@ how to instantiate our primitive logic gates in Verilog.
 ![](img/sec02-verilog-gates.png)
 
 We have provided you with the interface for the pair/triple detector in
-`PairTripleDetector.v`. Open this file using VS Code.
+`PairTripleDetectorGL.v`. Notice that this file has a `GL` suffix which
+standes for "gate-level". We will use various suffixes to clearly
+indicate what level of modeling is being used within the implementation
+of the corresponding Verilog hardware design. Open this file using VS
+Code.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% code PairTripleDetector.v
+% code PairTripleDetectorGL.v
 ```
 
 !!! question "Activity 2: Implement a Pair/Triple Detector"
@@ -154,7 +157,7 @@ Here is how to use `verilator` to lint our design.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% verilator -Wall --lint-only PairTripleDetector.v
+% verilator -Wall --lint-only PairTripleDetectorGL.v
 ```
 
 If `verilator` does not report any warnings or errors then you are ready
@@ -163,34 +166,40 @@ Verilog hardware design. For example, modify your hardware design to
 purposefully omit the semicolon at the end of the module interface.
 
 ```verilog
-module PairTripleDetector
+`ifndef PAIR_TRIPLE_DETECTOR_V1_GL_V
+`define PAIR_TRIPLE_DETECTOR_V1_GL_V
+
+module PairTripleDetectorV1GL
 (
   input  wire in0,
   input  wire in1,
   input  wire in2,
   output wire out
-)
+);
+
+  //''' ACTIVITY '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+  // Implement pair/triple detector using explicit gate-level modeling
+  //>'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+endmodule
+
+`endif /* PAIR_TRIPLE_DETECTOR_V1_GL_V */
 ```
 
-Notice there is no semicolon after the closed parenthesis which is a bug.
-Rerun `verilator` to lint your design. You should see an error like this:
+The `ifdef`, `define`, and `endif` statements are for the Verilog
+_preprocessor_ and act as _include guards_; then ensure if we include a
+Verilog module multiple times it is only inserted into the final Verilog
+hardware design once.
 
-```bash
-% cd ${HOME}/ece2300/sec02
-% verilator -Wall --lint-only PairTripleDetector.v
-%Error: PairTripleDetector.v:13:3: syntax error, unexpected wire, expecting ';'
-   13 |   wire w;
-      |   ^~~~
-%Error: PairTripleDetector.v:17:3: syntax error, unexpected or
-   17 |   or ( w,   in0, in1 );
-      |   ^~
-%Error: Exiting due to 2 error(s)
-```
+!!! question "Activity 3: Injecting a Static Bug"
 
-`verilator` is much, much better at catching syntax bugs and providing
-useful error messages. **So we will always lint our designs first with
-`verilator`, and then (only once we are sure there are no static errors!)
-we will move on to testing our hardware design's functionality.**
+  Try removing the semicolon after the closed parenthesis to create a
+  bug. Rerun `verilator` to lint your design. You should see an error.
+  `verilator` is much, much better at catching syntax bugs and providing
+  useful error messages. **So we will always lint our designs first with
+  `verilator`, and then (only once we are sure there are no static
+  errors!) we will move on to testing our hardware design's
+  functionality.**
 
 4. Ad-Hoc Testing a Pair/Triple Detector in Verilog
 --------------------------------------------------------------------------
@@ -214,14 +223,16 @@ When using Verilog for test benches, we can use any part of the Verilog
 language we want; our goal is not to model hardware but to test hardware.
 
 We have provided you a simple ad-hoc test bench in
-`PairTripleDetector_adhoc.v`. Take a look at this file in VS Code.
+`PairTripleDetectorGL-adhoc.v`. Take a look at this file in VS Code.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% code PairTripleDetector_adhoc.v
+% code PairTripleDetectorGL-adhoc.v
 ```
 
 ```verilog
+`include "PairTripleDetectorV1GL.v"
+
 module Top();
 
   logic dut_in0;
@@ -229,7 +240,7 @@ module Top();
   logic dut_in2;
   logic dut_out;
 
-  PairTripleDetector dut
+  PairTripleDetectorGL dut
   (
     .in0 (dut_in0),
     .in1 (dut_in1),
@@ -238,43 +249,45 @@ module Top();
   );
 
   initial begin
-    $dumpfile("PairTripleDetector_test.vcd");
+    $dumpfile("PairTripleDetectorGL-test.vcd");
     $dumpvars;
 
     dut_in0 = 0;
     dut_in1 = 0;
     dut_in2 = 0;
     #10;
-    $display( "%x %x %x > %x", dut_in0, dut_in1, dut_in2, dut_out );
+    $display( "%b %b %b > %b", dut_in0, dut_in1, dut_in2, dut_out );
 
     dut_in0 = 0;
     dut_in1 = 1;
     dut_in2 = 1;
     #10;
-    $display( "%x %x %x > %x", dut_in0, dut_in1, dut_in2, dut_out );
+    $display( "%b %b %b > %b", dut_in0, dut_in1, dut_in2, dut_out );
 
     dut_in0 = 0;
     dut_in1 = 1;
     dut_in2 = 0;
     #10;
-    $display( "%x %x %x > %x", dut_in0, dut_in1, dut_in2, dut_out );
+    $display( "%b %b %b > %b", dut_in0, dut_in1, dut_in2, dut_out );
 
     dut_in0 = 1;
     dut_in1 = 1;
     dut_in2 = 1;
     #10;
-    $display( "%x %x %x > %x", dut_in0, dut_in1, dut_in2, dut_out );
+    $display( "%b %b %b > %b", dut_in0, dut_in1, dut_in2, dut_out );
 
   end
 
 endmodule
 ```
 
-We start by declaring four wires that will be connected to the
-design-under-test. Note that we use `logic` not `wire` in test benches. A
-`logic` is a more abstract kind of signal than a `wire` in Verilog. We
-then instantiates the design-under-test (DUT) and hooks up the ports to
-the `logic` signals we just declared.
+The `include` statement is used by the Verilog preprocessor and indicates
+that the adhoc test depends on the Verilog hardware design. We start by
+declaring four wires that will be connected to the design-under-test.
+Note that we use `logic` not `wire` in test benches. A `logic` is a more
+abstract kind of signal than a `wire` in Verilog. We then instantiates
+the design-under-test (DUT) and hooks up the ports to the `logic` signals
+we just declared.
 
 An initial block is a special piece of code which starts running at the
 beginning of a simulation. **You should NEVER use an initial block when
@@ -305,16 +318,15 @@ based on our pair/triple hardware design and test bench.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% iverilog -Wall -g2012 -o PairTripleDetector_adhoc \
-    PairTripleDetector_adhoc.v PairTripleDetector.v
+% iverilog -Wall -g2012 -o PairTripleDetectorGL-adhoc PairTripleDetectorGL-adhoc.v
 ```
 
 If there are no errors you should now have a simulator named
-`PairTripleDetector_adhoc`. Go ahead and execute the simulator.
+`PairTripleDetectorGL-adhoc`. Go ahead and execute the simulator.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% ./PairTripleDetector_adhoc
+% ./PairTripleDetectorGL-adhoc
 ```
 
 The ad-hoc test will print out a simulation table. Compare it to the
@@ -323,7 +335,7 @@ You can also view the corresponding waveforms using the Surfer extension.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% code PairTripleDetector_adhoc.vcd
+% code PairTripleDetectorGL-adhoc.vcd
 ```
 
 Find the _Scopes_ panel and click on the arrow next to _Top_. Click on
@@ -350,11 +362,11 @@ complicated implementations we will tackle in this course.
 We will be using a more _systematic_ way to do automated unit testing
 including standardized naming conventions, test benches, and test output.
 We have provided you an example of such systematic testing in
-`PairTripleDetector_test.v`. Take a look at this file in VS Code.
+`PairTripleDetectorGL-test.v`. Take a look at this file in VS Code.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% code PairTripleDetector_test.v
+% code PairTripleDetectorGL-test.v
 ```
 
 The systematic test bench still declares four wires that will be
@@ -373,21 +385,23 @@ creating clean test benches.
     input logic in2,
     input logic out
   );
+    if ( !t.failed ) begin
 
-    dut_in0 = in0;
-    dut_in1 = in1;
-    dut_in2 = in2;
+      dut_in0 = in0;
+      dut_in1 = in1;
+      dut_in2 = in2;
 
-    #8;
+      #8;
 
-    if ( t.n != 0 )
-      $display( "%3d: %x %x %x > %x", t.cycles,
-                dut_in0, dut_in1, dut_in2, dut_out );
+      if ( t.n != 0 )
+        $display( "%3d: %b %b %b > %b", t.cycles,
+                  dut_in0, dut_in1, dut_in2, dut_out );
 
-    `ECE2300_CHECK_EQ( dut_out, out );
+      `ECE2300_CHECK_EQ( dut_out, out );
 
-    #2;
+      #2;
 
+    end
   endtask
 ```
 
@@ -400,8 +414,7 @@ of checks. Here is the basic test case.
 
 ```verilog
   task test_case_1_basic();
-    $display( "\ntest_case_1_basic" );
-    t.reset_sequence();
+    t.test_case_begin( "test_case_1_basic" );
 
     check( 0, 0, 0, 0 );
     check( 0, 1, 1, 1 );
@@ -416,13 +429,12 @@ to run.
 
 ```verilog
   initial begin
-    #1;
+    t.test_bench_begin( `__FILE__ );
 
     if ((t.n <= 0) || (t.n == 1)) test_case_1_basic();
     if ((t.n <= 0) || (t.n == 2)) test_case_2_exhaustive();
 
-    $display(t.pass_fail);
-    $finish;
+    t.test_bench_end();
   end
 ```
 
@@ -431,37 +443,37 @@ testing.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% iverilog -Wall -g2012 -o PairTripleDetector_test \
-    PairTripleDetector_test.v PairTripleDetector.v
-% ./PairTripleDetector_test
+% iverilog -Wall -g2012 -o PairTripleDetectorGL-test PairTripleDetectorGL-test.v
+% ./PairTripleDetectorGL-test
 ```
 
 Remember, you can always use the up arrow key to retrieve a previously
 entered command. You can then quickly edit it as opposed to having to
 type a complete command from scratch.
 
-The simple unit testing framework we provide you enables you to display
-trace output (with `+test-case=-1`), specify a single test case to run (with
-`+test-case=1` or `+test-case=2`), and generate a VCD file for viewing
-waveforms (with `+dump-vcd=waveform.vcd`).
+The simple unit testing framework we provide you enables to specify a
+single test case to run (with `+test-case=1` or `+test-case=2`), and
+generate a VCD file for viewing waveforms (with
+`+dump-vcd=waveform.vcd`).
 
 ```bash
 % cd ${HOME}/ece2300/sec02
-% ./PairTripleDetector_test +test-case=-1
-% ./PairTripleDetector_test +test-case=1
-% ./PairTripleDetector_test +test-case=1 +dump-vcd=PairTripleDetector_test.vcd
+% ./PairTripleDetectorGL-test +test-case=1
+% ./PairTripleDetectorGL-test +test-case=1 +dump-vcd=PairTripleDetectorGL-test.vcd
 ```
 
 Open up the waveforms in surfer.
 
-!!! question "Activity 3: Exhaustive Testing"
+!!! question "Activity 4: Exhaustive Testing"
 
     Finish the second test case which should use exhaustive testing.
     Exhaustive testing simply means we test all possible input values.
     You can refer to the truth table from earlier in the discussion
     section and simply have one check for every row in the truth table.
     When you have finished rerun the the test using `+test-case=2` to
-    make sure your test bench is testing what you think it is.
+    make sure your test bench is testing what you think it is. Then
+    inject a bug (e.g., change an OR gate to a NOR gate) to see if the
+    test bench fails.
 
 6. Using GitHub Actions for Continuous Integration
 --------------------------------------------------------------------------
@@ -478,7 +490,7 @@ you push to GitHub. Go ahead and commit your work and push to GitHub.
 
 Then go to the _Actions_ tab of your repo.
 
- - <https://github.com/githubid/ece2300-sec02/actions>
+ - <https://github.com/githubid/ece2300-sec02-verilog-gl/actions>
 
 You should be able to see a workflow run. Click on the name of the
 workflow run, then click on _sim_, then if you click on _Run sim_tests_
@@ -488,10 +500,62 @@ through GitHub Actions.
 7. To-Do On Your Own
 --------------------------------------------------------------------------
 
-So far we have been using  explicit gate-level modeling which can be
-quite tedious. We can also directly implement Boolean equations in
-Verilog. Here is how our primitive gates can be implemented using Boolean
-equations.
+Let's say we started from just the original truth table for a pair/triple
+detector without the gate-level network. We can also directly transform
+this truth table into a (unoptimized) Verilog hardware design. We first
+use four NOT gates to create the complement of each input. We then
+declare eight wires, one for each row in the truth table. We use eight
+AND gates so each to ensure each of the eight wires will be true for a
+different row in the truth table. Then we OR together all of the wires
+where the output in the truth table is one to derive the final output.
+
+```verilog
+module PairTripleDetectorGL
+(
+  input  wire in0,
+  input  wire in1,
+  input  wire in2,
+  output wire out
+);
+
+  // NOT gates to create complement of each input
+
+  wire in0_b, in1_b, in2_b;
+
+  not( in0_b, in0 );
+  not( in1_b, in1 );
+  not( in2_b, in2 );
+
+  // AND gates for each row in the truth table
+
+  // verilator lint_off UNUSEDSIGNAL
+  wire min0, min1, min2, min3, min4, min5, min6, min7;
+  // verilator lint_on UNUSEDSIGNAL
+
+  and( min0, in0_b, in1_b, in2_b );
+  and( min1, in0_b, in1_b, in2   );
+  and( min2, in0_b, in1,   in2_b );
+  and( min3, in0_b, in1,   in2   );
+
+  and( min4, in0,   in1_b, in2_b );
+  and( min5, in0,   in1_b, in2   );
+  and( min6, in0,   in1,   in2_b );
+  and( min7, in0,   in1,   in2   );
+
+  // OR together all wires where output in truth table is one
+
+  or( out, min3, min5, min6, min7 );
+
+endmodule
+```
+
+We have to use the special `verilator lint_off` and `verilator lint_on`
+comments to tell `verilator` to ignore the fact that some of these wires
+are not used.
+
+Using explicit gate-level modeling can be tedious. We can also directly
+implement Boolean equations in Verilog. Here is how our primitive gates
+can be implemented using Boolean equations.
 
 | Explicit Gate-Level Modeling  | Boolean Equations      |
 |-------------------------------|------------------------|
@@ -507,7 +571,7 @@ Here is the exact same gate-level network implementing the pair/triple
 detector except now implemented using Boolean equations.
 
 ```verilog
-module PairTripleDetector
+module PairTripleDetectorGL
 (
   input  wire in0,
   input  wire in1,
@@ -531,7 +595,7 @@ You can also of course use substitution to easily express the output in a
 single Boolean equation.
 
 ```verilog
-module PairTripleDetector
+module PairTripleDetectorGL
 (
   input  wire in0,
   input  wire in1,
@@ -544,14 +608,12 @@ module PairTripleDetector
 endmodule
 ```
 
-We can also directly transform the original truth table for a pair/triple
-detector into a Verilog hardware design using Boolean equations. We
-simply create eight wires, each of which will be true for a different
-row in the truth table. Then we OR together all of the wires where the
-output in the truth table is one to derive the final output.
+Just as with explicit gate-level modeling, we can also directly transform
+the original truth table for a pair/triple detector into a Verilog
+hardware design using Boolean equations.
 
 ```verilog
-module PairTripleDetector
+module PairTripleDetectorV5GL
 (
   input  wire in0,
   input  wire in1,
@@ -559,27 +621,32 @@ module PairTripleDetector
   output wire out
 );
 
-  wire min0, min1, min2, min3;
+  // AND gates for each row in the truth table
+
+  // verilator lint_off UNUSEDSIGNAL
+  wire min0, min1, min2, min3, min4, min5, min6, min7;
+  // verilator lint_on UNUSEDSIGNAL
 
   assign min0 = ~in0 & ~in1 & ~in2;
   assign min1 = ~in0 & ~in1 &  in2;
   assign min2 = ~in0 &  in1 & ~in2;
   assign min3 = ~in0 &  in1 &  in2;
 
-  wire min4, min5, min6, min7;
-
   assign min4 =  in0 & ~in1 & ~in2;
   assign min5 =  in0 & ~in1 &  in2;
   assign min6 =  in0 &  in1 & ~in2;
   assign min7 =  in0 &  in1 &  in2;
+
+  // OR together all wires where output in truth table is one
 
   assign out = min3 | min5 | min6 | min7;
 
 endmodule
 ```
 
-We now have explored three new approaches to implementing a pair/triple
-detector. All three are equivalent with our original implementation.
-Modify your implementation in `PairTripleDetector.v` based on one of
-these new approach and then rerun the ad-hoc and system tests to verify
-your new implementation is correct.
+We now have explored four new approaches to implementing a pair/triple
+detector. All four are equivalent with our original implementation.
+Modify your implementation in `PairTripleDetectorGL.v` based on one of
+these new approach and then rerun the ad-hoc and systematic tests to
+verify your new implementation is correct.
+
