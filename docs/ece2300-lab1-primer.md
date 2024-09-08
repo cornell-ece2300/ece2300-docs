@@ -389,12 +389,12 @@ is an _"ALM"_ (Adaptive Logic Module) - each LAB contains multiple ALMs.
 Each ALM contains multiple reconfigurable truth tables - you can start
 to get a sense of how much logic our FPGA can represent!
 
+![](img/lab1-primer-planner-lut.png)
+
 On the side, you should be able to see what the ALM is used for
 (indicated in the name), as well as the Boolean logic equation that it
 implements. In this case, our ALM is determining what the `out` port of
 our `my_detector` module should be.
-
-![](img/lab1-primer-planner-lut.png)
 
 When you're finished, you can close this pop-up window.
 
