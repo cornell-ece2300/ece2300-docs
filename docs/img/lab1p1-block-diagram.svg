@@ -32,8 +32,8 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="2.5327279"
-     inkscape:cx="270.8542"
-     inkscape:cy="120.62093"
+     inkscape:cx="267.10331"
+     inkscape:cy="128.12272"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -44,10 +44,10 @@
      width="900px"
      height="700px"
      inkscape:showpageshadow="false"
-     inkscape:window-width="886"
-     inkscape:window-height="1375"
+     inkscape:window-width="1553"
+     inkscape:window-height="1009"
      inkscape:window-x="6"
-     inkscape:window-y="31"
+     inkscape:window-y="38"
      showguides="true"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
@@ -341,7 +341,7 @@
          x="469.15646"
          y="699.46112"
          style="fill:#000000;stroke:none"
-         id="tspan2575">4b</tspan></text>
+         id="tspan2575">7b</tspan></text>
     <rect
        style="fill:#ffffff;stroke:#000000;stroke-width:0.999999;stroke-linecap:round"
        id="rect2587"
@@ -369,7 +369,7 @@
          x="469.15646"
          y="740.46112"
          style="fill:#000000;stroke:none"
-         id="tspan2597">tens</tspan></text>
+         id="tspan2597">ones</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-linecap:round"
        d="m 464,754 10,-10 v 0"
@@ -384,7 +384,7 @@
          x="469.15646"
          y="769.46112"
          style="fill:#000000;stroke:none"
-         id="tspan2603">4b</tspan></text>
+         id="tspan2603">7b</tspan></text>
     <rect
        style="fill:#ffffff;stroke:#000000;stroke-width:0.999999;stroke-linecap:round"
        id="rect2607"
@@ -471,7 +471,7 @@
          x="159.15646"
          y="729.46112"
          style="fill:#000000;stroke:none"
-         id="tspan2697">4b</tspan></text>
+         id="tspan2697">5b</tspan></text>
     <rect
        style="fill:#ffffff;stroke:#000000;stroke-width:0.999999;stroke-linecap:round"
        id="rect2803"
