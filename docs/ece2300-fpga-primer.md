@@ -193,7 +193,7 @@ want that logic.
 
 First, let's define our module. In `PairTripleDetector_GL.v`, define a module
 named `PairTripleDetector_GL` that represents the gate-level network above, 
-exactly as done in [section](https://github.com/cornell-ece2300/ece2300-sec02).
+exactly as done in [section](https://github.com/cornell-ece2300/ece2300-sec02-verilog-gl).
 
 ```verilog
 module PairTripleDetector_GL
