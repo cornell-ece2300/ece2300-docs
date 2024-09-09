@@ -92,7 +92,7 @@ in the week can use their lab session to get started with the help of the
 course staff and then finish on their own before the deadline. Students
 with a lab session late in the week can get started on their own and use
 their lab session to finish their lab with the help of the course staff.
-**Steps 1-5 are due on Thursday at 11:59pm. Steps 4 and 5 are not
+**Steps 1-5 are due on Thursday at 11:59pm. Steps 6 and 7 are not
 due until your lab session during the Lab 1.2 week.**
 
 1. Interface and Implementation Specification
