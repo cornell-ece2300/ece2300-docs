@@ -219,7 +219,7 @@ you're done (_File -> Save_)
 From here, we can _instantiate_ this module - create an instance of the
 hardware it represents. In your `DE0_CV_golden_top.v` (which contains
 the top-level `DE0_CV_golden_top` module), if you scroll to the bottom,
-you'll notice the module is currently empty - it doesn't contain any
+you'll notice the module doesn't contain any
 logic yet. Let's add some functionality by _instantiating_ our
 `PairTripleDetector_GL` module within the `DE0_CV_golden_top` module - let's
 give it the name `detector`.
