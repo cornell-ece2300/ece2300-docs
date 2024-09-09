@@ -92,7 +92,7 @@ in the week can use their lab session to get started with the help of the
 course staff and then finish on their own before the deadline. Students
 with a lab session late in the week can get started on their own and use
 their lab session to finish their lab with the help of the course staff.
-**Steps 1, 2, and 3 are due on Thursday at 11:59pm. Steps 4 and 5 are not
+**Steps 1-5 are due on Thursday at 11:59pm. Steps 4 and 5 are not
 due until your lab session during the Lab 1.2 week.**
 
 1. Interface and Implementation Specification
@@ -228,7 +228,7 @@ display, you can then experiment with optimizing the
 binary-to-seven-segment converter. Use what you have learned in lecture
 on Boolean algebra (especially Karnaugh maps) to see if you can reduce
 the amount of logic required to implement the binary-to-seven-segment
-converter. You should place use `BinaryToSevenSegOpt_GL` for your
+converter. You should use `BinaryToSevenSegOpt_GL` for your
 optimized implementation.
 
 **We strongly recommend taking a incremental design approach!** Start by
@@ -253,7 +253,7 @@ engineers often spend far more time implementing tests than they do
 implementing the actual hardware design.
 
 Continually having to use the same complex commands over and over can be
-tedious. We strong recommend creating a few Bash shell scripts to enable
+tedious. We strongly recommend creating a few Bash shell scripts to enable
 you to automatically execute the commands to lint, compile, and run
 systematic test benches. See the discussion section for an example.
 
