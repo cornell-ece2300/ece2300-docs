@@ -76,4 +76,5 @@ nav:
 
   - 'Lab Assignments':
     - 'FPGA Development Primer': ece2300-fpga-primer.md
-
+    - 'Lab 1.1: Five-Bit Numeric Display Simulation' : ece2300-lab1p1-display.md
+#    - 'Lab 1.2: Five-Bit Numeric Display Prototype' : ece2300-lab1p2-display.md

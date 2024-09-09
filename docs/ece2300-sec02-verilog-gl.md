@@ -58,9 +58,9 @@ enable them_. Now let's clone your new repo to the `ecelinux` machine.
 Where `githubid` is your username on the public version of GitHub. The
 repo includes the following files:
 
- - `ece2300-stdlib.v` : ECE 2300 standard library
  - `PairTripleDetector_GL.v` : Verilog for simple hardware module
  - `PairTripleDetector_GL-adhoc.v` : adhoc test for hardware module
+ - `ece2300-test.v` : ECE 2300 unit testing library
  - `PairTripleDetector_GL-test.v` : test cases for hardware module
 
 2. Background on a Pair/Triple Detector
@@ -493,7 +493,7 @@ list of commands that you can run using the `source` command.
 
 For example, let's create a Bash shell script to automatically lint,
 compile, and run the systematic test bench developed earlier in the
-discussion section. VS Code to open a new file called
+discussion section. Use VS Code to open a new file called
 `PairTripleDetector_GL-test.sh` (note that by convention we usually use
 the `.sh` extension for Bash shell scripts).
 
