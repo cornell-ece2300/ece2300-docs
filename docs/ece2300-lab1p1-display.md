@@ -183,14 +183,13 @@ below. Once you have the truth table then you can systematically
 implement this truth table using what you learned in the discussion
 section.
 
-| Input as      | Input as     | Output   |
-| Decimal Value | Binary Value | 654 3210 |
-|---------------|--------------|----------|
-| 0             | 0000         | 100 0000 |
-| 1             | 0001         | 111 1001 |
-| 2             | 0010         | 010 0000 |
-| ...           | ...          | ...      |
-| 15            | 1111         | 000 0000 |
+| Input as<br>Decimal Value | Input as<br>Binary Value| Output<br>654 3210|
+|---------------------------|-------------------------|-------------------|
+| 0                         | 0000                    | 100 0000          |
+| 1                         | 0001                    | 111 1001          |
+| 2                         | 0010                    | 010 0000          |
+| ...                       | ...                     | ...               |
+| 15                        | 1111                    | 000 0000          |
 
 The binary-to-BCD converter has a five-bit input port and two four-bit
 output ports: a tens output port and a ones output port. The converter
@@ -205,16 +204,16 @@ below. Once you have the truth table then you can systematically
 implement this truth table using what you learned in the discussion
 section.
 
-| Input as      | Input as     |      |      |
-| Decimal Value | Binary Value | Tens | Ones |
-|---------------|--------------|------|------|
-| 0             | 00000        | 0000 | 0000 |
-| 1             | 00001        | 0000 | 0001 |
-| 2             | 00010        | 0000 | 0010 |
-| ...           | ...          | ...  | ...  |
-| 10            | 01010        | 0001 | 0000 |
-| ...           | ...          | ...  | ...  |
-| 31            | 11111        | 0011 | 0001 |
+
+| Input as<br>Decimal Value | Input as<br>Binary Value| Tens | Ones |
+|---------------------------|-------------------------|------|------|
+| 0                         | 00000                   | 0000 | 0000 |
+| 1                         | 00001                   | 0000 | 0001 |
+| 2                         | 00010                   | 0000 | 0010 |
+| ...                       | ...                     | ...  | ...  |
+| 10                        | 01010                   | 0001 | 0000 |
+| ...                       | ...                     | ...  | ...  |
+| 31                        | 11111                   | 0011 | 0001 |
 
 Once you have implemented (and thoroughly tested!) your
 binary-to-seven-segment converter and binary-to-BCD converter, you can
