@@ -301,10 +301,10 @@ And you can then run your test bench like this:
 
 ```bash
 % cd ${HOME}/ece2300/netid
-% BinaryToSevenSegUnopt_GL-test
-% BinaryToSevenSegUnopt_GL-test +test-case=1
-% BinaryToSevenSegUnopt_GL-test +test-case=2
-% BinaryToSevenSegUnopt_GL-test +test-case=2 +dump-vcd=BinaryToSevenSegUnopt_GL-test.vcd
+% ./BinaryToSevenSegUnopt_GL-test
+% ./BinaryToSevenSegUnopt_GL-test +test-case=1
+% ./BinaryToSevenSegUnopt_GL-test +test-case=2
+% ./BinaryToSevenSegUnopt_GL-test +test-case=2 +dump-vcd=BinaryToSevenSegUnopt_GL-test.vcd
 ```
 
 ### 2.3. Simulator
