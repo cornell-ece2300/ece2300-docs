@@ -250,7 +250,7 @@ endmodule
 
 Make sure to save this file as well.
 
-### 2.2. Adding Timing Information
+### 2.3. Adding Timing Information
 
 In addition to the above, we need to give Quartus information about our
 timing constraints, so that it can properly analyze the timing of our
