@@ -24,11 +24,11 @@ started, log into an `ecelinux` server, source the setup script, and
 clone your individual remote repository from GitHub:
 
 ```bash
- % source setup-ece2400.sh
- % mkdir -p ${HOME}/ece2400
- % cd ${HOME}/ece2400
- % git clone git@github.com:cornell-ece2400/netid
- % cd ${HOME}/ece2400/netid
+ % source setup-ece2300.sh
+ % mkdir -p ${HOME}/ece2300
+ % cd ${HOME}/ece2300
+ % git clone git@github.com:cornell-ece2300/netid
+ % cd ${HOME}/ece2300/netid
  % tree
 ```
 
@@ -38,7 +38,7 @@ your individual remote repository, then use git pull to ensure you have
 any recent updates before working on your lab assignment.
 
 ```bash
- % cd ${HOME}/ece2400/netid
+ % cd ${HOME}/ece2300/netid
  % git pull
  % tree
 ```
