@@ -126,8 +126,8 @@ of these right now, but will instead focus on two signals in particular:
          `0` depending on whether the switch is up or down, respectively.
          These are coming into our FPGA hardware, and are therefore 
          _inputs_ to the top-level module.
- - `LEDR`: The LEDs on the board. These are "on" or "off" depending on
-           whether our logic sets them to a `1` or `0`, respectively.
+ - `LEDR`: The (red) LEDs on the board. These are "on" or "off" depending
+           on whether our logic sets them to a `1` or `0`, respectively.
            These are going out of our FPGA hardware, and are therefore
            _outputs_ of the top-level module.
 
