@@ -23,7 +23,7 @@ description language to something that can be configured on the FPGA. This
 includes:
 
  - Determining what resources are needed to represent your design (known
-   as __synthesis__). An example of this would be determining what your
+   as __synthesis__). An example of this would be determining that your
    design needs 3 AND gates and 2 OR gates.
  - __Placing__ your design - determining which FPGA resources will be
    used to represent your design
