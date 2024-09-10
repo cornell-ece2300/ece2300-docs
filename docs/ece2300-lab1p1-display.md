@@ -6,7 +6,7 @@ Lab 1.1 is a warmup designed to give you experience designing,
 implementing, and testing a simple Verilog hardware design using
 open-source tools. In this assignment, you will leverage the concepts
 from lecture across two key abstraction layers: logic gates and boolean
-equations.
+equations. **Lab 1.1 must be done individually without a partner.**
 
 You will be implementing a five-bit numeric display that takes as input a
 five-bit binary value and displays this value as a decimal number using
@@ -92,8 +92,8 @@ in the week can use their lab session to get started with the help of the
 course staff and then finish on their own before the deadline. Students
 with a lab session late in the week can get started on their own and use
 their lab session to finish their lab with the help of the course staff.
-**Steps 1-5 are due on Thursday at 11:59pm. Steps 6 and 7 are not
-due until your lab session during the Lab 1.2 week.**
+**Steps 1-5 are due on Thursday at 11:59pm. Steps 6 and 7 are not due
+until your lab session during the Lab 1.2 week.**
 
 1. Interface and Implementation Specification
 --------------------------------------------------------------------------
