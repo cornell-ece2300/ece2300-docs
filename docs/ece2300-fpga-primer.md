@@ -30,14 +30,17 @@ includes:
  - __Routing__ the different logic components together to represent your
    design
 
-For this class, we will be using Quartus as our development environment.
-Quartus is installed on all lab machines, and will be used during the
-FPGA portions of lab assignments to put your design on the FPGA.
+For this class, we will be using Quartus Prime ("Quartus")
+development environment. Quartus is installed on all lab machines, and
+will be used during the FPGA portions of lab assignments to put your 
+design on the FPGA.
 
 ### 1.1. Creating a New Quartus Project
 
-First, let's use Quartus to create our project. To start Quartus, click
-the _Start_ menu, then search for _Quartus_.
+First, let's use Quartus to create our project. To start Quartus, 
+double-click on the Quartus Prime icon on the Desktop of a lab machine:
+
+![](img/lab1-primer-quartus-prime.png)
 
 !!! info "Quartus Start-Up"
 
