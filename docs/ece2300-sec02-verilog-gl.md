@@ -574,16 +574,14 @@ module PairTripleDetector_GL
 
   // AND gates for each row in the truth table
 
-  // verilator lint_off UNUSEDSIGNAL
-  wire min0, min1, min2, min3, min4, min5, min6, min7;
-  // verilator lint_on UNUSEDSIGNAL
+  wire min3, min5, min6, min7;
 
-  and( min0, in0_b, in1_b, in2_b );
-  and( min1, in0_b, in1_b, in2   );
-  and( min2, in0_b, in1,   in2_b );
+  // and( min0, in0_b, in1_b, in2_b );
+  // and( min1, in0_b, in1_b, in2   );
+  // and( min2, in0_b, in1,   in2_b );
   and( min3, in0_b, in1,   in2   );
 
-  and( min4, in0,   in1_b, in2_b );
+  // and( min4, in0,   in1_b, in2_b );
   and( min5, in0,   in1_b, in2   );
   and( min6, in0,   in1,   in2_b );
   and( min7, in0,   in1,   in2   );
@@ -595,9 +593,9 @@ module PairTripleDetector_GL
 endmodule
 ```
 
-We have to use the special `verilator lint_off` and `verilator lint_on`
-comments to tell `verilator` to ignore the fact that some of these wires
-are not used.
+Note that we have commented out the minterms which are not used to avoid
+causing linting errors. It is still nice to have these minterms as
+comments to make it easier to write all the minterms out.
 
 Using explicit gate-level modeling can be tedious. We can also directly
 implement Boolean equations in Verilog. Here is how our primitive gates
@@ -669,16 +667,14 @@ module PairTripleDetectorV5_GL
 
   // AND gates for each row in the truth table
 
-  // verilator lint_off UNUSEDSIGNAL
-  wire min0, min1, min2, min3, min4, min5, min6, min7;
-  // verilator lint_on UNUSEDSIGNAL
+  wire min3, min5, min6, min7;
 
-  assign min0 = ~in0 & ~in1 & ~in2;
-  assign min1 = ~in0 & ~in1 &  in2;
-  assign min2 = ~in0 &  in1 & ~in2;
+  // assign min0 = ~in0 & ~in1 & ~in2;
+  // assign min1 = ~in0 & ~in1 &  in2;
+  // assign min2 = ~in0 &  in1 & ~in2;
   assign min3 = ~in0 &  in1 &  in2;
 
-  assign min4 =  in0 & ~in1 & ~in2;
+  // assign min4 =  in0 & ~in1 & ~in2;
   assign min5 =  in0 & ~in1 &  in2;
   assign min6 =  in0 &  in1 & ~in2;
   assign min7 =  in0 &  in1 &  in2;
@@ -689,6 +685,10 @@ module PairTripleDetectorV5_GL
 
 endmodule
 ```
+
+again, we have commented out the minterms which are not used to avoid
+causing linting errors. It is still nice to have these minterms as
+comments to make it easier to write all the minterms out.
 
 We now have explored four new approaches to implementing a pair/triple
 detector. All four are equivalent with our original implementation.
