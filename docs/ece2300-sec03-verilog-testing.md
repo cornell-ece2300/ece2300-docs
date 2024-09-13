@@ -405,6 +405,8 @@ module:
       check( random_a, random_b, random_out );
 
     end
+
+  endtask
 ```
 
 Recall that Verilog can be used to both _design_ hardware and also to
