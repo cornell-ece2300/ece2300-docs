@@ -3,7 +3,8 @@ Section 2: Verilog Combinational Gate-Level Design
 ==========================================================================
 
 In this discussion section you will develop your first Verilog hardware
-design, simulate the design, and test its functionality.
+design, build a simulator for your design, and then test the
+functionality of your design.
 
 1. Logging Into `ecelinux` with VS Code
 --------------------------------------------------------------------------

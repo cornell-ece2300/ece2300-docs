@@ -73,8 +73,13 @@ nav:
   - 'Discussion Sections':
     - 'Section 1: Linux Development Environment': ece2300-sec01-linux.md
     - 'Section 2: Verilog Combinational Gate-Level Design': ece2300-sec02-verilog-gl.md
+    - 'Section 3: Verilog Testing': ece2300-sec03-verilog-testing.md
 
   - 'Lab Assignments':
     - 'FPGA Development Primer': ece2300-fpga-primer.md
     - 'Lab 1.1: Five-Bit Numeric Display Simulation' : ece2300-lab1p1-display.md
 #    - 'Lab 1.2: Five-Bit Numeric Display Prototype' : ece2300-lab1p2-display.md
+
+#  - 'Misc':
+#    - 'Testing and Debug Strategy': ece2300-test-debug-strategy.md
+
