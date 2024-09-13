@@ -126,7 +126,7 @@ building a test simulator. Use VS Code to create a new file named
 % code Makefile
 ```
 
-The `Makefile` should have the following content.
+Enter the following content into the `Makefile`:
 
 ```
 PairTripleDetector_GL-test : PairTripleDetector_GL.v PairTripleDetector_GL-test.v 
