@@ -2,11 +2,10 @@
 Lab 1.1: Five-Bit Numeric Display Simulation
 ==========================================================================
 
-Lab 1.1 is a warmup designed to give you experience designing,
-implementing, and testing a simple Verilog hardware design using
-open-source tools. In this assignment, you will leverage the concepts
-from lecture across two key abstraction layers: logic gates and boolean
-equations. **Lab 1.1 must be done individually without a partner.**
+Lab 1 is a warmup designed to give you experience designing,
+implementing, testing, and prototyping a simple Verilog hardware design.
+This lab will leverage the concepts from lecture across two key
+abstraction layers: logic gates and boolean equations.
 
 You will be implementing a five-bit numeric display that takes as input a
 five-bit binary value and displays this value as a decimal number using
@@ -16,12 +15,13 @@ display will be reused extensively across all of the remaining labs. You
 will also gain experience optimizing your design. Lab 1.1 focuses on
 using simulation to test your design, while Lab 1.2 will explore
 integrating, synthesizing, analyzing, and configuring your design for an
-FPGA prototype.
+FPGA prototype. **Lab 1.1 must be done individually without a partner;
+Lab 1.2 must be done with a randomly assigned partner.**
 
 This handout assumes that you have read and understand the course
 tutorials and that you have attended the discussion sections. To get
-started, log into an `ecelinux` server, source the setup script, and
-clone your individual remote repository from GitHub:
+started, use VS Code to log into an `ecelinux` server, source the setup
+script, and clone your individual remote repository from GitHub:
 
 ```bash
  % source setup-ece2300.sh
@@ -343,15 +343,15 @@ quality and code quality. Here is how we will be testing your final code
 submission for Lab 1.1:
 
 ```bash
-verilator -Wall --lint-only BinaryToSevenSegUnopt_GL.v
-iverilog -Wall -g2012 -o BinaryToSevenSegUnopt_GL-test BinaryToSevenSegUnopt_GL-test.v
-./BinaryToSevenSegUnopt_GL-test
+% verilator -Wall --lint-only BinaryToSevenSegUnopt_GL.v
+% iverilog -Wall -g2012 -o BinaryToSevenSegUnopt_GL-test BinaryToSevenSegUnopt_GL-test.v
+% ./BinaryToSevenSegUnopt_GL-test
 
-verilator -Wall --lint-only BinaryToBinCodedDec_GL.v
-iverilog -Wall -g2012 -o BinaryToBinCodedDec_GL-test BinaryToBinCodedDec_GL-test.v
-./BinaryToBinCodedDec_GL-test
+% verilator -Wall --lint-only BinaryToBinCodedDec_GL.v
+% iverilog -Wall -g2012 -o BinaryToBinCodedDec_GL-test BinaryToBinCodedDec_GL-test.v
+% ./BinaryToBinCodedDec_GL-test
 
-verilator -Wall --lint-only DisplayUnopt_GL.v
-iverilog -Wall -g2012 -o DisplayUnopt_GL-test DisplayUnopt_GL-test.v
-./DisplayUnopt_GL-test
+% verilator -Wall --lint-only DisplayUnopt_GL.v
+% iverilog -Wall -g2012 -o DisplayUnopt_GL-test DisplayUnopt_GL-test.v
+% ./DisplayUnopt_GL-test
 ```
