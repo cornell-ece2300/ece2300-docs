@@ -303,7 +303,7 @@ The next step is to analyze the area of your design.
    (configurable look-up tables) are used for your design
 
 The final step is to analyze the timing (i.e., the critical path delay)
-of your design.
+of your design. We will analyze timing for the **Slow 1100mV 85C Model** which is the default choice in the Timing Analyzer.
 
  - Choose _Tools > Timing Analyzer_ from the menu
  - Double-click _Update Timing Netlist_
@@ -471,7 +471,8 @@ The next step is to analyze the area of your design.
  - **How does this compare to your unoptimized design?**
 
 The final step is to analyze the timing (i.e., the critical path delay)
-of your design.
+of your design. Once again, we analyze the timing for the **Slow 1100mV 85C Model** which is the default choice in the Timing Analyzer.
+
 
  - Choose _Tools > Timing Analyzer_ from the menu
  - Double-click _Update Timing Netlist_
