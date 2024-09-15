@@ -149,11 +149,13 @@ workstation. This requires multiple steps.
 2. Setup Quartus Project
 --------------------------------------------------------------------------
 
-Click _Quartus (Quartus Prime 19.1)_ on the desktop to start Quartus.
-Setup a new quartus project using the _New Project Wizard_:
+Click _Quartus (Quartus Prime 19.1)_ on the desktop to start Quartus, and
+click _Run the Quartus Prime software_. You might need to try starting
+Quartus twice. Setup a new quartus project using the _New Project
+Wizard_:
 
  - Directory, Name, Top-Level Entity
-    + Working directory: `lab1`
+    + Working directory: `C:\Users\netid\lab1`
     + Name of this project: `lab1`
     + Name of top-level design entity: `lab1`
     + Click _Next_
@@ -164,9 +166,11 @@ Setup a new quartus project using the _New Project Wizard_:
     + Click _Next_
  - Add Files
     + Click triple dots to right of _File name_
-    + Navigate to your cloned repo on the workstation
-    + Shift-click on every Verilog hardware design file (i.e., do not
-    select test files)
+    + Click on _This PC_, then navigate to your cloned repo by choosing
+       _Windows (C:) >  Users > netid > netid_ where _netid_ is your
+       Cornell NetID
+    + Shift-click on every Verilog hardware design file (do not include
+       any test files)
     + Click _Open_
     + Click _Next_
  - Family, Device, and Board Settings
@@ -375,7 +379,8 @@ we recommend you reduce the timing constraint to 14ns and try again. You
 want to find the a timing constraint where the design meets timing, but
 if we reduce the timing constraint by 1ns the design would no longer meet
 timing. The data delay for the final experiment where the design meets
-timing is the "true minium critical path delay".
+timing is the "true minium critical path delay". You should enter at
+least four rows into the table, but you can enter more if you need to.
 
 !!! note "Lab Report Task 3: Save Unoptimized Analysis Data Table"
 
@@ -529,7 +534,9 @@ You will be working to fill out the rest of this table:
 Work on the same copy of this table you made earlier, and enter in the
 data for your optimized design with a 20ns critical path delay
 constraint. Then iteratively reduce the timing constraint until your
-design no longer meets timing, updating the table as you go along.
+design no longer meets timing, updating the table as you go along. You
+should enter at least four rows into the table, but you can enter more if
+you need to.
 
 !!! note "Lab Report Task 6: Save Optimized Analysis Data Table"
 
@@ -555,10 +562,10 @@ configure the FPGA with our optimized design and demostrate the final
 FPGA prototype!
 
  - Choose _Tools > Programmer_ from the menu
- - Click on Hardware Setup. Under "Currently selected hardware", you
-   should see your FPGA as an option (appearing as USB Blaster [USB-0]).
-   Select your FPGA, then click Close
- - Click on Start. This should configure the FPGA
+ - Click _Hardware Setup_
+ - Currently selected hardware: _USB-Blaster [USB-0]_
+ - Click _Close_
+ - Click _Start_
 
 !!! success "Lab Check-Off Task 8: Final Five-Bit Numeric Display Demo"
 
