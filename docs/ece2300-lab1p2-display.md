@@ -105,13 +105,13 @@ Now run all of the tests to ensure your design is fully functional.
 ```
 
 We now need to get the files for your design from `ecelinux` onto the
-workstation. Use the Chrome web-browser on the workstation to log into
-GitHub and find your repository. Then open PowerShell and clone your repo
-onto the workstation **(these commands should be entered on the
-workstation not on ecelinux!)**:
+workstation. Use a web-browser on the workstation to log into GitHub and
+find your repository. Then open PowerShell and clone your repo onto the
+workstation **(these commands should be entered on the workstation not on
+ecelinux!)**:
 
 ```bash
-% git clone git@github.com:cornell-ece2300/netid
+% git clone https://github.com/cornell-ece2300/netid
 % cd netid
 % tree
 ```
