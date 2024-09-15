@@ -105,31 +105,51 @@ Now run all of the tests to ensure your design is fully functional.
 ```
 
 We now need to get the files for your design from `ecelinux` onto the
-workstation. Use a web-browser on the workstation to log into GitHub and
-find your repository. Then open PowerShell and clone your repo onto the
-workstation **(these commands should be entered on the workstation not on
-ecelinux!)**:
+workstation. This requires multiple steps.
 
-```bash
+ - Step 1. Click _Microsoft Edge_ on the desktop to open a web-browser on
+   the workstation to log into GitHub and then find your repository
+
+ - Step 2. Start PowerShell by clicking the _Start_ menu then searching
+   for _Windeos PowerShell_
+
+ - Step 3. Clone your repo onto the workstation by using this command in
+   PowerShell (where `netid` is your Cornell NetID, **notice we are using
+   https!**):
+
+```
 % git clone https://github.com/cornell-ece2300/netid
+```
+
+ - Step 4. In the _Connect to GitHub_ pop-up, click _Sign in with your
+   browser_
+
+ - Step 5. You may be asked for your GitHub username again and you may be
+   asked to authorize the Git Credential Manager; click _authorize
+   git-ecosystem_
+
+ - Step 6. Verify that you have successfully cloned your repo by changing
+   into your repo and using `tree` on the workstation:
+
+```
 % cd netid
 % tree
 ```
-
-Verify that the files that are on the workstation are as expected.
 
 !!! success "Lab Check-Off Task 2: Verify Test Simulations, Discuss Optimizations"
 
     Show a TA that your hardware design is passing all five tests. The TA
     will ask _both students_ to explain how they optimized their designs
     for the binary-to-seven-segment converter. Explain which outputs you
-    ended up optimizing and how you used a Karnaugh map to simplify the
-    logic. Hypothesize how much you think these optimizations will reduce
-    the overall area of the design and/or the critical path delay.
+    ended up optimizing and how you used either Boolean theorems or a
+    Karnaugh map to simplify the logic. Hypothesize how much you think
+    these optimizations will reduce the overall area of the design and/or
+    the critical path delay.
 
 2. Setup Quartus Project
 --------------------------------------------------------------------------
 
+Click _Quartus (Quartus Prime 19.1)_ on the desktop to start Quartus.
 Setup a new quartus project using the _New Project Wizard_:
 
  - Directory, Name, Top-Level Entity

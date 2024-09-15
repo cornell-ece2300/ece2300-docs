@@ -440,8 +440,6 @@ represent our path times in _nanoseconds_.
  - Navitage to _Tools -> Timing Analyzer_. This will open up a pop-up
    window for analyzing the timing of our design.
  - Under the _Tasks_ panel on the left-hand side:
-    - Double-click "Create Timing Netlist" to create a netlist for
-      for analyzing timing
     - Double-click "Update Timing Netlist" to update the netlist for
       our design
 
