@@ -90,7 +90,7 @@ Now run all of the tests to ensure your design is fully functional.
 
 % verilator -Wall --lint-only BinaryToSevenSegOpt_GL.v
 % iverilog -Wall -g2012 -o BinaryToSevenSegOpt_GL-test BinaryToSevenSegOpt_GL-test.v
-% ./BinaryToSevenSegUnopt_GL-test
+% ./BinaryToSevenSegOpt_GL-test
 
 % verilator -Wall --lint-only BinaryToBinCodedDec_GL.v
 % iverilog -Wall -g2012 -o BinaryToBinCodedDec_GL-test BinaryToBinCodedDec_GL-test.v
@@ -299,7 +299,7 @@ the RTL viewer, technology map viewer, and chip planner.
 !!! note "Lab Report Task 1: RTL Viewer for Unoptimized Design"
 
     Save a screenshot of the RTL viewer for just
-    `BinaryToSevenSegUnopt_GL` for your lab report.
+    `BinaryToSevenSegUnopt_GL` for your lab report. Press the Fn + Print Screen keys to take a screenshot.
 
 The next step is to analyze the area of your design.
 
@@ -327,7 +327,8 @@ of your design. We will analyze timing for the **Slow 1100mV 85C Model** which i
 !!! note "Lab Report Task 2: Critical Path for Unoptimized Design"
 
     Save a screenshot of just the critical path of your unoptimized
-    design for your lab report. The screenshot should clearly show the
+    design for your lab report. Press Fn + Print Screen keys to take a screenshot.
+    The screenshot should clearly show the
     total delay, incremental delay, location, and element for each gate
     along the critical path.
 
@@ -467,7 +468,8 @@ the RTL viewer, technology map viewer, and chip planner.
 !!! note "Lab Report Task 4: RTL Viewer for Optimized Design"
 
     Save a screenshot of the RTL viewer for just
-    `BinaryToSevenSegOpt_GL` for your lab report.
+    `BinaryToSevenSegOpt_GL` for your lab report. 
+    Press Fn + Print Screen keys to take a screenshot.
 
 The next step is to analyze the area of your design.
 
@@ -498,7 +500,8 @@ of your design. Once again, we analyze the timing for the **Slow 1100mV 85C Mode
 !!! note "Lab Report Task 5: Critical Path for Optimized Design"
 
     Save a screenshot of just the critical path of your optimized design
-    for your lab report. The screenshot should clearly show the total
+    for your lab report. Use Fn + Print Screen keys to take a screenshot.
+    The screenshot should clearly show the total
     delay, incremental delay, location, and element for each gate along
     the critical path.
 
