@@ -35,7 +35,8 @@ Here are the steps to get started:
     Lab 1.2 group)
  - Step 2. Find your randomly assigned lab partner
  - Step 3. Find a free workstation
- - Step 4. Ask the TAs for a lab check-off sheet
+ - Step 4. Ask the TAs for a lab check-off sheet (each student needs
+    their own check-off sheet)
 
 Throughout this handout you will see two kinds tasks: lab check-off tasks
 and lab report tasks.
@@ -228,12 +229,12 @@ DisplayUnopt_GL display
 
     Show a TA the location of switches `SW[0]` through `SW[4]` on the
     board. Show the TA the location of seven-segment displays `HEX0` and
-    `HEX1` on the board. Show the TA your top-level connections, and
-    clearly explain how the inputs and outputs of your `DisplayUnopt_GL`
-    Verilog module will be hooked up to the physical switches and
-    seven-segment displays on the board. Explain to the TA what is the
-    expected behavior (i.e., when we flip these switches, we expect this
-    to happen).
+    `HEX1` on the board. Show the TA your top-level connections in
+    Verilog, and clearly explain how the inputs and outputs of your
+    `DisplayUnopt_GL` Verilog module will be hooked up to the physical
+    switches and seven-segment displays on the board. Explain to the TA
+    what is the expected behavior (i.e., when we flip these switches, we
+    expect this to happen).
 
 ### 3.2. Synthesize and Analyze
 
@@ -330,7 +331,7 @@ of your design. We will analyze timing for the **Slow 1100mV 85C Model** which i
     total delay, incremental delay, location, and element for each gate
     along the critical path.
 
-!!! success "Lab Check-Off Task 4: Discuss How Verilog Connects to RTL Viewer and Critical Path"
+!!! success "Lab Check-Off Task 4: Discuss RTL Viewer and Critical Path for Unoptimized Design"
 
     Show a TA your screenshot of the RTL viewer for just
     `BinaryToSevenSegUnopt_GL`. Explain how the RTL viewer connects back
@@ -501,7 +502,7 @@ of your design. Once again, we analyze the timing for the **Slow 1100mV 85C Mode
     delay, incremental delay, location, and element for each gate along
     the critical path.
 
-!!! success "Lab Check-Off Task 6: Discuss How Verilog Connects to RTL Viewer and Critical Path"
+!!! success "Lab Check-Off Task 6: Discuss RTL Viewer and Critical Path for Optimized Design"
 
     Show a TA your screenshot of the RTL viewer for just
     `BinaryToSevenSegOpt_GL`. Explain how the RTL viewer connects back to
@@ -580,7 +581,8 @@ FPGA prototype!
     When you are finished with your demo, pack up your FPGA development
     board. Neatly put the board, power cable, and USB cable back in the
     box. Return the box to a TA who will then record the board number on
-    your check-off sheet and initial the final check-off.
+    your check-off sheet, initial the final check-off, and then collect
+    your check-off sheet.
 
 6. Requirements for Final Submission
 --------------------------------------------------------------------------
