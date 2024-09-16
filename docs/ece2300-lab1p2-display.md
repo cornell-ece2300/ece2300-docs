@@ -584,22 +584,115 @@ FPGA prototype!
     your check-off sheet, initial the final check-off, and then collect
     your check-off sheet.
 
-6. Requirements for Final Submission
+6. Lab Report Submission
 --------------------------------------------------------------------------
 
- - two page lab report
-    + intro
-    + optimizations
-       * kmaps in appendix
-    + testing strategy
-    + comparitive analysis
-       * look at verilog -> area and delay model
-       * compare verilog and rtl viewer
-       * compare FPGA area
-       * compare FPGA delay
-    + conclusion
- - unlimited appendix
-    + rtl viewer screen caps
-    + critical path screen caps
-    + area/delay table
+Students should work with their partner to prepare a short lab report
+that conveys what they have learned in this lab assignment. Before
+starting the lab report, pick one student's code and create a Verilog
+data table using this template:
+
+ - <https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=446446324>
+
+Count the number of logic gates with a specific number of inputs in your
+Verilog code and enter these counts in the table. Count the number of
+logic gates along the critical path and enter these counts in the table.
+The provided template uses a very simple area/delay model where the
+area/delay of a gate is equal to the number of inputs to that gate. This
+data should enable you to make a very simplistic estimate of the total
+area and critical path delay of the unoptimized and optimized designs.
+
+The lab report should start with no more than two pages of text. Students
+should include all figures, tables, and diagrams after these two pages in
+an appendix. The appendix can be as many pages as necessary. Do not
+interleave the text, figures, tables, and diagrams. There should be two
+pages of text and then the appendix with all of the text, figures,
+tables, and diagrams.
+
+There are no restrictions on font size, margins, or line spacing, but
+please make sure your report is readable. We recommend using 10pt Times
+or 10pt Palintino with 0.75in to 1in margins. Please make sure you
+include a title, your names, and your NetIDs at the top of the first
+page. Do not include a title page.
+
+The lab report must include the following numbered sections. Please
+number your sections and use these specific titles. Please follow the
+guidelines on the number of paragraphs, the content of each paragraph,
+and which figures/tables to include. Some paragraphs might just be 2-3
+sentences.
+
+#### Section 1. Introduction (one paragraph)
+
+ - Include 2-3 sentences explaining what the lab involves
+ - Include one sentence explaining the purpose of this lab (why are
+    students doing this lab?)
+ - Include one sentence explicitly connecting the lab to one or more
+    lecture topics; be specific on which lecture topics this lab
+    reinforces with experiential learning
+
+#### Section 2: Optimizing a Binary-to-Seven-Segment Converter (one paragraph)
+
+ - Choose one student's code to feature in this section
+ - Include a figure in the appendix illustrating the K-maps or your
+    Boolean simplifications
+ - Include 2-3 sentences describing your K-maps or Boolean
+    simplifications
+ - Include a sentence describing _why_ the result of your K-maps or
+    Boolean simplifications should hopefully result in a more
+    optimized implementation
+
+#### Section 3: Comparative Analysis (three paragraphs)
+
+ - Paragraph 1: Verilog Analysis
+    + Include the Verilog data table mentioned above in the appendix
+    + Include the RTL Viewer screenshots for both the unoptimized and
+       optimized designs in the appendix
+    + Include a sentence referencing the Verilog data table
+    + Include a sentence comparing the total area of the unoptimized
+       vs optimized designs using the simple Verilog area model
+    + Include a sentence comparing the total delay of the unoptimized
+       vs optimized designs using the simple Verilog delay model
+    + Include 2-3 sentences comparing and contrasting the unoptimized
+       vs optimized designs based just on the original Verilog
+    + Include a sentence discussing the RTL Viewer screenshots
+
+ - Paragraph 2: FPGA Area Analysis
+    + Include the FPGA data table in the appendix
+    + Include a sentence referencing the area data in the FPGA data
+       table
+    + Include a sentence comparing the area of the unoptimized vs
+       optimized designs using the FPGA area data
+    + Include a sentence relating this FPGA comparison to your comparison
+       based purely on the simple Verilog area model
+
+ - Paragraph 3: FPGA Delay Analysis
+    + Include the critical path screenshots for both the unoptimized
+       and optimized design in the appendix
+    + Include a sentence referencing the delay data in the FPGA data
+       table
+    + Include a sentence describing where the critical path goes
+       through the design (at a high-level) for both the unoptimized
+       and optimized designs
+    + Include a sentence comparing the critical path delay of the
+       unoptimized vs optimized designs using the FPGA delay data
+    + Include a sentence relating this FPGA comparison to your comparison
+       based purely on the simple Verilog delay model
+
+#### Section 4: Conclusion (one paragraph)
+
+ - Include 2-3 sentences that summarizes all of the data and analysis
+    in this lab assignment
+ - Include a sentence that draws a high-level conclusion; how will
+    what you have learned impact your design work throughout the rest
+    of the semester?
+
+#### Appendix
+
+ - Figure illustrating K-maps or Boolean simplifications
+ - Verilog data table
+ - Screenshot of RTL Viewer for unoptimized design
+ - Screenshot of RTL Viewer for optimized design
+ - FPGA data table
+ - Screenshot of critical path for unoptimized design
+ - Screenshot of critical path for optimized design
 

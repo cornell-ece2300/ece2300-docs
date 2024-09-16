@@ -323,7 +323,7 @@ simulator like this:
 The display simulator will show what the two seven segment displays would
 look like on the FPGA prototype.
 
-4. Requirements for Final Submission
+4. Lab Code Submission
 --------------------------------------------------------------------------
 
 Your code quality score will be based on the way you format the text in
