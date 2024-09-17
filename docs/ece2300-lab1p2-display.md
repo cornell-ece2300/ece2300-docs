@@ -304,7 +304,8 @@ the RTL viewer, technology map viewer, and chip planner.
 
 The next step is to analyze the area of your design.
 
- - In _Table of Contents_ choose _Fitter > Resource Section > Resource Usage Summary_
+ - Choose _Processing -> Compilation Report_ from the menu. Under _Table of Contents_ 
+   choose _Fitter > Resource Section > Resource Usage Summary_
  - Look through the report to determine the number of combinational ALUs
    (configurable look-up tables) are used for your design
 
