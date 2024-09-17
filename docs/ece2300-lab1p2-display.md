@@ -306,7 +306,7 @@ The next step is to analyze the area of your design.
 
  - Choose _Processing -> Compilation Report_ from the menu. Under _Table of Contents_ 
    choose _Fitter > Resource Section > Resource Usage Summary_
- - Look through the report to determine the number of combinational ALUs
+ - Look through the report to determine the number of combinational ALUTs
    (configurable look-up tables) are used for your design
 
 The final step is to analyze the timing (i.e., the critical path delay)
