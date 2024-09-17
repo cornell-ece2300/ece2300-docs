@@ -49,7 +49,7 @@ TA and students together feel the students have not mastered the lab
 check-off task, the students are encouraged to take a few minutes and try
 again.
 
-For each _lab report task_ you must take some notes, save a screen shot,
+For each _lab report task_ you must take some notes, save a screenshot,
 and/or record some data for your lab report. Students can start working
 on their lab report during their lab session, but will likely need to
 continue working on their lab report after the lab session. The lab
@@ -299,8 +299,10 @@ the RTL viewer, technology map viewer, and chip planner.
 !!! note "Lab Report Task 1: RTL Viewer for Unoptimized Design"
 
     Save a screenshot of the RTL viewer for just
-    `BinaryToSevenSegUnopt_GL` for your lab report.
-    Press the Fn + Print Screen keys or Windows + Shift + S keys to take a screenshot.
+    `BinaryToSevenSegUnopt_GL` for your lab report. Press the _Fn + Print
+    Screen_ key to save a screenshot to the clipboard, then paste the
+    screenshot into a Google Doc and crop appropriately for your lab
+    report.
 
 The next step is to analyze the area of your design.
 
@@ -329,11 +331,11 @@ of your design. We will analyze timing for the **Slow 1100mV 85C Model** which i
 !!! note "Lab Report Task 2: Critical Path for Unoptimized Design"
 
     Save a screenshot of just the critical path of your unoptimized
-    design for your lab report.
-    Press the Fn + Print Screen keys or Windows + Shift + S keys to take a screenshot.
-    The screenshot should clearly show the
-    total delay, incremental delay, location, and element for each gate
-    along the critical path.
+    design for your lab report. Press the _Fn + Print Screen_ key to save
+    a screenshot to the clipboard, then paste the screenshot into a
+    Google Doc and crop appropriately for your lab report. The screenshot
+    should clearly show the total delay, incremental delay, location, and
+    element for each gate along the critical path.
 
 !!! success "Lab Check-Off Task 4: Discuss RTL Viewer and Critical Path for Unoptimized Design"
 
@@ -470,9 +472,10 @@ the RTL viewer, technology map viewer, and chip planner.
 
 !!! note "Lab Report Task 4: RTL Viewer for Optimized Design"
 
-    Save a screenshot of the RTL viewer for just
-    `BinaryToSevenSegOpt_GL` for your lab report. 
-    Press the Fn + Print Screen keys or Windows + Shift + S keys to take a screenshot.
+    Save a screenshot of the RTL viewer for just `BinaryToSevenSegOpt_GL`
+    for your lab report. Press the _Fn + Print Screen_ key to save a
+    screenshot to the clipboard, then paste the screenshot into a Google
+    Doc and crop appropriately for your lab report.
 
 The next step is to analyze the area of your design.
 
@@ -503,11 +506,11 @@ of your design. Once again, we analyze the timing for the **Slow 1100mV 85C Mode
 !!! note "Lab Report Task 5: Critical Path for Optimized Design"
 
     Save a screenshot of just the critical path of your optimized design
-    for your lab report.
-    Press the Fn + Print Screen keys or Windows + Shift + S keys to take a screenshot.
-    The screenshot should clearly show the total
-    delay, incremental delay, location, and element for each gate along
-    the critical path.
+    for your lab report. Press the _Fn + Print Screen_ key to save a
+    screenshot to the clipboard, then paste the screenshot into a Google
+    Doc and crop appropriately for your lab report. The screenshot should
+    clearly show the total delay, incremental delay, location, and
+    element for each gate along the critical path.
 
 !!! success "Lab Check-Off Task 6: Discuss RTL Viewer and Critical Path for Optimized Design"
 
