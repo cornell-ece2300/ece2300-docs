@@ -654,8 +654,9 @@ sentences.
 #### Section 3: Comparative Analysis (three paragraphs)
 
  - Paragraph 1: Verilog Analysis
-    + Include the Verilog data table mentioned above in the appendix
-       * <https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=446446324>
+    + Include the ![Verilog data
+       table](https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=446446324)
+       mentioned above in the appendix
     + Include the RTL Viewer screenshots for both the unoptimized and
        optimized designs in the appendix
     + Include a sentence referencing the Verilog data table
@@ -668,8 +669,9 @@ sentences.
     + Include a sentence discussing the RTL Viewer screenshots
 
  - Paragraph 2: FPGA Area Analysis
-    + Include the FPGA data table in the appendix
-       * <https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=0#gid=0>
+    + Include the ![FPGA data
+       table](https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=0#gid=0)
+       in the appendix
     + Include a sentence referencing the area data in the FPGA data
        table
     + Include a sentence comparing the area of the unoptimized vs
