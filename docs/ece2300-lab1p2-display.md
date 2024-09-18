@@ -612,6 +612,19 @@ area/delay of a gate is equal to the number of inputs to that gate. This
 data should enable you to make a very simplistic estimate of the total
 area and critical path delay of the unoptimized and optimized designs.
 
+Note that you cannot directly compare the area/delay estimated using your
+simple Verilog area/delay model to the area/delay reported by the FPGA
+tools; these are completely different ways to estimate area/delay.
+However, you can relate the two comparisions when using the same
+methodology: is design A better than design B when using the Verilog
+area/delay model but then design A is worse than design B based on the
+FPGA tools? or maybe design A and B are similar when using the Verilog
+area/delay model but they are different when using the FPGA tools? So
+while directly comparing numbers from your simple Verilog area/delay
+model and the area/delay reported by the FPGA tools is not possible, it
+_is_ possible to discuss if the comparisons using the same model are
+similar or different.
+
 The lab report should start with no more than two pages of text. Students
 should include all figures, tables, and diagrams after these two pages in
 an appendix. The appendix can be as many pages as necessary. Do not
@@ -677,7 +690,7 @@ sentences.
     + Include a sentence comparing the area of the unoptimized vs
        optimized designs using the FPGA area data
     + Include a sentence relating this FPGA comparison to your comparison
-       based purely on the simple Verilog area model
+       based purely on the simple Verilog area model.
 
  - Paragraph 3: FPGA Delay Analysis
     + Include the critical path screenshots for both the unoptimized
