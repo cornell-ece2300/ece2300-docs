@@ -654,7 +654,7 @@ sentences.
 #### Section 3: Comparative Analysis (three paragraphs)
 
  - Paragraph 1: Verilog Analysis
-    + Include the ![Verilog data
+    + Include the [Verilog data
        table](https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=446446324)
        mentioned above in the appendix
     + Include the RTL Viewer screenshots for both the unoptimized and
@@ -669,7 +669,7 @@ sentences.
     + Include a sentence discussing the RTL Viewer screenshots
 
  - Paragraph 2: FPGA Area Analysis
-    + Include the ![FPGA data
+    + Include the [FPGA data
        table](https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=0#gid=0)
        in the appendix
     + Include a sentence referencing the area data in the FPGA data
