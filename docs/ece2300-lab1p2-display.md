@@ -611,6 +611,10 @@ The provided template uses a very simple area/delay model where the
 area/delay of a gate is equal to the number of inputs to that gate. This
 data should enable you to make a very simplistic estimate of the total
 area and critical path delay of the unoptimized and optimized designs.
+There is no "right way" to count gates from Verilog. Students must use
+their judgement to estimate the number of gates. The key is to be
+consistent so you can make a comparison between your unoptimized and
+optimized design from just the Verilog code.
 
 Note that you cannot directly compare the area/delay estimated using your
 simple Verilog area/delay model to the area/delay reported by the FPGA

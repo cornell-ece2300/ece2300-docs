@@ -256,8 +256,8 @@ two or three ones and output a zero otherwise. Go ahead and use VS Code
 to implement `PairTripleDetector2`.
 
 ```bash
-% cd ${HOME}/ece2300/sec03/hw
-% code ./PairTripleDetector2_GL.v
+% cd ${HOME}/ece2300/sec03/build
+% code ../hw/PairTripleDetector2_GL.v
 ```
 
 ### 2.2. Testing Child Modules
@@ -332,8 +332,14 @@ different kinds of input values we are interested in testing. For
 input values with a few ones and a different directed test case that
 focuses on input values with many ones. Go ahead and add appropriate
 checks to `test_case_2_few_ones` and `test_case_3_many_ones` in
-`PairTripleDetector2_GL-test.v`. Then rebuild and rerun the test
-simulator using `make`.
+`PairTripleDetector2_GL-test.v`.
+
+```bash
+% cd ${HOME}/ece2300/sec03/build
+% code ../test/PairTripleDetector2_GL-test.v
+```
+
+Then rebuild and rerun the test simulator using `make`.
 
 ```bash
 % cd ${HOME}/ece2300/sec03/build
@@ -426,6 +432,12 @@ number of ones in each random 3-bit value, we can determine what the
 correct output should be for the design-under-test.
 
 Copy and paste this new test case into `PairTripleDetector2_GL-test.v`.
+
+```bash
+% cd ${HOME}/ece2300/sec03/build
+% code ../test/PairTripleDetector2_GL-test.v
+```
+
 Then add this new test case to the list of test cases in the `initial`
 block like this:
 
@@ -488,8 +500,8 @@ our interactive simulators will be in the `sim` subdirectory. Take a look
 at the provided `detector2-sim.v` interactive simulator.
 
 ```bash
-% cd ${HOME}/ece2300/sec03/sim
-% code detector2-sim.v
+% cd ${HOME}/ece2300/sec03/build
+% code ../sim/detector2-sim.v
 ```
 
 You can build the simple interactive simulator by simply specifying it as

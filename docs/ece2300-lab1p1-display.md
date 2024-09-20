@@ -59,7 +59,7 @@ Your repo includes the following files:
  - `display-sim.v`: Simulator for five-bit numeric display
 
 The `_GL` suffix indicates that these hardware designs should be
-implemented using the gate-level or boolean logic equation layer of
+implemented using the logic gate or boolean equation layers of
 abstraction. This means students are only allowed to use these Verilog
 constructs in their Verilog hardware designs:
 

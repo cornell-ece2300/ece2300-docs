@@ -123,11 +123,23 @@ how to instantiate our primitive logic gates in Verilog.
 ![](img/sec02-verilog-gates.png)
 
 We have provided you with the interface for the pair/triple detector in
-`PairTripleDetector_GL.v`. Notice that this file has a `_GL` suffix which
-standes for "gate-level". We will use various suffixes to clearly
-indicate what level of modeling is being used within the implementation
-of the corresponding Verilog hardware design. Open this file using VS
-Code.
+`PairTripleDetector_GL.v`.
+
+```verilog
+module PairTripleDetector_GL
+(
+  input  wire in0,
+  input  wire in1,
+  input  wire in2,
+  output wire out
+);
+```
+
+The module has three input ports and one output port. Notice that this
+file has a `_GL` suffix which standes for "gate-level". We will use
+various suffixes to clearly indicate what level of modeling is being used
+within the implementation of the corresponding Verilog hardware design.
+Open the `PairTripleDetector_GL.v` Verilog file using VS Code.
 
 ```bash
 % cd ${HOME}/ece2300/sec02
