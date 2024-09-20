@@ -229,10 +229,10 @@ Open the `AdderRippleCarry_4b_GL.v` Verilog file using VS Code.
 
 Since we have already thoroughly unit tested our full adder, we can now
 focus on integration testing for our four-bit ripple-carry adder. Our
-four-bit ripple carry adder has `2^5` or 32 possible input values which
-means exhaustive testing is still feasible. However, we will be using
-directed and random testing to gain more experience with these testing
-strategies.
+four-bit ripple carry adder has a total of `2^9` or 512 possible input
+values which means exhaustive testing is not really feasible. We will
+need to use directed and random testing to verify the functionality of
+the ripple-carry adder.
 
 We have provided you a Verilog test bench in
 `AdderRippleCarry_4b_GL-test.v` with a basic test case named
