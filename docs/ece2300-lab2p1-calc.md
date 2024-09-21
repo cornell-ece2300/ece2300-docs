@@ -346,8 +346,8 @@ with using _register-transfer-level (RTL) modeling_ throughout the rest
 of the lab assignments. RTL modeling involves working at a higher-level
 of abstraction. **This can drastically increase designer productivity but
 only if the designer always keeps in mind the hardware we are actually
-modeling!** It is possible to Verilog RTL which does not model any kind
-of real hardware.
+modeling!** It is possible to use Verilog RTL which does not model any
+kind of real hardware.
 
 When using Boolean equations, we are only allowed to use a very limited
 number of Verilog operators (`~`, `&`, `|`, `^`). The simplest form of
@@ -390,6 +390,8 @@ module Adder_8b_RTL
 (
   input  logic [7:0] in0,
   input  logic [7:0] in1,
+  input  logic       cin,
+  output logic       cout,
   output logic [7:0] sum
 );
 
