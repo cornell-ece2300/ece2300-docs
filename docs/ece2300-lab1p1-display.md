@@ -9,7 +9,7 @@ abstraction layers: logic gates and boolean equations.
 
 You will be implementing a five-bit numeric display that takes as input a
 five-bit binary value and displays this value as a decimal number using
-two seven-segment displays. Your implementation will exclusively used
+two seven-segment displays. Your implementation will exclusively use
 combinational logic gates and/or Boolean equations. This five-bit numeric
 display will be reused extensively across all of the remaining labs. You
 will also gain experience optimizing your design. Lab 1.1 focuses on
@@ -343,6 +343,10 @@ quality and code quality. Here is how we will be testing your final code
 submission for Lab 1.1:
 
 ```bash
+% mkdir -p ${HOME}/ece2300/submissions
+% cd ${HOME}/ece2300/submissions
+% git clone git@github.com:cornell-ece2300/netid
+
 % verilator -Wall --lint-only BinaryToSevenSegUnopt_GL.v
 % iverilog -Wall -g2012 -o BinaryToSevenSegUnopt_GL-test BinaryToSevenSegUnopt_GL-test.v
 % ./BinaryToSevenSegUnopt_GL-test
