@@ -1,5 +1,5 @@
 
-Lab 1.2: Calculator Simulation
+Lab 2.1: Calculator Simulation
 ==========================================================================
 
 Lab 2 will give you experience designing, implementing, testing, and
