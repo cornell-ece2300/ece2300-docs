@@ -5,7 +5,7 @@ Lab 2.1: Calculator Simulation
 Lab 2 will give you experience designing, implementing, testing, and
 prototyping more complicated combinational logic using the Verilog
 hardware description language. In addition to leveraging the concepts
-from lecture across two key abstraction layers: logic gates and boolean
+from lecture across two key abstraction layers: logic gates and Boolean
 equations, this lab will also reinforce three key abstraction principles:
 modularity, hierarchy, and regularity. This lab will give students
 experience with several combinational building blocks including
@@ -43,7 +43,7 @@ script, and clone your individual remote repository from GitHub:
 
 where `XX` should be replaced with your group number. You can both pull
 and push to your remote repository. If you have already cloned your
-remote repository, then use git pull to ensure you have any recent
+remote repository, then use `git pull` to ensure you have any recent
 updates before working on your lab assignment.
 
 ```bash
@@ -117,7 +117,7 @@ simulator.
    seven-segment displays
 
 The `_GL` suffix indicates which hardware designs should be implemented
-using the logic gate or boolean equation layers of abstraction. For these
+using the logic gate or Boolean equation layers of abstraction. For these
 designs, students are only allowed to use these Verilog constructs:
 
  - `wire`, `assign`
@@ -128,7 +128,7 @@ designs, students are only allowed to use these Verilog constructs:
 
 The `_RTL` suffix indicates which hardware designs should be implemented
 using register-transfer-level (RTL) modeling. For RTL designs, students
-can additional use the following Verilog constructs.
+can additionally use the following Verilog constructs.
 
  - `+` `*`
 
