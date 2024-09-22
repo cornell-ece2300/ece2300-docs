@@ -587,7 +587,7 @@ button is connected to the `op` input of the calculator. The calculator
 simulator will show what the six seven segment displays would look like
 on the FPGA prototype.
 
-4. Lab Code Submission
+3. Lab Code Submission
 --------------------------------------------------------------------------
 
 Your code quality score will be based on the way you format the text in
