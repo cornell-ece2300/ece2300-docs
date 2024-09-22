@@ -52,8 +52,8 @@ updates before working on your lab assignment.
  % tree
 ```
 
-Go ahead and create a build directory and run configure to generate a
-Makefile.
+Go ahead and create a build directory in the `lab2-calc` directory for 
+this lab, and run configure to generate a Makefile.
 
 ```
 % cd ${HOME}/ece2300/groupXX/lab2-calc
@@ -62,8 +62,8 @@ Makefile.
 % ../configure
 ```
 
-Your repo the following files which are part of the automated build
-system:
+Your repo contains the following files which are part of the automated
+build system:
 
  - `Makefile.in`: Makefile for the build system
  - `configure`: Configure script for the build system
@@ -501,14 +501,14 @@ run the basic tests for all hardware modules using the generated
 `Makefile`.
 
 ```bash
-% cd ${HOME}/ece2300/groupXX/build
+% cd ${HOME}/ece2300/groupXX/lab2-calc/build
 % make check
 ```
 
 You can also build and run a single test simulator.
 
 ```bash
-% cd ${HOME}/ece2300/groupXX/build
+% cd ${HOME}/ece2300/groupXX/lab2-calc/build
 % make BinaryToSevenSeg_GL-test
 % ./BinaryToSevenSeg_GL-test
 ```
@@ -517,7 +517,7 @@ You can specify which specific test case to run on the command line and
 also dump waveforms that can be viewed using Surfer.
 
 ```bash
-% cd ${HOME}/ece2300/groupXX/build
+% cd ${HOME}/ece2300/groupXX/lab2-calc/build
 % make BinaryToSevenSeg_GL-test
 % ./BinaryToSevenSeg_GL-test +test-case=1
 % ./BinaryToSevenSeg_GL-test +test-case=1 +dump-vcd=waves.vcd
@@ -576,7 +576,7 @@ implementation for the complete calculator, you can build and run the
 calculator simulator like this:
 
 ```
-% cd ${HOME}/ece2300/groupXX/build
+% cd ${HOME}/ece2300/groupXX/lab2-calc/build
 % make calculator-sim
 % ./calculator-sim +in0-switches=00100 +in1-switches=00011 +button=0
 % ./calculator-sim +in0-switches=00100 +in1-switches=00011 +button=1
