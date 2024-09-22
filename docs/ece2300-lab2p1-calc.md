@@ -430,7 +430,7 @@ product.
 
 Review the lecture nodes for more on multipliers and then implement this
 multiplier in `Multiplier_2x8b_GL` by instantiating two
-`Multiplier_1x8b_GL` modules and one `RipleCarrySelect_8b_GL` and
+`Multiplier_1x8b_GL` modules and one `AdderCarrySelect_8b_GL` and
 correctly connecting all of the ports. You will likely need some internal
 wires. Note that you may also have some unused signals (i.e., the carry
 output from the adder and the most significant bit of the sum). You can
