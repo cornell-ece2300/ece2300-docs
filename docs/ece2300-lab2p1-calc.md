@@ -480,7 +480,7 @@ values when connect them to the inputs of the calculator. Both inputs and
 the output of the calculator should be attached to an instance of the
 five-bit numeric display module you developed in the previous lab.
 Implement the complete calculator in `CalculatorDisplay_GL.v` by
-instantiating a `Calculator_GL` module and six `Display_GL` modules.
+instantiating a `Calculator_GL` module and three `Display_GL` modules.
 
 2. Testing Strategy
 --------------------------------------------------------------------------
