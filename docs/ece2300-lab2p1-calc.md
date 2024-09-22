@@ -56,7 +56,7 @@ Go ahead and create a build directory and run configure to generate a
 Makefile.
 
 ```
-% cd ${HOME}/ece2300/groupXX
+% cd ${HOME}/ece2300/groupXX/lab2-calc
 % mkdir -p build
 % cd build
 % ../configure
