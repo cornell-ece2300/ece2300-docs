@@ -334,9 +334,9 @@ quickly choose the correct sum for the upper four bits.
 
 Review the lectures notes on carry-select adders and implement an
 eight-bit carry-select adder in `AdderCarrySelect_8b_GL` by instantiating
-three `AdderRippleCarry_4b_GL` modules and one `Mux2_4b_GL` module and
-then correctly connecting all of the ports. You will likely need some
-internal wires.
+three `AdderRippleCarry_4b_GL` modules, one `Mux2_4b_GL` module, and one
+`Mux2_1b_GL` module and then correctly connecting all of the ports. You 
+will likely need some internal wires.
 
 ### 1.9. Eight-Bit Register-Transfer-Level Adder
 
