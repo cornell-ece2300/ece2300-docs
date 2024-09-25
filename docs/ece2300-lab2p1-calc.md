@@ -177,7 +177,7 @@ test benches for those same hardware modules. Then work together to test
 and debug these modules. Then switch roles and move on the next few
 modules.
 
-Even thought this may seem like many steps, several hardware modules are
+Even though this may seem like many steps, several hardware modules are
 reused from Lab 1. Some hardware modules can be implemented in just a few
 lines of Verilog (e.g., `FullAdder_GL`, `Mux2_1b_GL`, `Adder_8b_RTL`,
 `Multiplier_2x8b_RTL`). It should also be possible to reuse your test
