@@ -139,10 +139,7 @@ difference unit in these files:
 !!! question "Activity 1: Draw Block Diagram of Gate-Level Absolute Difference Unit"
 
     Inspect the above files and draw a detailed block diagram of how all
-    of the blocks are instantiated and connected. You can use either a
-    bottom-up approach (i.e., start from the logic gates within the
-    `FullSubtractor_GL`, `GTComparator_1b_GL`, and `Mux2_1b_GL` modules
-    and work up to the `AbsDiff_4b_GL` module) or a top-down approach
+    of the blocks are instantiated and connected. Use a top-down approach
     (i.e., start from the `AbsDiff_4b_GL` module and work down to the
     logic gates in the `FullSubtractor_GL`, `GTComparator_1b_GL`, and
     `Mux2_1b_GL` modules). You must be able to point to the actual AND,
