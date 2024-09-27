@@ -245,8 +245,8 @@ implementation.
 
 ```bash
 % cd ${HOME}/ece2300/sec05/build
-% make GTSubtractor_4b_RTL-test
-% GTSubtractor_4b_RTL-test +test-case=-1
+% make GTComparator_4b_RTL-test
+% GTComparator_4b_RTL-test +test-case=-1
 ```
 
 ### 3.3. RTL Implementation of Four-Bit Two-to-One Multiplexor
