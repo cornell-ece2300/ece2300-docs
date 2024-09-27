@@ -175,7 +175,7 @@ borrow out. Run all of the provide tests to verify your implementation.
 ```bash
 % cd ${HOME}/ece2300/sec05/build
 % make Subtractor_4b_RTL-test
-% Subtractor_4b_RTL-test +test-case=-1
+% ./Subtractor_4b_RTL-test +test-case=-1
 ```
 
 Notice how simple the RTL implementation is compared to the GL
@@ -229,7 +229,7 @@ verify your implementation.
 ```bash
 % cd ${HOME}/ece2300/sec05/build
 % make Subtractor_4b_RTL-test
-% Subtractor_4b_RTL-test +test-case=-1
+% ./Subtractor_4b_RTL-test +test-case=-1
 ```
 
 ### 3.2. RTL Implementation of Four-Bit Greater-Than Comparator
@@ -243,7 +243,7 @@ implementation.
 ```bash
 % cd ${HOME}/ece2300/sec05/build
 % make GTComparator_4b_RTL-test
-% GTComparator_4b_RTL-test +test-case=-1
+% ./GTComparator_4b_RTL-test +test-case=-1
 ```
 
 ### 3.3. RTL Implementation of Four-Bit Two-to-One Multiplexor
@@ -265,7 +265,7 @@ Run all of the provide tests to verify your implementation.
 ```bash
 % cd ${HOME}/ece2300/sec05/build
 % make Mux2_4b_RTL-test
-% Mux2_4b_RTL-test +test-case=-1
+% ./Mux2_4b_RTL-test +test-case=-1
 ```
 
 You can use ternary operators in an `always_comb` block, but an
@@ -289,7 +289,7 @@ Run all of the provide tests to verify your implementation.
 ```bash
 % cd ${HOME}/ece2300/sec05/build
 % make Mux2_4b_RTL-test
-% Mux2_4b_RTL-test +test-case=-1
+% ./Mux2_4b_RTL-test +test-case=-1
 ```
 
 ### 3.3. Subtle Issues with Using If/Else in RTL Modeling
@@ -303,8 +303,8 @@ like this:
 ```bash
 % cd ${HOME}/ece2300/sec05/build
 % make mux-rtl-sim
-% mux-rtl-sim +in0=0101 +in1=1111 +sel=0
-% mux-rtl-sim +in0=0101 +in1=1111 +sel=1
+% ./mux-rtl-sim +in0=0101 +in1=1111 +sel=0
+% ./mux-rtl-sim +in0=0101 +in1=1111 +sel=1
 ```
 
 Let's assume we accidentally forget to include the `else` clause in our
@@ -355,11 +355,11 @@ undefined (i.e., is modeled using an `X` in Verilog). Try these inputs.
 ```bash
 % cd ${HOME}/ece2300/sec05/build
 % make mux-rtl-sim
-% mux-rtl-sim +in0=xxxx +in1=1111 +sel=0
-% mux-rtl-sim +in0=xxxx +in1=1111 +sel=1
-% mux-rtl-sim +in0=0101 +in1=xxxx +sel=0
-% mux-rtl-sim +in0=0101 +in1=xxxx +sel=1
-% mux-rtl-sim +in0=0101 +in1=1111 +sel=x
+% ./mux-rtl-sim +in0=xxxx +in1=1111 +sel=0
+% ./mux-rtl-sim +in0=xxxx +in1=1111 +sel=1
+% ./mux-rtl-sim +in0=0101 +in1=xxxx +sel=0
+% ./mux-rtl-sim +in0=0101 +in1=xxxx +sel=1
+% ./mux-rtl-sim +in0=0101 +in1=1111 +sel=x
 ```
 
 Are the results as expected? Prof. Batten will talk more about `X`
@@ -381,7 +381,7 @@ correct.
 ```bash
 % cd ${HOME}/ece2300/sec05/build
 % make AbsDiff_4b_RTL-test
-% AbsDiff_4b_RTL-test +test-case=-1
+% ./AbsDiff_4b_RTL-test +test-case=-1
 ```
 
 Notice how structural RTL modeling like this provides a nice balance
@@ -410,7 +410,7 @@ functionally correct.
 ```bash
 % cd ${HOME}/ece2300/sec05/build
 % make AbsDiff_4b_RTL-test
-% AbsDiff_4b_RTL-test +test-case=-1
+% ./AbsDiff_4b_RTL-test +test-case=-1
 ```
 
 Notice how flat RTL modeling enables the designer to express their intent
