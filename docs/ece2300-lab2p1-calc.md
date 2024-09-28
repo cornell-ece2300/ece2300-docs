@@ -52,7 +52,7 @@ updates before working on your lab assignment.
  % tree
 ```
 
-Go ahead and create a build directory in the `lab2-calc` directory for 
+Go ahead and create a build directory in the `lab2-calc` directory for
 this lab, and run configure to generate a Makefile.
 
 ```
@@ -335,7 +335,7 @@ quickly choose the correct sum for the upper four bits.
 Review the lectures notes on carry-select adders and implement an
 eight-bit carry-select adder in `AdderCarrySelect_8b_GL` by instantiating
 three `AdderRippleCarry_4b_GL` modules, one `Mux2_4b_GL` module, and one
-`Mux2_1b_GL` module and then correctly connecting all of the ports. You 
+`Mux2_1b_GL` module and then correctly connecting all of the ports. You
 will likely need some internal wires.
 
 ### 1.9. Eight-Bit Register-Transfer-Level Adder
@@ -409,13 +409,10 @@ Implement an eight-bit RTL adder in `Adder_8b_RTL`.
 ### 1.10. One-bit by Eight-Bit Multiplier
 
 A one-bit by eight-bit multiplier multiplies an eight-bit input value by
-a one-bit input value to determine an eight-bit product output.
-
-![](img/lab2p1-mul1x8b.png)
-
-Review the lecture notes for more on multipliers and then implement this
-simple multiplier in `Multiplier_1x8b_GL`. Use either an explicit
-gate-level network or Boolean equations.
+a one-bit input value to determine an eight-bit product output. Review
+the lecture notes for more on multipliers and then implement this simple
+multiplier in `Multiplier_1x8b_GL`. Use either an explicit gate-level
+network or Boolean equations.
 
 ### 1.11. Two-bit by Eight-Bit Multiplier
 
@@ -423,7 +420,7 @@ A two-bit by eight-bit multiplier multiplies an eight-bit input value by
 a two-bit input value to determine an eight-bit product output.
 
 We use two one-bit by eight-bit multipliers to create the two partial
-products and then we can use an eight-bit adder to sum these two partial
+products, and then we use an eight-bit adder to sum these two partial
 products to get the final result. If the output overflows then the
 implementation should truncate by using the lower eight bits of the
 product.
@@ -433,13 +430,15 @@ multiplier in `Multiplier_2x8b_GL` by instantiating two
 `Multiplier_1x8b_GL` modules and one `AdderCarrySelect_8b_GL` and
 correctly connecting all of the ports. You will likely need some internal
 wires. Note that you may also have some unused signals (i.e., the carry
-output from the adder and the most significant bit of the sum). You can
-use the following Verilog snippet to avoid unused signal errors for a
-wire named `foo`.
+output from the adder and the most significant bit of the sum). These
+unused signals will cause `verilator` linting errors. If a signal has
+`unused` in its name, then `verilator` will assume the designer
+explicitly wants this signal to be unused. So you can use the following
+Verilog snippet to avoid unused signal errors for a wire named `foo`.
 
 ```verilog
-wire unused_foo;
-assign unused_foo = foo;
+wire foo_unused;
+assign foo_unused = foo;
 ```
 
 Feel free to use such snippets with an associated comment if you are
@@ -456,15 +455,14 @@ Verilog. Implement such a two-bit by eight-bit RTL multiplier in
 
 ### 1.13. Calculator
 
-We can now put our adder and multiplier together using a eight-bit
-two-to-one mux to create a calculator.
+We can now put our adder and multiplier together using an eight-bit
+two-to-one mux to create a calculator. The calculator has an `op` input
+to select which operation we want to perform. If `op` is zero then we
+perform addition; if `op` is one then we perform multiplication. Note
+that you will need to connect just the least-significant two bits of
+input `in1` to the multiplier's input `in1`.
 
-We include an `op` input to select which operation we want to perform. If
-`op` is zero then we perform addition; if `op` is one then we perform
-multiplication. Note that you will need to connect the least-significant
-two bits of input `in1` to the multiplier's input `in1`.
-
-Implement the calculator in `Calculator_GL.v` but instantiating an
+Implement the calculator in `Calculator_GL.v` by instantiating an
 `AdderCarrySelect_8b_GL` module, an `Multiplier_2x8b_GL` module, and a
 `Mux2_8b_GL` module and then correctly connecting all of the ports. You
 will likely need some internal wires. You may also need to use an extra
@@ -473,14 +471,14 @@ Verilog snippet to avoid unused signal errors.
 ### 1.14. Calculator with Seven-Segment Displays
 
 We are finally now ready to implement the complete calculator with the
-seven-segnment displays.
-
-The inputs are only five bits, so you will need to zero extend these
-values when connect them to the inputs of the calculator. Both inputs and
-the output of the calculator should be attached to an instance of the
-five-bit numeric display module you developed in the previous lab.
-Implement the complete calculator in `CalculatorDisplay_GL.v` by
-instantiating a `Calculator_GL` module and three `Display_GL` modules.
+seven-segnment displays. The inputs are only five bits, so you will need
+to zero extend these values when connecting them to the inputs of the
+calculator. Both inputs and the output of the calculator should be
+attached to an instance of the five-bit numeric display module you
+developed in the previous lab. Implement the complete calculator in
+`CalculatorDisplay_GL.v` by instantiating a `Calculator_GL` module and
+three `Display_GL` modules and then correctly connecting all of the
+ports.
 
 2. Testing Strategy
 --------------------------------------------------------------------------
@@ -631,4 +629,3 @@ Here is how we will be testing your code submission for Lab 2 Part B:
 % ../configure
 % make check
 ```
-

@@ -224,7 +224,9 @@ borrow output and the remaining bits as the difference.
 
 Open the `Subtractor_4b_RTL.v` file and change your implementation of the
 subtractor to use `always_comb` block. Run all of the provide tests to
-verify your implementation.
+verify your implementation. Note that you might get notifications from
+`iverilog` that "constant selects are not currently supported". It is
+safe to ignore this notification.
 
 ```bash
 % cd ${HOME}/ece2300/sec05/build
