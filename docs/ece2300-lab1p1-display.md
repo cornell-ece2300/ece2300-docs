@@ -1,5 +1,5 @@
 
-Lab 1.1: Five-Bit Numeric Display Simulation
+Lab 1.1: Five-Bit Numeric Display (Code and Simulation)
 ==========================================================================
 
 Lab 1 is a warmup designed to give you experience designing,

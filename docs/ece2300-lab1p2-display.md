@@ -1,5 +1,5 @@
 
-Lab 1.2: Five-Bit Numeric Display FPGA
+Lab 1.2: Five-Bit Numeric Display (FPGA and Report)
 ==========================================================================
 
 Lab 1 is a warmup designed to give you experience designing,
