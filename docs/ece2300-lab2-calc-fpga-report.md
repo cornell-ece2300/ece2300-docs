@@ -215,7 +215,8 @@ two block diagrams shown below. You do not need to redraw these yourself.
 !!! success "Lab Check-Off Task 3: Discuss Predicted Adder Critical Paths"
 
     Show a TA your block diagrams with the critical paths. Explain to the
-    TA which design should have a shorter critical path and why.
+    TA which design should have a shorter critical path and why. How much
+    shorter will the critical path be?
 
 ### 3.1. Synthesize and Analyze Ripple-Carry Adder
 
@@ -293,9 +294,9 @@ the RTL viewer, technology map viewer, and chip planner.
 
 The next step is to analyze the area of your design.
 
- - Choose _Processing -> Compilation Report_ from the menu. Under _Table
-   of Contents_ choose _Fitter > Resource Section > Resource Usage
-   Summary_
+ - Choose _Processing -> Compilation Report_ from the menu
+ - Under _Table of Contents_ choose _Fitter > Resource Section > Resource
+   Usage Summary_
  - Look through the report to determine the number of combinational ALUTs
    (configurable look-up tables) are used for your design
 
@@ -342,9 +343,14 @@ You will be working to fill in this table:
 
 Make a copy of this table, and enter in the data for your ripple-carry
 adder with a 20ns critical path delay constraint. You can find the number
-of 7-input ALUts, 6-input ALUts, etc in the area report. The critical
-path delay is just the _Data Delay_ of the slowest path in the timing
-report.
+of 7-input ALUts, 6-input ALUts, etc in the area report. You can save
+time by not generating a brand new timing report. You can instead simply
+use the following steps.
+
+ - Choose _Processing -> Compilation Report_ from the menu
+ - Under _Table of Contents_ choose _Timing Analyzer > Slow 1100mV 85C
+     Model > Setup Summary_
+ - The critical path delay is just the constraint minus the slack
 
 Then iteratively reduce the timing constraint until your design no longer
 meets timing. If the data delay is 14ns with a timing constraint of 20ns,
@@ -571,7 +577,7 @@ increase the constraint by 1ns and try again.
     fits on a single page. **If you do not follow this requirements then
     we will ignore your critical path in the lab report.**
 
-!!! success "Lab Check-Off Task 7: Discuss Area and Delay Analysis for All Adders"
+!!! success "Lab Check-Off Task 7: Discuss Area and Delay Analysis for Multipliers"
 
     Show a TA your completed data table with your analysis for both
     multipliers. Use your experimental data to quantitatively explain to
@@ -683,7 +689,10 @@ specification.
     you to enter two binary numbers using the switches. **You must
     determine the correct decimal values first, tell the TA what the
     correct decimal value should be for both addition and multiplication,
-    and only then set the switches to confirm correct operation.**
+    and only then set the switches to confirm correct operation.** Your
+    calculator must display the digits in the correct locations and
+    perform addition by default and multiplication when the button is
+    pressed.
 
 !!! success "Lab Check-Off Task 9: Turn In FPGA Board"
 
