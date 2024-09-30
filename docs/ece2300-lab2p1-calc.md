@@ -1,5 +1,5 @@
 
-Lab 2.1: Calculator (Code and Simulation)
+Lab 2: Two-Function Calculator (Code and Simulation)
 ==========================================================================
 
 Lab 2 will give you experience designing, implementing, testing, and
@@ -11,9 +11,9 @@ modularity, hierarchy, and regularity. This lab will give students
 experience with several combinational building blocks including
 multiplexors, adders, and multipliers.
 
-You will be implementing a simple calculator that takes as input two
-binary values and then calculates either the sum or the product of these
-two values. The input values and the result will be displayed on
+You will be implementing a two-function calculator that takes as input
+two binary values and then calculates either the sum or the product of
+these two values. The input values and the result will be displayed on
 seven-segment displays using your Verilog hardware design from Lab 1.
 Parts of the calculator will be used in future labs. Your implementation
 will mostly use combinational logic gates and/or Boolean equations, but
@@ -192,13 +192,13 @@ cases can be used for `Multiplier_2x8b_GL` and `Multiplier_2x8b_RTL`).
 
 You will be implementing and composing a variety of combinational
 building blocks including muxes, adders, and multipliers; ultimately you
-will be composing combinational building blocks to implement a simple
-calculator that takes as input two binary values and then calculates
-either the sum or the product of these two values. This section describe
-the required _interface_ (i.e., the ports for the module and the module's
-functional behavior) before describing the required _implementation_
-(i.e., what goes inside the module) for each combinational building
-block.
+will be composing combinational building blocks to implement a
+two-function calculator that takes as input two binary values and then
+calculates either the sum or the product of these two values. This
+section describe the required _interface_ (i.e., the ports for the module
+and the module's functional behavior) before describing the required
+_implementation_ (i.e., what goes inside the module) for each
+combinational building block.
 
 ### 1.1. Five-Bit Numeric Display
 
@@ -453,13 +453,13 @@ the `*` operator to implement an eight-bit multiplier in a single line of
 Verilog. Implement such a two-bit by eight-bit RTL multiplier in
 `Multiplier_8b_RTL`.
 
-### 1.13. Calculator
+### 1.13. Two-Function Calculator
 
 We can now put our adder and multiplier together using an eight-bit
-two-to-one mux to create a calculator. The calculator has an `op` input
-to select which operation we want to perform. If `op` is zero then we
-perform addition; if `op` is one then we perform multiplication. Note
-that you will need to connect just the least-significant two bits of
+two-to-one mux to create a two-function calculator. The calculator has an
+`op` input to select which operation we want to perform. If `op` is zero
+then we perform addition; if `op` is one then we perform multiplication.
+Note that you will need to connect just the least-significant two bits of
 input `in1` to the multiplier's input `in1`.
 
 Implement the calculator in `Calculator_GL.v` by instantiating an
@@ -468,7 +468,7 @@ Implement the calculator in `Calculator_GL.v` by instantiating an
 will likely need some internal wires. You may also need to use an extra
 Verilog snippet to avoid unused signal errors.
 
-### 1.14. Calculator with Seven-Segment Displays
+### 1.14. Two-Function Calculator with Seven-Segment Displays
 
 We are finally now ready to implement the complete calculator with the
 seven-segnment displays. The inputs are only five bits, so you will need
@@ -570,8 +570,8 @@ outputs give the corresponding random inputs.
 
 We have provided you a simple calculator simulator which will emulate
 what you will prototype during the Lab 2 FPGA week. After finishing your
-implementation for the complete calculator, you can build and run the
-calculator simulator like this:
+implementation for the complete two-function calculator, you can build
+and run the calculator simulator like this:
 
 ```
 % cd ${HOME}/ece2300/groupXX/lab2-calc/build

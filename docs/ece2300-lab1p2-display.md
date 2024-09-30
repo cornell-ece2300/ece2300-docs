@@ -1,5 +1,5 @@
 
-Lab 1.2: Five-Bit Numeric Display (FPGA and Report)
+Lab 1: Five-Bit Numeric Display (FPGA and Report)
 ==========================================================================
 
 Lab 1 is a warmup designed to give you experience designing,
@@ -41,6 +41,12 @@ Here are the steps to get started:
 Throughout this handout you will see two kinds tasks: lab check-off tasks
 and lab report tasks.
 
+For each _lab report task_ you must take some notes, save a screenshot,
+and/or record some data for your lab report. Students can start working
+on their lab report during their lab session, but will likely need to
+continue working on their lab report after the lab session. The lab
+report is due on Thursday at 11:59pm.
+
 For each _lab check-off task_ you must raise your hand and have a TA come
 to check-off your work. The TA will ask you the questions included as
 part of the lab check-off task and the assess your understanding using
@@ -48,12 +54,6 @@ the following rubric: mastery; accomplished; emerging; beginning. If the
 TA and students together feel the students have not mastered the lab
 check-off task, the students are encouraged to take a few minutes and try
 again.
-
-For each _lab report task_ you must take some notes, save a screenshot,
-and/or record some data for your lab report. Students can start working
-on their lab report during their lab session, but will likely need to
-continue working on their lab report after the lab session. The lab
-report is due on Thursday at 11:59pm.
 
 !!! success "Lab Check-Off Task 1: Setup FPGA Board"
 
@@ -74,12 +74,13 @@ date.
 
 ```bash
 % source setup-ece2300.sh
-% cd ${HOME}/ece2300
+% cd ${HOME}/ece2300/netid
 % git pull
 % tree
 ```
 
-Now run all of the tests to ensure your design is fully functional.
+Where `netid` is your Cornell NetID. Now run all of the tests to ensure
+your design is fully functional.
 
 ```bash
 % cd ${HOME}/ece2300/netid
@@ -112,7 +113,7 @@ workstation. This requires multiple steps.
    the workstation to log into GitHub and then find your repository
 
  - Step 2. Start PowerShell by clicking the _Start_ menu then searching
-   for _Windeos PowerShell_
+   for _Windows PowerShell_
 
  - Step 3. Clone your repo onto the workstation by using this command in
    PowerShell (where `netid` is your Cornell NetID, **notice we are using
@@ -152,7 +153,7 @@ workstation. This requires multiple steps.
 
 Click _Quartus (Quartus Prime 19.1)_ on the desktop to start Quartus, and
 click _Run the Quartus Prime software_. You might need to try starting
-Quartus twice. Setup a new quartus project using the _New Project
+Quartus twice. Setup a new Quartus project using the _New Project
 Wizard_:
 
  - Directory, Name, Top-Level Entity
@@ -306,13 +307,15 @@ the RTL viewer, technology map viewer, and chip planner.
 
 The next step is to analyze the area of your design.
 
- - Choose _Processing -> Compilation Report_ from the menu. Under _Table of Contents_ 
-   choose _Fitter > Resource Section > Resource Usage Summary_
+ - Choose _Processing -> Compilation Report_ from the menu. Under _Table
+   of Contents_ choose _Fitter > Resource Section > Resource Usage
+   Summary_
  - Look through the report to determine the number of combinational ALUTs
    (configurable look-up tables) are used for your design
 
 The final step is to analyze the timing (i.e., the critical path delay)
-of your design. We will analyze timing for the **Slow 1100mV 85C Model** which is the default choice in the Timing Analyzer.
+of your design. We will analyze timing for the _Slow 1100mV 85C Model_
+which is the default choice in the Timing Analyzer.
 
  - Choose _Tools > Timing Analyzer_ from the menu
  - Double-click _Update Timing Netlist_
@@ -389,7 +392,7 @@ timing. The data delay for the final experiment where the design meets
 timing is the "true minium critical path delay". You should enter at
 least four rows into the table, but you can enter more if you need to.
 
-!!! note "Lab Report Task 3: Save Unoptimized Analysis Data Table"
+!!! note "Lab Report Task 3: Unoptimized Analysis Data Table"
 
     Save your completed data table with your analysis of the unoptimized
     design and include it in your report.
@@ -454,7 +457,7 @@ the RTL viewer, technology map viewer, and chip planner.
  - RTL Viewer
     + Choose _Tools > Netlist Viewer > RTL Viewer_ from the menu
     + Drill down in the hierarchy to see the netlist for `BinaryToSevenSegOpt_GL`
-    + **How does this compare to your unoptimized design?**
+    + How does this compare to your unoptimized design?
     + Choose _File > Close_ from menu to close the RTL viewer
  - Technology Map Viewer
     + Choose _Tools > Netlist Viewer > Technology Map Viewer (Post-Fitting)_
@@ -462,12 +465,12 @@ the RTL viewer, technology map viewer, and chip planner.
     + In _Netlist Navigator_ choose _DE0_CV_golden_top > Instances > DisplayOpt_GL_
     + Drag _DisplayOpt_GL_ into the empty tab
     + Drill down in the hierarchy to see the implementation of `BinaryToSevenSegOpt_GL`
-    + **How does this compare to your unoptimized design?**
+    + How does this compare to your unoptimized design?
     + Choose _File > Close_ from the menu to close the technology map viewer
  - Chip Planner
     + Choose _Tools > Chip Planner_ from the menu
     + Identify where the logic used to implement your design is located in the FPGA
-    + **How does this compare to your unoptimized design?**
+    + How does this compare to your unoptimized design?
     + Choose _File > Close_ from the menu to close the chip planner
 
 !!! note "Lab Report Task 4: RTL Viewer for Optimized Design"
@@ -549,7 +552,7 @@ design no longer meets timing, updating the table as you go along. You
 should enter at least four rows into the table, but you can enter more if
 you need to.
 
-!!! note "Lab Report Task 6: Save Optimized Analysis Data Table"
+!!! note "Lab Report Task 6: Optimized Analysis Data Table"
 
     Save your completed data table with your analysis of the optimized
     design and include it in your report.
@@ -670,7 +673,7 @@ sentences.
 
 #### Section 3: Comparative Analysis (three paragraphs)
 
- - Paragraph 1: Verilog Analysis
+ - Paragraph 1: Verilog Comparison
     + Include the [Verilog data
        table](https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=446446324)
        mentioned above in the appendix
@@ -685,7 +688,7 @@ sentences.
        vs optimized designs based just on the original Verilog
     + Include a sentence discussing the RTL Viewer screenshots
 
- - Paragraph 2: FPGA Area Analysis
+ - Paragraph 2: FPGA Area Comparison
     + Include the [FPGA data
        table](https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=0#gid=0)
        in the appendix
@@ -696,7 +699,7 @@ sentences.
     + Include a sentence relating this FPGA comparison to your comparison
        based purely on the simple Verilog area model.
 
- - Paragraph 3: FPGA Delay Analysis
+ - Paragraph 3: FPGA Delay Comparison
     + Include the critical path screenshots for both the unoptimized
        and optimized design in the appendix
     + Include a sentence referencing the delay data in the FPGA data
