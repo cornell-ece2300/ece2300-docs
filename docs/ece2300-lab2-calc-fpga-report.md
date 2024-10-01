@@ -438,7 +438,7 @@ report. So when using the Timing Analyzer to create the timing report
 complete the following two steps:
 
   + Check _File name_
-  + Enter file name as `AdderRippleCarry_8b_GL-critical-path.txt`
+  + Enter file name as `AdderCarrySelect_8b_GL-critical-path.txt`
 
 Find and open this timing report text file. It should be in the `lab2`
 subdirectory. Make sure there is only a single critical path in the
