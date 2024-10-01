@@ -79,6 +79,7 @@ build to ensure your design is fully functional.
 ```bash
 % cd ${HOME}/ece2300/groupXX
 % trash build
+% mkdir build
 % cd build
 % ../configure
 % make check
