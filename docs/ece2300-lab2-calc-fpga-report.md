@@ -77,7 +77,7 @@ Where `XX` is your group number. Now run all of the tests from a clean
 build to ensure your design is fully functional.
 
 ```bash
-% cd ${HOME}/ece2300/groupXX
+% cd ${HOME}/ece2300/groupXX/lab2-calc
 % trash build
 % mkdir build
 % cd build
