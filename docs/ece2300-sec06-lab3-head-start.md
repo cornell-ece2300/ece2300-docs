@@ -93,9 +93,8 @@ each line.
 --------------------------------------------------------------------------
 
 Copy your 1-bit 2-to-1 multiplexor and your 8-bit RTL adder from Lab 2
-into the `hw` directory for this discussion section. Copy your test
-benches for both of these hardware modules into the `test` directory for
-this discussion section. Verify that these hardware modules are working.
+into the `hw` directory for this discussion section. Verify that these
+hardware modules are working.
 
 ```bah
 % cd ${HOME}/ece2300/sec06/build
