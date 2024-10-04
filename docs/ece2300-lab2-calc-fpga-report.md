@@ -354,14 +354,12 @@ use the following steps.
  - The critical path delay is just the constraint minus the slack
 
 Then iteratively reduce the timing constraint until your design no longer
-meets timing. If the data delay is 14ns with a timing constraint of 20ns,
-we recommend you reduce the timing constraint to 14ns and try again. You
-want to find the a timing constraint where the design meets timing, but
-if we reduce the timing constraint by 1ns the design would no longer meet
-timing. The data delay for the final experiment where the design meets
-timing is the "true minimum critical path delay". You only need to enter
-as many rows as necessary to figure out the truth minimum critical path
-delay.
+meets timing. We are interested in the limit on the critical path
+delay (i.e., what is the true minimum critical path delay) so we can
+compare our unoptimized and optimized designs. To find the limit, we need
+to iteratively reduce the critical path timing constraint until we no
+longer meet timing. We can consider the shortest critical path delay
+while still meeting timing as the "true minimum critical path delay".
 
 Once you have found the minimum timing constraint which still meets
 timing, use the Timing Analyzer to find the corresponding critical path.
