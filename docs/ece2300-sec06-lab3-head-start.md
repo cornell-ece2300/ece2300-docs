@@ -46,7 +46,7 @@ clone the repo as follows.
 % source setup-ece2300.sh
 % mkdir -p ${HOME}/ece2300
 % cd ${HOME}/ece2300
-% git clone git@github.com:cornell-ece2300/ece2300-sec05-verilog-rtl sec06
+% git clone git@github.com:cornell-ece2300/ece2300-sec06-lab3-head-start sec06
 % cd sec06
 % tree
 ```
