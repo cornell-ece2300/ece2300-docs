@@ -466,7 +466,7 @@ note is stored in one 4-byte word using the following encoding:
  SONG_END  32'hffffffff
 ```
 
-Each song can have a maximum of 128 notes. The value `0xFFFF_FFFF` (i.e.,
+Each song can have a maximum of 128 notes. The value `32'hFFFF_FFFF` (i.e.,
 all ones) is used to indicate the end of a song. The music player can play
 up to 32 songs; so the music player will only use 
 $32 \text{ songs} \cdot \frac{128 \text{ notes}}{\text{song}} \cdot 
