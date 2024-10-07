@@ -43,6 +43,8 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
 
 # markdown_extensions:
 #   - pymdownx.arithmatex
@@ -60,6 +62,9 @@ extra_css:
 extra_javascript:
   - 'js/extras.js'
   - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
+  # pymdownx.arithmatex
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 # Pages
 
