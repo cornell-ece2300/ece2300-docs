@@ -466,9 +466,11 @@ note is stored in one 4-byte word using the following encoding:
  SONG_END  32'hffffffff
 ```
 
-Each song can have a maximum of 128 notes. The value FFFF_FFFF (i.e., all
-ones) is used to indicate the end of a song. The music player can play up
-to 16 songs; so the music player will only use 16*128*4B = 8KB of
+Each song can have a maximum of 128 notes. The value `0xFFFF_FFFF` (i.e.,
+all ones) is used to indicate the end of a song. The music player can play
+up to 32 songs; so the music player will only use 
+$`32 \text{ songs} * \frac{128 \text{ notes}}{\text{song}} * 
+\frac{4B}{\text{note}} = 16KB`$ of
 storage. The song _memory map_ (i.e., how the songs are arranged in
 memory) looks like this:
 
@@ -496,7 +498,7 @@ memory map, we can see that the starting memory address for a song is
 just:
 
 ```
-  { 5'b0, song_sel, 9'b0 }
+  { 2'b0, song_sel, 9'b0 }
 ```
 
 The counter will then need to increment this memory by four (because we
