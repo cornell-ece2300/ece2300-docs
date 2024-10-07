@@ -80,10 +80,11 @@ nav:
 
   - 'Lab Assignments':
     - 'FPGA Development Primer': ece2300-fpga-primer.md
-    - 'Lab 1: Five-Bit Numeric Display (Code and Simulation)' : ece2300-lab1p1-display.md
-    - 'Lab 1: Five-Bit Numeric Display (FPGA and Report)' : ece2300-lab1p2-display.md
-    - 'Lab 2: Two-Function Calculator (Code and Simulation)' : ece2300-lab2p1-calc.md
-    - 'Lab 2: Two-Function Calculator (FPGA and Report)' : ece2300-lab2-calc-fpga-report.md
+    - 'Lab 1 (Parts A & B): Five-Bit Numeric Display -- Implementation and Verification' : ece2300-lab1p1-display.md
+    - 'Lab 1 (Parts C & D): Five-Bit Numeric Display -- FPGA Analysis/Prototyping and Report' : ece2300-lab1p2-display.md
+    - 'Lab 2 (Parts A & B): Two-Function Calculator -- Implementation and Verification' : ece2300-lab2p1-calc.md
+    - 'Lab 2 (Parts C & D): Two-Function Calculator -- FPGA Analysis/Prototyping and Report' : ece2300-lab2-calc-fpga-report.md
+    - 'Lab 3 (Parts A & B): Music-Player -- Implementation and Verification' : ece2300-lab3ab-music.md
 
 #  - 'Misc':
 #    - 'Testing and Debug Strategy': ece2300-test-debug-strategy.md
