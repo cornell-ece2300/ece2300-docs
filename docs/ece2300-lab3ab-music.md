@@ -277,10 +277,12 @@ the load input (`load`) is high, then the counter should load the value
 on the input (`in`) into the internal counter. 
 
 When `load` is not high (no new value is being loaded), the counter should
-decrement by one every cycle until it reaches zero at which point the
-done output (`done`) should be set to one. The input (`in`) must be
-positive. Since we are using a two's complement number representation the
-maximum allowed value for the input is 127.
+decrement by one every cycle until it reaches zero, at which point the
+done output (`done`) should be set to one. Once the counter is done, it
+should no longer decrement until a new value is loaded.
+
+The input (`in`) must be positive. Since we are using a two's complement 
+number representation, the maximum allowed value for the input is 127.
 
 Here is a trace of the expected output when counting down from three.
 
