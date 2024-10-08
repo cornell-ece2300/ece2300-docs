@@ -274,7 +274,9 @@ The count-down counter has the following interface:
 
 The reset input (`rst`) should reset the internal counter to zero. When
 the load input (`load`) is high, then the counter should load the value
-on the input (`in`) into the internal counter. The counter should
+on the input (`in`) into the internal counter. 
+
+When `load` is not high (no new value is being loaded), the counter should
 decrement by one every cycle until it reaches zero at which point the
 done output (`done`) should be set to one. The input (`in`) must be
 positive. Since we are using a two's complement number representation the
