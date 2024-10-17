@@ -353,7 +353,7 @@ count-down counter, set the note output to be high, and move into the
 WAIT_HIGH. In the WAIT_HIGH state, the FSM should continue to set the note
 output to be high. Once the counter is done, the FSM should move into the
 LOAD_LOW state. In the LOAD_LOW state, the FSM should load the period
-into the count-down counter, set the note output to be high, and move
+into the count-down counter, set the note output to be low, and move
 into the WAIT_LOW. In the WAIT_LOW state, the FSM should continue to set
 the note output to be low. Once the counter is again done, the FSM should
 move back to the LOAD_HIGH state to repeat the sequence.
