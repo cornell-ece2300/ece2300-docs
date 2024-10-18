@@ -274,14 +274,14 @@ The count-down counter has the following interface:
 
 The reset input (`rst`) should reset the internal counter to zero. When
 the load input (`load`) is high, then the counter should load the value
-on the input (`in`) into the internal counter. 
+on the input (`in`) into the internal counter.
 
-When `load` is not high (no new value is being loaded), the counter should
-decrement by one every cycle until it reaches zero, at which point the
-done output (`done`) should be set to one. Once the counter is done, it
-should no longer decrement until a new value is loaded.
+When `load` is not high (no new value is being loaded), the counter
+should decrement by one every cycle until it reaches zero, at which point
+the done output (`done`) should be set to one. Once the counter is done,
+it should no longer decrement until a new value is loaded.
 
-The input (`in`) must be positive. Since we are using a two's complement 
+The input (`in`) must be positive. Since we are using a two's complement
 number representation, the maximum allowed value for the input is 127.
 
 Here is a trace of the expected output when counting down from three.
@@ -300,15 +300,15 @@ Pay careful attention to the exact cycle the output count is set to
 three and the exact cycle the done signal is set to one. Your counter
 must produce the exact same cycle-level behavior.
 
-You are responsible for designing your own GL eight-bit counter that meets this
-specification. Your GL implementation _must_ make use of the GL muxes, GL
-registers, and GL subtractor. Do _not_ put any logic on the reset signal.
-The reset signal should be directly attached to the reset input port of
-the register without any logic. Do _not_ put any logic on the clock. The
-clock signal should be directly attached to the clock input port of the
-register without any logic. Start by drawing a block-level diagram. You
-will need to show this diagram in lab for Part C and include this diagram
-in the report for Part D.
+You are responsible for designing your own GL eight-bit counter that
+meets this specification. Your GL implementation _must_ make use of the
+GL muxes, GL registers, and GL subtractor. Do _not_ put any logic on the
+reset signal. The reset signal should be directly attached to the reset
+input port of the register without any logic. Do _not_ put any logic on
+the clock. The clock signal should be directly attached to the clock
+input port of the register without any logic. Start by drawing a
+block-level diagram. You will need to show this diagram in lab for Part C
+and include this diagram in the report for Part D.
 
 You are also responsible for designing your own RTL eight-bit and 16-bit
 counters that meet this specification. Your RTL counters _must_
@@ -470,10 +470,10 @@ note is stored in one 4-byte word using the following encoding:
  SONG_END  32'hffffffff
 ```
 
-Each song can have a maximum of 128 notes. The value `32'hFFFF_FFFF` (i.e.,
-all ones) is used to indicate the end of a song. The music player can play
-up to 32 songs; so the music player will only use 
-$32 \text{ songs} \cdot \frac{128 \text{ notes}}{\text{song}} \cdot 
+Each song can have a maximum of 128 notes. The value `32'hFFFF_FFFF`
+(i.e., all ones) is used to indicate the end of a song. The music player
+can play up to 32 songs; so the music player will only use $32 \text{
+songs} \cdot \frac{128 \text{ notes}}{\text{song}} \cdot
 \frac{4B}{\text{note}} = 16KB$ of storage. The song _memory map_ (i.e.,
 how the songs are arranged in memory) looks like this:
 
@@ -506,7 +506,10 @@ just:
 
 The counter will then need to increment this memory by four (because we
 are using memory byte addresses and each note is four bytes) so the music
-player can read the next note.
+player can read the next note. This counter should be implemented by
+instantiating a register and then using _flat_ combinational logic within
+the music player. You cannot use your previously developed counter since
+you need to increment by four each time.
 
 The control unit should be implemented using the following four-state
 Mealy FSM.
