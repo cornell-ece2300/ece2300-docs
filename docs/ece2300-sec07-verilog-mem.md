@@ -275,26 +275,7 @@ We have provided you the interface for a parameterized decoder in
 
     Use what you have learned to create a Verilog hardware design that
     implements a parameterized decoder. You should have a single
-    `always_comb` block.
-
-### 3.2. Testing a Parameterized Decoder
-
-You can run the test simulator for the decoder as follows. Currently we are
-only testing a 2-to-4 decoder.
-
-```bash
-% cd ${HOME}/ece2300/sec07/build
-% make Decoder_RTL-test
-% ./Decoder_RTL-test
-```
-
-!!! question "Activity 4: Test Parameterized Decoder"
-
-    Instantiate `TestDecoder` two more times to test a 3-to-8 decoder and
-    a 4-to-16 decoder. Use `run_test_suite` in the top-level initial
-    block to run these two new test suites. Build and run the updated
-    test simulator to verify the parameterized mux works for a variety of
-    different parameters.
+    `always_comb` block. Then run the tests in `Decoder_RTL-test.v`.
 
 4. Implementing and Testing a Parameterized RTL Register
 --------------------------------------------------------------------------
@@ -319,31 +300,13 @@ module Register_RTL
 );
 ```
 
-!!! question "Activity 5: Implement a Parameterized Register"
+!!! question "Activity 4: Implement a Parameterized Register"
 
     Use what you have learned to create a Verilog hardware design that
     implements a parameterized register. You should have a single
     `always_ff` block with an if/else conditional operation to handle the
-    reset and enable signals.
-
-### 3.2. Testing a Parameterized Register
-
-You can run the test simulator for the register as follows. Currently we
-are only testing a 1-bit register.
-
-```bash
-% cd ${HOME}/ece2300/sec07/build
-% make Register_RTL-test
-% ./Register_RTL-test
-```
-
-!!! question "Activity 6: Test Parameterized Register"
-
-    Instantiate `TestRegister` two more times to test a 5-bit and 32-bit
-    register. Use `run_test_suite` in the top-level initial block to run
-    these two new test suites. Build and run the updated test simulator
-    to verify the parameterized mux works for a variety of different
-    parameters.
+    reset and enable signals. Then run the tests in
+    `Register_RTL-test.v`.
 
 5. Implementing and Testing a Structural Register File
 --------------------------------------------------------------------------
@@ -435,7 +398,7 @@ The following construct from the template creates an _array_ of signals:
 
 This creates an array of four signals, each signal is four-bits.
 
-!!! question "Activity 7: Implement and Test Structural Register File"
+!!! question "Activity 5: Implement and Test Structural Register File"
 
     Instantiate your 4-bit register using your parameterized register in
     the template. Verify your register file works using the provided test
@@ -462,7 +425,7 @@ the second signal in this array.
   end
 ```
 
-!!! question "Activity 8: Implement and Test Flat Register File"
+!!! question "Activity 6: Implement and Test Flat Register File"
 
     Implement the flat register file using a single `always_ff` block and
     a single `always_comb` block. Verify your register file works using
