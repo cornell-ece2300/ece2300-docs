@@ -139,8 +139,8 @@ following Verilog constructs.
  - `&`, `~&`, `|`, `~|`, `^`, `^~` (reduction operators)
  - `?:` (ternary operator)
  - `always_comb`, `always_ff @(posedge clk)`
- - `if`, `endif`
- - `case`, `endcase`
+ - `if`, `else if`, `endif`
+ - `case`, `default`, `endcase`
 
 Note that some hardware modules have more specific restrictions; see the
 source comments for more details. Using unallowed Verilog constructs will

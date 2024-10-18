@@ -82,6 +82,7 @@ nav:
     - 'Section 4: Lab 2 Head Start': ece2300-sec04-lab2-head-start.md
     - 'Section 5: Verilog Combinational RTL Design': ece2300-sec05-verilog-rtl.md
     - 'Section 6: Lab 3 Head Start': ece2300-sec06-lab3-head-start.md
+    - 'Section 7: Verilog Memory Arrays': ece2300-sec07-verilog-mem.md
 
   - 'Lab Assignments':
     - 'FPGA Development Primer': ece2300-fpga-primer.md
