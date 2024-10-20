@@ -628,35 +628,35 @@ help):
    turn it on
  - Connect the main probe of `CH 1` to the first GPIO of `GPIO_0`
  - Connect the ground clip of `CH 1` to ground
- - Click on "DEFAULT SETUP" to first go to the default setup for the
+ - Click on _DEFAULT SETUP_ to first go to the default setup for the
    oscilloscope
- - Click the "CH 2 MENU" button
+ - Click the _CH 2 MENU_ button
     - Clicking this repeatedly will toggle whether Channel 2 is displayed
-      We only need one channel; turn Channel 2 off, then click "MEASURE"
+      We only need one channel; turn Channel 2 off, then click _MEASURE_
       to return to the main measurement window
- - Adjust the "VOLTS/DIV" dial of `CH 1` to achieve a scale of 1.00V
+ - Adjust the _VOLTS/DIV_ dial of `CH 1` to achieve a scale of 1.00V
    (referencing the bottom-left of the display)
- - Adjust the "POSITION" dial of `CH 1` so that the static bar is about
-   25% from the bottom of the display
- - Adjust the "SEC/DIV" dial to achieve a time division of 5.00ms
+ - Adjust the _POSITION_ dial of `CH 1` so that the static bar is about
+   25% of the way from the bottom of the display
+ - Adjust the _SEC/DIV_ dial to achieve a time division of 2.50ms
    (referencing the bottom-middle of the display)
- - Press "TRIG MENU"
-    - Make sure that "Type" is `EDGE`, "Source" is `CH 1`, and "Slope"
-      is `RISING` (adjusting any if needed). Once done, click "MEASURE"
+ - Press _TRIG MENU_
+    - Make sure that _Type_ is `EDGE`, _Source_ is `CH 1`, and _Slope_
+      is `RISING` (adjusting any if needed). Once done, click _MEASURE_
       to go back to the main measurement window
- - Using the "LEVEL" dial of the Trigger setup, adjust the trigger to
+ - Using the _LEVEL_ dial of the Trigger setup, adjust the trigger to
    be 1.00V (referencing the bottom-right of the display). This tells
    the oscilloscope at what value to capture a signal change
 
 You should initially see static. Try playing a note; you should see
 some signal. Now, let's capture this data from the oscilloscope:
 
- - Press "SINGLE SEQ" to start a capture
+ - Press _SINGLE SEQ_ to start a single capture
  - Play a note on the FPGA. You should see the captured waveform on the
    oscilloscope
- - Press "CURSOR":
-    - Change "Type" to `TIME`
-    - Using the buttons to the left of the display, click on "Cursor 1".
+ - Press _CURSOR_:
+    - Change _Type_ to `TIME` by pressing the button next to it repeatedly
+    - Using the buttons to the left of the display, click on _Cursor 1_.
       Using the large dial next the display, adjust the cursor to be on a
       positive edge of the note. Similarly, adjust Cursor 2 to be on a
       neighboring positive edge
@@ -680,7 +680,7 @@ understand why this might happen based on the underlying hardware
        USB Drive
         - A clock will appear on the side; wait for it to disappear
 
-    This image will save in a new folder on the drive as a `.BPM` file
+    This image will save in a new folder on the drive as a `.BMP` file
     (for which there are converters online to other image types). Once
     saved, you can connect the drive to either your own computer or the
     lab machine to get the image.
