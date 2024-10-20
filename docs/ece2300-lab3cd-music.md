@@ -624,7 +624,7 @@ Connect the two __F-M Jumper Wires__:
 From there, we can connect these to the oscilloscope (ask a TA if you need
 help):
 
- - Press the button on the top of the oscilloscope (on the right) to
+ - Press the button on the top of the oscilloscope (on the left) to
    turn it on
  - Connect the main probe of `CH 1` to the first GPIO of `GPIO_0`
  - Connect the ground clip of `CH 1` to ground
