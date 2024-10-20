@@ -493,12 +493,12 @@ The on-board clock signal (`CLOCK_50`) is a 50MHz clock. This is far too
 fast to have our notes be audible. Because of this, students are
 provided a `ClockDiv` module that divides the clock (decreases the
 frequency) by a parametrizable amount. To perform the necessary clock
-division by a factor of $2^{11}$ for our desired clock frequency of
+division by a factor of $2^{10}$ for our desired clock frequency of
 $\approx48828\text{Hz}$, students should now assign the `clk` signal to
 be an output of an instantiated clock divider, as shown below:
 
 ```verilog
-ClockDiv_RTL #(10) clock_div
+ClockDiv_RTL #(9) clock_div
 (
   .clk_in  (CLOCK_50),
   .rst     (rst),
