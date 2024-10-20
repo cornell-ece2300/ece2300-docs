@@ -65,6 +65,8 @@ additional hardware:
 
 ![](img/lab3-hardware.jpg)
 
+![](img/lab3-oscilloscope.png)
+
 !!! warning "Please be delicate!"
 
     Real hardware can often be delicate and fragile. As a general rule,
@@ -715,3 +717,7 @@ differs in frequency.
 
     Finally, connect the piezo buzzer to the FPGA, and demonstrate that
     you can play the desired note.
+
+# TBD
+
+![](img/lab3-musicplayer-fpga.png)
