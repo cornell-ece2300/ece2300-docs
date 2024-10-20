@@ -548,15 +548,15 @@ port connections to meet the following specification:
    Part A for more details):
 
 ```
-                    freq
-port         hex    (Hz) note
-note1_period 0x7b 195.31 G3
-note1_period 0x6d 219.95 A3
-note1_period 0x61 246.61 B3
-note1_period 0x5b 262.52 C4
-note1_period 0x51 294.15 D4
-note1_period 0x48 329.92 E4
-note1_period 0x44 348.77 F4
+                     freq
+port         hex     (Hz) note
+note1_period 8'h7b 195.31 G3
+note2_period 8'h6d 219.95 A3
+note3_period 8'h61 246.61 B3
+note4_period 8'h5b 262.52 C4
+note5_period 8'h51 294.15 D4
+note6_period 8'h48 329.92 E4
+note7_period 8'h44 348.77 F4
 ```
 
 In addition to the above, students should re-use their `Display` module
