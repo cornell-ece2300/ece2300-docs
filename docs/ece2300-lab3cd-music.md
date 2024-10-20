@@ -587,7 +587,7 @@ on the FPGA:
  - Identify where the logic used to implement your design is located in the FPGA
  - Choose _File > Close_ from the menu to close the chip planner
 
-#### Synthesize and Configure
+### Synthesize and Configure
 
 From here, choose  _Processing > Start Compilation_ from the menu to 
 synthesize your design. Once completed, we can configure the FPGA:
@@ -617,6 +617,7 @@ from the manual below:
 ![](img/lab3-gpio-location.png)
 
 Connect the two __F-M Jumper Wires__:
+
  - Connect the input of one to the first GPIO of `GPIO_0` (look on the
    board for the label)
  - Connect the input of the other to ground
