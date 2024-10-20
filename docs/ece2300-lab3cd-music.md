@@ -299,8 +299,8 @@ area reports may additionally help.
      - (3) The logic that determines what should be the next stored count
      - (4) The logic that determines whether the counter is done
 
-   In addition, save the values of the combinational ALUTs and dedicated
-   logic registers used for your design.
+    In addition, save the values of the combinational ALUTs and dedicated
+    logic registers used for your design.
 
 !!! success "Lab Check-Off Task 3: Discuss Mapping and Timing of Gate-Level Counter"
 
@@ -337,13 +337,13 @@ the area utilization, as well as conducting timing analysis.
      - (3) The logic that determines what should be the next stored count
      - (4) The logic that determines whether the counter is done
 
-   For the lab report, you will be asked to provide a version of this
-   screenshot annotated with the corresponding snippets of RTL code. Make
-   sure that you note down the locations above, to be used when
-   annotating.
+    For the lab report, you will be asked to provide a version of this
+    screenshot annotated with the corresponding snippets of RTL code. Make
+    sure that you note down the locations above, to be used when
+    annotating.
    
-   In addition, save the values of the combinational ALUTs and dedicated
-   logic registers used for your design.
+    In addition, save the values of the combinational ALUTs and dedicated
+    logic registers used for your design.
 
 !!! note "Lab Report Task 4: Data Table and Critical Path Report for RTL Counter"
 
