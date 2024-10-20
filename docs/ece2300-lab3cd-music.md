@@ -713,7 +713,8 @@ differs in frequency.
 
     Next, connect the FPGA to the oscilloscope, and capture a waveform
     for the same switch configuration. Measure the period, and show that
-    it's identical to the simulation.
+    it's identical to the simulation. Explain to the TA why the period
+    of the first pulse might differ from the others.
 
     Finally, connect the piezo buzzer to the FPGA, and demonstrate that
     you can play the desired note.
