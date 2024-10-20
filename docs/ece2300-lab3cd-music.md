@@ -285,7 +285,7 @@ which is the default choice in the Timing Analyzer.
     design to one of the outputs
  - Choose _File > Close_ from the menu to close the timing analyzer
 
-You may run into issues completing the timing report for `Counter_8b_RTL`.
+You may run into issues completing the timing report for `Counter_8b_GL`.
 Think critically about why these reports might occur. Referencing your
 area reports may additionally help.
 
