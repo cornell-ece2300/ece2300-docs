@@ -664,10 +664,6 @@ some signal. Now, let's capture this data from the oscilloscope:
     - Note the value of $\Delta t$ shown on the side - does it match your
       simulation?
 
-If you repeat the above process, you will notice that the first captured
-cycle of the note can differ in length than the others. Make sure you can
-understand why this might happen based on the underlying hardware
-
 !!! note "Lab Report Task 6: Screenshot of MultiNotePlayer Waveform"
 
     Follow the instructions below on the oscilloscope to obtain a screen
@@ -679,7 +675,8 @@ understand why this might happen based on the underlying hardware
           $\Delta t$
      - Press "PRINT" on the oscilloscope to save a screen capture to the
        USB Drive
-        - A clock will appear on the side; wait for it to disappear
+        - A clock will appear on the side panel. This will take a minute
+          to save; just be patient.
 
     This image will save in a new folder on the drive as a `.BMP` file
     (for which there are converters online to other image types). Once
@@ -714,8 +711,7 @@ differs in frequency.
 
     Next, connect the FPGA to the oscilloscope, and capture a waveform
     for the same switch configuration. Measure the period, and show that
-    it's identical to the simulation. Explain to the TA why the period
-    of the first pulse might differ from the others.
+    it's identical to the simulation.
 
     Finally, connect the piezo buzzer to the FPGA, and demonstrate that
     you can play the desired note.
