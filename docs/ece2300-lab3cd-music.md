@@ -657,7 +657,7 @@ some signal. Now, let's capture this data from the oscilloscope:
    oscilloscope
  - Press _CURSOR_:
     - Change _Type_ to `TIME` by pressing the button next to it repeatedly
-    - Using the buttons to the left of the display, click on _Cursor 1_.
+    - Using the buttons to the right of the display, click on _Cursor 1_.
       Using the large dial next the display, adjust the cursor to be on a
       positive edge of the note. Similarly, adjust Cursor 2 to be on a
       neighboring positive edge
