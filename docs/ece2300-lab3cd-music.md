@@ -1100,6 +1100,17 @@ music player playing?
     play these songs. The TA will then ask you to play a hidden song and
     identify what song it is.
 
+!!! success "Lab Check-Off Task 10: Turn In FPGA Board"
+
+    When you are finished with your demo, pack up your FPGA development
+    board. Neatly put the board, power cable, and USB cable back in the
+    box. **Make sure to copy the oscilloscope screenshot from the USB
+    drive to your laptop. Please delete any images that are on the USB
+    drive.** Put the piezo buzzer, jumper wires, and the USB drive back
+    in the zip lock. Return the box to a TA who will then record the
+    board number on your check-off sheet, initial the final check-off,
+    and then collect your check-off sheet.
+
 6. Lab Report Submission
 --------------------------------------------------------------------------
 
