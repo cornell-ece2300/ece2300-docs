@@ -1003,20 +1003,18 @@ specification below.
   Display_GL display0
   (
     .in       (note_sel),
-    .seg_tens (/* not used */),
+    .seg_tens (HEX1),
     .seg_ones (HEX0)
   );
 
   Display_GL display1
   (
     .in       (SW[4:0]),
-    .seg_tens (/* not used */),
-    .seg_ones (HEX1)
+    .seg_tens (HEX3),
+    .seg_ones (HEX2)
   );
 
   // turn off remaining seven segment displays
-  assign HEX2 = 7'b1111111;
-  assign HEX3 = 7'b1111111;
   assign HEX4 = 7'b1111111;
   assign HEX5 = 7'b1111111;
 ```
