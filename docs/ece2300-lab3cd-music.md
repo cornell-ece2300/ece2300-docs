@@ -935,19 +935,19 @@ We are finally ready to play some tunes with our music player!
 ### 5.1. Integrate
 
 Similar to before, make sure that `DE0_CV_golden_top` is the top-level
-entity. We want to implement a multi-note player FPGA prototype with the
+entity. We want to implement a music player FPGA prototype with the
 following specification:
 
 ![](img/lab3-musicplayer-fpga.png)
 
  - `clk` and `rst` are connected appropriately
  - `note1_period`, `note2_period`, etc are set as in multi-note player
- - `play_load` is connected to the first push button
- - `play_note` is connected to the right three switches
- - `play_duration` is set to `0xBEBC` (resulting in a one second duration)
- - `play_done` is connected to the first LED
+ - `song_sel` is connected to the right five switches
+ - `start_song` is connected to the first push button
+ - `idle` is connected to the first LED
+ - `note_duration` is set to `0x2000` (resulting in a short but audible note)
  - `note` is connected to the `GPIO_0[0]` pin
- - One seven-segment display for `play_note` (note specified on switches)
+ - One seven-segment display for `song_sel` (note specified on switches)
  - One seven-segment display for `note_sel` (currently playing note)
 
 We provide you the appropriate top-level connections to implement this
