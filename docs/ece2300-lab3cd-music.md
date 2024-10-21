@@ -1,5 +1,5 @@
 
-Lab 3 (Parts C & D): Music Player Implementation and Verification
+Lab 3 (Parts C & D): Music Player - FPGA Analysis/Prototype and Report
 ==========================================================================
 
 Lab 3 is meant to give you experience designing, implementing, testing,
@@ -16,15 +16,15 @@ connection between simulation and prototyping.
 With the introduction of sequential logic, our designs can now model more
 complex and interesting designs; in particular, designs that can have
 real-world applications. You should have already worked in simulation to
-verify your `MusicPlayer` and all of the submodules in Lab 3A. In Lab 3B,
-we will be using the FPGA to emulate these designs, connecting them to
-real-world phenomena such as music. By the end of the lab, you should be
-able to play a simple song using your design, and understand the digital
-logic that allows it to happen.
+verify your music player and all of the submodules in Lab 3 Parts A and
+B. In Lab 3 Part C, we will be using the FPGA to emulate these designs,
+connecting them to real-world phenomena such as music. By the end of the
+lab, you should be able to play a simple song using your design, and
+understand the digital logic that allows it to happen.
 
 This handout assumes that you have read and understand the course
 tutorials, attended the discussion sections, and successfully completed
-Lab 2. Here are the steps to get started:
+Labs 1-2. Here are the steps to get started:
 
  - Step 1. Find your lab partner
  - Step 2. Find a free workstation
@@ -56,23 +56,19 @@ additional hardware:
  - A __piezoelectric ("piezo") buzzer__. This is a tiny speaker that can
    play our notes
  - Four __jumper wires__:
-    - Two __F-M jumper wires__. These have one "input" and one "output"
-    - Two __F-F jumper wires__. These have two "inputs"
+    + Two __F-M jumper wires__. These have one "input" and one "output"
+    + Two __F-F jumper wires__. These have two "inputs"
  - A __USB Drive__. Some of the lab report tasks will require you to
    capture waveforms from the oscilloscope. You should follow the
-   instructions to save these on your USB Drive, and transfer them to your
-   computer before leaving the lab
+   instructions to save these on your USB Drive, and transfer them to
+   your own laptop before leaving the lab.
 
 ![](img/lab3-hardware.jpg)
 
-![](img/lab3-oscilloscope.png)
-
-!!! warning "Please be delicate!"
-
-    Real hardware can often be delicate and fragile. As a general rule,
-    please do not "force" anything together, and take time and caution
-    when connecting different components. If you have any questions or
-    need assistance, please ask the TAs
+**Real hardware can often be delicate and fragile.** As a general rule,
+please do not "force" anything together, and take time and caution when
+connecting different components. If you have any questions or need
+assistance, please ask the TAs.
 
 !!! success "Lab Check-Off Task 1: Setup FPGA Board and Hardware Supplies"
 
@@ -81,7 +77,7 @@ additional hardware:
     your check-off sheet. Use the power cord to plug the FPGA board into
     an outlet, and use the USB cable to plug the FPGA board into the
     workstation. Do not use the other hardware supplies until instructed
-    to do so
+    to do so.
 
 1. Simulation of a Music Player
 --------------------------------------------------------------------------
@@ -111,12 +107,47 @@ build to ensure your design is fully functional.
 % make check
 ```
 
+We now need to get the files for your design from `ecelinux` onto the
+workstation. This requires multiple steps.
+
+ - Step 1. Click _Microsoft Edge_ on the desktop to open a web-browser on
+   the workstation to log into GitHub and then find your repository
+
+ - Step 2. Start PowerShell by clicking the _Start_ menu then searching
+   for _Windows PowerShell_
+
+ - Step 3. Clone your repo onto the workstation by using this command in
+   PowerShell (where `netid` is your Cornell NetID, **notice we are using
+   https!**):
+
+```
+% git clone https://github.com/cornell-ece2300/groupXX
+```
+
+ - Step 4. In the _Connect to GitHub_ pop-up, click _Sign in with your
+   browser_
+
+ - Step 5. You may be asked for your GitHub username again and you may be
+   asked to authorize the Git Credential Manager; click _authorize
+   git-ecosystem_
+
+ - Step 6. Verify that you have successfully cloned your repo by changing
+   into your repo and using `tree` on the workstation:
+
+```
+% cd groupXX
+% tree
+```
+
 !!! success "Lab Check-Off Task 2: Verify Tests"
 
     Show a TA that your hardware designs are passing all of your tests.
-    The TA will ask _both_ students about the two FSMs involved in their
-    design. Explain the different purposes of the two FSMs, and how the
-    states and state transitions achieve that purpose.
+    The TA will ask one student to explain the purpose of the note player
+    control FSM and to show the TA specific lines of code in the GL and
+    RTL implementation that make this a Moore FSM. The TA will ask the
+    other student to explain the purpose of the music player control FSM
+    and to show the TA specific lines of code in the RTL implementation
+    that make this a Mealy FSM.
 
 2. Setup Quartus Project
 --------------------------------------------------------------------------
@@ -156,10 +187,10 @@ Wizard_:
  - Summary
     + Click _Finish_
 
-Since we are now using RTL modeling, there is one new step, similar to Lab
-2. You must choose _Assignments > Settings_ from the menu. Then select the
-category _Compiler Settings > Verilog HDL Input_ and under _Verilog
-version_ click _SystemVerilog_. Then click _Apply_ and _OK_.
+Since we are now using RTL modeling, there is one new step, similar to
+Lab 2. You must choose _Assignments > Settings_ from the menu. Then
+select the category _Compiler Settings > Verilog HDL Input_ and under
+_Verilog version_ click _SystemVerilog_. Then click _OK_.
 
 3. Synthesize, Analyze, Integrate, and Configure Counters
 --------------------------------------------------------------------------
@@ -168,36 +199,36 @@ We will start by synthesizing and analyzing the two different counter
 implementations. Once we better understand the tradeoffs in these
 implementations, we can make high-level conclusions about their tradeoffs.
 
-!!! note "Lab Report Task 1: Predicted Counter Critical Path"
+!!! note "Lab Report Task 1: Gate-Level Counter Block Diagram"
 
-    Draw a diagram of your counter. This diagram should include
-    all gates present in your counter module, as well as high-level
-    representations of all submodules instantiated in your counter module
-    (i.e. if you instantiate a subtractor, you can draw a representation
-    of that subtractor and abstract away the internal gates).
+    Make sure you have the block diagram for your gate-level counter
+    which you prepared in Part A. If you did not draw a block diagram in
+    Part A, the you _must_ draw a diagram now. Save this diagram since
+    you will be annotating it later in the lab.
 
-    Clearly draw your predicted critical path on your block diagram. Save
-    this diagrams since you will be continuing to annotate it
-    throughout the lab.
+!!! success "Lab Check-Off Task 3: Discuss Gate-Level Counter Block Diagram"
 
-### 3.1. Synthesize and Analyze Gate-Level Counter
+    Show a TA your block diagram. Explain how loading a new value works.
+    Explain how the done signal is implemented.
+
+### 3.1. Synthesize and Analyze GL Counter
 
 To synthesize and analyze the gate-level counter in isolation first find
 the _Project Navigator_ pane and click on _Hierarchy_ to display the
-drop-down list. Choose _Files_ and select the `Counter_8b_GL.v`
-file. Right click on the file and choose _Select as Top-Level Entity_.
-Then click on _Files_ to display the drop-down list again. Choose
-_Hierarchy_ and confirm that `Counter_8b_GL` is shown as the
-only entity.
+drop-down list. Choose _Files_ and select the `Counter_8b_GL.v` file.
+Right click on the file and choose _Select as Top-Level Entity_. Then
+click on _Files_ to display the drop-down list again. Choose _Hierarchy_
+and confirm that `Counter_8b_GL` is shown as the only entity.
 
 As in Lab 2, we need to create a _timing constraint_ file. Unlike in Lab
 2, we also now need to inform the tools that there is a _clock_ signal as
-part of our design. Identifying the clock signal will make the tools
-work to ensure that our design has no setup or hold time violations.
-Similar to Lab 2, when finished, the design will either "meet timing" 
-(i.e., the actual critical path delay is less than the constraint) or "not
-meet timing" (i.e., the actual critical path delay is greater than the
-constraint).
+part of our design. Identifying the clock signal will make the tools work
+to ensure that our design has no setup or hold time violations. Similar
+to Lab 2, when finished, the design will either "meet timing" (i.e., the
+actual critical path delay is less than the constraint and there are no
+hold time violations) or "not meet timing" (i.e., the actual critical
+path delay is greater than the constraint or there are hold time
+violations).
 
 Here are the steps to create a timing constraint file:
 
@@ -215,13 +246,13 @@ We will use the following initial constraints:
 set_max_delay -from [all_inputs] -to [all_outputs] 20
 set_min_delay -from [all_inputs] -to [all_outputs] 0
 
-create_clock -period 20 [get_ports {clk}]
+create_clock -name clk -period 20 [get_ports {clk}]
 
 set_output_delay -add_delay -clock clk -max 0 [all_outputs]
 set_output_delay -add_delay -clock clk -min 0 [all_outputs]
 
-set_input_delay -add_delay -clock clk -max 0 [all_inputs]
-set_input_delay -add_delay -clock clk -min 0 [all_inputs]
+set_input_delay  -add_delay -clock clk -max 0 [all_inputs]
+set_input_delay  -add_delay -clock clk -min 0 [all_inputs]
 ```
 
 These constraints tell the FPGA tools that:
@@ -229,13 +260,14 @@ These constraints tell the FPGA tools that:
  - Our critical path delay constraint is `20ns` from all inputs to all
    outputs as well
  - We have a clock signal named `clk`
-    - Our design must not have any hold time violations with respect to `clk`
-    - Our design must not have any setup time violations with respect to
+    - There should be setup time violations with respect to
       `clk` when the period is `20ns`
- - The outputs should have a delay of 0 when being factored into the
-   timing of paths
- - The inputs should have a delay of 0 when being factored into the
-   timing of paths
+    - There should be no hold time violations with respect to `clk`
+ - The output ports have a setup time of 0 (max constraint) and a hold
+   time of 0 (min constraint)
+ - The input ports have clock-to-port propagation delay of 0 (max
+   constraint) and a clock-to-port contamination delay of 0 (min
+   constraint)
 
 Now use the following steps to synthesize your design and then look at
 the RTL viewer, technology map viewer, and chip planner.
@@ -245,18 +277,19 @@ the RTL viewer, technology map viewer, and chip planner.
  - RTL Viewer
     + Choose _Tools > Netlist Viewer > RTL Viewer_ from the menu
     + Drill down in the hierarchy to see the netlist for the counter
-    + Does the RTL viewer match your expectations? Where would the
-         critical path go on this diagram?
+    + Does the RTL viewer match your expectations?
     + Choose _File > Close_ from menu to close the RTL viewer
  - Technology Map Viewer
     + Choose _Tools > Netlist Viewer > Technology Map Viewer (Post-Fitting)_
-    + Drill down in the hierarchy to see the implementation of the counter
-    + Does the technology viewer match your expectations? Where would the
-         critical path go on this diagram?
-    + Choose _File > Close_ from the menu to close the technology map viewer
+    + Drill down into the subtractor all the way to see the
+       implementation of the full adder
+    + Does the technology viewer match your expectations?
+    + Choose _File > Close_ from the menu to close the technology map
+       viewer
  - Chip Planner
     + Choose _Tools > Chip Planner_ from the menu
-    + Identify where the logic used to implement your design is located in the FPGA
+    + Identify where the logic used to implement your design is located
+       in the FPGA
     + Choose _File > Close_ from the menu to close the chip planner
 
 The next step is to analyze the area of your design.
@@ -266,8 +299,17 @@ The next step is to analyze the area of your design.
    Usage Summary_
  - Look through the report to determine the number of combinational ALUTs
    (configurable look-up tables) that are used for your design
- - Look through the report to determine the number of dedicated logic 
+ - Look through the report to determine the number of dedicated logic
    registers that are used for your design
+
+You will be working to fill in this data table:
+
+ - <https://docs.google.com/spreadsheets/d/1b0Ep9hQOy_K2F6YslZt8ExoQcgabWJIXPrI3lRXn1mI/edit?gid=0#gid=0>
+
+Make a copy of this table, and enter in the data for your ripple-carry
+adder with a 20ns critical path delay constraint. You can find the number
+of 7-input ALUts, 6-input ALUts, etc in the area report. You can find the
+dedicated logic registers also in the area report.
 
 The final step is to analyze the timing (i.e., the critical path delay)
 of your design. We will analyze timing for the _Slow 1100mV 85C Model_
@@ -277,8 +319,10 @@ which is the default choice in the Timing Analyzer.
  - Double-click _Update Timing Netlist_
  - Choose _Reports > Custom Reports > Report Timing_ from the menu
  - Report Timing
-    + From: _[get_registers *]_
-    + To: _[get_registers *]_
+    + Clocks - From clock: _clk_
+    + Clocks - To clock: _clk_
+    + Targets - From: _[get_registers *]_
+    + Targets - To: _[get_registers *]_
     + Report number of paths: _100_
     + Click _Report Timing_
  - Identify the propagation delay of the displayed path
@@ -287,32 +331,80 @@ which is the default choice in the Timing Analyzer.
     design to one of the outputs
  - Choose _File > Close_ from the menu to close the timing analyzer
 
-You may run into issues completing the timing report for `Counter_8b_GL`.
-Think critically about why these reports might occur. Referencing your
-area reports may additionally help.
+Note that your GL counter will not meet timing. This is because the FPGA
+tools do not understand that your gate-level flip-flop is actually a
+register (check the number of dedicated logic registers in the area
+report to confirm this). The FPGA tools are designed to recognize
+specific RTL patterns and infer appropriate sequential logic, but they
+are simply not designed to recognize specific GL patterns. Even so, we
+can still analyze the critical path in our design.
 
-!!! note "Lab Report Task 2: Mapping and Area for Gate-Level Counter"
+We will use the following conventions when analyzing the critical path
+based on FPGA timing reports. The FPGA timing report will have three
+parts:
 
-    Save a screenshot of the technology mapper view for your gate-level
-    counter. In this view, determine the location of
+ - The clock part of the data arrival path: this is the delay from the
+   clock pin to the flip-flop at the start of the path.
 
-     - (1) The storage element that keeps track of the current count
-     - (2) The logic that determines the subtracted count
-     - (3) The logic that determines what should be the next stored count
-     - (4) The logic that determines whether the counter is done
+ - The data part of the data arrival path: this is the actual propagation
+   path delay from one flip-flop to another flop-flop.
 
-    In addition, save the values of the combinational ALUTs and dedicated
-    logic registers used for your design.
+ - The clock part of the data required path: this is the delay from the
+   clock pin to the flip-flop at the end of the path.
 
-!!! success "Lab Check-Off Task 3: Discuss Mapping and Timing of Gate-Level Counter"
+The following timing report illustrates these three parts:
 
-    Show a TA your screenshot of the technology mapper view, and discuss
-    your identification of the different portions of the design (listed
-    above). Were these easy or difficult to identify?
-    
-    Additionally, show the TA your results after performing timing 
-    analysis on your gate-level counter. Be ready to discuss why the tools
-    might perform this way, leveraging your area results
+![](img/seq-logic-timing-report.png)
+
+The above image shows that you should count the delay from the start of
+the path until the signal leaves the initial flip-flop or register module
+as the clock-to-q delay, and you should count the delay from when the
+signal enters the final flip-flop until the end of the path as the setup
+time. If you select multiple cells in the _Incr_ column and hover your
+mouse it will display a pop-up showing the sum of the delays along that
+portion of the path.
+
+Also notice that the propagation path delay and the slack do not add up
+to the clock constraint. This is due to clock skew. Clock skew means the
+clock reaches the initial and final flip-flops at a different times. You
+can calculate the effective clock skew as follows:
+
+$$t_{skew} = t_{pathdelay} + t_{slack} - t_{constraint}$$
+
+The effective clock skew is different from what you will see in the
+timing report because the tools are using a more complicated calculation.
+For our purposes you should always use the effective clock skew as
+calculated above. A negative effective clock skew means the clock reaches
+the final flip-flop before it reaches the initial flip-flop. A positive
+effective clock skew means the clock reaches the initial flip-flop before
+it reaches the final flip-flop.
+
+Enter the slack and critical path delay in the data table. The
+spreadsheet will calculate effective clock skew for you.
+
+!!! note "Lab Report Task 2: Collect Data for Gate-Level Counter"
+
+    Save your completed data table with your analysis of the gate-level
+    counter and include it in your report. Draw the critical path on your
+    block-level diagram. Annotate the clock-to-q delay, the propagation
+    delay of each block along the critical path, and the setup time on
+    your block level diagram. Save the critical path timing report text
+    file and include it in your report. You only want to save the _Data
+    Arrival Path_ from the timing report text file. Do NOT include
+    anything else from the timing report text file. You must format the
+    critical path with a fixed-width font and size the font such that it
+    fits on a single page. You might need to delete some rows from the
+    critical path to make it fit. Try to make sure that the remaining
+    rows still clearly show where the critical path goes. **If you do not
+    follow this requirements then we will ignore your critical path in
+    the lab report.**
+
+!!! success "Lab Check-Off Task 4: Discuss Gate-Level Counter Critical Path"
+
+    Show a TA your data table and timing report. Explain why there are no
+    dedicated logic registers. Show a TA the critical path on your block
+    diagram and clearly show how the delays in the timing report
+    correspond to the delays annotated on the block diagram.
 
 ### 3.2. Synthesize and Analyze RTL Counter
 
@@ -320,136 +412,142 @@ Use the same process to synthesize and analyze the RTL counter in
 isolation. Remember to change that hardware module to be the top-level
 entity. So find the _Project Navigator_ pane and click on _Hierarchy_ to
 display the drop-down list. Choose _Files_ and select the
-`Counter_8b_RTL.v file. Right click on the file and choose
-_Select as Top-Level Entity_. Then click on _Files_ to display the
-drop-down list again. Choose _Hierarchy_ and confirm that
-`Counter_8b_RTL` is shown as the only entity.
+`Counter_8b_RTL.v` file. Right click on the file and choose _Select as
+Top-Level Entity_. Then click on _Files_ to display the drop-down list
+again. Choose _Hierarchy_ and confirm that `Counter_8b_RTL` is shown as
+the only entity.
 
 Go through the same process of looking at the RTL Viewer, Technology Map
-Viewer, and the Chip Planner. Go through the same process of determining
-the area utilization, as well as conducting timing analysis.
+Viewer, and the Chip Planner. Spend time looking at the Technology Map
+Viewer and try to figure out how the blocks in the Technology Map Viewer
+connect to your Verilog implementation. Go through the same process of
+determining the area utilization. Do the number of dedicated logic
+registers match your expectation? Go through the same process of
+conducting a timing analysis. Enter the area, slack, and critical path
+delay in the data table. The spreadsheet will calculate effective clock
+skew for you.
 
-!!! note "Lab Report Task 3: Mapping and Area for RTL Counter"
+Your RTL counter _should_ meet timing. This is because the FPGA tools
+_do_ understand that your RTL flip-flop is actually a register (check the
+number of dedicated logic registers in the area report to confirm this).
+As mentioned above, the FPGA tools are designed to recognize specific RTL
+patterns and infer appropriate sequential logic. You will likely observe
+that the area is much less than the GL implementation and the critical
+path is much shorter. This because for the GL counter the tools were not
+able to actually do any timing optimization because they did not
+understand how the timing constraints connected to the GL flip-flop,
+while for the RTL counter the FPGA tools are able to do standard timing
+optimization.
 
-    Save a screenshot of the technology mapper view for your RTL
-    counter. In this view, determine the location of
+!!! note "Lab Report Task 3: Collect Data for RTL Counter"
+
+    Save your completed data table with your analysis of the RTL counter
+    and include it in your report. Save a screenshot of the technology
+    mapper view for your RTL counter. Annotate this screen shot by
+    circling what logic implements:
 
      - (1) The storage element that keeps track of the current count
      - (2) The logic that determines the subtracted count
      - (3) The logic that determines what should be the next stored count
      - (4) The logic that determines whether the counter is done
 
-    For the lab report, you will be asked to provide a version of this
-    screenshot annotated with the corresponding snippets of RTL code. Make
-    sure that you note down the locations above, to be used when
-    annotating.
-   
-    In addition, save the values of the combinational ALUTs and dedicated
-    logic registers used for your design.
+    Clearly label each circle with the corresponding Verilog code
+    snippet. Save the critical path timing report text file and include
+    it in your report. You only want to save the _Data Arrival Path_ from
+    the timing report text file. Do NOT include anything else from the
+    timing report text file. You must format the critical path with a
+    fixed-width font and size the font such that it fits on a single
+    page. **If you do not follow this requirements then we will ignore
+    your critical path in the lab report.**
 
-!!! note "Lab Report Task 4: Data Table and Critical Path Report for RTL Counter"
+!!! success "Lab Check-Off Task 5: Discuss RTL Counter Technology Mapping"
 
-    Save your completed data table with your analysis of the RTL counter
-    and include it in your report. Save the critical path timing
-    report text file and include it in your report. You only want to save
-    the _Data Arrival Path_ from the timing report text file. Do NOT
-    include anything else from the timing report text file. You must
-    format the critical path with a fixed-width font and size the font
-    such that it fits on a single page. **If you do not follow this
-    requirements then we will ignore your critical path in the lab
-    report.**
+    Show a TA your data table and timing report. Justify why the number
+    of dedicated logic registers makes sense. Show a TA your technology
+    map screen shot annotated with Verilog code snippets. Explain to the
+    TA the connection between the Verilog code and the actual low-level
+    logic gates. Are we convinced that RTL modeling does indeed turn into
+    low-level logic gates?
 
-!!! note "Lab Report Task 5: Actual Critical Path for RTL Counter"
+### 3.3. Integrate RTL Counter
 
-    Draw the _actual_ critical path on the block diagram for the
-    RTL counter using the timing report. Label each gate/block
-    along the critical path with its corresponding delay using the timing
-    report.
-
-!!! success "Lab Check-Off Task 4: Discuss Mapping and Timing of RTL Counter"
-
-    Show a TA your screenshot of the technology mapper view, and discuss
-    your identification of the different portions of the design (listed
-    above). Were these easy or difficult to identify relative to the
-    gate-level version? What conclusions can we make about the
-    clarity of how a design is implemented when it is gate-level vs. RTL?
-
-    Show a TA your completed data table with your analysis for the
-    RTL counter. Show a TA the actual critical path on the block
-    diagram for the RTL counter. Clearly show how the delays in
-    the timing report correspond to the delays through the 
-    blocks/submodules in the block diagram.
-
-### 3.3. Integrate, Synthesize, and Configure the RTL Counter
-
-Now that we've performed analysis on our counters, we can demonstrate
-them on the FPGA.
-
-#### Integrate
-
-We need to change the top-level entity to be `DE0_CV_golden_top.v`. Find
-the _Project Navigator_ pane and click on _Hierarchy_ to display the
-drop-down list. Choose _Files_ and select the `DE0_CV_golden_top.v` file.
-Right click on the file and choose _Select as Top-Level Entity_. Then
-click on _Files_ to display the drop-down list again. Choose _Hierarchy_
-and confirm that `DE0_CV_golden_top` is shown as the only entity.
+We are now ready to demonstrate a counter FPGA prototype using the RTL
+implementation. We need to change the top-level entity to be
+`DE0_CV_golden_top.v`. Find the _Project Navigator_ pane and click on
+_Hierarchy_ to display the drop-down list. Choose _Files_ and select the
+`DE0_CV_golden_top.v` file. Right click on the file and choose _Select as
+Top-Level Entity_. Then click on _Files_ to display the drop-down list
+again. Choose _Hierarchy_ and confirm that `DE0_CV_golden_top` is shown
+as the only entity.
 
 The _New Project Wizard_ creates a top-level Verilog module for us which
 has ports for all of the switches, LEDs, seven-segment displays, and pins
-on the FPGA development board. We need to instantiate
-`Counter_8b_RTL` in this top-level Verilog module and connect the
-ports.
-
-Notably, the FPGA's reset signal (`RESET_N`) is _active-low_; it is
-designed for modules that reset when the signal is 0 (unlike ours, which
-reset when the signal is 1). Students should declare a signal named `rst`,
-assign it to the inverse/NOT of `RESET_N`, and use `rst` for all designs
-where appropriate. In addition, students should declare a separate
-`clk` signal, for our timing file to recognize. All designs should use
-`clk` and `rst` as their clock and reset signals, appropriately
-
-Students are responsible for figuring out the appropriate top-level port
-connections to meet the following specification:
-
- - `clk` should be connected to the first button
- - `load` should be connected to the second button
- - `done` should be assigned to the first LED
-
-Both `clk` and `load` should be _active-high_, meaning that the signals
-are 1 when the button is pressed. Recall from Lab 2 that this may require
-some additional logic.
-
-In addition to the above, students should re-use their `Display` module
-from Lab 1 to achieve the following:
-
- - The two seven-segment displays in the middle should display the current
-   input `in` to the counter
- - The two seven-segment displays on the right should display the current
-   count
+on the FPGA development board. We want to implement a counter FPGA
+prototype with the following specification:
 
 ![](img/lab3-counter-fpga.png)
 
-Look carefully at the labels on the board to figure out how the switches,
-buttons, and seven-segment displays correspond to ports in the top-level
-Verilog module. Use the following steps when you are ready to integrate
-the calculator.
+ - `clk` should be connected to the first button
+ - `rst` should be connected to the reset button on the board
+ - `load` should be connected to the second button
+ - `done` should be assigned to the first LED
+ - Two seven-segment displays for the current input `in` to the counter
+ - Two seven-segment displays for the current count
 
- - Double-click on _DE0_CV_golden_top_
- - Instantiate _Counter_8b_RTL_ in the top-level module
- - Connect the ports
- - Choose _File > Save_ from the menu
+Note that FPGA's reset (`RESET_N`) and all of the buttons are
+_active-low_. Unpressed buttons output a logic one and pressed buttons
+output a logic zero. Here is a template you can use for your top-level
+design.
 
-Then choose  _Processing > Start Compilation_ from the menu to synthesize
-your design. Open the Chip Planner to see where the calculator is located
-on the FPGA:
+```verilog
+  Counter_8b_RTL counter
+  (
+    .clk      (),
+    .rst      (),
+    .load     (),
+    .in       (),
+    .count    (),
+    .done     ()
+  );
 
- - Choose _Tools > Chip Planner_ from the menu
- - Identify where the logic used to implement your design is located in the FPGA
- - Choose _File > Close_ from the menu to close the chip planner
+  Display_GL display0
+  (
+    .in       (),
+    .seg_tens (),
+    .seg_ones ()
+  );
 
-#### Synthesize and Configure
+  Display_GL display1
+  (
+    .in       (),
+    .seg_tens (),
+    .seg_ones ()
+  );
+```
 
-From here, choose  _Processing > Start Compilation_ from the menu to 
+You just need to copy this code into the _DE0_CV_golden_top.v_ file and
+connect the ports appropriately. You may need to declare additional
+internal wires. Look carefully at the labels on the board to figure out
+how the switches, buttons, and seven-segment displays correspond to ports
+in the top-level Verilog module. We also need to update our timing
+constraint file as follows:
+
+```
+set_max_delay -from [all_inputs] -to [all_outputs] 20
+set_min_delay -from [all_inputs] -to [all_outputs] 0
+
+create_clock -name clk -period 20 [get_ports {KEY[0]}]
+
+set_output_delay -add_delay -clock clk -max 0 [all_outputs]
+set_output_delay -add_delay -clock clk -min 0 [all_outputs]
+
+set_input_delay  -add_delay -clock clk -max 0 [all_inputs]
+set_input_delay  -add_delay -clock clk -min 0 [all_inputs]
+```
+
+### 3.4. Synthesize and Configure the RTL Counter
+
+From here, choose  _Processing > Start Compilation_ from the menu to
 synthesize your design. Once completed, we can configure the FPGA:
 
  - Choose _Tools > Programmer_ from the menu
@@ -458,7 +556,8 @@ synthesize your design. Once completed, we can configure the FPGA:
  - Click _Close_
  - Click _Start_
 
-Additionally, on ECELinux, have your counter simulation open:
+Additionally, on `ecelinux`, go ahead and build and run the counter
+interactive simulator:
 
 ```bash
 % cd ${HOME}/ece2300/groupXX/build
@@ -469,49 +568,199 @@ Additionally, on ECELinux, have your counter simulation open:
 Try out your counter simulator for a few values, and make sure that the
 FPGA behaves identically.
 
-!!! success "Lab Check-Off Task 5: Demonstrate the RTL Counter"
+!!! success "Lab Check-Off Task 6: Demonstrate the RTL Counter"
 
-    First, show a TA your calculator simulator, demonstrating its
+    First, show a TA the counter interactive simulator, demonstrating its
     functionality. The TA will give you a switch configuration. You
     should first predict what your counter will do, then demonstrate it
-    in simulation.
+    in simulation. Then demonstrate that your counter on the FPGA
+    produces identical results for the same stimulus. Additionally,
+    demonstrate that your counter can take in new values at any time, and
+    will stop counting down once it reaches 0.
 
-    From there, demonstrate that your counter on the FPGA produces
-    identical results for the same stimulus. Additionally, demonstrate
-    that your counter can take in new values at any time, and will stop
-    counting down once it reaches 0
-
-4. Synthesize and Analyse Note Players
+4. Synthesize and Analyze Note Players
 --------------------------------------------------------------------------
 
-From here, we can transition to analyzing our gate-level and RTL note
-players
+In this part, we will synthesize and analyze the gate-level and RTL note
+players to continue to understand the connection between gate-level and
+RTL modeling.
 
-<!-- Insert stuff about NotePlayers - skipping for now since it repeats above -->
+### 4.1. Synthesize and Analyze GL Note Player
 
-<!-- Include this section on clock division: -->
+Use the same process to synthesize and analyze the GL note player in
+isolation that we used with the GL counter. Remember to change that
+hardware module to be the top-level entity. So find the _Project
+Navigator_ pane and click on _Hierarchy_ to display the drop-down list.
+Choose _Files_ and select the `NotePlayer_GL.v` file. Right click on the
+file and choose _Select as Top-Level Entity_. Then click on _Files_ to
+display the drop-down list again. Choose _Hierarchy_ and confirm that
+`NotePlayer_GL` is shown as the only entity.
 
-The on-board clock signal (`CLOCK_50`) is a 50MHz clock. This is far too
-fast to have our notes be audible. Because of this, students are
-provided a `ClockDiv` module that divides the clock (decreases the
-frequency) by a parametrizable amount. To perform the necessary clock
-division by a factor of $2^{10}$ for our desired clock frequency of
-$\approx48828\text{Hz}$, students should now assign the `clk` signal to
-be an output of an instantiated clock divider, as shown below:
+You will need to use the following constraints.
 
-```verilog
-ClockDiv_RTL #(9) clock_div
-(
-  .clk_in  (CLOCK_50),
-  .rst     (rst),
-  .clk_out (clk)
-);
+```
+set_max_delay -from [all_inputs] -to [all_outputs] 20
+set_min_delay -from [all_inputs] -to [all_outputs] 0
+
+create_clock -name clk -period 20 [get_ports {clk}]
+
+set_output_delay -add_delay -clock clk -max 0 [all_outputs]
+set_output_delay -add_delay -clock clk -min 0 [all_outputs]
+
+set_input_delay  -add_delay -clock clk -max 0 [all_inputs]
+set_input_delay  -add_delay -clock clk -min 0 [all_inputs]
 ```
 
-Similarly, we must update our timing constraint file to reflect the other
-clock signal. Note that we still specify `clk` to be `20ns`; this is
-over-constrained based on our actual clock signal, but for our designs,
-it shouldn't make a difference.
+Go through the same process of determining the area utilization. Do the
+number of dedicated logic registers match your expectation? You can go to
+_Table of Contents_ and choose _Fitter > Resource Section > Resource
+Utilization by Entity_ to determine how many logic gates and registers
+are used in every module in your design. Go through the same process of
+conducting a timing analysis. As mentioned before, your GL design will
+not meet timing, but we can still look at the critical path. Enter the
+area, slack, and critical path delay in the data table. The spreadsheet
+will calculate effective clock skew for you.
+
+!!! note "Lab Report Task 4: Collect Data for GL Note Player"
+
+    Save your completed data table with your analysis of the GL note
+    player and include it in your report.
+
+### 4.2. Synthesize and Analyze RTL Note Player
+
+Use the same process to synthesize and analyze the RTL note player in
+isolation that we used with the RTL counter. Remember to change that
+hardware module to be the top-level entity. So find the _Project
+Navigator_ pane and click on _Hierarchy_ to display the drop-down list.
+Choose _Files_ and select the `NotePlayer_RTL.v` file. Right click on the
+file and choose _Select as Top-Level Entity_. Then click on _Files_ to
+display the drop-down list again. Choose _Hierarchy_ and confirm that
+`NotePlayer_RTL` is shown as the only entity.
+
+Go through the same process of determining the area utilization. Do the
+number of dedicated logic registers match your expectation? You can go to
+_Table of Contents_ and choose _Fitter > Resource Section > Resource
+Utilization by Entity_ to determine how many logic gates and registers
+are used in every module in your design. Go through the same process of
+conducting a timing analysis. As mentioned before, your RTL design
+_should_ meet timing. Enter the area, slack, and critical path delay in
+the data table. The spreadsheet will calculate effective clock skew for
+you.
+
+!!! note "Lab Report Task 5: Collect Data for RTL Note Player"
+
+    Save your completed data table with your analysis of the RTL note
+    player and include it in your report.
+
+!!! success "Lab Check-Off Task 7: Discuss GL vs RTL Note Players"
+
+    Show a TA your data table and timing report. Justify why the number
+    of dedicated logic registers makes sense. Are we convinced that RTL
+    modeling does indeed turn into low-level logic gates?
+
+5. Integrate, Synthesize, and Configure Multi-Note Player
+--------------------------------------------------------------------------
+
+Once we've analyzed our note player, we can move on to using our
+multi-note player and actually begin to play notes!
+
+### 5.1. Integrate
+
+Similar to before, make sure that `DE0_CV_golden_top` is the top-level
+entity. We want to implement a multi-note player FPGA prototype with the
+following specification:
+
+![](img/lab3-multinoteplayer-fpga.png)
+
+ - `clk` and `rst` are connected appropriately
+ - `note1_period`, `note2_period`, etc are set as described below
+ - `play_load` is connected to the first push button
+ - `play_note` is connected to the right three switches
+ - `play_duration` is set to `0xBEBC` (resulting in a one second duration)
+ - `play_done` is connected to the first LED
+ - `note` is connected to the `GPIO_0[0]` pin
+ - One seven-segment display for `play_note` (note specified on switches)
+ - One seven-segment display for `note_sel` (currently playing note)
+
+The note periods should be set according to the following table (see Part
+A for more details):
+
+```
+                   period   freq
+port         hex     (ms)   (Hz) note
+note1_period 8'h7b   5.12 195.31 G3
+note2_period 8'h6d   4.55 219.95 A3
+note3_period 8'h61   4.06 246.61 B3
+note4_period 8'h5b   3.81 262.52 C4
+note5_period 8'h51   3.40 294.15 D4
+note6_period 8'h48   3.03 329.92 E4
+note7_period 8'h44   2.87 348.77 F4
+```
+
+Note that FPGA's reset (`RESET_N`) and all of the buttons are
+_active-low_. Unpressed buttons output a logic one and pressed buttons
+output a logic zero. Here is a template you can use for your top-level
+design.
+
+```verilog
+  logic clk;
+
+  ClockDiv_RTL#(9) clock_div
+  (
+    .clk_in  (CLOCK_50),
+    .rst     (~RESET_N),
+    .clk_out (clk)
+  );
+
+  MultiNotePlayer_RTL note_player
+  (
+    .clk           (clk),
+    .rst           (),
+
+    .note1_period  (8'h7b),
+    .note2_period  (8'h6d),
+    .note3_period  (8'h61),
+    .note4_period  (8'h5b),
+    .note5_period  (8'h51),
+    .note6_period  (8'h48),
+    .note7_period  (8'h44),
+
+    .play_load     (),
+    .play_note     (),
+    .play_duration (),
+    .play_done     (),
+    .note_sel      (),
+    .note          ()
+  );
+
+  Display_GL display0
+  (
+    .in       (),
+    .seg_tens (/* not used */),
+    .seg_ones ()
+  );
+
+  Display_GL display1
+  (
+    .in       (),
+    .seg_tens (/* not used */),
+    .seg_ones ()
+  );
+```
+
+Notice we are using a clock divider. The on-board clock signal
+(`CLOCK_50`) is a 50MHz clock. This is far too fast to have our notes be
+audible. The `ClockDiv` module divides the clock (decreases the
+frequency) by a parametrizable amount. To perform the necessary clock
+division by a factor of $2^{10}$ for our desired clock frequency of
+$\approx48828\text{Hz}$ we need to set the `ClockDiv` parameter to 9.
+
+You just need to copy this code into the _DE0_CV_golden_top.v_ file and
+connect the ports appropriately. You may need to declare additional
+internal wires. Look carefully at the labels on the board to figure out
+how the switches, buttons, and seven-segment displays correspond to ports
+in the top-level Verilog module. We also need to update our timing
+constraint file as follows:
 
 ```
 set_max_delay -from [all_inputs] -to [all_outputs] 20
@@ -527,72 +776,23 @@ set_input_delay -add_delay -clock clk -max 0 [all_inputs]
 set_input_delay -add_delay -clock clk -min 0 [all_inputs]
 ```
 
+Note that we still specify `clk` to be `20ns`; this is over-constrained
+based on our actual clock signal, but for our designs, it shouldn't make
+a difference.
 
-5. Integrate, Synthesize, and Configure Multi-Note Players
---------------------------------------------------------------------------
+### 5.2. Synthesize and Configure
 
-Once we've analyzed our `NotePlayer`, we can move on to using our
-`MultiNotePlayer`, and actually begin to play notes!
+From here, choose _Processing > Start Compilation_ from the menu to
+synthesize your design. Go through the same process of determining the
+area utilization. Do the number of dedicated logic registers match your
+expectation? You can go to _Table of Contents_ and choose _Fitter >
+Resource Section > Resource Utilization by Entity_ to determine how many
+logic gates and registers are used in every module in your design. Go
+through the same process of conducting a timing analysis. Enter the area,
+slack, and critical path delay in the data table. The spreadsheet will
+calculate effective clock skew for you.
 
-### Integrate
-
-Similar to before, make sure that `DE0_CV_golden_top` is the top-level
-entity. Students are responsible for figuring out the appropriate top-level
-port connections to meet the following specification:
-
- - `clk` and `rst` are connected appropriately
- - `play_load` is connected to the first push button (_active-high_)
- - `play_note` is connected to the right three switches
- - `duration` is set to `0xBEBC` (resulting in a one second duration)
- - `play_done` is connected to the first LED
- - `note` is connected to the first GPIO in `GPIO_0`
- - The note periods should be set according to the following table (see
-   Part A for more details):
-
-```
-                   period   freq
-port         hex     (ms)   (Hz) note
-note1_period 8'h7b   5.12 195.31 G3
-note2_period 8'h6d   4.55 219.95 A3
-note3_period 8'h61   4.06 246.61 B3
-note4_period 8'h5b   3.81 262.52 C4
-note5_period 8'h51   3.40 294.15 D4
-note6_period 8'h48   3.03 329.92 E4
-note7_period 8'h44   2.87 348.77 F4
-```
-
-In addition to the above, students should re-use their `Display` module
-from Lab 1 to achieve the following:
-
- - The rightmost seven-segment display should show the currently selected
-   note (`note_sel`)
- - The next rightmost seven-segment display should show the current input
-   note from the switches (`play_note`)
-
-![](img/lab3-multinoteplayer-fpga.png)
-
-Look carefully at the labels on the board to figure out how the switches,
-buttons, and seven-segment displays correspond to ports in the top-level
-Verilog module. Use the following steps when you are ready to integrate
-the calculator.
-
- - Double-click on _DE0_CV_golden_top_
- - Instantiate _Counter_8b_RTL_ in the top-level module
- - Connect the ports
- - Choose _File > Save_ from the menu
-
-Then choose  _Processing > Start Compilation_ from the menu to synthesize
-your design. Open the Chip Planner to see where the calculator is located
-on the FPGA:
-
- - Choose _Tools > Chip Planner_ from the menu
- - Identify where the logic used to implement your design is located in the FPGA
- - Choose _File > Close_ from the menu to close the chip planner
-
-### Synthesize and Configure
-
-From here, choose  _Processing > Start Compilation_ from the menu to 
-synthesize your design. Once completed, we can configure the FPGA:
+Now configure the FPGA:
 
  - Choose _Tools > Programmer_ from the menu
  - Click _Hardware Setup_
@@ -600,7 +800,8 @@ synthesize your design. Once completed, we can configure the FPGA:
  - Click _Close_
  - Click _Start_
 
-Additionally, on ECELinux, have your counter simulation open:
+Additionally, on `ecelinux`, go ahead and build and run the multi-note
+player interactive simulator:
 
 ```bash
 % cd ${HOME}/ece2300/groupXX/build
@@ -609,12 +810,21 @@ Additionally, on ECELinux, have your counter simulation open:
 ```
 
 Open the resulting `multi-note-player-sim.vcd` in VSCode using Surfer.
-Right-click on a rising edge of `note` to place a marker there, and
-navigate your cursor to the next rising edge to measure the period
-of the note (one rising edge to the next). Note down this period.
+You must display these signals in this order: `clk`, `play_note`,
+`note_sel`, `note7_player.state`, and `note`. Select the note signal in
+the waveform viewer. Right-click on a rising edge of `note` to place a
+marker there, and use the arrow keys to navigate your cursor to the next
+rising edge to measure the period of the note (one rising edge to the
+next). Choose _Settings > Time Unit > ms_ to display the period in
+milliseconds. Take a screen shot and record the period.
 
-To sample the note, we need to know the connections. Reference the excerpt
-from the manual below:
+We will now determine the period for our FPGA prototype using an
+oscilloscope. An oscilloscope is a kind of electronic test equipment that
+graphically displays analog signals (i.e., voltage). We first need to
+connect wires to the pin which produces the note and a reference ground.
+Recall that the `note` port was connected to pin `GPIO_0[0]` on the FPGA
+board. The excerpt from the manual below shows where the `GPIO_0[0]` pin
+is located.
 
 ![](img/lab3-gpio-location.png)
 
@@ -624,12 +834,15 @@ Connect the two __F-M Jumper Wires__:
    board for the label)
  - Connect the input of the other to ground
 
-From there, we can connect these to the oscilloscope (ask a TA if you need
-help):
+Now we need to connect these wires to the oscilloscope. Use the button on
+the top of the oscilloscope (on the left) to turn it on and find the main
+probe and the ground clip attached to Channel 1.
 
- - Press the button on the top of the oscilloscope (on the left) to
-   turn it on
- - Connect the main probe of `CH 1` to the first GPIO of `GPIO_0`
+![](img/lab3-oscilloscope.png)
+
+Now carefully follow these steps (ask a TA if you need help):
+
+ - Connect the main probe of `CH 1` to `GPIO_0[0]`
  - Connect the ground clip of `CH 1` to ground
  - Click on _DEFAULT SETUP_ to first go to the default setup for the
    oscilloscope
@@ -649,10 +862,11 @@ help):
       to go back to the main measurement window
  - Using the _LEVEL_ dial of the Trigger setup, adjust the trigger to
    be 1.00V (referencing the bottom-right of the display). This tells
-   the oscilloscope at what value to capture a signal change
+   the oscilloscope at what value to capture a signal change.
 
-You should initially see static. Try playing a note; you should see
-some signal. Now, let's capture this data from the oscilloscope:
+You should initially see static. Try playing a note using your multi-note
+FPGA prototype; you should see a waveform! Try different notes. Now,
+let's capture this data from the oscilloscope:
 
  - Press _SINGLE SEQ_ to start a single capture
  - Play a note on the FPGA. You should see the captured waveform on the
@@ -666,10 +880,15 @@ some signal. Now, let's capture this data from the oscilloscope:
     - Note the value of $\Delta t$ shown on the side - does it match your
       simulation?
 
-!!! note "Lab Report Task 6: Screenshot of MultiNotePlayer Waveform"
+!!! note "Lab Report Task 6: Collect Data for Multi-Note Player"
 
-    Follow the instructions below on the oscilloscope to obtain a screen
-    capture of the waveform
+    Save your completed data table with your analysis of the multi-note
+    player and include it in your report. Save a screenshot of your
+    simulated waveform for a specific note which clearly shows the period
+    of that note. Save a screenshot of your actual waveform from the
+    oscilloscope for the same note which clearly shows the period of this
+    same note. To obtain a screen capture from the oscilloscope use these
+    steps:
 
      - Insert the USB Drive into the port on the front of the oscilloscope
      - Get the waveform you want to capture
@@ -685,7 +904,7 @@ some signal. Now, let's capture this data from the oscilloscope:
     saved, you can connect the drive to either your own computer or the
     lab machine to get the image.
 
-From here, we can play notes from the FPGA!
+We are now ready to play notes using our multi-note FPGA prototype!
 
  - Swap the __F-M Jumper Wires__ for __F-F Jumper Wires__, connected
    similarly
@@ -695,29 +914,276 @@ Now, when you play a note, you should be able to hear the piezo buzzer
 make a sound. Vary the switches, and verify that the resulting note
 differs in frequency.
 
-!!! success "Lab Check-Off Task 6: Demonstrate the MultiNotePlayer"
+!!! success "Lab Check-Off Task 8: Demonstrate the Multi-Note Player"
 
     The TA will give you a configuration for the switches. First,
-    simulate the configuration with your `multi-note-player-sim`,
-    and demonstrate finding the period. The TA will ask follow-up 
-    questions about how the note period would change in the following 
-    scenarios:
+    simulate the configuration with your `multi-note-player-sim` and show
+    the simulated waveform. You must find the state output for the note
+    payer that corresponds to the note you are playing and explain how
+    the states of the note payer FSM correspond to the generated note
+    waveform. Next, connect the FPGA to the oscilloscope and show the
+    waveform on the oscilloscope for the same note. Finally, connect the
+    piezo buzzer to the FPGA, and demonstrate that you can play the
+    desired note. You do not need to measure the period for the TA, but
+    make sure you have that data for your lab report.
 
-     - (1) The underlying `NotePlayer` is instead loaded with the value 
-           `0x88`
-     - (2) We use the switch input `010` instead
-     - (3) The clock frequency is increased by a factor of 2
+5. Integrate, Synthesize, and Configure Music Player
+--------------------------------------------------------------------------
 
-    Be ready to explain _why_ the `MultiNotePlayer` is producing the
-    corresponding output for each scenario.
+We are finally ready to play some tunes with our music player!
 
-    Next, connect the FPGA to the oscilloscope, and capture a waveform
-    for the same switch configuration. Measure the period, and show that
-    it's identical to the simulation.
+### 5.1. Integrate
 
-    Finally, connect the piezo buzzer to the FPGA, and demonstrate that
-    you can play the desired note.
-
-# TBD
+Similar to before, make sure that `DE0_CV_golden_top` is the top-level
+entity. We want to implement a multi-note player FPGA prototype with the
+following specification:
 
 ![](img/lab3-musicplayer-fpga.png)
+
+ - `clk` and `rst` are connected appropriately
+ - `note1_period`, `note2_period`, etc are set as in multi-note player
+ - `play_load` is connected to the first push button
+ - `play_note` is connected to the right three switches
+ - `play_duration` is set to `0xBEBC` (resulting in a one second duration)
+ - `play_done` is connected to the first LED
+ - `note` is connected to the `GPIO_0[0]` pin
+ - One seven-segment display for `play_note` (note specified on switches)
+ - One seven-segment display for `note_sel` (currently playing note)
+
+We provide you the appropriate top-level connections to implement this
+specification below.
+
+```verilog
+  logic clk;
+
+  ClockDiv_RTL#(9) clock_div
+  (
+    .clk_in  (CLOCK_50),
+    .rst     (~RESET_N),
+    .clk_out (clk)
+  );
+
+  logic  [2:0] note_sel;
+  logic        memreq_val;
+  logic [15:0] memreq_addr;
+  logic [31:0] memresp_data;
+
+  MusicPlayer_RTL player
+  (
+    .clk           (clk),
+    .rst           (~RESET_N),
+    .song_sel      (SW[4:0]),
+    .start_song    (~KEY[0]),
+    .state         (/* not used */),
+    .idle          (LEDR[0]),
+
+    .note_duration (16'h2000),
+    .note1_period  (8'h7B),
+    .note2_period  (8'h6D),
+    .note3_period  (8'h61),
+    .note4_period  (8'h5B),
+    .note5_period  (8'h51),
+    .note6_period  (8'h48),
+    .note7_period  (8'h44),
+    .note_sel      (note_sel),
+    .note          (GPIO_0[0]),
+
+    .memreq_val    (memreq_val),
+    .memreq_addr   (memreq_addr),
+    .memresp_data  (memresp_data)
+  );
+
+  MusicMem_RTL mem
+  (
+    .memreq_val    (memreq_val),
+    .memreq_addr   (memreq_addr),
+    .memresp_data  (memresp_data)
+  );
+
+  Display_GL display0
+  (
+    .in       (note_sel),
+    .seg_tens (/* not used */),
+    .seg_ones (HEX0)
+  );
+
+  Display_GL display1
+  (
+    .in       (SW[4:0]),
+    .seg_tens (/* not used */),
+    .seg_ones (HEX1)
+  );
+
+  // turn off remaining seven segment displays
+  assign HEX2 = 7'b1111111;
+  assign HEX3 = 7'b1111111;
+  assign HEX4 = 7'b1111111;
+  assign HEX5 = 7'b1111111;
+```
+
+You just need to copy this code into the _DE0_CV_golden_top.v_ file. Our
+timing constraint file should be the same as in the multi-note player.
+
+```
+set_max_delay -from [all_inputs] -to [all_outputs] 20
+set_min_delay -from [all_inputs] -to [all_outputs] 0
+
+create_clock -period 20 [get_ports {CLOCK_50}]
+create_clock -name clk -period 20 [get_nets {ClockDiv_RTL:clock_div|count[9]}]
+
+set_output_delay -add_delay -clock clk -max 0 [all_outputs]
+set_output_delay -add_delay -clock clk -min 0 [all_outputs]
+
+set_input_delay -add_delay -clock clk -max 0 [all_inputs]
+set_input_delay -add_delay -clock clk -min 0 [all_inputs]
+```
+
+### 5.2. Synthesize and Configure
+
+From here, choose _Processing > Start Compilation_ from the menu to
+synthesize your design. Go through the same process of determining the
+area utilization. Do the number of dedicated logic registers match your
+expectation? You can go to _Table of Contents_ and choose _Fitter >
+Resource Section > Resource Utilization by Entity_ to determine how many
+logic gates and registers are used in every module in your design. Go
+through the same process of conducting a timing analysis. Enter the area,
+slack, and critical path delay in the data table. The spreadsheet will
+calculate effective clock skew for you.
+
+Now configure the FPGA:
+
+ - Choose _Tools > Programmer_ from the menu
+ - Click _Hardware Setup_
+ - Currently selected hardware: _USB-Blaster [USB-0]_
+ - Click _Close_
+ - Click _Start_
+
+Additionally, on `ecelinux`, go ahead and build and run the music player
+interactive simulator:
+
+```bash
+% cd ${HOME}/ece2300/groupXX/build
+% make music-player-sim
+% ./music-player-sim +switches=000
+```
+
+Open the resulting `multi-note-player-sim.vcd` in VSCode using Surfer.
+You must display these signals in this order: `clk`, `song_sel`,
+`note_sel`, and `note`. Zoom in so you can see the first three or four
+notes. Take a screen shot.
+
+Confirm that the piezo buzzer is wired correctly to the FPGA board.
+
+ - Swap the __F-M Jumper Wires__ for __F-F Jumper Wires__, connected
+   similarly
+ - Connect the other ends of the jumper wires to the piezo buzzer
+
+Now try playing song zero. Then try playing song one. What songs is your
+music player playing?
+
+!!! note "Lab Report Task 7: Collect Data for Multi-Note Player"
+
+    Save your completed data table with your analysis of the music
+    player and include it in your report. Save a screenshot of your
+    simulated waveform for the the first song which clearly shows the
+    first three or four notes.
+
+!!! success "Lab Check-Off Task 9: Demonstrate the Music Player"
+
+    The TA will ask you to use your music player to play song 0 and song
+    1. To demonstrate mastery, you must clearly explain to the TA how the
+    counter, note player FSM, and music player FSM all work together to
+    play these songs. The TA will then ask you to play a hidden song and
+    identify what song it is.
+
+6. Lab Report Submission
+--------------------------------------------------------------------------
+
+Students should work with their partner to prepare a short lab report
+that conveys what they have learned in this lab assignment. The lab
+report should start with no more than two pages of text. Students should
+include all figures, tables, and diagrams after these two pages in an
+appendix. The appendix can be as many pages as necessary. Do not
+interleave the text, figures, tables, and diagrams. There should be two
+pages of text and then the appendix with all of the text, figures,
+tables, and diagrams.
+
+There are no restrictions on font size, margins, or line spacing, but
+please make sure your report is readable. We recommend using 10pt Times
+or 10pt Palintino with 0.75in to 1in margins. Please make sure you
+include a title, your names, and your NetIDs at the top of the first
+page. Do not include a title page.
+
+The lab report must include the following numbered sections. Please
+number your sections and use these specific titles. Please follow the
+guidelines on the number of paragraphs, the content of each paragraph,
+and which figures/tables to include. Some paragraphs might just be 2-3
+sentences.
+
+#### Section 1. Introduction (one paragraph)
+
+ - Include 2-3 sentences explaining what the lab involves
+ - Include one sentence explaining the purpose of this lab (why are
+    students doing this lab?)
+ - Include one sentence explicitly connecting the lab to one or more
+    lecture topics; be specific on which lecture topics this lab
+    reinforces with experiential learning
+
+#### Section 2. Gate-Level Counter Design (one paragraph)
+
+ - Include a sentence referencing your block diagram
+ - Include one sentence describing how you implemented your subtractor
+ - Include 2-3 sentences that describe how your counter works including
+    how it loads in new counter values and how to implements the done
+    signal
+
+#### Section 3. Gate-Level vs RTL Design (two paragraphs)
+
+ - Paragraph 1: Analyzing the Gate-Level Counter
+    + Include a sentence referencing the critical path of your GL counter
+    + Discuss the delay of the various components along the critical path
+      (you must mention clock-to-q and setup time)
+    + Explain why the GL counter and GL note players do not meet timing
+       and do not have any dedicated logic registers
+
+ - Paragraph 2: Analyzing the RTL Counter
+    + Include a sentence referencing your technology map screenshot
+    + Discuss how the various Verilog constructs turn into specific
+       low-level hardware in the FPGA
+    + Discuss whether or not the number of dedicated logic registers in
+       the GL counter and GL note player as expected
+    + Be specific and count registers in your Verilog and argue why the
+       number of dedicated logic registers is correct in both the counter
+       and the note player
+
+#### Section 4: Multi-Note and Music Player (one paragraph)
+
+ - Briefly reference your simulated waveforms and your oscilloscope
+   waveforms for your multi-note player
+ - Explain what note you tried, the expected note period, the measured
+   note period in simulation, and the measured note period using the
+   oscilloscope
+
+#### Section 5: Conclusion (one paragraph)
+
+ - Include 2-3 sentences that summarizes all of the data and analysis
+    in this lab assignment
+ - Include a sentence that draws a high-level conclusion; how will
+    what you have learned impact your design work throughout the rest
+    of the semester?
+
+#### Appendix
+
+ - FPGA Data Table
+ - Block diagram for GL counter with highlighted critical path and
+     annotated delays
+ - Technology map viewer for RTL counter annotated with Verilog code snippets
+ - Critical path report for GL counter **(1 page max, fixed width font!)**
+ - Critical path report for RTL counter **(1 page max, fixed width font!)**
+ - Simulated waveform screenshot for multi-note player clearly showing
+    note period
+ - Oscilloscope waveform screenshot for multi-note player clearly showing
+    note period
+ - Simulated waveform screenshot for first song which clearly shows the
+    first few notes
+

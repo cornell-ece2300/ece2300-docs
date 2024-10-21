@@ -1,5 +1,5 @@
 
-Lab 3 (Parts A & B): Music Player Implementation and Verification
+Lab 3 (Parts A & B): Music Player - Implementation and Verification
 ==========================================================================
 
 Lab 3 will give you experience designing, implementing, testing, and

@@ -140,13 +140,13 @@ workstation. This requires multiple steps.
 
 !!! success "Lab Check-Off Task 2: Verify Test Simulations, Discuss Optimizations"
 
-    Show a TA that your hardware design is passing all five tests. The TA
-    will ask _both students_ to explain how they optimized their designs
-    for the binary-to-seven-segment converter. Explain which outputs you
-    ended up optimizing and how you used either Boolean theorems or a
-    Karnaugh map to simplify the logic. Hypothesize how much you think
-    these optimizations will reduce the overall area of the design and/or
-    the critical path delay.
+    Show a TA that your hardware design is passing all five tests on
+    `ecelinux`. The TA will ask _both students_ to explain how they
+    optimized their designs for the binary-to-seven-segment converter.
+    Explain which outputs you ended up optimizing and how you used either
+    Boolean theorems or a Karnaugh map to simplify the logic. Hypothesize
+    how much you think these optimizations will reduce the overall area
+    of the design and/or the critical path delay.
 
 2. Setup Quartus Project
 --------------------------------------------------------------------------

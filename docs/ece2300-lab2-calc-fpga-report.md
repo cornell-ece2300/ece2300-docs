@@ -129,13 +129,13 @@ workstation. This requires multiple steps.
 
 !!! success "Lab Check-Off Task 2: Verify Test and Interactive Simulators"
 
-    Show a TA that your hardware designs are passing all of your tests.
-    The TA will give you two decimal numbers. You should first determine
-    their unsigned binary representation, then determine what the correct
-    unsigned binary output would be if we added these two numbers
-    together, and finally determine what the correct unsigned output
-    should be if we multiplied these two numbers together. **You must
-    determine these unsigned binary values before running the
+    Show a TA that your hardware designs are passing all of your tests on
+    `ecelinux`. The TA will give you two decimal numbers. You should
+    first determine their unsigned binary representation, then determine
+    what the correct unsigned binary output would be if we added these
+    two numbers together, and finally determine what the correct unsigned
+    output should be if we multiplied these two numbers together. **You
+    must determine these unsigned binary values before running the
     two-function interactive simulator!** Once you know these values,
     then use the two-function interactive simulator to verify your work.
     The TA will ask follow-up questions about the following scenarios:
@@ -188,7 +188,7 @@ Wizard_:
 Since we are now using RTL modeling, there is one new step from Lab 1.
 You must choose _Assignments > Settings_ from the menu. Then select the
 category _Compiler Settings > Verilog HDL Input_ and under _Verilog
-version_ click _SystemVerilog_. Then click _Apply_ and _OK_.
+version_ click _SystemVerilog_. Then click _OK_.
 
 3. Synthesize and Analyze Adders
 --------------------------------------------------------------------------
@@ -596,7 +596,7 @@ the adders and multipliers. The last step is to integrate, synthesize,
 and configure the FPGA with our design and demonstrate the final FPGA
 prototype!
 
-### Integrate
+### 5.1. Integrate
 
 We need to change the top-level entity to be `DE0_CV_golden_top.v`. Find
 the _Project Navigator_ pane and click on _Hierarchy_ to display the
@@ -633,7 +633,7 @@ the calculator.
  - Connect the ports
  - Choose _File > Save_ from the menu
 
-### Synthesize
+### 5.2. Synthesize
 
 You will need to update the timing constraint file as follows:
 
@@ -661,7 +661,7 @@ complete calculator.
     appropriately for your lab report. **You must highlight where your
     calculator is located on the FPGA.**
 
-### Configure
+### 5.3. Configure
 
 Now we are finally ready to configure the FPGA for our calculator demo!
 
