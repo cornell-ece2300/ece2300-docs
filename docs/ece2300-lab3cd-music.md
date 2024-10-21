@@ -385,7 +385,13 @@ spreadsheet will calculate effective clock skew for you.
 !!! note "Lab Report Task 2: Collect Data for Gate-Level Counter"
 
     Save your completed data table with your analysis of the gate-level
-    counter and include it in your report. Draw the critical path on your
+    counter and include it in your report. 
+
+     - When generating your timing report, select "File name" to save
+       your timing report
+     - You will only need to collect 1 path for this portion
+    
+    Draw the critical path on your
     block-level diagram. Annotate the clock-to-q delay, the propagation
     delay of each block along the critical path, and the setup time on
     your block level diagram. Save the critical path timing report text
