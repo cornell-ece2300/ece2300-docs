@@ -947,8 +947,8 @@ following specification:
  - `idle` is connected to the first LED
  - `note_duration` is set to `0x2000` (resulting in a short but audible note)
  - `note` is connected to the `GPIO_0[0]` pin
- - One seven-segment display for `song_sel` (note specified on switches)
- - One seven-segment display for `note_sel` (currently playing note)
+ - Two seven-segment displays for `song_sel` (song specified on switches)
+ - Two seven-segment displays for `note_sel` (currently playing note)
 
 We provide you the appropriate top-level connections to implement this
 specification below.
