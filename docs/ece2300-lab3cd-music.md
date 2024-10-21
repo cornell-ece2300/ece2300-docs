@@ -682,7 +682,7 @@ following specification:
  - `note1_period`, `note2_period`, etc are set as described below
  - `play_load` is connected to the first push button
  - `play_note` is connected to the right three switches
- - `play_duration` is set to `0xBEBC` (resulting in a one second duration)
+ - `play_duration` is set to `16'hBEBC` (resulting in a one second duration)
  - `play_done` is connected to the first LED
  - `note` is connected to the `GPIO_0[0]` pin
  - One seven-segment display for `play_note` (note specified on switches)
@@ -951,7 +951,7 @@ following specification:
  - `song_sel` is connected to the right five switches
  - `start_song` is connected to the first push button
  - `idle` is connected to the first LED
- - `note_duration` is set to `0x2000` (resulting in a short but audible note)
+ - `note_duration` is set to `16'h2000` (resulting in a short but audible note)
  - `note` is connected to the `GPIO_0[0]` pin
  - Two seven-segment displays for `song_sel` (song specified on switches)
  - Two seven-segment displays for `note_sel` (currently playing note)
