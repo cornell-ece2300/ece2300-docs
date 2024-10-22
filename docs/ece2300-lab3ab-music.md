@@ -541,6 +541,20 @@ the WAIT_NOTE state. In the WAIT_NOTE state, the FSM should wait until
 the multi-note player is done before moving back into the SET_NOTE state
 to read the next note from memory.
 
+We recommend taking an incremental approach as opposed to just
+implementing the entire FSM and counter at once. Start by implementing
+just implementing the FSM without support for playing more than one note
+nor support for playing more than one song. Have your FSM go from RESET,
+to IDLE, to SET_NOTE, to WAIT_NOTE and just stay in WAIT_NOTE forever.
+Get this working and look at the trace and waveforms to confirm that your
+FSM is moving through the states correctly and setting the control
+signals for the multi-note player correctly. Then incrementally add
+support for moving from WAIT_NOTE back to SET_NOTE but without a counter.
+This should just play the same note over and over. Once this is working,
+incrementally add support for the counter. Once this is working,
+incrementally add support for moving from SET_NOTE back to IDLE and being
+able to play more than one song.
+
 2. Testing Strategy
 --------------------------------------------------------------------------
 

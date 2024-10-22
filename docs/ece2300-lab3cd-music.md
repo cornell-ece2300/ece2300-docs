@@ -582,7 +582,10 @@ FPGA behaves identically.
     in simulation. Then demonstrate that your counter on the FPGA
     produces identical results for the same stimulus. Additionally,
     demonstrate that your counter can take in new values at any time, and
-    will stop counting down once it reaches 0.
+    will stop counting down once it reaches 0. Clearly explain to the TA
+    why the counter prototype is different from the calculator prototype
+    in Lab 2; explain how the counter prototype illustrates sequential
+    logic.
 
 4. Synthesize and Analyze Note Players
 --------------------------------------------------------------------------
