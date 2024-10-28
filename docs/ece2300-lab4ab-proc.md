@@ -43,7 +43,7 @@ updates before working on your lab assignment.
  % tree
 ```
 
-Go ahead and create a build directory in the `lab3-music` directory for
+Go ahead and create a build directory in the `lab4-proc` directory for
 this lab, and run configure to generate a Makefile.
 
 ```
