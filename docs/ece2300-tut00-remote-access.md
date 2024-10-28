@@ -351,6 +351,11 @@ can delete the `.vscode-server` directory like this:
 Be very careful with the `rm` command since it can permanently delete
 files!
 
+Another option is to directly log into a specific `ecelinux` server. So
+instead of loging into `ecelinux.ece.cornell.edu` (which will
+automatically pick an `ecelinux` server for you to use) you can log into
+`ecelinux-01.ece.cornell.edu`, `ecelinux-02.ece.cornell.edu`, and so on.
+
 Note that using the `Remote-SSH: Add new SSH host...` option does not
 always seem to work on Microsoft Windows OS laptops/workstations. This is
 why we recommend just using `Remote-SSH: Connect Current Window to
