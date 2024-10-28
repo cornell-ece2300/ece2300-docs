@@ -1157,19 +1157,19 @@ sentences.
 
 #### Section 3. Gate-Level vs RTL Design (two paragraphs)
 
- - Paragraph 1: Analyzing the Gate-Level Counter
+ - Paragraph 1: Analyzing the Gate-Level Counter and Note Player
     + Include a sentence referencing the critical path of your GL counter
     + Discuss the delay of the various components along the critical path
       (you must mention clock-to-q and setup time)
     + Explain why the GL counter and GL note players do not meet timing
        and do not have any dedicated logic registers
 
- - Paragraph 2: Analyzing the RTL Counter
+ - Paragraph 2: Analyzing the RTL Counter and Note Player
     + Include a sentence referencing your technology map screenshot
     + Discuss how the various Verilog constructs turn into specific
        low-level hardware in the FPGA
     + Discuss whether or not the number of dedicated logic registers in
-       the GL counter and GL note player as expected
+       the RTL counter and RTL note player as expected
     + Be specific and count registers in your Verilog and argue why the
        number of dedicated logic registers is correct in both the counter
        and the note player
