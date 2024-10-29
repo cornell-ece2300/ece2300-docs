@@ -135,6 +135,16 @@ immediate, then it will also have an immediate type.
   ]}
 </script>
 
+#### U-type
+
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7,  name: "opcode"},
+    {bits: 5,  name: "rd",      type: 2},
+    {bits: 20, name: "imm",     type: 5}
+  ]}
+</script>
+
 ### 2.2: TinyRV1 Immediate Formats
 
 RISC-V has an asymmetric immediate encoding which means that the
