@@ -35,7 +35,7 @@ theme:
 
 markdown_extensions:
   - admonition
-  - markdown_wavedrom
+  - attr_list
   - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
@@ -66,9 +66,9 @@ extra_javascript:
   # pymdownx.arithmatex
   - javascripts/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
-  # markdown_wavedrom
-  - https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/wavedrom.min.js
-  - https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/skins/default.js
+  # Wavedrom
+  - https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/skins/default.js
+  - https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/wavedrom.min.js
   - js/wavedrom_loader.js
 
 
@@ -101,7 +101,7 @@ nav:
     - 'Lab 3 (Parts C & D) Optional Add-On: Custom Song': ece2300-lab3cd-custom-song.md
     - 'Lab 4 (Part A) TinyRV1 Processor -- Implementation and Verification': ece2300-lab4ab-proc.md
 
-#   - 'Misc':
-#     - 'TinyRV1 ISA': ece2300-tinyrv1-isa.md
+  # - 'Misc':
+  #   - 'TinyRV1 ISA': ece2300-tinyrv1-isa.md
 #     - 'Testing and Debug Strategy': ece2300-test-debug-strategy.md
 
