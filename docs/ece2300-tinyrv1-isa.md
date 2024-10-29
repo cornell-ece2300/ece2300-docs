@@ -99,7 +99,7 @@ immediate, then it will also have an immediate type.
 
 #### R-type
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 7, name: "opcode"},
     {bits: 5, name: "rd",      type: 2},
@@ -108,11 +108,11 @@ wavedrom(
     {bits: 5, name: "rs2",     type: 7},
     {bits: 7, name: "funct7"}
   ]}
-)
+</script>
 
 #### I-type
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 7,  name: "opcode"},
     {bits: 5,  name: "rd",      type: 2},
@@ -120,11 +120,11 @@ wavedrom(
     {bits: 5,  name: "rs1",     type: 3},
     {bits: 12, name: "imm",     type: 5}
   ]}
-)
+</script>
 
 #### S-type
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 7, name: "opcode"},
     {bits: 5, name: "imm",     type: 5},
@@ -133,7 +133,7 @@ wavedrom(
     {bits: 5, name: "rs2",     type: 7},
     {bits: 7, name: "imm",     type: 5}
   ]}
-)
+</script>
 
 ### 2.2: TinyRV1 Immediate Formats
 
@@ -146,7 +146,7 @@ is always in bit 31 of the instruction.
 For this, let's separate out the different sections of an
 instruction:
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 7, name: '',        type: 1},
     {bits: 1, name: '[7]',     type: 2},
@@ -157,7 +157,7 @@ wavedrom(
     {bits: 6, name: '[30:25]', type: 7},
     {bits: 1, name: '[31]'            }
   ]}
-)
+</script>
 
 The following diagrams represent how to re-arrange these sections to
 create different immediates, based on the encoding for the particular
@@ -169,29 +169,29 @@ instruction. Here:
 
 #### I-immediate
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 1, name: '[20]'            },
     {bits: 4, name: '[24:21]', type: 6},
     {bits: 6, name: '[30:25]', type: 7},
     {bits: 21, name: '<-[31]->'       }
   ]}
-)
+</script>
 
 #### S-immediate
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 1, name: '[7]',     type: 2},
     {bits: 4, name: '[11:8]',  type: 4},
     {bits: 6, name: '[30:25]', type: 7},
     {bits: 21, name: '<-[31]->'       }
   ]}
-)
+</script>
 
 #### J-immediate
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 1, name: '0',       type: 1},
     {bits: 4, name: '[24:21]', type: 6},
@@ -200,11 +200,11 @@ wavedrom(
     {bits: 8, name: '[19:12]', type: 5},
     {bits: 12, name: '<-[31]->'       }
   ]}
-)
+</script>
 
 #### B-immediate
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 1, name: '0',       type: 1},
     {bits: 4, name: '[11:8]',  type: 4},
@@ -212,7 +212,7 @@ wavedrom(
     {bits: 1, name: '[7]',     type: 2},
     {bits: 20, name: '<-[31]->'       }
   ]}
-)
+</script>
 
 3. Tiny RISC-V Instruction Details
 --------------------------------------------------------------------------
@@ -240,7 +240,7 @@ when specifying the instruction semantics:
   PC \leftarrow PC + 4
 \end{gather}
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 7, name: 0b0110011},
     {bits: 5, name: "rd",      type: 2},
@@ -249,7 +249,7 @@ wavedrom(
     {bits: 5, name: "rs2",     type: 7},
     {bits: 7, name: 0b10000000}
   ]}
-)
+</script>
 
 #### ADDI
 
@@ -263,7 +263,7 @@ wavedrom(
   PC \leftarrow PC + 4
 \end{gather}
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 7,  name: 0b0110011},
     {bits: 5,  name: "rd",      type: 2},
@@ -271,7 +271,7 @@ wavedrom(
     {bits: 5,  name: "rs1",     type: 3},
     {bits: 12, name: "imm",     type: 5}
   ]}
-)
+</script>
 
 #### MUL
 
@@ -285,7 +285,7 @@ wavedrom(
   PC \leftarrow PC + 4
 \end{gather}
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 7, name: 0b0110011},
     {bits: 5, name: "rd",      type: 2},
@@ -294,7 +294,7 @@ wavedrom(
     {bits: 5, name: "rs2",     type: 7},
     {bits: 7, name: 0b10000001}
   ]}
-)
+</script>
 
 #### LW
 
@@ -308,7 +308,7 @@ wavedrom(
   PC \leftarrow PC + 4
 \end{gather}
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 7,  name: 0b0000011},
     {bits: 5,  name: "rd",      type: 2},
@@ -316,7 +316,7 @@ wavedrom(
     {bits: 5,  name: "rs1",     type: 3},
     {bits: 12, name: "imm",     type: 5}
   ]}
-)
+</script>
 
 #### SW
 
@@ -330,7 +330,7 @@ wavedrom(
   PC \leftarrow PC + 4
 \end{gather}
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 7, name: 0b0100011},
     {bits: 5, name: "imm",     type: 5},
@@ -339,7 +339,7 @@ wavedrom(
     {bits: 5, name: "rs2",     type: 7},
     {bits: 7, name: "imm",     type: 5}
   ]}
-)
+</script>
 
 #### JAL
 
@@ -353,13 +353,13 @@ wavedrom(
   PC \leftarrow PC + \text{sext}(\texttt{imm})
 \end{gather}
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 7,  name: 0b1101111},
     {bits: 5,  name: "rd",      type: 2},
     {bits: 20, name: "imm",     type: 5}
   ]}
-)
+</script>
 
 #### JR
 
@@ -372,7 +372,7 @@ wavedrom(
   PC \leftarrow R[\texttt{rs1}]
 \end{gather}
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 7,  name: 0b1100111},
     {bits: 5,  name: 0b100000  },
@@ -380,7 +380,7 @@ wavedrom(
     {bits: 5,  name: "rs1",     type: 3},
     {bits: 12, name: 0b1000000000000   },
   ]}
-)
+</script>
 
 #### BNE
 
@@ -394,7 +394,7 @@ wavedrom(
   & \text{else}                                     && PC \leftarrow PC + 4
 \end{align}
 
-wavedrom(
+<script type="WaveDrom">
   {reg: [
     {bits: 7, name: 0b1100011},
     {bits: 5, name: "rd",      type: 2},
@@ -403,7 +403,7 @@ wavedrom(
     {bits: 5, name: "rs2",     type: 7},
     {bits: 7, name: "imm",     type: 5}
   ]}
-)
+</script>
 
 4. TinyRV1 Privileged ISA
 --------------------------------------------------------------------------
