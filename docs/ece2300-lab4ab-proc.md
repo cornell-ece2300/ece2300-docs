@@ -89,7 +89,7 @@ RTL implementations can use all of the GL constructs in addition to the
 following Verilog constructs.
 
  - `logic`
- - `+`, `-`
+ - `+`, `-`, `*`
  - `>>`, `<<`, `>>>`
  - `==`, `!=`, `<`, `>`, `<=`, `>=`
  - `&&`, `||`, `!`
