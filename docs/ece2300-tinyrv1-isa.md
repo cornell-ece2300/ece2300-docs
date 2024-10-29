@@ -7,221 +7,143 @@ TinyRV1 ISA is a very limited subset of the RISC-V ISA, an open-source
 instruction set architecture that has gained significant popularity in the
 last decade.
 
-1. How Is The Data Represented?
+1. Architectural State
 --------------------------------------------------------------------------
 
-2. Where Can The Data Be Stored?
---------------------------------------------------------------------------
+### 1.1: Data Formats
 
-3. How Can Data Be Accessed?
---------------------------------------------------------------------------
+TinyRV1 only supports 4B (four-byte) signed and unsigned integer values.
+There are no byte nor half-word values and no floating-point.
 
-4. What Operations Can Be Done On The Data?
---------------------------------------------------------------------------
+### 1.2: General-Purpose Registers
 
-5. How Are Instructions Encoded?
---------------------------------------------------------------------------
+There are 31 general-purpose registers (GPRs) `x1`-`x31` (called x 
+registers), which hold integer values. Register `x0` is hardwired to the
+constant zero. Each register is 32 bits wide. TinyRV1 uses the same calling
+convention and symbolic register names as RISC-V:
 
-TinyRV1 contains eight instructions; `ADD`, `ADDI`, `MUL`, `LW`, `SW`,
-`JAL`, `JALR`, and `BNE`. The encoding of these instructions involves the
-instructions themselves, as well as how to form immediates from the
-instruction when needed.
-
-### 5.1: Instruction Encoding
-
-The following section details the assembly representation and semantics of
-each instruction, as well as how the values for each instruction are
-organized in their binary representations.
-
-#### ADD
-
- - Summary: Addition with 3 general-purpose registers (no overflow)
- - Assembly: `add rd, rs1, rs2`
- - Format: R-type
- - Semantics: 
+<style>
+thead {
+  background-color: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+}
+</style>
 
 <center>
-$R[\texttt{rd}] \leftarrow R[\texttt{rs1}] + R[\texttt{rs2}]$
 
-$PC \leftarrow PC + 4$
+| Register | ABI Name | Description                                            |
+|----------|----------|--------------------------------------------------------|
+| `x0`     | `zero`   | The constant value 0                                   |
+| `x1`     | `ra`     | Return address (caller saved)                          |
+| `x2`     | `sp`     | Stack pointer (callee saved)                           |
+| `x3`     | `gp`     | Global pointer                                         |
+| `x4`     | `tp`     | Thread pointer                                         |
+| `x5`     | `t0`     | Temporary registers (caller saved)                     |
+| `x6`     | `t1`     | &#8593;                                                |
+| `x7`     | `t2`     | &#8593;                                                |
+| `x8`     | `s0/fp`  | Saved register or frame pointer (callee saved)         |
+| `x9`     | `s1`     | Saved register (callee saved)                          |
+| `x10`    | `a0`     | Function arguments and/or return values (caller saved) |
+| `x11`    | `a1`     | &#8593;                                                |
+| `x12`    | `a2`     | Function arguments (caller saved)                      |
+| `x13`    | `a3`     | &#8593;                                                |
+| `x14`    | `a4`     | &#8593;                                                |
+| `x15`    | `a5`     | &#8593;                                                |
+| `x16`    | `a6`     | &#8593;                                                |
+| `x17`    | `a7`     | &#8593;                                                |
+| `x18`    | `s2`     | Saved registers (callee saved)                         |
+| `x19`    | `s3`     | &#8593;                                                |
+| `x20`    | `s4`     | &#8593;                                                |
+| `x21`    | `s5`     | &#8593;                                                |
+| `x22`    | `s6`     | &#8593;                                                |
+| `x23`    | `s7`     | &#8593;                                                |
+| `x24`    | `s8`     | &#8593;                                                |
+| `x25`    | `s9`     | &#8593;                                                |
+| `x26`    | `s10`    | &#8593;                                                |
+| `x27`    | `s11`    | &#8593;                                                |
+| `x28`    | `t3`     | Temporary registers (caller saved)                     |
+| `x29`    | `t4`     | &#8593;                                                |
+| `x30`    | `t5`     | &#8593;                                                |
+| `x31`    | `t6`     | &#8593;                                                |
+
 </center>
+
+### 1.3: Memory
+
+TinyRV1 only supports a 1MB virtual memory address space from
+`0x00000000` to `0x000fffff`. The result of memory accesses to addresses
+larger than `0x000fffff` are undefined.
+
+A key feature of any ISA is identifying the _endianness_ of the memory
+system. Endianness specifies if we load a word in memory, what order
+should those bytes appear in the destination register. Assume the
+letter A ia at byte address `0x0`, the letter B is at byte address `0x1`,
+the letter C is at byte address `0x2`, and the letter D is at byte
+address `0x3`. If we laod a four-byte word from address 0x0, there are
+two options: the destination register can either hold `0xABCD` (big
+endian) or `0xDCBA` (little endian). There is no significant benefit of
+one system over the other. Tiny RISC-V uses a little endian memory
+system.
+
+![](img/tinyrv1-endian.png){: style="width: 70%"}
+
+2. TinyRV1 Instruction and Immediate Encoding
+--------------------------------------------------------------------------
+
+The TinyRV1 ISA uses the same instruction encoding as RISC-V. There
+are three instruction types and four immediate encodings. Each instruction
+has a specific instruction type, and if that instruction includes an
+immediate, then it will also have an immediate type.
+
+### 2.1: TinyRV1 Instruction Formats
+
+#### R-type
 
 wavedrom(
   {reg: [
-    {bits: 7, name: 0b0110011},
+    {bits: 7, name: "opcode"},
     {bits: 5, name: "rd",      type: 2},
-    {bits: 3, name: 0b1000},
+    {bits: 3, name: "funct3"},
     {bits: 5, name: "rs1",     type: 3},
     {bits: 5, name: "rs2",     type: 7},
-    {bits: 7, name: 0b10000000}
+    {bits: 7, name: "funct7"}
   ]}
 )
 
-#### ADDI
-
- - Summary: Add constant
- - Assembly: `addi rd, rs1, imm`
- - Format: I-type, I-immediate
- - Semantics: 
-
-<center>
-$R[\texttt{rd}] \leftarrow R[\texttt{rs1}] + \text{sext}(\texttt{imm})$
-
-$PC \leftarrow PC + 4$
-</center>
+#### I-type
 
 wavedrom(
   {reg: [
-    {bits: 7,  name: 0b0110011},
+    {bits: 7,  name: "opcode"},
     {bits: 5,  name: "rd",      type: 2},
-    {bits: 3,  name: 0b1000},
+    {bits: 3,  name: "funct3"},
     {bits: 5,  name: "rs1",     type: 3},
     {bits: 12, name: "imm",     type: 5}
   ]}
 )
 
-#### MUL
-
- - Summary: Signed multiplication with 3 general-purpose registers (no overflow)
- - Assembly: `mul rd, rs1, imm`
- - Format: R-type
- - Semantics: 
-
-<center>
-$R[\texttt{rd}] \leftarrow R[\texttt{rs1}] \times R[\texttt{rs2}]$
-
-$PC \leftarrow PC + 4$
-</center>
+#### S-type
 
 wavedrom(
   {reg: [
-    {bits: 7, name: 0b0110011},
-    {bits: 5, name: "rd",      type: 2},
-    {bits: 3, name: 0b1000},
-    {bits: 5, name: "rs1",     type: 3},
-    {bits: 5, name: "rs2",     type: 7},
-    {bits: 7, name: 0b10000001}
-  ]}
-)
-
-#### LW
-
- - Summary: Load word from memory
- - Assembly: `lw rd, imm(rs1)`
- - Format: I-type, I-immediate
- - Semantics: 
-
-<center>
-$R[\texttt{rd}] \leftarrow M\left[R[\texttt{rs1}] + \text{sext}(\texttt{imm})\right]$
-
-$PC \leftarrow PC + 4$
-</center>
-
-wavedrom(
-  {reg: [
-    {bits: 7,  name: 0b0000011},
-    {bits: 5,  name: "rd",      type: 2},
-    {bits: 3,  name: 0b1010},
-    {bits: 5,  name: "rs1",     type: 3},
-    {bits: 12, name: "imm",     type: 5}
-  ]}
-)
-
-#### SW
-
- - Summary: Store word in memory
- - Assembly: `sw rs2, imm(rs1)`
- - Format: S-type, S-immediate
- - Semantics: 
-
-<center>
-$M\left[R[\texttt{rs1}] + \text{sext}(\texttt{imm})\right] \leftarrow R[\texttt{rs2}]$
-
-$PC \leftarrow PC + 4$
-</center>
-
-wavedrom(
-  {reg: [
-    {bits: 7, name: 0b0100011},
+    {bits: 7, name: "opcode"},
     {bits: 5, name: "imm",     type: 5},
-    {bits: 3, name: 0b1010},
+    {bits: 3, name: "funct3"},
     {bits: 5, name: "rs1",     type: 3},
     {bits: 5, name: "rs2",     type: 7},
     {bits: 7, name: "imm",     type: 5}
   ]}
 )
 
-#### JAL
+### 2.2: TinyRV1 Immediate Formats
 
- - Summary: Jump to address, place return address in general-purpose register
- - Assembly: `jal rd, imm`
- - Format: U-type, J-immediate
- - Semantics: 
+RISC-V has an asymmetric immediate encoding which means that the
+immediates are formed by concatenating different bits in an asymmetric
+order based on the specific immediate formats. Note that in RISC-V, all
+immediates are always sign extended, and the sign-bit for the immediate
+is always in bit 31 of the instruction.
 
-<center>
-$R[\texttt{rd}] \leftarrow PC + 4$
-
-$PC \leftarrow PC + \text{sext}(\texttt{imm})$
-</center>
-
-wavedrom(
-  {reg: [
-    {bits: 7,  name: 0b1101111},
-    {bits: 5,  name: "rd",      type: 2},
-    {bits: 20, name: "imm",     type: 5}
-  ]}
-)
-
-#### JR
-
- - Summary: Jump to address
- - Assembly: `jr rs1`
- - Format: I-type
- - Semantics: 
-
-<center>
-$PC \leftarrow R[\texttt{rs1}]$
-</center>
-
-wavedrom(
-  {reg: [
-    {bits: 7,  name: 0b1100111},
-    {bits: 5,  name: 0b100000  },
-    {bits: 3,  name: 0b1010    },
-    {bits: 5,  name: "rs1",     type: 3},
-    {bits: 12, name: 0b1000000000000   },
-  ]}
-)
-
-#### BNE
-
- - Summary: Branch if two general-purpose registers are equal
- - Assembly: `bne rs1, rs2, imm`
- - Format: S-type, B-immediate
- - Semantics: 
-
-\begin{align}
-  & \text{if}(R[\texttt{rs1}] \neq R[\texttt{rs2}]) && PC \leftarrow PC + \text{sext}(\texttt{imm}) \\
-  & \text{else}                                     && PC \leftarrow PC + 4
-\end{align}
-
-wavedrom(
-  {reg: [
-    {bits: 7, name: 0b1100011},
-    {bits: 5, name: "rd",      type: 2},
-    {bits: 3, name: 0b1001},
-    {bits: 5, name: "rs1",     type: 3},
-    {bits: 5, name: "rs2",     type: 7},
-    {bits: 7, name: "imm",     type: 5}
-  ]}
-)
-
-### 5.2: Immediate Encoding
-
-Immediates are literal values encoded as part of an instruction. These use
-up space in the instruction; depending on the type of instruction, we may
-wish to change which bits of the instruction are used to encode an
-immediate. For this, let's separate out the different sections of an
+For this, let's separate out the different sections of an
 instruction:
 
 wavedrom(
@@ -291,3 +213,250 @@ wavedrom(
     {bits: 20, name: '<-[31]->'       }
   ]}
 )
+
+3. Tiny RISC-V Instruction Details
+--------------------------------------------------------------------------
+
+For each instruction we include a brief summary, assembly syntax,
+instruction semantics, instruction and immediate encoding format, and the
+actual encoding for the instruction. We use the following conventions
+when specifying the instruction semantics:
+
+ - $R[\texttt{rx}]$: general-purpose register value for register specifier `rx`
+ - $\text{sext}$: sign extend to 32 bits
+ - $M[\texttt{addr}]$ : 4-byte memory value at address `addr`
+ - $PC$: current program counter
+ - $\texttt{imm}$: immediate according to the immediate type
+
+#### ADD
+
+ - Summary: Addition with 3 general-purpose registers (no overflow)
+ - Assembly: `add rd, rs1, rs2`
+ - Format: R-type
+ - Semantics: 
+
+\begin{gather}
+  R[\texttt{rd}] \leftarrow R[\texttt{rs1}] + R[\texttt{rs2}] \\
+  PC \leftarrow PC + 4
+\end{gather}
+
+wavedrom(
+  {reg: [
+    {bits: 7, name: 0b0110011},
+    {bits: 5, name: "rd",      type: 2},
+    {bits: 3, name: 0b1000},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 5, name: "rs2",     type: 7},
+    {bits: 7, name: 0b10000000}
+  ]}
+)
+
+#### ADDI
+
+ - Summary: Add constant
+ - Assembly: `addi rd, rs1, imm`
+ - Format: I-type, I-immediate
+ - Semantics: 
+
+\begin{gather}
+  R[\texttt{rd}] \leftarrow R[\texttt{rs1}] + \text{sext}(\texttt{imm}) \\
+  PC \leftarrow PC + 4
+\end{gather}
+
+wavedrom(
+  {reg: [
+    {bits: 7,  name: 0b0110011},
+    {bits: 5,  name: "rd",      type: 2},
+    {bits: 3,  name: 0b1000},
+    {bits: 5,  name: "rs1",     type: 3},
+    {bits: 12, name: "imm",     type: 5}
+  ]}
+)
+
+#### MUL
+
+ - Summary: Signed multiplication with 3 general-purpose registers (no overflow)
+ - Assembly: `mul rd, rs1, imm`
+ - Format: R-type
+ - Semantics: 
+
+\begin{gather}
+  R[\texttt{rd}] \leftarrow R[\texttt{rs1}] \times R[\texttt{rs2}] \\
+  PC \leftarrow PC + 4
+\end{gather}
+
+wavedrom(
+  {reg: [
+    {bits: 7, name: 0b0110011},
+    {bits: 5, name: "rd",      type: 2},
+    {bits: 3, name: 0b1000},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 5, name: "rs2",     type: 7},
+    {bits: 7, name: 0b10000001}
+  ]}
+)
+
+#### LW
+
+ - Summary: Load word from memory
+ - Assembly: `lw rd, imm(rs1)`
+ - Format: I-type, I-immediate
+ - Semantics: 
+
+\begin{gather}
+  R[\texttt{rd}] \leftarrow M\left[R[\texttt{rs1}] + \text{sext}(\texttt{imm})\right] \\
+  PC \leftarrow PC + 4
+\end{gather}
+
+wavedrom(
+  {reg: [
+    {bits: 7,  name: 0b0000011},
+    {bits: 5,  name: "rd",      type: 2},
+    {bits: 3,  name: 0b1010},
+    {bits: 5,  name: "rs1",     type: 3},
+    {bits: 12, name: "imm",     type: 5}
+  ]}
+)
+
+#### SW
+
+ - Summary: Store word in memory
+ - Assembly: `sw rs2, imm(rs1)`
+ - Format: S-type, S-immediate
+ - Semantics: 
+
+\begin{gather}
+  M\left[R[\texttt{rs1}] + \text{sext}(\texttt{imm})\right] \leftarrow R[\texttt{rs2}] \\
+  PC \leftarrow PC + 4
+\end{gather}
+
+wavedrom(
+  {reg: [
+    {bits: 7, name: 0b0100011},
+    {bits: 5, name: "imm",     type: 5},
+    {bits: 3, name: 0b1010},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 5, name: "rs2",     type: 7},
+    {bits: 7, name: "imm",     type: 5}
+  ]}
+)
+
+#### JAL
+
+ - Summary: Jump to address, place return address in general-purpose register
+ - Assembly: `jal rd, imm`
+ - Format: U-type, J-immediate
+ - Semantics: 
+
+\begin{gather}
+  R[\texttt{rd}] \leftarrow PC + 4 \\
+  PC \leftarrow PC + \text{sext}(\texttt{imm})
+\end{gather}
+
+wavedrom(
+  {reg: [
+    {bits: 7,  name: 0b1101111},
+    {bits: 5,  name: "rd",      type: 2},
+    {bits: 20, name: "imm",     type: 5}
+  ]}
+)
+
+#### JR
+
+ - Summary: Jump to address
+ - Assembly: `jr rs1`
+ - Format: I-type
+ - Semantics: 
+
+\begin{gather}
+  PC \leftarrow R[\texttt{rs1}]
+\end{gather}
+
+wavedrom(
+  {reg: [
+    {bits: 7,  name: 0b1100111},
+    {bits: 5,  name: 0b100000  },
+    {bits: 3,  name: 0b1010    },
+    {bits: 5,  name: "rs1",     type: 3},
+    {bits: 12, name: 0b1000000000000   },
+  ]}
+)
+
+#### BNE
+
+ - Summary: Branch if two general-purpose registers are equal
+ - Assembly: `bne rs1, rs2, imm`
+ - Format: S-type, B-immediate
+ - Semantics: 
+
+\begin{align}
+  & \text{if}(R[\texttt{rs1}] \neq R[\texttt{rs2}]) && PC \leftarrow PC + \text{sext}(\texttt{imm}) \\
+  & \text{else}                                     && PC \leftarrow PC + 4
+\end{align}
+
+wavedrom(
+  {reg: [
+    {bits: 7, name: 0b1100011},
+    {bits: 5, name: "rd",      type: 2},
+    {bits: 3, name: 0b1001},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 5, name: "rs2",     type: 7},
+    {bits: 7, name: "imm",     type: 5}
+  ]}
+)
+
+4. TinyRV1 Privileged ISA
+--------------------------------------------------------------------------
+
+TinyRV1 does not support any kind of distinction between user and
+privileged mode. Using the terminology in the RISC-V vol 2 ISA manual,
+TinyRV1 only supports M-mode.
+
+#### Reset Vector
+
+RISC-V specifies two potential reset vectors: one at a low address,
+and one at a high address. TinyRV1 uses the low address reset
+vector at `0x00000200`. This is where assembly tests should reside.
+
+#### Address Translation
+
+Tiny RISC-V only supports the most basic form of address translation.
+Every logical address is directly mapped to the corresponding physical
+address. As mentioned above, TinyRV1 only supports a 1MB virtual
+memory address space from `0x00000000` to `0x000fffff`, and thus TinyRV1
+only supports a $1MB$ physical memory address space. In the RISC-V vol 2
+ISA manual this is called a `Mbare` addressing environment.
+
+5. TinyRV1 Pseudo-Instructions
+--------------------------------------------------------------------------
+
+It is very important to understand the relationship between the "real"
+instructions presented in this manual, the "real" instructions in the
+official RISC-V ISA manual, and pseudo-instructions. There are two
+instructions we need to be careful with: `NOP` and `JR`. The
+following table illustrates which ISAs contain which of these two
+instructions, and whether or not the instruction is considered a "real"
+instruction or a "pseudo-instruction".
+
+<center>
+
+|          | TinyRV1 | RISC-V |
+|----------|---------|--------|
+| `NOP`    | pseudo  | pseudo |
+| `JR`     | real    | pseudo  |
+
+</center>
+
+`NOP` is always a pseudo-instruction. It is always equivalent to the
+following use of the `ADDI` instruction:
+
+\begin{align}
+  \texttt{nop} \equiv \texttt{addi x0, x0, 0}
+\end{align}
+
+`JR` is a "real" instruction in TinyRV1, but it is a pseudo-instruction in
+RISC-V for the following use of the `JALR` instruction:
+
+\begin{align}
+  \texttt{jr rs1} \equiv \texttt{jalr x0, rs1, 0}
+\end{align}
