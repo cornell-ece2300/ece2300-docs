@@ -91,7 +91,7 @@ system.
 --------------------------------------------------------------------------
 
 The TinyRV1 ISA uses the same instruction encoding as RISC-V. There
-are three instruction types and four immediate encodings. Each instruction
+are four instruction types and four immediate encodings. Each instruction
 has a specific instruction type, and if that instruction includes an
 immediate, then it will also have an immediate type.
 
