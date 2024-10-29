@@ -217,3 +217,77 @@ wavedrom(
 )
 
 ### 5.2: Immediate Encoding
+
+Immediates are literal values encoded as part of an instruction. These use
+up space in the instruction; depending on the type of instruction, we may
+wish to change which bits of the instruction are used to encode an
+immediate. For this, let's separate out the different sections of an
+instruction:
+
+wavedrom(
+  {reg: [
+    {bits: 7, name: '',        type: 1},
+    {bits: 1, name: '[7]',     type: 2},
+    {bits: 4, name: '[11:8]',  type: 4},
+    {bits: 8, name: '[19:12]', type: 5},
+    {bits: 1, name: '[20]'            },
+    {bits: 4, name: '[24:21]', type: 6},
+    {bits: 6, name: '[30:25]', type: 7},
+    {bits: 1, name: '[31]'            }
+  ]}
+)
+
+The following diagrams represent how to re-arrange these sections to
+create different immediates, based on the encoding for the particular
+instruction. Here:
+
+ - `0` is used to indicate that a particular bit is 0
+ - `<-[n]->` is used to indicate that bit `n` should be replicated for
+   all bits in the field
+
+#### I-immediate
+
+wavedrom(
+  {reg: [
+    {bits: 1, name: '[20]'            },
+    {bits: 4, name: '[24:21]', type: 6},
+    {bits: 6, name: '[30:25]', type: 7},
+    {bits: 21, name: '<-[31]->'       }
+  ]}
+)
+
+#### S-immediate
+
+wavedrom(
+  {reg: [
+    {bits: 1, name: '[7]',     type: 2},
+    {bits: 4, name: '[11:8]',  type: 4},
+    {bits: 6, name: '[30:25]', type: 7},
+    {bits: 21, name: '<-[31]->'       }
+  ]}
+)
+
+#### J-immediate
+
+wavedrom(
+  {reg: [
+    {bits: 1, name: '0',       type: 1},
+    {bits: 4, name: '[24:21]', type: 6},
+    {bits: 6, name: '[30:25]', type: 7},
+    {bits: 1, name: '[20]'            },
+    {bits: 8, name: '[19:12]', type: 5},
+    {bits: 12, name: '<-[31]->'       }
+  ]}
+)
+
+#### B-immediate
+
+wavedrom(
+  {reg: [
+    {bits: 1, name: '0',       type: 1},
+    {bits: 4, name: '[11:8]',  type: 4},
+    {bits: 6, name: '[30:25]', type: 7},
+    {bits: 1, name: '[7]',     type: 2},
+    {bits: 20, name: '<-[31]->'       }
+  ]}
+)
