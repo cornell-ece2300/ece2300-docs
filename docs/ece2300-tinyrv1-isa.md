@@ -298,7 +298,7 @@ pseudo-instructions.
     {bits: 5, name: "rd",      type: 2},
     {bits: 3, name: 0b1000},
     {bits: 5, name: "rs1",     type: 3},
-    {bits: 5, name: "rs2",     type: 5},
+    {bits: 5, name: "rs2",     type: 7},
     {bits: 7, name: 0b10000000}
   ]}
 </script>
