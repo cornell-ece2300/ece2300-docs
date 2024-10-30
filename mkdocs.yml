@@ -101,7 +101,7 @@ nav:
     - 'Lab 3 (Parts C & D) Optional Add-On: Custom Song': ece2300-lab3cd-custom-song.md
     - 'Lab 4 (Part A) TinyRV1 Processor -- Implementation and Verification': ece2300-lab4ab-proc.md
 
-  # - 'Misc':
-  #   - 'TinyRV1 ISA': ece2300-tinyrv1-isa.md
+  - 'Misc':
+    - 'TinyRV1 ISA': ece2300-tinyrv1-isa.md
 #     - 'Testing and Debug Strategy': ece2300-test-debug-strategy.md
 

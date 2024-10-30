@@ -3,9 +3,10 @@ TinyRV1 ISA
 ==========================================================================
 
 In Lab 4, you will be implementing the TinyRV1 ISA on your processor. The
-TinyRV1 ISA is a very limited subset of the RISC-V ISA, an open-source
-instruction set architecture that has gained significant popularity in the
-last decade.
+TinyRV1 ISA is a very limited subset of the 
+[RISC-V ISA](https://web.csl.cornell.edu/courses/ece2300/resources/waterman-riscv-isa-vol1-2p1.pdf),
+an open-source instruction set architecture that has gained significant 
+popularity in the last decade.
 
 1. Architectural State
 --------------------------------------------------------------------------
@@ -22,70 +23,51 @@ registers), which hold integer values. Register `x0` is hardwired to the
 constant zero. Each register is 32 bits wide. TinyRV1 uses the same calling
 convention and symbolic register names as RISC-V:
 
-<style>
-thead {
-  background-color: var(--md-primary-fg-color);
-  color: var(--md-primary-bg-color);
-}
-</style>
-
-<center>
-
+```
++----------+----------+--------------------------------------------------------+
 | Register | ABI Name | Description                                            |
 |----------|----------|--------------------------------------------------------|
-| `x0`     | `zero`   | The constant value 0                                   |
-| `x1`     | `ra`     | Return address (caller saved)                          |
-| `x2`     | `sp`     | Stack pointer (callee saved)                           |
-| `x3`     | `gp`     | Global pointer                                         |
-| `x4`     | `tp`     | Thread pointer                                         |
-| `x5`     | `t0`     | Temporary registers (caller saved)                     |
-| `x6`     | `t1`     | &#8593;                                                |
-| `x7`     | `t2`     | &#8593;                                                |
-| `x8`     | `s0/fp`  | Saved register or frame pointer (callee saved)         |
-| `x9`     | `s1`     | Saved register (callee saved)                          |
-| `x10`    | `a0`     | Function arguments and/or return values (caller saved) |
-| `x11`    | `a1`     | &#8593;                                                |
-| `x12`    | `a2`     | Function arguments (caller saved)                      |
-| `x13`    | `a3`     | &#8593;                                                |
-| `x14`    | `a4`     | &#8593;                                                |
-| `x15`    | `a5`     | &#8593;                                                |
-| `x16`    | `a6`     | &#8593;                                                |
-| `x17`    | `a7`     | &#8593;                                                |
-| `x18`    | `s2`     | Saved registers (callee saved)                         |
-| `x19`    | `s3`     | &#8593;                                                |
-| `x20`    | `s4`     | &#8593;                                                |
-| `x21`    | `s5`     | &#8593;                                                |
-| `x22`    | `s6`     | &#8593;                                                |
-| `x23`    | `s7`     | &#8593;                                                |
-| `x24`    | `s8`     | &#8593;                                                |
-| `x25`    | `s9`     | &#8593;                                                |
-| `x26`    | `s10`    | &#8593;                                                |
-| `x27`    | `s11`    | &#8593;                                                |
-| `x28`    | `t3`     | Temporary registers (caller saved)                     |
-| `x29`    | `t4`     | &#8593;                                                |
-| `x30`    | `t5`     | &#8593;                                                |
-| `x31`    | `t6`     | &#8593;                                                |
-
-</center>
+| x0       | zero     | The constant value 0                                   |
+| x1       | ra       | Return address (caller saved)                          |
+| x2       | sp       | Stack pointer (callee saved)                           |
+| x3       | gp       | Global pointer                                         |
+| x4       | tp       | Thread pointer                                         |
+| x5       | t0       | Temporary registers (caller saved)                     |
+| x6       | t1       | ↑                                                      |
+| x7       | t2       | ↑                                                      |
+| x8       | s0/fp    | Saved register or frame pointer (callee saved)         |
+| x9       | s1       | Saved register (callee saved)                          |
+| x10      | a0       | Function arguments and/or return values (caller saved) |
+| x11      | a1       | ↑                                                      |
+| x12      | a2       | Function arguments (caller saved)                      |
+| x13      | a3       | ↑                                                      |
+| x14      | a4       | ↑                                                      |
+| x15      | a5       | ↑                                                      |
+| x16      | a6       | ↑                                                      |
+| x17      | a7       | ↑                                                      |
+| x18      | s2       | Saved registers (callee saved)                         |
+| x19      | s3       | ↑                                                      |
+| x20      | s4       | ↑                                                      |
+| x21      | s5       | ↑                                                      |
+| x22      | s6       | ↑                                                      |
+| x23      | s7       | ↑                                                      |
+| x24      | s8       | ↑                                                      |
+| x25      | s9       | ↑                                                      |
+| x26      | s10      | ↑                                                      |
+| x27      | s11      | ↑                                                      |
+| x28      | t3       | Temporary registers (caller saved)                     |
+| x29      | t4       | ↑                                                      |
+| x30      | t5       | ↑                                                      |
+| x31      | t6       | ↑                                                      |
++----------+----------+--------------------------------------------------------+
+```
 
 ### 1.3: Memory
 
 TinyRV1 only supports a 1MB virtual memory address space from
 `0x00000000` to `0x000fffff`. The result of memory accesses to addresses
-larger than `0x000fffff` are undefined.
-
-A key feature of any ISA is identifying the _endianness_ of the memory
-system. Endianness specifies if we load a word in memory, what order
-should those bytes appear in the destination register. Assume the
-letter A ia at byte address `0x0`, the letter B is at byte address `0x1`,
-the letter C is at byte address `0x2`, and the letter D is at byte
-address `0x3`. If we laod a four-byte word from address 0x0, there are
-two options: the destination register can either hold `0xABCD` (big
-endian) or `0xDCBA` (little endian). There is no significant benefit of
-one system over the other. Tiny RISC-V uses a little endian memory
-system.
-
-![](img/tinyrv1-endian.png){: style="width: 70%"}
+larger than `0x000fffff` are undefined. TinyRV1 uses a 
+[little endian memory system](https://en.wikipedia.org/wiki/Endianness).
 
 2. TinyRV1 Instruction and Immediate Encoding
 --------------------------------------------------------------------------
@@ -233,22 +215,84 @@ actual encoding for the instruction. We use the following conventions
 when specifying the instruction semantics:
 
  - $R[\texttt{rx}]$: general-purpose register value for register specifier `rx`
+ - $CSR[\texttt{csr}]$: control/status register value for register specifier `csr`
  - $\text{sext}$: sign extend to 32 bits
  - $M[\texttt{addr}]$ : 4-byte memory value at address `addr`
  - $PC$: current program counter
  - $\texttt{imm}$: immediate according to the immediate type
 
+<style>
+  .semantics_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+#### CSRR
+
+ - Summary: Move value in control/status register to GPR
+ - Assembly: `csrr rd, csr`
+ - Format: I-type, I-immediate
+ - Semantics: 
+ - $R[\texttt{rd}] \leftarrow CSR[\texttt{csr}]$
+   {: .semantics_list }
+
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7, name: 0b1110011},
+    {bits: 5, name: "rd",      type: 2},
+    {bits: 3, name: 0b1010},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 12, name: "csr",    type: 4}
+  ]}
+</script>
+
+The control/status register read instruction is used to read a CSR and
+write the result to a GPR. The CSRs supported in TinyRV1 are listed in
+Section 4. Note that in RISC-V, `CSRR` is really a pseudo-instruction for a
+specific usage of `CSRRS`, but in TinyRV1 we only support the subset of
+`CSRRS` captured by `CSRR`. See Section 5 for more details about
+pseudo-instructions.
+
+#### CSRW
+
+ - Summary: Move value in GPR to control/status register
+ - Assembly: `csrw csr, rs1`
+ - Format: I-type, I-immediate
+ - Semantics: 
+ - $CSR[\texttt{csr}] \leftarrow R[\texttt{rs1}]$
+   {: .semantics_list }
+
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7, name: 0b1110011},
+    {bits: 5, name: "rd",      type: 2},
+    {bits: 3, name: 0b1001},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 12, name: "csr",    type: 4}
+  ]}
+</script>
+
+The control/status register write instruction is used to read a GPR and
+write the result to a CSR. The CSRs supported in TinyRV1 are listed in
+Section 4. Note that in RISC-V, `CSRW` is really a pseudo-instruction for a
+specific usage of `CSRRW`, but in TinyRV1 we only support the subset of
+`CSRRW` captured by `CSRW`. See Section 5 for more details about
+pseudo-instructions.
+
+#### CSRW
+
 #### ADD
 
- - Summary: Addition with 3 general-purpose registers (no overflow)
+ - Summary: Addition with 3 GPRs (no overflow)
  - Assembly: `add rd, rs1, rs2`
  - Format: R-type
  - Semantics: 
-
-\begin{gather}
-  R[\texttt{rd}] \leftarrow R[\texttt{rs1}] + R[\texttt{rs2}] \\
-  PC \leftarrow PC + 4
-\end{gather}
+ - $R[\texttt{rd}] \leftarrow R[\texttt{rs1}] + R[\texttt{rs2}]$
+   {: .semantics_list }
+ - $PC \leftarrow PC + 4$
+   {: .semantics_list }
 
 <script type="WaveDrom">
   {reg: [
@@ -266,12 +310,11 @@ when specifying the instruction semantics:
  - Summary: Add constant
  - Assembly: `addi rd, rs1, imm`
  - Format: I-type, I-immediate
- - Semantics: 
-
-\begin{gather}
-  R[\texttt{rd}] \leftarrow R[\texttt{rs1}] + \text{sext}(\texttt{imm}) \\
-  PC \leftarrow PC + 4
-\end{gather}
+ - Semantics:
+ - $R[\texttt{rd}] \leftarrow R[\texttt{rs1}] + \text{sext}(\texttt{imm})$
+   {: .semantics_list }
+ - $PC \leftarrow PC + 4$
+   {: .semantics_list }
 
 <script type="WaveDrom">
   {reg: [
@@ -285,15 +328,14 @@ when specifying the instruction semantics:
 
 #### MUL
 
- - Summary: Signed multiplication with 3 general-purpose registers (no overflow)
+ - Summary: Signed multiplication with 3 GPRs (no overflow)
  - Assembly: `mul rd, rs1, imm`
  - Format: R-type
  - Semantics: 
-
-\begin{gather}
-  R[\texttt{rd}] \leftarrow R[\texttt{rs1}] \times R[\texttt{rs2}] \\
-  PC \leftarrow PC + 4
-\end{gather}
+ - $R[\texttt{rd}] \leftarrow R[\texttt{rs1}] \times R[\texttt{rs2}]$
+   {: .semantics_list }
+ - $PC \leftarrow PC + 4$
+   {: .semantics_list }
 
 <script type="WaveDrom">
   {reg: [
@@ -311,12 +353,11 @@ when specifying the instruction semantics:
  - Summary: Load word from memory
  - Assembly: `lw rd, imm(rs1)`
  - Format: I-type, I-immediate
- - Semantics: 
-
-\begin{gather}
-  R[\texttt{rd}] \leftarrow M\left[R[\texttt{rs1}] + \text{sext}(\texttt{imm})\right] \\
-  PC \leftarrow PC + 4
-\end{gather}
+ - Semantics:
+ - $R[\texttt{rd}] \leftarrow M\left[R[\texttt{rs1}] + \text{sext}(\texttt{imm})\right]$
+   {: .semantics_list }
+ - $PC \leftarrow PC + 4$
+   {: .semantics_list }
 
 <script type="WaveDrom">
   {reg: [
@@ -334,11 +375,10 @@ when specifying the instruction semantics:
  - Assembly: `sw rs2, imm(rs1)`
  - Format: S-type, S-immediate
  - Semantics: 
-
-\begin{gather}
-  M\left[R[\texttt{rs1}] + \text{sext}(\texttt{imm})\right] \leftarrow R[\texttt{rs2}] \\
-  PC \leftarrow PC + 4
-\end{gather}
+ - $M\left[R[\texttt{rs1}] + \text{sext}(\texttt{imm})\right] \leftarrow R[\texttt{rs2}]$
+   {: .semantics_list }
+ - $PC \leftarrow PC + 4$
+   {: .semantics_list }
 
 <script type="WaveDrom">
   {reg: [
@@ -353,15 +393,14 @@ when specifying the instruction semantics:
 
 #### JAL
 
- - Summary: Jump to address, place return address in general-purpose register
+ - Summary: Jump to address, place return address in GPR
  - Assembly: `jal rd, imm`
  - Format: U-type, J-immediate
  - Semantics: 
-
-\begin{gather}
-  R[\texttt{rd}] \leftarrow PC + 4 \\
-  PC \leftarrow PC + \text{sext}(\texttt{imm})
-\end{gather}
+ - $R[\texttt{rd}] \leftarrow PC + 4$
+   {: .semantics_list }
+ - $PC \leftarrow PC + \text{sext}(\texttt{imm})$
+   {: .semantics_list }
 
 <script type="WaveDrom">
   {reg: [
@@ -377,10 +416,8 @@ when specifying the instruction semantics:
  - Assembly: `jr rs1`
  - Format: I-type
  - Semantics: 
-
-\begin{gather}
-  PC \leftarrow R[\texttt{rs1}]
-\end{gather}
+ - $PC \leftarrow R[\texttt{rs1}]$
+   {: .semantics_list }
 
 <script type="WaveDrom">
   {reg: [
@@ -394,15 +431,14 @@ when specifying the instruction semantics:
 
 #### BNE
 
- - Summary: Branch if two general-purpose registers are equal
+ - Summary: Branch if two GPRs are equal
  - Assembly: `bne rs1, rs2, imm`
  - Format: S-type, B-immediate
  - Semantics: 
-
-\begin{align}
-  & \text{if}(R[\texttt{rs1}] \neq R[\texttt{rs2}]) && PC \leftarrow PC + \text{sext}(\texttt{imm}) \\
-  & \text{else}                                     && PC \leftarrow PC + 4
-\end{align}
+ - $\text{if}(R[\texttt{rs1}] \neq R[\texttt{rs2}]) \ PC \leftarrow PC + \text{sext}(\texttt{imm})$
+   {: .semantics_list }
+ - $\text{else}\qquad\qquad\qquad\ \ \ \ \,           PC \leftarrow PC + 4$
+   {: .semantics_list }
 
 <script type="WaveDrom">
   {reg: [
@@ -424,9 +460,44 @@ TinyRV1 only supports M-mode.
 
 #### Reset Vector
 
-RISC-V specifies two potential reset vectors: one at a low address,
-and one at a high address. TinyRV1 uses the low address reset
-vector at `0x00000200`. This is where assembly tests should reside.
+RISC-V specifies that on reset, $PC$ will reset to an 
+implementation-defined value. TinyRV1 defines this to be at `0x00000000`.
+This is where assembly tests should reside.
+
+#### Control/Status Registers
+
+TinyRV1 includes six non-standard CSRs. Here is the mapping:
+
+<center>
+
+| CSR Name | Privilege | Read/Write | CSR Num | Note         |
+|----------|-----------|------------|---------|--------------|
+| `in0`    | M         | R          | `0xFC2` | non-standard |
+| `in1`    | M         | R          | `0xFC3` | non-standard |
+| `in2`    | M         | R          | `0xFC4` | non-standard |
+| `out0`   | M         | R/W        | `0x7C2` | non-standard |
+| `out1`   | M         | R/W        | `0x7C3` | non-standard |
+| `out2`   | M         | R/W        | `0x7C4` | non-standard |
+
+</center>
+
+These are chosen to conform to the guidelines in Section 2.1 of the
+RISC-V vol 2 ISA manual. Here is a description of each of these six
+CSRs.
+
+ - `in0`/`in1`/`in2`
+    - Used to communicate data to the processor from an external
+      manager. These registers have register-mapped FIFO-dequeue
+      semantics, meaning reading the registers essentially dequeues 
+      the data from the head of a FIFO. Reading the registers will 
+      stall if the FIFO has no valid data. Writing the registers is
+      undefined.
+ - `out0`/`out1`/`out2`
+    - Used to communicate data from an external manager to the processor.
+      These registers have register-mapped FIFO-enqueue semantics, meaning
+      writing the registers essentially enqueues the data on the tail of a 
+      FIFO. Writing the registers will stall if the FIFO is not ready. 
+      Reading the registers is undefined.
 
 #### Address Translation
 
@@ -448,12 +519,21 @@ following table illustrates which ISAs contain which of these two
 instructions, and whether or not the instruction is considered a "real"
 instruction or a "pseudo-instruction".
 
+<style> 
+  thead { 
+    background-color: var(--md-primary-fg-color); 
+    color: var(--md-primary-bg-color); 
+  } 
+</style>
+
 <center>
 
 |          | TinyRV1 | RISC-V |
 |----------|---------|--------|
 | `NOP`    | pseudo  | pseudo |
-| `JR`     | real    | pseudo  |
+| `JR`     | real    | pseudo |
+| `CSRR`   | real    | pseudo |
+| `CSRW`   | real    | pseudo |
 
 </center>
 
@@ -470,3 +550,14 @@ RISC-V for the following use of the `JALR` instruction:
 \begin{align}
   \texttt{jr rs1} \equiv \texttt{jalr x0, rs1, 0}
 \end{align}
+
+`CSRR` and `CSSRW` are real instructions in TinyRV1 but they are
+pseudo-instructions for the following use of the `CSRRS` and `CSRRW`:
+
+\begin{align}
+  \texttt{csrr rd, csr}  &\equiv \texttt{csrrs rd, csr, x0} \\
+  \texttt{csrw csr, rs1} &\equiv \texttt{csrrw x0, csr, rs1}
+\end{align}
+
+None of this changes the encodings. In TinyRV1, `JR` is encoded the same
+way as the corresponding use of the `JALR` instruction in RISC-V.
