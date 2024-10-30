@@ -244,7 +244,7 @@ when specifying the instruction semantics:
     {bits: 5, name: "rd",      type: 2},
     {bits: 3, name: 0b1010},
     {bits: 5, name: "rs1",     type: 3},
-    {bits: 12, name: "csr",    type: 4}
+    {bits: 12, name: "csr",    type: 5}
   ]}
 </script>
 
