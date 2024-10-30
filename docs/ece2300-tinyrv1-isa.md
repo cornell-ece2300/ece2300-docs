@@ -206,7 +206,7 @@ instruction. Here:
   ]}
 </script>
 
-3. Tiny RISC-V Instruction Details
+3. TinyRV1 Instruction Details
 --------------------------------------------------------------------------
 
 For each instruction we include a brief summary, assembly syntax,
@@ -501,7 +501,7 @@ CSRs.
 
 #### Address Translation
 
-Tiny RISC-V only supports the most basic form of address translation.
+TinyRV1 only supports the most basic form of address translation.
 Every logical address is directly mapped to the corresponding physical
 address. As mentioned above, TinyRV1 only supports a 1MB virtual
 memory address space from `0x00000000` to `0x000fffff`, and thus TinyRV1
