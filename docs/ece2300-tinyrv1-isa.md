@@ -318,7 +318,7 @@ pseudo-instructions.
 
 <script type="WaveDrom">
   {reg: [
-    {bits: 7,  name: 0b0110011},
+    {bits: 7,  name: 0b0010011},
     {bits: 5,  name: "rd",      type: 2},
     {bits: 3,  name: 0b1000},
     {bits: 5,  name: "rs1",     type: 3},
@@ -423,7 +423,7 @@ pseudo-instructions.
   {reg: [
     {bits: 7,  name: 0b1100111},
     {bits: 5,  name: 0b100000  },
-    {bits: 3,  name: 0b1010    },
+    {bits: 3,  name: 0b1000    },
     {bits: 5,  name: "rs1",     type: 3},
     {bits: 12, name: 0b1000000000000   },
   ]}
