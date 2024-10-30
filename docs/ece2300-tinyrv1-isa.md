@@ -429,7 +429,7 @@ pseudo-instructions.
 
 #### BNE
 
- - Summary: Branch if two GPRs are equal
+ - Summary: Branch if two GPRs are not equal
  - Assembly: `bne rs1, rs2, imm`
  - Format: S-type, B-immediate
  - Semantics: 
