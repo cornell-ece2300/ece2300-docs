@@ -281,8 +281,6 @@ specific usage of `CSRRW`, but in TinyRV1 we only support the subset of
 `CSRRW` captured by `CSRW`. See Section 5 for more details about
 pseudo-instructions.
 
-#### CSRW
-
 #### ADD
 
  - Summary: Addition with 3 GPRs (no overflow)
