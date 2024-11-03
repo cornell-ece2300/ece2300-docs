@@ -441,7 +441,7 @@ pseudo-instructions.
 <script type="WaveDrom">
   {reg: [
     {bits: 7, name: 0b1100011},
-    {bits: 5, name: "rd",      type: 2},
+    {bits: 5, name: "imm",     type: 2},
     {bits: 3, name: 0b1001},
     {bits: 5, name: "rs1",     type: 3},
     {bits: 5, name: "rs2",     type: 7},
