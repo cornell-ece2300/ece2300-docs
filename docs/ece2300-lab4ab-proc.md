@@ -1,5 +1,5 @@
 
-Lab 4 (Part A): TinyRV1 Processor - Implementation and Verification
+Lab 4 (Parts A & B): TinyRV1 Processor - Implementation and Verification
 ==========================================================================
 
 Lab 4 will give you experience designing, implementing, testing, and
