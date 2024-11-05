@@ -237,6 +237,8 @@ when specifying the instruction semantics:
  - Semantics: 
  - $R[\texttt{rd}] \leftarrow CSR[\texttt{csr}]$
    {: .semantics_list }
+  - $PC \leftarrow PC + 4$
+   {: .semantics_list }
 
 <script type="WaveDrom">
   {reg: [
@@ -262,6 +264,8 @@ pseudo-instructions.
  - Format: I-type, I-immediate
  - Semantics: 
  - $CSR[\texttt{csr}] \leftarrow R[\texttt{rs1}]$
+   {: .semantics_list }
+  - $PC \leftarrow PC + 4$
    {: .semantics_list }
 
 <script type="WaveDrom">
