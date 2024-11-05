@@ -392,7 +392,7 @@ pseudo-instructions.
 #### JAL
 
  - Summary: Jump to address, place return address in GPR
- - Assembly: `jal rd, imm`
+ - Assembly: `jal rd, addr`
  - Format: U-type, J-immediate
  - Semantics: 
  - $R[\texttt{rd}] \leftarrow PC + 4$
@@ -407,6 +407,9 @@ pseudo-instructions.
     {bits: 20, name: "imm",     type: 5}
   ]}
 </script>
+
+The encoded immediate `imm` is calculated during assembly such that
+$PC + \text{sext}(\texttt{imm}) = \texttt{addr}$
 
 #### JR
 
@@ -430,7 +433,7 @@ pseudo-instructions.
 #### BNE
 
  - Summary: Branch if two GPRs are not equal
- - Assembly: `bne rs1, rs2, imm`
+ - Assembly: `bne rs1, rs2, addr`
  - Format: S-type, B-immediate
  - Semantics: 
  - $\text{if}(R[\texttt{rs1}] \neq R[\texttt{rs2}]) \ PC \leftarrow PC + \text{sext}(\texttt{imm})$
@@ -448,6 +451,9 @@ pseudo-instructions.
     {bits: 7, name: "imm",     type: 5}
   ]}
 </script>
+
+The encoded immediate `imm` is calculated during assembly such that
+$PC + \text{sext}(\texttt{imm}) = \texttt{addr}$
 
 4. TinyRV1 Privileged ISA
 --------------------------------------------------------------------------
