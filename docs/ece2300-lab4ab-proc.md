@@ -412,6 +412,27 @@ Every processor test case includes two parts.
 The above basic test case for the ADDI instruction uses the trace to make
 sure the first ADDI instruction writes the value 2 to the register file
 and the second ADDI instruction writes the value 4 to the register file.
+When writing register X0, the trace data is undefined. We do not want to
+enforce that the register write data is zero when writing X0 since this
+would require special hardware to handle this case. Here is how you might
+test reading and writing register X0.
+
+```verilog
+task test_case_2_regX0();
+  t.test_case_begin( "test_case_2_regX0" );
+
+  // Write assembly program into memory
+
+  asm( 'h000, "addi x1, x0, 0"   );
+  asm( 'h004, "addi x0, x1, 0"   );
+
+  // Check each executed instruction
+
+  check_trace( 'h000, 'h0000_0000 ); // addi x1, x0, 0
+  check_trace( 'h004, 'x          ); // addi x0, x1, 0
+
+endtask
+```
 
 Processor test cases for memory can include an additional part:
 
@@ -472,7 +493,10 @@ endtask
 Here we can see the static instruction sequence includes four
 instructions, but the dynamic instruction sequence only includes three
 instructions because the JAL instruction jumps over the instruction at
-address 0x008.
+address 0x008. Note that in the assembly format used for testing our
+processors, the literal in a JAL and BNE instruction is the _absolute_
+address of the target not the actual immediate. The assembler will take
+care of creating the appropriate PC relative immediate.
 
 You can run the test cases for the ADDI instruction on the FL processor
 model like this:
