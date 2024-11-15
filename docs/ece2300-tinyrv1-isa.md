@@ -3,9 +3,9 @@ TinyRV1 ISA
 ==========================================================================
 
 In Lab 4, you will be implementing the TinyRV1 ISA on your processor. The
-TinyRV1 ISA is a very limited subset of the 
+TinyRV1 ISA is a very limited subset of the
 [RISC-V ISA](https://web.csl.cornell.edu/courses/ece2300/resources/waterman-riscv-isa-vol1-2p1.pdf),
-an open-source instruction set architecture that has gained significant 
+an open-source instruction set architecture that has gained significant
 popularity in the last decade.
 
 1. Architectural State
@@ -18,7 +18,7 @@ There are no byte nor half-word values and no floating-point.
 
 ### 1.2: General-Purpose Registers
 
-There are 31 general-purpose registers (GPRs) `x1`-`x31` (called x 
+There are 31 general-purpose registers (GPRs) `x1`-`x31` (called x
 registers), which hold integer values. Register `x0` is hardwired to the
 constant zero. Each register is 32 bits wide. TinyRV1 uses the same calling
 convention and symbolic register names as RISC-V:
@@ -66,7 +66,7 @@ convention and symbolic register names as RISC-V:
 
 TinyRV1 only supports a 1MB virtual memory address space from
 `0x00000000` to `0x000fffff`. The result of memory accesses to addresses
-larger than `0x000fffff` are undefined. TinyRV1 uses a 
+larger than `0x000fffff` are undefined. TinyRV1 uses a
 [little endian memory system](https://en.wikipedia.org/wiki/Endianness).
 
 2. TinyRV1 Instruction and Immediate Encoding
@@ -234,7 +234,7 @@ when specifying the instruction semantics:
  - Summary: Move value in control/status register to GPR
  - Assembly: `csrr rd, csr`
  - Format: I-type, I-immediate
- - Semantics: 
+ - Semantics:
  - $R[\texttt{rd}] \leftarrow CSR[\texttt{csr}]$
    {: .semantics_list }
   - $PC \leftarrow PC + 4$
@@ -262,7 +262,7 @@ pseudo-instructions.
  - Summary: Move value in GPR to control/status register
  - Assembly: `csrw csr, rs1`
  - Format: I-type, I-immediate
- - Semantics: 
+ - Semantics:
  - $CSR[\texttt{csr}] \leftarrow R[\texttt{rs1}]$
    {: .semantics_list }
   - $PC \leftarrow PC + 4$
@@ -290,7 +290,7 @@ pseudo-instructions.
  - Summary: Addition with 3 GPRs (no overflow)
  - Assembly: `add rd, rs1, rs2`
  - Format: R-type
- - Semantics: 
+ - Semantics:
  - $R[\texttt{rd}] \leftarrow R[\texttt{rs1}] + R[\texttt{rs2}]$
    {: .semantics_list }
  - $PC \leftarrow PC + 4$
@@ -333,7 +333,7 @@ pseudo-instructions.
  - Summary: Signed multiplication with 3 GPRs (no overflow)
  - Assembly: `mul rd, rs1, imm`
  - Format: R-type
- - Semantics: 
+ - Semantics:
  - $R[\texttt{rd}] \leftarrow R[\texttt{rs1}] \times R[\texttt{rs2}]$
    {: .semantics_list }
  - $PC \leftarrow PC + 4$
@@ -371,12 +371,16 @@ pseudo-instructions.
   ]}
 </script>
 
+TinyRV1 does not support unaligned memory access. The address used in any
+LW instruction must be 4-byte aligned (i.e., the bottom two bits must be
+zero). An unaligned LW address results in undefined behavior.
+
 #### SW
 
  - Summary: Store word in memory
  - Assembly: `sw rs2, imm(rs1)`
  - Format: S-type, S-immediate
- - Semantics: 
+ - Semantics:
  - $M\left[R[\texttt{rs1}] + \text{sext}(\texttt{imm})\right] \leftarrow R[\texttt{rs2}]$
    {: .semantics_list }
  - $PC \leftarrow PC + 4$
@@ -393,12 +397,19 @@ pseudo-instructions.
   ]}
 </script>
 
+TinyRV1 does not support self-modifying code. Using a SW instruction to
+writing memory locations which will eventually be fetched as instructions
+results in undefined behavior. TinyRV1 does not support unaligned memory
+access. The address used in any SW instruction must be 4-byte aligned
+(i.e., the bottom two bits must be zero). An unaligned SW address results
+in undefined behavior.
+
 #### JAL
 
  - Summary: Jump to address, place return address in GPR
  - Assembly: `jal rd, addr`
  - Format: U-type, J-immediate
- - Semantics: 
+ - Semantics:
  - $R[\texttt{rd}] \leftarrow PC + 4$
    {: .semantics_list }
  - $PC \leftarrow PC + \text{sext}(\texttt{imm})$
@@ -412,15 +423,18 @@ pseudo-instructions.
   ]}
 </script>
 
-The encoded immediate `imm` is calculated during assembly such that
-$PC + \text{sext}(\texttt{imm}) = \texttt{addr}$
+The encoded immediate `imm` is calculated during assembly such that $PC +
+\text{sext}(\texttt{imm}) = \texttt{addr}$. TinyRV1 requires the JAL
+target address to always be four-byte aligned (i.e., the bottom two bits
+must be zero). An unaligned BNE target address results in undefined
+behavior.
 
 #### JR
 
  - Summary: Jump to address
  - Assembly: `jr rs1`
  - Format: I-type
- - Semantics: 
+ - Semantics:
  - $PC \leftarrow R[\texttt{rs1}]$
    {: .semantics_list }
 
@@ -434,12 +448,16 @@ $PC + \text{sext}(\texttt{imm}) = \texttt{addr}$
   ]}
 </script>
 
+TinyRV1 requires the JR target address to always be four-byte aligned
+(i.e., the bottom two bits must be zero). An unaligned BNE target address
+results in undefined behavior.
+
 #### BNE
 
  - Summary: Branch if two GPRs are not equal
  - Assembly: `bne rs1, rs2, addr`
  - Format: S-type, B-immediate
- - Semantics: 
+ - Semantics:
  - $\text{if}(R[\texttt{rs1}] \neq R[\texttt{rs2}]) \ PC \leftarrow PC + \text{sext}(\texttt{imm})$
    {: .semantics_list }
  - $\text{else}\qquad\qquad\qquad\ \ \ \ \,           PC \leftarrow PC + 4$
@@ -456,8 +474,11 @@ $PC + \text{sext}(\texttt{imm}) = \texttt{addr}$
   ]}
 </script>
 
-The encoded immediate `imm` is calculated during assembly such that
-$PC + \text{sext}(\texttt{imm}) = \texttt{addr}$
+The encoded immediate `imm` is calculated during assembly such that $PC +
+\text{sext}(\texttt{imm}) = \texttt{addr}$. TinyRV1 requires the BNE
+target address to always be four-byte aligned (i.e., the bottom two bits
+must be zero). An unaligned BNE target address results in undefined
+behavior.
 
 4. TinyRV1 Privileged ISA
 --------------------------------------------------------------------------
@@ -468,7 +489,7 @@ TinyRV1 only supports M-mode.
 
 #### Reset Vector
 
-RISC-V specifies that on reset, $PC$ will reset to an 
+RISC-V specifies that on reset, $PC$ will reset to an
 implementation-defined value. TinyRV1 defines this to be at `0x00000000`.
 This is where assembly tests should reside.
 
@@ -496,15 +517,15 @@ CSRs.
  - `in0`/`in1`/`in2`
     - Used to communicate data to the processor from an external
       manager. These registers have register-mapped FIFO-dequeue
-      semantics, meaning reading the registers essentially dequeues 
-      the data from the head of a FIFO. Reading the registers will 
+      semantics, meaning reading the registers essentially dequeues
+      the data from the head of a FIFO. Reading the registers will
       stall if the FIFO has no valid data. Writing the registers is
       undefined.
  - `out0`/`out1`/`out2`
     - Used to communicate data from an external manager to the processor.
       These registers have register-mapped FIFO-enqueue semantics, meaning
-      writing the registers essentially enqueues the data on the tail of a 
-      FIFO. Writing the registers will stall if the FIFO is not ready. 
+      writing the registers essentially enqueues the data on the tail of a
+      FIFO. Writing the registers will stall if the FIFO is not ready.
       Reading the registers is undefined.
 
 #### Address Translation
@@ -527,11 +548,11 @@ following table illustrates which ISAs contain which of these two
 instructions, and whether or not the instruction is considered a "real"
 instruction or a "pseudo-instruction".
 
-<style> 
-  thead { 
-    background-color: var(--md-primary-fg-color); 
-    color: var(--md-primary-bg-color); 
-  } 
+<style>
+  thead {
+    background-color: var(--md-primary-fg-color);
+    color: var(--md-primary-bg-color);
+  }
 </style>
 
 <center>

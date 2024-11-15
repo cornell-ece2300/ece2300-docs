@@ -518,12 +518,15 @@ and multi-cycle processors like this:
 % ./ProcMcycle-addi-test
 ```
 
-Add will need to add more tests cases to the appropriate `-test-cases.v`
+You will need to add more tests cases to the appropriate `-test-cases.v`
 file, and also add corresponding calls to these test cases in the
-`ProcFL-*-test.v`, `ProcScycle-*-test.v`, and `ProcMcycle-*-test.v`
-files. **Remember to always make sure your tests pass on the FL processor
-model before attempting to run those tests on your single- or multi-cycle
-processor model!**
+`ProcFL-*-test.v` and `ProcScycle-*-test.v`. Do not simple have a single
+directed test case (i.e., a single task); you must have many directed
+test cases (i.e., many tasks). Each directed test case should focus on
+testing a different aspect of the corresponding instruction. **Remember
+to always make sure your tests pass on the FL processor model before
+attempting to run those tests on your single- or multi-cycle processor
+model!**
 
 3. Getting Started
 --------------------------------------------------------------------------
