@@ -566,7 +566,7 @@ Additionally, on `ecelinux`, go ahead and build and run the counter
 interactive simulator:
 
 ```bash
-% cd ${HOME}/ece2300/groupXX/build
+% cd ${HOME}/ece2300/groupXX/lab3-music/build
 % make counter-sim
 % ./counter-sim +switches=00111
 ```
@@ -813,7 +813,7 @@ Additionally, on `ecelinux`, go ahead and build and run the multi-note
 player interactive simulator:
 
 ```bash
-% cd ${HOME}/ece2300/groupXX/build
+% cd ${HOME}/ece2300/groupXX/lab3-music/build
 % make multi-note-player-sim
 % ./multi-note-player-sim +switches=111
 ```
@@ -1069,7 +1069,7 @@ Additionally, on `ecelinux`, go ahead and build and run the music player
 interactive simulator:
 
 ```bash
-% cd ${HOME}/ece2300/groupXX/build
+% cd ${HOME}/ece2300/groupXX/lab3-music/build
 % make music-player-sim
 % ./music-player-sim +switches=000
 ```
