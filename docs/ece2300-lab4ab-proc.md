@@ -623,14 +623,18 @@ While not required, feel free to write more tests if you like.
 --------------------------------------------------------------------------
 
 We cannot stress enough how important it is to take an incremental
-approach on this lab. **Do not implement the entire datapath, then
-implement the entire control unit, and then try to run your first test!**
-You _must_ take an incremental approach. Start by implementing just what
-you need in the datapath to execute an ADDI instruction, then add the
-corresponding row to the control signal table in the control unit. Then
-add many directed test cases to ensure your ADDI instruction is executing
-correctly. Then move on to the next instruction. We recommend you
-implement and test the instructions in this order:
+approach on this lab!
+
+### 3.1. Getting Started on the Processor
+
+**Do not implement the entire datapath, then implement the entire control
+unit, and then try to run your first test!** You _must_ take an
+incremental approach. Start by implementing just what you need in the
+datapath to execute an ADDI instruction, then add the corresponding row
+to the control signal table in the control unit. Then add many directed
+test cases to ensure your ADDI instruction is executing correctly. Then
+move on to the next instruction. We recommend you implement and test the
+instructions in this order:
 
  - ADDI
  - ADD
@@ -652,4 +656,48 @@ datapath to executed ADD instructions. Then add the corresponding row to
 the control signal table in the control unit.
 
 ![](img/lab4-simple-proc-dpath.png)
+
+### 3.2. Getting Started on the Accelerator
+
+**Do not implement the entire datapath, then implement the entire control
+unit, and then try to run your first test!** You _must_ take an
+incremental approach. We provide you a simple basic test case which can
+help. You can run this basic test case and look at the waveforms like
+this:
+
+```
+   % make AccumXcel-test
+   % ./AccumXcel-test +test-case=1 +dump-vcd=waves.vcd
+   % code waves.vcd
+```
+
+This test case does not actually check anything. It just sets `size` to
+4, sets `go` to 1, and then waits 6 cycles. It is useful because you can
+look at the waveforms to see if your design is performing as expected as
+you use an incremental design approach. We recommend you develop your
+accelerator using the following three steps (this is exactly what the
+course staff did!):
+
+ - **Step 1: Fetch:** Implement a datapath and FSM that just fetches data
+   from memory and never stops. Run this basic test case, dump the
+   waveforms, then look at the waveforms in Surfer. See if your
+   accelerator is correctly fetching each element from memory.
+
+ - **Step 2: Fetch and Stop:** Augment your datapath and FSM so that it
+   fetches data from memory and stop once it fetches `size` elements.
+   Run this basic test case, dump the waveforms, then look at the
+   waveforms in Surfer. See if your accelerator is correctly fetching
+   each element from memory and also stops after fetching four elements.
+
+ - **Step 2: Fetch, Accumulate, and Stop:** Now that you know your
+   accelerator can fetch data correctly, augment your datapath and FSM so
+   that it fetches data from memory, does the accumulation, and stops
+   once it fetches `size` elements. Run this basic test case, dump the
+   waveforms, then look at the waveforms in Surfer. See if your
+   accelerator is correctly fetching each element from memory,
+   accumulating the values, stops after fetching four elements, and
+   outputs the correct sum.
+
+Once you have completed all three steps then you can try the rest of the
+test cases.
 
