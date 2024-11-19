@@ -1,33 +1,37 @@
 
-Lab 4 (Parts A & B): TinyRV1 Processor - Implementation and Verification
+Lab 4 (Parts A, B, C): TinyRV1 Processor - Implementation and Verification
 ==========================================================================
 
 Lab 4 will give you experience designing, implementing, testing, and
-prototyping two simple processor microarchitectures which both implement
-the TinyRV1 instruction set. The TinyRV1 instruction set manual is
-located here:
+prototyping a single-cycle processor microarchitecture and a specialized
+accelerator. The processor will implement the TinyRV1 instruction set.
+The instruction set manual is located here:
 
  - <https://cornell-ece2300.github.io/ece2300-docs/ece2300-tinyrv1-isa>
 
 The lab reinforces several lecture topics including instruction set
-architectures, single-cycle processors, and multi-cycle processors. The
+architectures, single-cycle processors, and finite-state machines. The
 lab will continue to provide opportunities to leverage the three key
 abstraction principles: modularity, hierarchy, and regularity.
 
-The lab will include several parts, but currently only Parts A and a
-portion of Part B released.
+The lab includes six parts:
 
- - Part A: Processor Datapath Components
- - Part B: Single-Cycle and Multi-Cycle TinyRV1 Processors
+ - Part A: Processor Datapath Components Implementation and Verification
+ - Part B: Single-Cycle TinyRV1 Processor Implementation and Verification
+ - Part C: Accumulator Accelerator Implementation and Verification
+ - Part D: Single-Cycle TinyRV1 Processor FPGA Analysis and Prototyping
+ - Part E: Processor vs Accelerator FPGA Analysis and Prototyping
+ - Part F: TinyRV1 Processor Report
 
-Parts A and B are submitted by simply pushing the appropriate code to
+Parts A, B, and C are submitted by simply pushing the appropriate code to
 GitHub. Part A is due on Thursday, November 7 at 11:59pm. Part B is due
-on Thursday, November 14.
+on Thursday, November 14 at 11:59pm. Part C is due on Monday, November
+25th at 11:59pm.
 
 This handout assumes that you have read and understand the course
-tutorials and that you have attended the discussion sections. To get
-started, use VS Code to log into an `ecelinux` server, source the setup
-script, and clone your individual remote repository from GitHub:
+tutorials, discussion sections, and successfully completed Labs 1-3. To
+get started, use VS Code to log into an `ecelinux` server, source the
+setup script, and clone your individual remote repository from GitHub:
 
 ```bash
  % source setup-ece2300.sh
@@ -67,7 +71,8 @@ build system:
  - `configure.ac`: Used to generate the configure script
  - `scripts`: Scripts used by the build system
 
-The following table shows all of the hardware modules for Part A.
+The following table shows all of the hardware modules you will be working
+with in Lab 4.
 
 ![](img/lab4-hardware-module-table.png)
 
@@ -185,8 +190,7 @@ port.
 
 ### 1.2. TinyRV1 Processor Interface
 
-Both the single-cycle and multi-cycle TinyRV1 processors have the exact
-same interface:
+The single-cycle TinyRV1 processor has the following interface:
 
 ```verilog
 module Proc
@@ -330,13 +334,90 @@ memory, decode this instruction, read the register file, perform
 arithmetic, access memory, and write the result to the register file all
 in a single cycle.
 
+### 1.3. Accumulator Accelerator
+
+Your TinyRV1 single-cycle processor is programmable meaning it can
+perform different functionality simply by executing different assembly
+level programs. We will also be implementing a specialized accelerator
+which can only perform a single function. We will then do a comparative
+analysis to understand the performance and area of both our
+general-purpose programmable processor and a specialized accelerator.
+
+Our accelerator will perform an accumulation function. It will accumulate
+32-bit integer values stored in an array in memory to produce a single
+sum. The interface for our accelerator is shown below.
+
+```verilog
+module AccumXcel
+(
+  (* keep=1 *) input  logic        clk,
+  (* keep=1 *) input  logic        rst,
+
+  (* keep=1 *) input  logic        go,
+  (* keep=1 *) input  logic [13:0] size,
+
+  (* keep=1 *) output logic        result_val,
+  (* keep=1 *) output logic [31:0] result,
+
+  (* keep=1 *) output logic        memreq_val,
+  (* keep=1 *) output logic [15:0] memreq_addr,
+  (* keep=1 *) input  logic [31:0] memresp_data
+);
+```
+
+![](img/lab4-xcel-ifc.png)
+
+The memory interface is very similar to the processor memory interface
+except our accumulator accelerator will only use a 16-bit address. The
+accelerator will assume the array starts at address zero in the memory.
+The accelarator also includes a `size` input port which is used to
+specify the number of elements stored in the array; note that the size is
+specified in _elements_ not bytes. So if the size is 4 then the
+accumulator should read the values stored at memory addresses 0x000,
+0x004, 0x008, and 0x00c. The accelerator should wait until the `go` input
+port is high; the accelerator should then start its computation. When the
+accelerator has finished it should set the `result` output to the final
+sum and the `result_val` output high. Your accelerator does not need to
+be able to support multiple transactions. The accelerator will perform a
+single accumulation and then stop. We will need to reset the accelerator
+if we with to perform another accumulation.
+
+You must implement your accelerator using a datapath
+(`hw/AccumXcelDpath.v`) and a control unit (`hw/AccumXcelCtrl.v`). We
+have very specific requirements on what kind of hardware modeling is
+permitted in these two files.
+
+ - **Datapath Rules:** The datapath must be completely structural RTL.
+   You can use any of the components developed in Part A. You should only
+   instantiate and connect RTL modules that you have implemented and
+   tested separately. The only exception is if you need to use an adder
+   you should use the Adder_32b_GL module. This means you cannot directly
+   use any logic in this module; no always blocks and nothing in an
+   assign statement other than basic connectivity.
+
+ - **Control Unit Rules:** The control unit must include just a
+   finite-state machine. It must have three parts: the state register
+   which should be implemented using a `Register_RTL`, an `always_comb`
+   block to implement the combinational state transition logic, and an
+   `always_comb` block to implement the combinational output logic. There
+   should be no other logic in the control unit. No `always_ff1 blocks
+   (explicitly instantiate `Register_RTL` for the state register), no
+   other `always_comb` blocks, and nothing in an `assign` statement other
+   than basic connectivity.
+
+You are free to structure your datapath however you like, and you are
+free to use any kind of finite-state-machine for the control unit; but
+you must follow the above rules. The provided `hw/AccumXcel.v` file
+composes the datapath and control units. You will need to modify this
+file to add new control and/or status signals.
+
 2. Testing Strategy
 --------------------------------------------------------------------------
 
 You will need to use a variety of different testing strategies to ensure
-your TinyRV1 processors are full functional.
+your TinyRV1 processor is full functional.
 
-### 1.1. Testing the Processor Datapath Components
+### 2.1. Testing the Processor Datapath Components
 
 It is critical we take a test-driven approach. You must thoroughly verify
 each processor datapath component using exhaustive, directed, and/or
@@ -345,21 +426,21 @@ the previous labs. Do not under any circumstances start implementing your
 processor until you are absolutely positive all of your processor
 datapath components are fully functional.
 
-### 1.2. Testing the Processors
+### 2.2. Testing the Processor
 
-Testing processors is more complex than testing individual hardware
+Testing the processor is more complex than testing individual hardware
 blocks. We have provided you some testing infrastructure to simplify the
 process, but students should still expect to dedicated significant time
-to verifying their processors correctly implement the TinyRV1 ISA.
+to verifying their processor correctly implements the TinyRV1 ISA.
 
 We have provided you a functional-level FL processor model (also called
 an instruction set simulator) located in `test/ProcFL.v`. The FL
 processor model executes the instruction semantics behaviorally using
 high-level Verilog. It is not meant to model hardware. The FL processor
 model can be used to make sure your tests are correct before you run
-those tests on your single-cycle and multi-cycle processors.
+those tests on your single-cycle processor.
 
-The test cases for the processors are located in these test files:
+The test cases for the processor is located in these test files:
 
  - `test/Proc-addi-test-cases.v`
  - `test/Proc-add-test-cases.v`
@@ -494,7 +575,7 @@ Here we can see the static instruction sequence includes four
 instructions, but the dynamic instruction sequence only includes three
 instructions because the JAL instruction jumps over the instruction at
 address 0x008. Note that in the assembly format used for testing our
-processors, the literal in a JAL and BNE instruction is the _absolute_
+processor, the literal in a JAL and BNE instruction is the _absolute_
 address of the target not the actual immediate. The assembler will take
 care of creating the appropriate PC relative immediate.
 
@@ -507,15 +588,13 @@ model like this:
 % ./ProcFL-addi-test
 ```
 
-You can run those same test cases for the ADDI instruction on the single-
-and multi-cycle processors like this:
+You can run those same test cases for the ADDI instruction on the
+single-cycle processor like this:
 
 ```bash
 % cd ${HOME}/ece2300/groupXX/lab4-proc/build
 % make ProcScycle-addi-test
 % ./ProcScycle-addi-test
-% make ProcMcycle-addi-test
-% ./ProcMcycle-addi-test
 ```
 
 You will need to add more tests cases to the appropriate `-test-cases.v`
@@ -525,8 +604,20 @@ directed test case (i.e., a single task); you must have many directed
 test cases (i.e., many tasks). Each directed test case should focus on
 testing a different aspect of the corresponding instruction. **Remember
 to always make sure your tests pass on the FL processor model before
-attempting to run those tests on your single- or multi-cycle processor
-model!**
+attempting to run those tests on your single-cycle processor model!**
+
+### 2.3. Testing the Accelerator
+
+We provide you some simple tests for your accumulator accelerator. You
+can run those tests like this:
+
+```bash
+% cd ${HOME}/ece2300/groupXX/lab4-proc/build
+% make AccumXcel-test
+% ./AccumXcel-test
+```
+
+While not required, feel free to write more tests if you like.
 
 3. Getting Started
 --------------------------------------------------------------------------

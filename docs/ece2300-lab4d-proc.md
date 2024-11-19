@@ -516,7 +516,7 @@ displays show the exact same output as the simulation.
 
 !!! success "Lab Check-Off Task 5: Demonstrate TinyRV1 Processor Running Simple Program"
 
-    First, show the TA the same simulation you did earlier on ecelinux
+    First, show the TA the same simulation you did earlier on `ecelinux`
     like this:
 
     ```bash
@@ -673,9 +673,9 @@ You probably need to press the reset button on the FPGA board to start
 the execution of the assembly program. Confirm that the seven-segment
 displays show the exact same output as the simulation.
 
-!!! success "Lab Check-Off Task 8: Demonstrate TinyRV1 Processor Running Program"
+!!! success "Lab Check-Off Task 8: Demonstrate TinyRV1 Processor Running Complex Program"
 
-    First, show the TA the same simulation you did earlier on ecelinux
+    First, show the TA the same simulation you did earlier on `ecelinux`
     like this:
 
     ```bash
