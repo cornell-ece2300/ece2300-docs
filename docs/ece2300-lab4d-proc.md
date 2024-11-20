@@ -392,7 +392,15 @@ your top-level design.
 
 Spend a few minutes making sure you understand this top-level
 composition. Once you are happy with your understanding, you just need to
-copy this code into the _DE0_CV_golden_top.v_. As in previous labs, we
+copy this code into the _DE0_CV_golden_top.v_. After understanding the top-level,
+try compiling and synethsizing the design. Before continuing, STOP!!!
+Double check your ProcSCycle module for any inferred latches. The compilation will
+emit warning regarding inferred latches. These warnings are confusingly in green text.
+[Check out this Ed post](https://edstem.org/us/courses/62248/discussion/5740183)
+for some more information on how to fix common issues,
+including inferred latches, we have seen this week in lab.
+
+As in previous labs, we
 need to create a _timing constraint_ file. Here are the steps to create
 an initial timing constraint file:
 
