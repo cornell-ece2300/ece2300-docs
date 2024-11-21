@@ -381,7 +381,11 @@ accelerator has finished it should set the `result` output to the final
 sum and the `result_val` output high. Your accelerator does not need to
 be able to support multiple transactions. The accelerator will perform a
 single accumulation and then stop. We will need to reset the accelerator
-if we with to perform another accumulation.
+if we with to perform another accumulation. The waveform below shows an
+example transaction, assuming that the values at addresses 0x000, 0x004,
+and 0x008 sum to 6:
+
+![](img/lab4-xcel-waveform.jpg)
 
 You must implement your accelerator using a datapath
 (`hw/AccumXcelDpath.v`) and a control unit (`hw/AccumXcelCtrl.v`). We
