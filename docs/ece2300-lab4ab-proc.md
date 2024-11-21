@@ -345,7 +345,8 @@ general-purpose programmable processor and a specialized accelerator.
 
 Our accelerator will perform an accumulation function. It will accumulate
 32-bit integer values stored in an array in memory to produce a single
-sum. The interface for our accelerator is shown below.
+sum. You should assume the array starts at memory address 0x00000. The
+interface for our accelerator is shown below.
 
 ```verilog
 module AccumXcel
