@@ -25,8 +25,8 @@ The lab includes six parts:
 
 Parts A, B, and C are submitted by simply pushing the appropriate code to
 GitHub. Part A is due on Thursday, November 7 at 11:59pm. Part B is due
-on Thursday, November 14 at 11:59pm. Part C is due on Monday, November
-25th at 11:59pm.
+on Thursday, November 14 at 11:59pm. Part C is due on Tuesday, November
+26th at 11:59pm.
 
 This handout assumes that you have read and understand the course
 tutorials, discussion sections, and successfully completed Labs 1-3. To
