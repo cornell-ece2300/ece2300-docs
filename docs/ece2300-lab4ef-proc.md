@@ -258,7 +258,7 @@ The pseudo-code for our two-function calculator is shown below.
 
 in0     = read_in0()
 in1     = read_in1()
-buttons = read_in2()
+button = read_in2()
 
 # display inputs
 
@@ -267,7 +267,7 @@ write_out1(in1)
 
 # addition
 
-if buttons == 0b0000:
+if button == 0b0000:
   result = in0 + in1
 
 # multiply
@@ -300,8 +300,8 @@ first as follows:
 ```bash
 % cd ${HOME}/ece2300/groupXX/lab4-proc/build
 % make proc-fl-sim
-% ./proc-fl-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0000
-% ./proc-fl-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0001
+% ./proc-fl-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0000
+% ./proc-fl-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0001
 ```
 
 You can single-step through each assembly instruction one at a time
@@ -315,8 +315,8 @@ simulator, then try it on the single-cycle processor simulator like this.
 ```bash
 % cd ${HOME}/ece2300/groupXX/lab4-proc/build
 % make proc-scycle-sim
-% ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0000
-% ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0001
+% ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0000
+% ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0001
 ```
 
 Ideally, an effective testing strategy will ensure that your single-cycle
@@ -339,11 +339,11 @@ use what you learn to add more directed tests cases.
     % make proc-fl-sim
     % make proc-scycle-sim
 
-    % ./proc-fl-sim     +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0000
-    % ./proc-fl-sim     +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0001
+    % ./proc-fl-sim     +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0000
+    % ./proc-fl-sim     +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0001
 
-    % ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0000
-    % ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0001
+    % ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0000
+    % ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0001
     ```
 
 ### 3.3. Implement Three-Function Calculator TinyRV1 Program
@@ -399,7 +399,7 @@ currently stored in `hw/ProcMem.v` works as expected:
 ```bash
 % cd ${HOME}/ece2300/groupXX/lab4-proc/build
 % make proc-scycle-sim
-% ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in1-switches=00010 +buttons=0000
+% ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in1-switches=00010 +button=0000
 ```
 
 !!! note "Lab Report Task 1: Three-Function Calculator Assembly Program"
@@ -420,17 +420,17 @@ currently stored in `hw/ProcMem.v` works as expected:
     % make proc-fl-sim
     % make proc-scycle-sim
 
-    % ./proc-fl-sim     +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0000
-    % ./proc-fl-sim     +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0001
-    % ./proc-fl-sim     +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0010
+    % ./proc-fl-sim     +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0000
+    % ./proc-fl-sim     +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0001
+    % ./proc-fl-sim     +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0010
 
-    % ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0000
-    % ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0001
-    % ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +buttons=0010
+    % ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0000
+    % ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0001
+    % ./proc-scycle-sim +prog-num=2 +in0-switches=00011 +in1-switches=00010 +button=0010
 
-    % ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in1-switches=00010 +buttons=0000
-    % ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in1-switches=00010 +buttons=0001
-    % ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in1-switches=00010 +buttons=0010
+    % ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in1-switches=00010 +button=0000
+    % ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in1-switches=00010 +button=0001
+    % ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in1-switches=00010 +button=0010
     ```
 
 ### 3.4. Synthesize, Analyze, and Configure Single-Cycle TinyRV1 Processor
@@ -633,7 +633,7 @@ displays show the exact same output as the simulation.
     ```bash
     % cd ${HOME}/ece2300/groupXX/lab4-proc/build
     % make proc-scycle-sim
-    % ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in0-switches=00010 +buttons=0000
+    % ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in0-switches=00010 +button=0000
     ```
 
     Then press the reset button the FPGA board to show the TA that your
@@ -667,8 +667,8 @@ for our accumulate program is shown below.
 
 wait:
   size    = read_in0()
-  buttons = read_in2()
-  if buttons != 1:
+  button = read_in2()
+  if button != 1:
     goto wait
 
   # display size
@@ -766,7 +766,7 @@ wait loop. Simply write a loop to accumulate the first four elements in
 the array, output the result to the seven-segment displays, and end with
 an infinite loop. Use the `+step` command line option to ensure the
 processor is executing the instructions as you expect. Once this is
-working, add support for the initial wait loop. Use the `+buttons=00000`
+working, add support for the initial wait loop. Use the `+button=00000`
 and `+step` command line option to ensure the processor is executing the
 instructions as you expect when it is waiting for a button to be pushed.
 
@@ -783,8 +783,8 @@ first as follows:
 ```bash
 % cd ${HOME}/ece2300/groupXX/lab4-proc/build
 % make proc-fl-sim
-% ./proc-fl-sim +prog-num=3 +in0-switches=00100 +buttons=0000
-% ./proc-fl-sim +prog-num=3 +in0-switches=00100 +buttons=0001
+% ./proc-fl-sim +prog-num=3 +in0-switches=00100 +button=0000
+% ./proc-fl-sim +prog-num=3 +in0-switches=00100 +button=0001
 ```
 
 From the comment above, the result when accumulating the first four
@@ -795,8 +795,8 @@ simulator, then try it on the single-cycle processor simulator like this.
 ```bash
 % cd ${HOME}/ece2300/groupXX/lab4-proc/build
 % make proc-scycle-sim
-% ./proc-scycle-sim +prog-num=3 +in0-switches=00100 +buttons=0000
-% ./proc-scycle-sim +prog-num=3 +in0-switches=00100 +buttons=0001
+% ./proc-scycle-sim +prog-num=3 +in0-switches=00100 +button=0000
+% ./proc-scycle-sim +prog-num=3 +in0-switches=00100 +button=0001
 ```
 
 Once you have verified your assembly program works, use `+dump-bin` and
@@ -807,8 +807,8 @@ program number 0 to verify that the program currently stored in
 ```bash
 % cd ${HOME}/ece2300/groupXX/lab4-proc/build
 % make proc-scycle-sim
-% ./proc-scycle-sim +prog-num=0 +in0-switches=00100 +buttons=0000
-% ./proc-scycle-sim +prog-num=0 +in0-switches=00100 +buttons=0001
+% ./proc-scycle-sim +prog-num=0 +in0-switches=00100 +button=0000
+% ./proc-scycle-sim +prog-num=0 +in0-switches=00100 +button=0001
 ```
 
 Let's run a full experiment to accumulate 31 elements.
@@ -816,7 +816,7 @@ Let's run a full experiment to accumulate 31 elements.
 ```bash
 % cd ${HOME}/ece2300/groupXX/lab4-proc/build
 % make proc-scycle-sim
-% ./proc-scycle-sim +prog-num=0 +in0-switches=11111 +buttons=0001
+% ./proc-scycle-sim +prog-num=0 +in0-switches=11111 +button=0001
 ```
 
 The correct result is 1425 and the seven-segment display should show 17.
@@ -852,14 +852,14 @@ zero.
     % make proc-fl-sim
     % make proc-scycle-sim
 
-    % ./proc-fl-sim     +prog-num=3 +in0-switches=00100 +buttons=0000
-    % ./proc-fl-sim     +prog-num=3 +in0-switches=00100 +buttons=0001
+    % ./proc-fl-sim     +prog-num=3 +in0-switches=00100 +button=0000
+    % ./proc-fl-sim     +prog-num=3 +in0-switches=00100 +button=0001
 
-    % ./proc-scycle-sim +prog-num=3 +in0-switches=00100 +buttons=0000
-    % ./proc-scycle-sim +prog-num=3 +in0-switches=00100 +buttons=0001
+    % ./proc-scycle-sim +prog-num=3 +in0-switches=00100 +button=0000
+    % ./proc-scycle-sim +prog-num=3 +in0-switches=00100 +button=0001
 
-    % ./proc-scycle-sim +prog-num=0 +in0-switches=00100 +buttons=0000
-    % ./proc-scycle-sim +prog-num=0 +in0-switches=00100 +buttons=0001
+    % ./proc-scycle-sim +prog-num=0 +in0-switches=00100 +button=0000
+    % ./proc-scycle-sim +prog-num=0 +in0-switches=00100 +button=0001
     ```
 
 ### 4.2. Synthesize and Analyze Single-Cycle TinyRV1 Processor
@@ -973,7 +973,7 @@ actually press the push button to start the kernel!
     ```bash
     % cd ${HOME}/ece2300/groupXX/lab4-proc/build
     % make proc-scycle-sim
-    % ./proc-scycle-sim +prog-num=0 +in0-switches=00100 +buttons=0001
+    % ./proc-scycle-sim +prog-num=0 +in0-switches=00100 +button=0001
     ```
 
     Then press the reset button the FPGA board to show the TA that your
@@ -999,8 +999,8 @@ simulator as follows:
 ```bash
 % cd ${HOME}/ece2300/groupXX/lab4-proc/build
 % make accum-xcel-sim
-% ./accum-xcel-sim +in0-switches=00100 +buttons=0000
-% ./accum-xcel-sim +in0-switches=00100 +buttons=0001
+% ./accum-xcel-sim +in0-switches=00100 +button=0000
+% ./accum-xcel-sim +in0-switches=00100 +button=0001
 ```
 
 The accumulate accelerator is setup to use the exact same data as the
@@ -1014,7 +1014,7 @@ Let's run a full experiment to accumulate 31 elements.
 ```bash
 % cd ${HOME}/ece2300/groupXX/lab4-proc/build
 % make proc-scycle-sim
-% ./proc-scycle-sim +prog-num=0 +in0-switches=11111 +buttons=0001
+% ./proc-scycle-sim +prog-num=0 +in0-switches=11111 +button=0001
 ```
 
 The correct result is 1425 and the seven-segment display should show 17.
@@ -1040,8 +1040,8 @@ count to the data table.
     ```bash
     % cd ${HOME}/ece2300/groupXX/lab4-proc/build
     % make accum-xcel-sim
-    % ./accum-xcel-sim +in0-switches=00100 +buttons=0000
-    % ./accum-xcel-sim +in0-switches=00100 +buttons=0001
+    % ./accum-xcel-sim +in0-switches=00100 +button=0000
+    % ./accum-xcel-sim +in0-switches=00100 +button=0001
     ```
 
 ### 5.2. Synthesize and Analyze Accumulator Accelerator
@@ -1225,7 +1225,7 @@ Don't forget to actually press the push button to start the accelerator!
     ```bash
     % cd ${HOME}/ece2300/groupXX/lab4-proc/build
     % make accum-xcel-sim
-    % ./accum-xcel-sim +in0-switches=00100 +buttons=0001
+    % ./accum-xcel-sim +in0-switches=00100 +button=0001
     ```
 
     Then press the reset button the FPGA board to show the TA that your
