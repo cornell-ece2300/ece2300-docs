@@ -20,7 +20,7 @@ Lab 4A, 4B, and 4C. You should also have already finished your initial
 single-cycle FPGA prototype in Lab 4D. In Lab 4E, we will first implement
 a two-function calculator assembly program before extending this program
 to support subtraction. We will then implement an accumulate assembly
-program an quantify the area and performance of this kernel running on
+program and quantify the area and performance of this kernel running on
 your single-cycle processor. Finally, we will quantitatively compare the
 area and performance of this software implementation to a specialized
 accumulate accelerator.
@@ -41,7 +41,8 @@ For each _lab report task_ you must take some notes, save a screenshot,
 and/or record some data for your lab report. Students can start working
 on their lab report during their lab session, but will likely need to
 continue working on their lab report after the lab session. The lab
-report is due three days after your lab session at 11:59pm.
+report is due on Monday, Dec 9th at 11:59pm for all groups regardless of
+your lab session.
 
 For each _lab check-off task_ you must raise your hand and have a TA come
 to check-off your work. The TA will ask you the questions included as
@@ -326,7 +327,7 @@ use waveforms to carefully examine each cycle. You can dump waveforms
 using the `+dump-vcd=waves.vcd` command line option. You should probably
 use what you learn to add more directed tests cases.
 
-!!! success "Lab Check-Off Task 2: Simulate Two-Function Calculator Program"
+!!! success "Lab Check-Off Task 3: Simulate Two-Function Calculator Program"
 
     Show a TA your two-function calculator program running on (1) the FL
     processor simulator; and (2) the single-cycle processor simulator.
@@ -398,7 +399,7 @@ currently stored in `hw/ProcMem.v` works as expected:
 ```bash
 % cd ${HOME}/ece2300/groupXX/lab4-proc/build
 % make proc-scycle-sim
-% ./proc-scycle-sim +prog-num=0
+% ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in1-switches=00010 +buttons=0000
 ```
 
 !!! note "Lab Report Task 1: Three-Function Calculator Assembly Program"
@@ -407,7 +408,7 @@ currently stored in `hw/ProcMem.v` works as expected:
     include it in your lab report. All assembly code should be formatted
     using a fixed-width font.
 
-!!! success "Lab Check-Off Task 3: Simulate Three-Function Calculator Program"
+!!! success "Lab Check-Off Task 4: Simulate Three-Function Calculator Program"
 
     Show a TA your two-function calculator program running on (1) the FL
     processor simulator; (2) the single-cycle processor simulator; and
@@ -545,14 +546,14 @@ Here is the code you can use for your top-level design.
 ```
 
 Spend a few minutes making sure you understand this top-level
-composition. Our timing analysis in the Lab 4D showed that the
-single-cycle processor cannot meet timing with a 50MHz clock (i.e., clock
-constraint of 20ns). So we are using a clock divider which divides the
-50MHz clock by four to produce a 12.5MHz clock (i.e., clock constraint of
-80ns). We are now using a _reset synchronizer_ which should help address
-some of the flakiness that students were seeing Lab 4D. Prof. Batten will
-talk more about reset synchronizers in lecture, but you can also read
-about synchronizers in Sections 3.5.4 and 3.5.5 of Harris and Harris.
+composition. Our timing analysis in Lab 4D showed that the single-cycle
+processor cannot meet timing with a 50MHz clock (i.e., clock constraint
+of 20ns). So we are using a clock divider which divides the 50MHz clock
+by four to produce a 12.5MHz clock (i.e., clock constraint of 80ns). We
+are now using a _reset synchronizer_ which should help address some of
+the flakiness that students were seeing Lab 4D. Prof. Batten will talk
+more about reset synchronizers in lecture, but you can also read about
+synchronizers in Sections 3.5.4 and 3.5.5 of Harris and Harris.
 
 Once you are happy with your understanding, you just need to copy this
 code into the _DE0_CV_golden_top.v_. As in previous labs, we need to
@@ -586,7 +587,7 @@ set_input_delay -add_delay -clock clk -min 0 [all_inputs]
 These constraints tell the FPGA tools that:
 
  - Our critical path delay constraint is `80ns` from all inputs to all
-   outputs as well
+   outputs
  - We have a clock signal named `clk`
     - There should be no setup time violations with respect to
       `clk` when the period is `80ns`
@@ -600,9 +601,11 @@ These constraints tell the FPGA tools that:
 Make sure to copy-and-paste the three-function calculator program into
 `hw/ProcMem.v` within Quartus. Choose _Processing > Start Compilation_
 from the menu to synthesize your design. You will need to wait 5-10
-minutes for synthesis to complete. Be patient!
+minutes for synthesis to complete. Be patient! **Students should continue
+on and start developing their accumulate program on `ecelinux` while
+waiting for synthesis to complete.**
 
-**Before continuing, double check that your design does not have any
+**Once synthesis is done, double check that your design does not have any
 inferred latches!** The compilation will emit warnings not errors
 regarding inferred latches, but you must remove all inferred latches.
 These warnings are confusingly in green text. [Check out this Ed
@@ -622,7 +625,7 @@ You probably need to press the reset button on the FPGA board to start
 the execution of the assembly program. Confirm that the seven-segment
 displays show the exact same output as the simulation.
 
-!!! success "Lab Check-Off Task 4: Demonstrate TinyRV1 Processor Running Three-Function Calculator Program"
+!!! success "Lab Check-Off Task 5: Demonstrate TinyRV1 Processor Running Three-Function Calculator Program"
 
     First, show the TA the same simulation you did earlier on `ecelinux`
     like this:
@@ -684,16 +687,37 @@ wait:
 ```
 
 Implement the accumulate program in assembly in the
-`sim/proc-sim-prog3.v` file. Use the following template which specifies
-the input data as an array starting at address 0x080 with 32 elements.
-The comment next to each element in the array specifies the value of the
-bottom five bits of the result (i.e., what the seven-segment display
-should show for a correct execution).
+`sim/proc-sim-prog3.v` file. Use the following template which takes care
+of the wait loop, writing the result, and initializing the input data as
+an array starting at address 0x080 with 32 elements. The comment next to
+each element in the array specifies the value of the bottom five bits of
+the result (i.e., what the seven-segment display should show for a
+correct execution).
 
 ```
 task proc_sim_prog3();
 
-  // assembly code goes here
+  // set out1 to zero
+
+  asm( 'h000, "csrw out1, x0"      );
+
+  // wait for go
+
+  asm( 'h004, "csrr x1, in0"       );
+  asm( 'h008, "csrr x2, in2"       );
+  asm( 'h00c, "addi x3, x0, 1"     );
+  asm( 'h010, "bne  x2, x3, 0x004" );
+
+  // display size
+
+  asm( 'h014, "csrw out0, x1" );
+
+  // fill in the accumulate loop here
+
+  // done (assumes result is in x4)
+
+  asm( ?????, "csrw out1, x4"      ); // set address appropriately
+  asm( ?????, "jal  x0, ?????"     ); // set address appropriately
 
   // Input array
 
@@ -809,7 +833,7 @@ single-cycle processor into the _fpga-perf-data_ tab.
     font. Make sure to save your completed data table with the cycle
     count number.
 
-!!! success "Lab Check-Off Task 4: Simulate Accumulate Program"
+!!! success "Lab Check-Off Task 6: Simulate Accumulate Program"
 
     Show a TA your accumulate program running on (1) the FL processor
     simulator; (2) the single-cycle processor simulator; and (3) the
@@ -839,9 +863,12 @@ Now that we know our single-cycle processor can successfully execute the
 accumulate assembly program in simulation, we want to see if we can
 verify the same program running on the processor FPGA prototype.
 Copy-and-paste the accumulate program into `hw/ProcMem.v` within Quartus.
+Choose _Processing > Start Compilation_ from the menu to synthesize your
+design. You will need to wait 5-10 minutes for synthesis to complete. Be
+patient! **Students should continue on and start experimenting with the
+accumulate accelerator interactive simulator on `ecelinux` while waiting
+for synthesis to complete.**
 
- - Choose _Processing > Start Compilation_ from the menu
- - Wait 5-10 minutes for synthesis to complete (Be patient!)
  - RTL Viewer
     + Choose _Tools > Netlist Viewer > RTL Viewer_ from the menu
     + Use the Netlist Navigator to gradually drill down in the hierarchy as follows:
@@ -910,7 +937,7 @@ which is the default choice in the Timing Analyzer.
     your mouse it will display a pop-up showing the sum of the delays
     along that portion of the path.
 
-!!! success "Lab Check-Off Task 5: Discuss Single-Cycle Processor"
+!!! success "Lab Check-Off Task 7: Discuss Single-Cycle Processor"
 
     Show a TA your completed data table with the area and performance
     results. Show a TA the screenshot of the full adder and explain how
@@ -933,7 +960,7 @@ the execution of the assembly program. Confirm that the seven-segment
 displays show the exact same output as the simulation. Don't forget to
 actually press the push button to start the kernel!
 
-!!! success "Lab Check-Off Task 6: Demonstrate TinyRV1 Processor Running Accumulate Program"
+!!! success "Lab Check-Off Task 8: Demonstrate TinyRV1 Processor Running Accumulate Program"
 
     First, show the TA the same simulation you did earlier on `ecelinux`
     like this:
@@ -996,7 +1023,7 @@ count to the data table.
     number. You will also need to include a datapath diagram and a FSM
     diagram of your accumulate accelerator in your lab report.
 
-!!! success "Lab Check-Off Task 7: Simulate Accumulate Accelerator"
+!!! success "Lab Check-Off Task 9: Simulate Accumulate Accelerator"
 
     Start by showing a TA the datapath and FSM diagram for your
     accumulate accelerator. Clearly explain how your accumulate
@@ -1109,7 +1136,7 @@ This is similar to the processor except without the clock divider. Choose
 _Processing > Start Compilation_ from the menu to synthesize your design.
 You will need to wait 2-3 minutes for synthesis to complete. Be patient!
 
-**Before continuing, double check that your design does not have any
+**Once synthesis is done, double check that your design does not have any
 inferred latches!** The compilation will emit warnings not errors
 regarding inferred latches, but you must remove all inferred latches.
 These warnings are confusingly in green text. [Check out this Ed
@@ -1162,7 +1189,7 @@ which is the default choice in the Timing Analyzer.
     your mouse it will display a pop-up showing the sum of the delays
     along that portion of the path.
 
-!!! success "Lab Check-Off Task 8: Discuss Accumulate Accelerator"
+!!! success "Lab Check-Off Task 10: Discuss Accumulate Accelerator"
 
     Show a TA your completed data table with the area and performance
     results. Discuss the trade-off between more general-purpose hardware
@@ -1185,7 +1212,7 @@ You might need to press the reset button on the FPGA board. Confirm that
 the seven-segment displays show the exact same output as the simulation.
 Don't forget to actually press the push button to start the accelerator!
 
-!!! success "Lab Check-Off Task 9: Demonstrate Accumulate Accelerator"
+!!! success "Lab Check-Off Task 11: Demonstrate Accumulate Accelerator"
 
     First, show the TA the same simulation you did earlier on `ecelinux`
     like this:
@@ -1201,7 +1228,7 @@ Don't forget to actually press the push button to start the accelerator!
     try a different size and to compare the output between your simulator
     and the FPGA prototype.
 
-!!! success "Lab Check-Off Task 10: Turn In FPGA Board"
+!!! success "Lab Check-Off Task 12: Turn In FPGA Board"
 
     When you are finished with your demo, pack up your FPGA development
     board. Neatly put the board, power cable, and USB cable back in the
@@ -1211,9 +1238,6 @@ Don't forget to actually press the push button to start the accelerator!
 
 6. Lab Report Submission
 --------------------------------------------------------------------------
-
- - "Lab Report Task 1: Complex TinyRV1 Program Worksheet"
- - annotate processor datapath
 
 Students should work with their partner to prepare a short lab report
 that conveys what they have learned in this lab assignment. The lab
@@ -1245,61 +1269,73 @@ sentences.
     lecture topics; be specific on which lecture topics this lab
     reinforces with experiential learning
 
-#### Section 2. Gate-Level Counter Design (one paragraph)
+#### Section 2. Single-Cycle TinyRV1 Processor (two paragraphs)
 
- - Include a sentence referencing your block diagram
- - Include one sentence describing how you implemented your subtractor
- - Include 2-3 sentences that describe how your counter works including
-    how it loads in new counter values and how to implements the done
-    signal
+ - Paragraph 1: Accumulate Assembly Program
+    + Include a sentence referencing your accumulate assembly program
+       listing in the appendix
+    + Include 2-3 sentences clearly describing how the accumulate
+       assembly program works
 
-#### Section 3. Gate-Level vs RTL Design (two paragraphs)
+ - Paragraph 2: Single-Cycle TinyRV1 Processor FPGA Implementation
+    + Include a sentence referencing the data tables in the appendix
+    + Include a sentence discussing the area of the processor
+    + Include 2-3 sentences referencing your annotated processor datapath
+       diagram in the appendix, clearly describing where the critical
+       path is in your processor, and discussing if this is the expected
+       path
+    + Include a sentence discussing the number of cycles required for the
+       processor to accumulate 13 elements; clearly justify this cycle
+       count
+    + Include a sentence discussing the total execution time in
+       nanoseconds required for the processor to accumulate 13 elements
 
- - Paragraph 1: Analyzing the Gate-Level Counter and Note Player
-    + Include a sentence referencing the critical path of your GL counter
-    + Discuss the delay of the various components along the critical path
-      (you must mention clock-to-q and setup time)
-    + Explain why the GL counter and GL note players do not meet timing
-       and do not have any dedicated logic registers
+#### Section 3. Accumulate Accelerator (two paragraphs)
 
- - Paragraph 2: Analyzing the RTL Counter and Note Player
-    + Include a sentence referencing your technology map screenshot
-    + Discuss how the various Verilog constructs turn into specific
-       low-level hardware in the FPGA
-    + Discuss whether or not the number of dedicated logic registers in
-       the RTL counter and RTL note player as expected
-    + Be specific and count registers in your Verilog and argue why the
-       number of dedicated logic registers is correct in both the counter
-       and the note player
+ - Paragraph 1: Accumulate Accelerator Design
+    + Include a sentence referencing your datapath and FSM diagram
+    + Include several sentences that clearly explain how your accumulate
+      accelerator works by describing the interaction between the
+      datapath and control unit; be sure to clearly explain how the
+      accelerator starts and stops
 
-#### Section 4: Multi-Note and Music Player (one paragraph)
-
- - Briefly reference your simulated waveforms and your oscilloscope
-   waveforms for your multi-note player
- - Explain what note you tried, the expected note period, the measured
-   note period in simulation, and the measured note period using the
-   oscilloscope
+ - Paragraph 2: Accumulate Accelerator FPGA implementation
+    + Include a sentence referencing the data tables in the appendix
+    + Include a sentence discussing the area of the accelerator
+    + Include 2-3 sentences referencing your annotated accelerator
+       datapath diagram in the appendix, clearly describing where the
+       critical path is in your accelerator, and discussing if this is
+       the expected path
+    + Include a sentence discussing the number of cycles required for the
+       accelerator to accumulate 13 elements; clearly justify this cycle
+       count
+    + Include a sentence discussing the total execution time in
+       nanoseconds required for the accelerator to accumulate 13 elements
 
 #### Section 5: Conclusion (one paragraph)
 
- - Include 2-3 sentences that summarizes all of the data and analysis
-    in this lab assignment
- - Include a sentence that draws a high-level conclusion; how will
-    what you have learned impact your design work throughout the rest
-    of the semester?
+ - Include a sentence that provides a clear quantitative comparison in
+    terms of area and performance between using a general-purpose
+    processor vs. specialized hardware for this accumulate kernel
+ - Include a sentence that provides a clear qualitative comparison in
+    terms of design complexity and generality between using a
+    general-purpose processor vs. specialized hardware
+ - Include a sentence that draws a high-level conclusion; how has what
+    you have learned impact your perspective of computer engineering
 
 #### Appendix
 
- - FPGA Data Table
- - Block diagram for GL counter with highlighted critical path and
+ - Complex TinyRV1 program worksheet (from Lab 4D)
+ - Three-function assembly program
+ - Accumulate assembly program
+ - FPGA Area and Performance Data Tables
+ - RTL viewer showing complete hierarchy on left and full adder gate-level
+    implementation on the right
+ - Chip planner showing location of logic used to implement processor
+ - Processor datapath diagram with highlighted critical path and
      annotated delays
- - Technology map viewer for RTL counter annotated with Verilog code snippets
- - Critical path report for GL counter **(1 page max, fixed width font!)**
- - Critical path report for RTL counter **(1 page max, fixed width font!)**
- - Simulated waveform screenshot for multi-note player clearly showing
-    note period
- - Oscilloscope waveform screenshot for multi-note player clearly showing
-    note period
- - Simulated waveform screenshot for first song which clearly shows the
-    first few notes
+ - Accumulate accelerator datapath diagram with highlighted critical path
+     and annotated delays
+ - Accumulate accelerator FSM diagram
+ - **You do not need to include the actual critical path reports!**
 
