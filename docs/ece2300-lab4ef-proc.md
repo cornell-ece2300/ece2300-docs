@@ -640,6 +640,9 @@ displays show the exact same output as the simulation.
     FPGA prototype produces the expected output. The TA will ask you to
     perform different functions on different input data and to compare
     the output between your simulator and the FPGA prototype.
+    Qualitatively discuss the advantages and disadvantages of your
+    software calculator running on the single-cycle processor compared to
+    the specialized hardware calculator you implemented in Lab 2.
 
 4. Accumulate TinyRV1 Program
 --------------------------------------------------------------------------
@@ -824,7 +827,9 @@ fill in this data table:
  - <https://docs.google.com/spreadsheets/d/1u30pax9gSaYgxfGzijZ16sxKd5bPucyl2BFsVvLCns4>
 
 Make a copy of this table, and enter in the cycle count for your
-single-cycle processor into the _fpga-perf-data_ tab.
+single-cycle processor into the _fpga-perf-data_ tab. The cycle count
+starts from the beginning of the program and stops once out1 is no longer
+zero.
 
 !!! note "Lab Report Task 2: Accumulate Assembly Program and Cycle Count"
 
@@ -1192,11 +1197,11 @@ which is the default choice in the Timing Analyzer.
 !!! success "Lab Check-Off Task 10: Discuss Accumulate Accelerator"
 
     Show a TA your completed data table with the area and performance
-    results. Discuss the trade-off between more general-purpose hardware
-    (e.g., our TinyRV1 processor) and more specialized hardware (e.g.,
-    our accumulate accelerator). Show a TA your accumulate accelerator
-    datapath with the highlighted critical path and annotated delays. Is
-    the critical path as expected?
+    results. Show a TA your accumulate accelerator datapath with the
+    highlighted critical path and annotated delays. Is the critical path
+    as expected? Discuss the trade-off between more general-purpose
+    hardware (e.g., our TinyRV1 processor) and more specialized hardware
+    (e.g., our accumulate accelerator).
 
 ### 5.3. Configure Accumulator Accelerator Prototype
 
