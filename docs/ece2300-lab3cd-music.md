@@ -851,6 +851,8 @@ probe and the ground clip attached to Channel 1.
 
 Now carefully follow these steps (ask a TA if you need help):
 
+ - There is a small slide switch on the probe that chooses between 1x and
+    10x; make sure it is set to 10x
  - Connect the main probe of `CH 1` to `GPIO_0[0]`
  - Connect the ground clip of `CH 1` to ground
  - Click on _DEFAULT SETUP_ to first go to the default setup for the
