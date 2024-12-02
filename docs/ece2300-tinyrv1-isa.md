@@ -426,7 +426,7 @@ in undefined behavior.
 The encoded immediate `imm` is calculated during assembly such that $PC +
 \text{sext}(\texttt{imm}) = \texttt{addr}$. TinyRV1 requires the JAL
 target address to always be four-byte aligned (i.e., the bottom two bits
-must be zero). An unaligned BNE target address results in undefined
+must be zero). An unaligned JAL target address results in undefined
 behavior.
 
 #### JR
@@ -449,7 +449,7 @@ behavior.
 </script>
 
 TinyRV1 requires the JR target address to always be four-byte aligned
-(i.e., the bottom two bits must be zero). An unaligned BNE target address
+(i.e., the bottom two bits must be zero). An unaligned JR target address
 results in undefined behavior.
 
 #### BNE
