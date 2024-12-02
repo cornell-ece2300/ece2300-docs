@@ -1051,9 +1051,13 @@ synthesize and analyze the accumulate accelerator using the FPGA tools.
 Here is the code you can use for your top-level design.
 
 ```verilog
+  // replace this with the clock divider if you do not meet timing
+  logic clk;
+  assign clk = CLOCK_50;
+
   logic rst0;
   logic rst;
-  always @(posedge CLOCK_50) begin
+  always @(posedge clk) begin
     rst0 <= ~RESET_N;
     rst  <= rst0;
   end
@@ -1072,7 +1076,7 @@ Here is the code you can use for your top-level design.
 
   AccumXcel xcel
   (
-    .clk          (CLOCK_50),
+    .clk          (clk),
     .rst          (rst),
     .go           (xcel_go),
     .size         (xcel_size),
@@ -1085,7 +1089,7 @@ Here is the code you can use for your top-level design.
 
   AccumXcelMem mem
   (
-    .clk          (CLOCK_50),
+    .clk          (clk),
     .rst          (rst),
     .memreq_val   (memreq_val),
     .memreq_addr  (memreq_addr),
@@ -1140,6 +1144,17 @@ set_input_delay -add_delay -clock clk -min 0 [all_inputs]
 This is similar to the processor except without the clock divider. Choose
 _Processing > Start Compilation_ from the menu to synthesize your design.
 You will need to wait 2-3 minutes for synthesis to complete. Be patient!
+
+If your design does not meet timing then you have two options: (1) you
+can change your design to try and reduce the critical path; or (2) you
+can increase the clock constraint (i.e., your accelerator will run at a
+lower clock frequency). For this lab let's go with option (2). You can
+instantiate a clock divider at the top-level just like you did for the
+processor earlier in the lab. The clock divider will increase the clock
+constraint to 80ns (i.e., the target clock frequency will be 12.5MHz
+instead of 50MHz). After instantiating the clock divider make sure you
+also change the timing constraints to be the same as what you used with
+the processor. Then try synthesizing your design again.
 
 **Once synthesis is done, double check that your design does not have any
 inferred latches!** The compilation will emit warnings not errors
