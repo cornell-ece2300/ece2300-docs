@@ -410,7 +410,7 @@ currently stored in `hw/ProcMem.v` works as expected:
 
 !!! success "Lab Check-Off Task 4: Simulate Three-Function Calculator Program"
 
-    Show a TA your two-function calculator program running on (1) the FL
+    Show a TA your thre-function calculator program running on (1) the FL
     processor simulator; (2) the single-cycle processor simulator; and
     (3) the single-cycle processor simulator with the `ProcMem`. Here are
     the steps you need to show the TA.
