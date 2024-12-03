@@ -202,7 +202,7 @@ connections:
 
  - `in0[4:0]` is connected to first five switches
  - `in1[4:0]` is connected to second five switches
- - `in2[0]` is connected to the four push-buttons
+ - `in2[3:0]` is connected to the four push-buttons
  - `out0[4:0]` is connected to the two seven-segment displays
  - `out1[4:0]` is connected to the two seven-segment displays
  - `out2[4:0]` is connected to the two seven-segment displays
