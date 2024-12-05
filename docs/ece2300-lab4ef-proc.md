@@ -633,7 +633,7 @@ displays show the exact same output as the simulation.
     ```bash
     % cd ${HOME}/ece2300/groupXX/lab4-proc/build
     % make proc-scycle-sim
-    % ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in0-switches=00010 +buttons=0000
+    % ./proc-scycle-sim +prog-num=0 +in0-switches=00011 +in1-switches=00010 +buttons=0000
     ```
 
     Then press the reset buttons the FPGA board to show the TA that your
