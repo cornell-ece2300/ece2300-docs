@@ -1191,7 +1191,7 @@ which is the default choice in the Timing Analyzer.
     + Targets - From: _[get_registers *]_
     + Targets - To: _[get_registers *]_
     + Report number of paths: _1_
-    + Check next to _File name_ and enter _proc-critical-path.txt_
+    + Check next to _File name_ and enter _xcel-critical-path.txt_
     + Click _Report Timing_
  - Identify the "slack" and the "data delay" of the displayed path
  - Look at the actual critical path (i.e., _Data Arrival Path_) which
