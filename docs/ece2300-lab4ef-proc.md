@@ -254,30 +254,32 @@ calculator should output the result on the final seven-segment displays.
 The pseudo-code for our two-function calculator is shown below.
 
 ```python
-# read switches and buttons
+while True:
 
-in0     = read_in0()
-in1     = read_in1()
-buttons = read_in2()
+  # read switches and buttons
 
-# display inputs
+  in0     = read_in0()
+  in1     = read_in1()
+  buttons = read_in2()
 
-write_out0(in0)
-write_out1(in1)
+  # display inputs
 
-# addition
+  write_out0(in0)
+  write_out1(in1)
 
-if buttons == 0b0000:
-  result = in0 + in1
+  # addition
 
-# multiply
+  if buttons == 0b0000:
+    result = in0 + in1
 
-else:
-  result = in0 * in1
+  # multiply
 
-# display result
+  else:
+    result = in0 * in1
 
-write_out2( result )
+  # display result
+
+  write_out2( result )
 ```
 
 Implement the two-function calculator in assembly in the
@@ -285,7 +287,10 @@ Implement the two-function calculator in assembly in the
 approach. Start by implementing a calculator that _only_ performs
 addition. Once this is working, think critically about how to implement
 an if/else conditional operator in assembly and then add support for
-multiplication.
+multiplication. Note how the calculator is in an infinite loop. This way
+your calculator will continuously read the inputs and write the outputs.
+You can implement this with a final JAL instruction which jumps back to
+the first instruction in the assembly program.
 
 In general, we suggest writing out all of the assembly instructions but
 leave the actual instruction address values until the end. Use `???` as
@@ -836,7 +841,7 @@ zero.
     Save your accumulate assembly program so you can include it in your
     lab report. All assembly code should be formatted using a fixed-width
     font. Make sure to save your completed data table with the cycle
-    count number.
+    count number for accumulating 31 elements.
 
 !!! success "Lab Check-Off Task 6: Simulate Accumulate Program"
 
@@ -1013,20 +1018,21 @@ Let's run a full experiment to accumulate 31 elements.
 
 ```bash
 % cd ${HOME}/ece2300/groupXX/lab4-proc/build
-% make proc-scycle-sim
-% ./proc-scycle-sim +prog-num=0 +in0-switches=11111 +buttons=0001
+% make accum-xcel-sim
+% ./accum-xcel-sim +in0-switches=11111 +buttons=0001
 ```
 
 The correct result is 1425 and the seven-segment display should show 17.
 The simulator will print out the `cycle_count`. This is the number of
-cycles it takes for the accumulate accelerator to finish. Add the cycle
+cycles it takes for the accumulate accelerator to finish. Add this cycle
 count to the data table.
 
 !!! note "Lab Report Task 4: Accumulate Accelerator and Cycle Count"
 
     Make sure to save your completed data table with the cycle count
-    number. You will also need to include a datapath diagram and a FSM
-    diagram of your accumulate accelerator in your lab report.
+    number for accumulating 31 elements. You will also need to include a
+    datapath diagram and a FSM diagram of your accumulate accelerator in
+    your lab report.
 
 !!! success "Lab Check-Off Task 9: Simulate Accumulate Accelerator"
 
@@ -1358,4 +1364,3 @@ sentences.
      and annotated delays
  - Accumulate accelerator FSM diagram
  - **You do not need to include the actual critical path reports!**
-
