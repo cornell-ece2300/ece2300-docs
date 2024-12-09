@@ -1311,10 +1311,10 @@ sentences.
        path is in your processor, and discussing if this is the expected
        path
     + Include a sentence discussing the number of cycles required for the
-       processor to accumulate 13 elements; clearly justify this cycle
+       processor to accumulate 31 elements; clearly justify this cycle
        count
     + Include a sentence discussing the total execution time in
-       nanoseconds required for the processor to accumulate 13 elements
+       nanoseconds required for the processor to accumulate 31 elements
 
 #### Section 3. Accumulate Accelerator (two paragraphs)
 
@@ -1333,10 +1333,10 @@ sentences.
        critical path is in your accelerator, and discussing if this is
        the expected path
     + Include a sentence discussing the number of cycles required for the
-       accelerator to accumulate 13 elements; clearly justify this cycle
+       accelerator to accumulate 31 elements; clearly justify this cycle
        count
     + Include a sentence discussing the total execution time in
-       nanoseconds required for the accelerator to accumulate 13 elements
+       nanoseconds required for the accelerator to accumulate 31 elements
 
 #### Section 5: Conclusion (one paragraph)
 
