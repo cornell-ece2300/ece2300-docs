@@ -1352,7 +1352,7 @@ sentences.
 #### Appendix
 
  - Complex TinyRV1 program worksheet (from Lab 4D)
- - Three-function assembly program
+ - Three-function calculator assembly program
  - Accumulate assembly program
  - FPGA Area and Performance Data Tables
  - RTL viewer showing complete hierarchy on left and full adder gate-level
