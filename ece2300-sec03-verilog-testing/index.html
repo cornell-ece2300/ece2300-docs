@@ -1,0 +1,1705 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Christopher Batten">
+      
+      
+      
+        <link rel="prev" href="../ece2300-sec02-verilog-gl/">
+      
+      
+        <link rel="next" href="../ece2300-sec04-lab2-head-start/">
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Section 3: Verilog Testing - ECE 2300 Digital Logic and Computer Organization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-3-verilog-testing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-header__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECE 2300 Digital Logic and Computer Organization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Section 3: Verilog Testing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tut00-remote-access/" class="md-tabs__link">
+          
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../ece2300-sec01-linux/" class="md-tabs__link">
+          
+  
+  Discussion Sections
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-fpga-primer/" class="md-tabs__link">
+          
+  
+  Lab Assignments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tinyrv1-isa/" class="md-tabs__link">
+          
+  
+  Misc
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-nav__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ECE 2300 Digital Logic and Computer Organization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut00-remote-access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 0: ECE Linux Server Remote Access
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut02-git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 2: Git Distributed Version Control System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Discussion Sections
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Discussion Sections
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec02-verilog-gl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 2: Verilog Combinational Gate-Level Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Section 3: Verilog Testing
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Section 3: Verilog Testing
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-logging-into-ecelinux-with-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Logging Into ecelinux with VS Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-a-simple-makefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. A Simple Makefile
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-automated-build-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Automated Build System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Automated Build System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-composing-two-pairtriple-detectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. Composing Two Pair/Triple Detectors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-testing-child-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. Testing Child Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-basic-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3. Basic Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-directed-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4. Directed Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-random-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5. Random Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-running-all-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.6. Running All Tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-interactive-simulators" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Interactive Simulators
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec04-lab2-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 4: Lab 2 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec05-verilog-rtl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 5: Verilog Combinational RTL Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec06-lab3-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 6: Lab 3 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec07-verilog-mem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 7: Verilog Memory Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lab Assignments
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Lab Assignments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-fpga-primer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FPGA Development Primer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p1-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts A & B): Five-Bit Numeric Display -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p2-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts C & D): Five-Bit Numeric Display -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2p1-calc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts A & B): Two-Function Calculator -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2-calc-fpga-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts C & D): Two-Function Calculator -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3ab-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts A & B): Music-Player -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D): Music-Player -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-custom-song/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D) Optional Add-On: Custom Song
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ab-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts A, B, & C) TinyRV1 Processor -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4d-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Part D) TinyRV1 Processor -- FPGA Analysis/Prototyping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ef-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts E & F) TinyRV1 Processor -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Misc
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Misc
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tinyrv1-isa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TinyRV1 ISA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-logging-into-ecelinux-with-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Logging Into ecelinux with VS Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-a-simple-makefile" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. A Simple Makefile
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-automated-build-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Automated Build System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Automated Build System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-composing-two-pairtriple-detectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. Composing Two Pair/Triple Detectors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-testing-child-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. Testing Child Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-basic-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3. Basic Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-directed-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4. Directed Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-random-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5. Random Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-running-all-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.6. Running All Tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-interactive-simulators" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Interactive Simulators
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="section-3-verilog-testing">Section 3: Verilog Testing</h1>
+<p>In this discussion section you will learn how to automate the process of
+linting your designs, building test simulators for your designs, and
+testing the functionality of your design with these test simulators.</p>
+<h2 id="1-logging-into-ecelinux-with-vs-code">1. Logging Into <code>ecelinux</code> with VS Code</h2>
+<p>Follow the same process as previous discussion sections. Find a free
+workstation and log into the workstation using your NetID and standard
+NetID password. Then complete the following steps (described in more
+detail in the last discussion section):</p>
+<ul>
+<li>Start VS Code</li>
+<li>Install the Remote-SSH, Verilog, and Surfer extensions</li>
+<li>Use <em>View &gt; Command Palette</em> to execute <em>Remote-SSH: Connect Current
+    Window to Host...</em></li>
+<li>Enter <code>netid@ecelinux.ece.cornell.edu</code></li>
+<li>Install the Verilog and Surfer extensions on the server</li>
+<li>Use <em>View &gt; Explorer</em> to open your home directory on <code>ecelinux</code></li>
+<li>Use <em>View &gt; Terminal</em> to open a terminal on <code>ecelinux</code></li>
+</ul>
+<p>There is no need to fork the repo for today's discussion section. Simple
+clone the repo as follows.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>%<span class="w"> </span><span class="nb">source</span><span class="w"> </span>setup-ece2300.sh
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>%<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>%<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:cornell-ece2300/ece2300-sec03-verilog-testing<span class="w"> </span>sec03
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>sec03
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>%<span class="w"> </span>tree
+</span></code></pre></div>
+<p>The repo includes the following files:</p>
+<ul>
+<li><code>Makefile.in</code>: Makefile for the build system</li>
+<li><code>configure</code>: Configure script for the build system</li>
+<li><code>configure.ac</code>: Used to generate the configure script</li>
+<li><code>scripts</code>: Scripts used by the build system</li>
+<li><code>hw/PairTripleDetector_GL.v</code>: Verilog for pair/triple detector</li>
+<li><code>hw/PairTripleDetector2_GL.v</code>: Verilog for two pair/triple detectors</li>
+<li><code>test/ece2300-test.v</code>: ECE 2300 unit testing library</li>
+<li><code>test/PairTripleDetector_GL-test.v</code>: test cases for pair/triple detector</li>
+<li><code>test/PairTripleDetector2_GL-test.v</code>: test cases for two pair/triple detector</li>
+<li><code>sim/detector2-sim.v</code>: interactive simulator for hardware module</li>
+</ul>
+<p>To make it easier to cut-and-paste commands from this handout onto the
+command line, you can tell Bash to ignore the <code>%</code> character using the
+following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>%<span class="w"> </span><span class="nb">alias</span><span class="w"> </span>%<span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span></code></pre></div>
+<p>Now you can cut-and-paste a sequence of commands from this tutorial
+document and Bash will not get confused by the <code>%</code> character which begins
+each line.</p>
+<h2 id="2-a-simple-makefile">2. A Simple Makefile</h2>
+<p>We will start by writing a very simple Makefile to automate our work from
+the last discussion section. Let's copy some files into a temporary
+directory to enable us to explore a simple makefile.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>%<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>temp
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>%<span class="w"> </span>cp<span class="w"> </span>hw/PairTripleDetector_GL.v<span class="w"> </span>temp
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>%<span class="w"> </span>cp<span class="w"> </span>test/ece2300-test.v<span class="w"> </span>temp
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>%<span class="w"> </span>cp<span class="w"> </span>test/PairTripleDetector_GL-test.v<span class="w"> </span>temp
+</span></code></pre></div>
+<p>Now let's remind ourselves how to lint, build, and run a test simulator
+for the pair/triple detector from the last discussion section.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/temp
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>%<span class="w"> </span>verilator<span class="w"> </span>-Wall<span class="w"> </span>--lint-only<span class="w"> </span>PairTripleDetector_GL.v
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>%<span class="w"> </span>iverilog<span class="w"> </span>-Wall<span class="w"> </span>-g2012<span class="w"> </span>-o<span class="w"> </span>PairTripleDetector_GL-test<span class="w"> </span>PairTripleDetector_GL-test.v
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>%<span class="w"> </span>./PairTripleDetector_GL-test
+</span></code></pre></div>
+<p>Let's now remove the test simulator so we are back to a clean directory.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/temp
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>%<span class="w"> </span>trash<span class="w"> </span>PairTripleDetector_GL-test
+</span></code></pre></div>
+<p>Manually performing these steps can be very tedious. We can use a new
+tool called <code>make</code> which was specifically designed to help automate the
+process of running a sequence of programs. The key to using <code>make</code> is
+developing a <code>Makefile</code>. A <code>Makefile</code> is a plain text file which contains
+a list of <em>rules</em> which together specify how to execute commands to
+accomplish some task. Each rule has the following syntax:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>target : prerequisite0 prerequisite1 prerequisite2
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>&lt;TAB&gt;command
+</span></code></pre></div>
+<p>A rule specifies how to generate the target file using the list of
+prerequisite files and the given Linux command. <code>make</code> is smart enough to
+know it should rerun the command if any of the prerequisites change, and
+it also knows that if one of the prerequisites does not exist then it
+needs to look for some other rule to generate that prerequisite first. It
+is very important to note that make requires commands in a rule to start
+with a real TAB character. So you should not type the letters <code>&lt;TAB&gt;</code>,
+but you should instead press the TAB key and verify that it has
+inserted a real TAB character (i.e., if you move the left/right arrows
+the cursor should jump back and forth across the TAB). This is the only
+time in the course where you should use a real TAB character as opposed
+to spaces.</p>
+<p>Let's create a simple <code>Makefile</code> to automate the process of linting an
+building a test simulator. Use VS Code to create a new file named
+<code>Makefile</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/temp
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>%<span class="w"> </span>code<span class="w"> </span>Makefile
+</span></code></pre></div>
+<p>Enter the following content into the <code>Makefile</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>PairTripleDetector_GL-test : PairTripleDetector_GL.v PairTripleDetector_GL-test.v 
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>&lt;TAB&gt;verilator -Wall --lint-only PairTripleDetector_GL.v
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>&lt;TAB&gt;iverilog -Wall -g2012 -o PairTripleDetector_GL-test PairTripleDetector_GL-test.v
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>clean:
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>&lt;TAB&gt;rm -rf PairTripleDetector_GL-test
+</span></code></pre></div>
+<p>We can use the newly created <code>Makefile</code> like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/temp
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>%<span class="w"> </span>make<span class="w"> </span>PairTripleDetector_GL-test
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>%<span class="w"> </span>./PairTripleDetector_GL-test
+</span></code></pre></div>
+<p><code>make</code> will by default use the <code>Makefile</code> in the current directory.
+<code>make</code> takes a command line argument specifying what you want "make". In
+this case, we want to make the <code>PairTripleDetector_GL-test</code> simulator.
+<code>make</code> will look at all of the rules in the <code>Makefile</code> to find a rule
+that specifies how to make the <code>PairTripleDetector_GL-test</code> simulator. It
+will then check to make sure the prerequisites exist and that they are
+up-to-date, and then it will run the command sequence specified in the
+rule for <code>PairTripleDetector_GL-test</code>. In this case, those commands are
+<code>verilator</code> and <code>iverilog</code>. <code>make</code> will output to the terminal every
+command it runs, so you should see it output the command line which uses
+<code>verilator</code> to lint the design and <code>iverilog</code> to build the
+<code>PairTripleDetector_GL-test</code> simulator.</p>
+<p>Try running <code>make</code> again:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/temp
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>%<span class="w"> </span>make<span class="w"> </span>PairTripleDetector_GL-test
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>%<span class="w"> </span>./PairTripleDetector_GL-test
+</span></code></pre></div>
+<p><code>make</code> detects that the prerequisite (i.e., <code>PairTripleDetector_GL.v</code> and
+<code>PairTripleDetector_GL-test.v</code>) have not changed and so it does not
+rebuild the test simulator. Now let's try making a change in the
+<code>PairTripleDetector_GL.v</code> source file; change the final OR gate to a NOR
+gate and rebuild and rerun the test simulator like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/temp
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>%<span class="w"> </span>make<span class="w"> </span>PairTripleDetector_GL-test
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>%<span class="w"> </span>./PairTripleDetector_GL-test
+</span></code></pre></div>
+<p><code>make</code> will automatically detect that the prerequesite has changed and
+rebuild the test simulator appropriately. This ability to automatically
+track dependencies and rerun just what is necessary is a key benefit of
+using a tool like <code>make</code>. <code>Makefiles</code> can also include targets which are
+not actually files. Our example <code>Makefile</code> includes a <code>clean</code> target
+which will delete any generated simulators. Let's clean up our directory
+like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/temp
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>%<span class="w"> </span>ls
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>%<span class="w"> </span>make<span class="w"> </span>clean
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>%<span class="w"> </span>ls
+</span></code></pre></div>
+<p>Let's go ahead and remove the temporary directory.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>%<span class="w"> </span>trash<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/temp
+</span></code></pre></div>
+<h2 id="3-automated-build-system">3. Automated Build System</h2>
+<p>So far we have been doing all of our work in one directory. We will need
+a better way to organize our work as we start to develop larger and more
+complicated hardware modules. In the remaining lab assignments, you will
+be working with four subdirectories:</p>
+<ul>
+<li><code>hw</code> : subdirectory for Verilog hardware design files</li>
+<li><code>test</code> : subdirectory for Verilog test simulator files</li>
+<li><code>sim</code> : subdirectory for Verilog interactive simulator files</li>
+<li><code>build</code> : subdirectory for building/running all simulators</li>
+</ul>
+<p>Take a look in the <code>hw</code>, <code>test</code>, and <code>sim</code> directories in your cloned
+repo. You can see the <code>PairTripleDetector_GL.v</code> file is in the <code>hw</code>
+subdirectory and the <code>PairTripleDetector_GL-test.v</code> file is in the <code>test</code>
+subdirectory.</p>
+<p>From now on, we will always be building all of our simulators in a
+separate <code>build</code> directory. Keeping simulator executables, trace files,
+and waveforms separate from the source code is critical to maintaining a
+clean project. It enables us to easily do a "clean build". We can simply
+trash the build directory and start from scratch. <strong>You should never
+commit and push your build directory to GitHub!</strong></p>
+<p>We provide you a sophisticated <code>Makefile</code> you will be using in the
+remaining lab assignments. The <code>Makefile</code> is generated through a
+configuration step that checks to make sure your environment is setup
+correctly. Let's go ahead and create a build directory, run configure,
+and look at the provided <code>Makefile.</code></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>%<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>build
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>build
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>%<span class="w"> </span>../configure
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>%<span class="w"> </span>code<span class="w"> </span>Makefile
+</span></code></pre></div>
+<p>You do not need to understand everything in the <code>Makefile</code>, but just
+appreciate that it will be a powerful way to automate the process of
+linting, building, and running our simulators.</p>
+<h3 id="21-composing-two-pairtriple-detectors">2.1. Composing Two Pair/Triple Detectors</h3>
+<p>Let's implement a more complicated Verilog hardware module that composes
+two instances of our pair/triple detector called <code>PairTripleDetector2</code>.
+It has the following block diagram.</p>
+<p><img alt="" src="../img/sec03-pair-triple-detector2.png" /></p>
+<p>The <code>PairTripleDetector2</code> has two three-bit input ports and one one-bit
+output port; it should output a one if either of the input ports contain
+two or three ones and output a zero otherwise. Go ahead and use VS Code
+to implement <code>PairTripleDetector2</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>%<span class="w"> </span>code<span class="w"> </span>../hw/PairTripleDetector2_GL.v
+</span></code></pre></div>
+<h3 id="22-testing-child-modules">2.2. Testing Child Modules</h3>
+<p>What strategy should we use to test our new composition? The wrong thing
+to do is to immediately start testing the composition. Instead, <strong>we must
+test and thoroughly verify every child module before doing any kind of
+integration testing.</strong> Let's use the provided <code>Makefile</code> to lint, build,
+and run the test simulator for the child pair/triple detector.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>%<span class="w"> </span>make<span class="w"> </span>PairTripleDetector_GL-test
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>%<span class="w"> </span>./PairTripleDetector_GL-test
+</span></code></pre></div>
+<p>You can build and run the test in a single line like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>%<span class="w"> </span>make<span class="w"> </span>PairTripleDetector_GL-test<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./PairTripleDetector_GL-test
+</span></code></pre></div>
+<p>The <code>&amp;&amp;</code> bash operator enables running multiple commands on the same
+command line. Remember you can "zoom-in" to run a single test case with
+the <code>+test-case</code> command line option.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>%<span class="w"> </span>./PairTripleDetector_GL-test<span class="w"> </span>+test-case<span class="o">=</span><span class="m">1</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>%<span class="w"> </span>./PairTripleDetector_GL-test<span class="w"> </span>+test-case<span class="o">=</span><span class="m">2</span>
+</span></code></pre></div>
+<p>When you zoom-in the test framework will displace a trace of the inputs
+and outputs for the design-under-test. You can output waveforms using the
+<code>+dump-vcd</code> command line option and then open them using the Surfer
+extension for VS Code.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>%<span class="w"> </span>./PairTripleDetector_GL-test<span class="w"> </span>+test-case<span class="o">=</span><span class="m">2</span><span class="w"> </span>+dump-vcd<span class="o">=</span>waves.vcd
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>%<span class="w"> </span>code<span class="w"> </span>waves.vcd
+</span></code></pre></div>
+<h3 id="23-basic-testing">2.3. Basic Testing</h3>
+<p>Now that we know the child modules are correct, we can do integration
+testing of the composition. Run the basic tests that we provide for this
+new composition.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>%<span class="w"> </span>make<span class="w"> </span>PairTripleDetector2_GL-test<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./PairTripleDetector2_GL-test
+</span></code></pre></div>
+<h3 id="24-directed-testing">2.4. Directed Testing</h3>
+<p>In the previous discussion section, we used exhaustive testing to verify
+our pair/triple detector. Exhaustive testing is a powerful technique but
+only applicable to hardware modules with just a few input ports each with
+just a few bits. The number of exhaustive checks scales exponentially
+with the number of bits across all input ports. For example, if our
+hardware module has four eight-bit input ports, we would need <code>2^(8*4)</code>
+or four billion checks for exhaustive testing!</p>
+<p>We can use <em>directed testing</em> in situations where exhaustive testing is
+not possible. In directed testing, we focus on including checks for as
+many interesting input values as possible. We usually organize directed
+testing into many test cases, where each test case is focusing on a
+different kinds of input values we are interested in testing. For
+<code>PairTripleDetector2</code>, we might want a directed test case that focuses on
+input values with a few ones and a different directed test case that
+focuses on input values with many ones. Go ahead and add appropriate
+checks to <code>test_case_2_few_ones</code> and <code>test_case_3_many_ones</code> in
+<code>PairTripleDetector2_GL-test.v</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>%<span class="w"> </span>code<span class="w"> </span>../test/PairTripleDetector2_GL-test.v
+</span></code></pre></div>
+<p>Then rebuild and rerun the test simulator using <code>make</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>%<span class="w"> </span>make<span class="w"> </span>PairTripleDetector2_GL-test<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./PairTripleDetector2_GL-test
+</span></code></pre></div>
+<p>Zoom-in on each of these two test cases to see the trace output.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>%<span class="w"> </span>./PairTripleDetector2_GL-test<span class="w"> </span>+test-case<span class="o">=</span><span class="m">2</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>%<span class="w"> </span>./PairTripleDetector2_GL-test<span class="w"> </span>+test-case<span class="o">=</span><span class="m">3</span>
+</span></code></pre></div>
+<h3 id="25-random-testing">2.5. Random Testing</h3>
+<p>Directed testing is a good first step, but how do we know if we have
+covered all of the corner cases? We can use <em>random testing</em> to help
+increase our confidence that we have not missed any important corner
+cases. Random testing involves generating random input values, determing
+the correct output given these random input values, applying these random
+input values to the design-under-test, and then verifying that the
+design-under-test produces the correct output values.</p>
+<p>Here is an example of a random test case for our <code>PairTripleDetector2</code>
+module:</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">random_a</span><span class="p">;</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">random_b</span><span class="p">;</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span><span class="kt">logic</span><span class="w">       </span><span class="n">random_out</span><span class="p">;</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">  </span><span class="kt">int</span><span class="w">         </span><span class="n">random_a_num_ones</span><span class="p">;</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">  </span><span class="kt">int</span><span class="w">         </span><span class="n">random_b_num_ones</span><span class="p">;</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">  </span><span class="k">task</span><span class="w"> </span><span class="n">test_case_4_random</span><span class="p">();</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">    </span><span class="n">t</span><span class="p">.</span><span class="n">test_case_begin</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;test_case_4_random&quot;</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">    </span><span class="c1">// Generate 20 random input values</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mh">20</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="w">      </span><span class="c1">// Generate a 3-bit random value for both a and b</span>
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="w">      </span><span class="n">random_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">3</span><span class="p">&#39;(</span><span class="n">$urandom</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">seed</span><span class="p">));</span>
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a><span class="w">      </span><span class="n">random_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">3</span><span class="p">&#39;(</span><span class="n">$urandom</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">seed</span><span class="p">));</span>
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>
+</span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a><span class="w">      </span><span class="c1">// Calculate the number of ones in random value a</span>
+</span><span id="__span-23-20"><a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a>
+</span><span id="__span-23-21"><a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a><span class="w">      </span><span class="n">random_a_num_ones</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span>
+</span><span id="__span-23-22"><a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a><span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mh">3</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-23-23"><a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">random_a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="p">)</span>
+</span><span id="__span-23-24"><a id="__codelineno-23-24" name="__codelineno-23-24" href="#__codelineno-23-24"></a><span class="w">          </span><span class="n">random_a_num_ones</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">random_a_num_ones</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span>
+</span><span id="__span-23-25"><a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a><span class="w">      </span><span class="k">end</span>
+</span><span id="__span-23-26"><a id="__codelineno-23-26" name="__codelineno-23-26" href="#__codelineno-23-26"></a>
+</span><span id="__span-23-27"><a id="__codelineno-23-27" name="__codelineno-23-27" href="#__codelineno-23-27"></a><span class="w">      </span><span class="c1">// Calculate the number of ones in random value b</span>
+</span><span id="__span-23-28"><a id="__codelineno-23-28" name="__codelineno-23-28" href="#__codelineno-23-28"></a>
+</span><span id="__span-23-29"><a id="__codelineno-23-29" name="__codelineno-23-29" href="#__codelineno-23-29"></a><span class="w">      </span><span class="n">random_b_num_ones</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span>
+</span><span id="__span-23-30"><a id="__codelineno-23-30" name="__codelineno-23-30" href="#__codelineno-23-30"></a><span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mh">3</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-23-31"><a id="__codelineno-23-31" name="__codelineno-23-31" href="#__codelineno-23-31"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">random_b</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="p">)</span>
+</span><span id="__span-23-32"><a id="__codelineno-23-32" name="__codelineno-23-32" href="#__codelineno-23-32"></a><span class="w">          </span><span class="n">random_b_num_ones</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">random_b_num_ones</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span>
+</span><span id="__span-23-33"><a id="__codelineno-23-33" name="__codelineno-23-33" href="#__codelineno-23-33"></a><span class="w">      </span><span class="k">end</span>
+</span><span id="__span-23-34"><a id="__codelineno-23-34" name="__codelineno-23-34" href="#__codelineno-23-34"></a>
+</span><span id="__span-23-35"><a id="__codelineno-23-35" name="__codelineno-23-35" href="#__codelineno-23-35"></a><span class="w">      </span><span class="c1">// Calculate the correct output value</span>
+</span><span id="__span-23-36"><a id="__codelineno-23-36" name="__codelineno-23-36" href="#__codelineno-23-36"></a>
+</span><span id="__span-23-37"><a id="__codelineno-23-37" name="__codelineno-23-37" href="#__codelineno-23-37"></a><span class="w">      </span><span class="n">random_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">random_a_num_ones</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="n">random_b_num_ones</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mh">1</span><span class="p">);</span>
+</span><span id="__span-23-38"><a id="__codelineno-23-38" name="__codelineno-23-38" href="#__codelineno-23-38"></a>
+</span><span id="__span-23-39"><a id="__codelineno-23-39" name="__codelineno-23-39" href="#__codelineno-23-39"></a><span class="w">      </span><span class="c1">// Apply the random input values and check the output value</span>
+</span><span id="__span-23-40"><a id="__codelineno-23-40" name="__codelineno-23-40" href="#__codelineno-23-40"></a>
+</span><span id="__span-23-41"><a id="__codelineno-23-41" name="__codelineno-23-41" href="#__codelineno-23-41"></a><span class="w">      </span><span class="n">check</span><span class="p">(</span><span class="w"> </span><span class="n">random_a</span><span class="p">,</span><span class="w"> </span><span class="n">random_b</span><span class="p">,</span><span class="w"> </span><span class="n">random_out</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-23-42"><a id="__codelineno-23-42" name="__codelineno-23-42" href="#__codelineno-23-42"></a>
+</span><span id="__span-23-43"><a id="__codelineno-23-43" name="__codelineno-23-43" href="#__codelineno-23-43"></a><span class="w">    </span><span class="k">end</span>
+</span><span id="__span-23-44"><a id="__codelineno-23-44" name="__codelineno-23-44" href="#__codelineno-23-44"></a>
+</span><span id="__span-23-45"><a id="__codelineno-23-45" name="__codelineno-23-45" href="#__codelineno-23-45"></a><span class="w">  </span><span class="k">endtask</span>
+</span></code></pre></div>
+<p>Recall that Verilog can be used to both <em>design</em> hardware and also to
+<em>test</em> hardware. Very different constructs should be used when designing
+vs. testing hardware. Here we are clearly using Verilog constructs (e.g.,
+<code>$urandom</code>, for loops, etc) that are not suitable for modeling hardware.</p>
+<p>The random test generates two random 3-bit values using the <code>$urandom</code>
+system task. We pass in <code>t.seed</code> to ensure our random tests are actually
+"pseudo-random", i.e., the test case will always produce the same
+sequence of random values. This way if a random test case fails we can
+rerun the test case to debug it without worrying that the failure will go
+away due to different random input values. We then include Verilog
+behavioral code to determine the correct answer; we use two for loops to
+count the number of ones in each random 3-bit value. Once we know the
+number of ones in each random 3-bit value, we can determine what the
+correct output should be for the design-under-test.</p>
+<p>Copy and paste this new test case into <code>PairTripleDetector2_GL-test.v</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>%<span class="w"> </span>code<span class="w"> </span>../test/PairTripleDetector2_GL-test.v
+</span></code></pre></div>
+<p>Then add this new test case to the list of test cases in the <code>initial</code>
+block like this:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>  initial begin
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>    t.test_bench_begin( `__FILE__ );
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>    if ((t.n &lt;= 0) || (t.n == 1)) test_case_1_basic();
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>    if ((t.n &lt;= 0) || (t.n == 2)) test_case_2_few_ones();
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>    if ((t.n &lt;= 0) || (t.n == 3)) test_case_3_many_ones();
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>    if ((t.n &lt;= 0) || (t.n == 4)) test_case_4_random();
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>    t.test_bench_end();
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>  end
+</span></code></pre></div>
+<p>Now rebuild and rerun the test simulator. Verify that your new random
+test case is running.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>%<span class="w"> </span>make<span class="w"> </span>PairTripleDetector2_GL-test<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./PairTripleDetector2_GL-test
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>%<span class="w"> </span>./PairTripleDetector2_GL-test<span class="w"> </span>+test-case<span class="o">=</span><span class="m">4</span>
+</span></code></pre></div>
+<p>It is always useful to try and break your code to make sure your test
+cases really are testing what you think they are. Replace the OR gate in
+<code>PairTripleDetector2_GL</code> with an AND gate. Do your directed tests catch
+this bug? If your directed tests <em>do not</em> catch a bug but your random
+tests <em>do</em> catch a bug, then you want to add a <em>new</em> directed test case
+that tests for this behavior. In fact, adding a new directed test case to
+reproduce a bug caught during randoming testing is the best way to start
+debugging a random test case failure. If the bug was caught by your
+random test, but not your directed test cases, go ahead and add a new
+directed test case that will catch this bug.</p>
+<h3 id="26-running-all-tests">2.6. Running All Tests</h3>
+<p>The provided <code>Makefile</code> provides a <code>check</code> target which will build and
+run all test simulators in a single step.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>%<span class="w"> </span>make<span class="w"> </span>check
+</span></code></pre></div>
+<p><strong>Note that this should only be used to produce a high-level overview of
+which test simulators are passing and which test simulators are failing.
+You should not just always type <code>make check</code>.</strong> You should "zoom-in" and
+build and run a single test simulator for which ever hardware module you
+are currently working on. Periodically run <code>make check</code> to get a
+high-level overview.</p>
+<h2 id="3-interactive-simulators">3. Interactive Simulators</h2>
+<p>Once we have finished testing our hardware design, we can use an
+interactive simulator to experiment with the design. The source files for
+our interactive simulators will be in the <code>sim</code> subdirectory. Take a look
+at the provided <code>detector2-sim.v</code> interactive simulator.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>%<span class="w"> </span>code<span class="w"> </span>../sim/detector2-sim.v
+</span></code></pre></div>
+<p>You can build the simple interactive simulator by simply specifying it as
+a target:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>%<span class="w"> </span>make<span class="w"> </span>detector2-sim
+</span></code></pre></div>
+<p>Then you can specify the input values for <code>a</code> and <code>b</code> on the command
+line.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec03/build
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>%<span class="w"> </span>./detector2-sim<span class="w"> </span>+a<span class="o">=</span><span class="m">000</span><span class="w"> </span>+b<span class="o">=</span><span class="m">000</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>%<span class="w"> </span>./detector2-sim<span class="w"> </span>+a<span class="o">=</span><span class="m">001</span><span class="w"> </span>+b<span class="o">=</span><span class="m">000</span>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>%<span class="w"> </span>./detector2-sim<span class="w"> </span>+a<span class="o">=</span><span class="m">000</span><span class="w"> </span>+b<span class="o">=</span><span class="m">001</span>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>%<span class="w"> </span>./detector2-sim<span class="w"> </span>+a<span class="o">=</span><span class="m">111</span><span class="w"> </span>+b<span class="o">=</span><span class="m">111</span>
+</span></code></pre></div>
+<p>Note that an interactive simulator is <em>not</em> for testing. Using an
+interactive simulator is neither systematic nor automatic. One should
+only start experimenting with an interactive simulator once a hardware
+module has been thoroughly tested using a combination of basic,
+exhaustive, directed, and/or random testing!</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Christopher Batten
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../js/extras.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/skins/default.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/wavedrom.min.js"></script>
+      
+        <script src="../js/wavedrom_loader.js"></script>
+      
+    
+  </body>
+</html>

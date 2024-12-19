@@ -1,0 +1,1740 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Christopher Batten">
+      
+      
+      
+        <link rel="prev" href="../ece2300-sec05-verilog-rtl/">
+      
+      
+        <link rel="next" href="../ece2300-sec07-verilog-mem/">
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Section 6: Lab 3 Head Start - ECE 2300 Digital Logic and Computer Organization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-6-lab-3-head-start" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-header__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECE 2300 Digital Logic and Computer Organization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Section 6: Lab 3 Head Start
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tut00-remote-access/" class="md-tabs__link">
+          
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../ece2300-sec01-linux/" class="md-tabs__link">
+          
+  
+  Discussion Sections
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-fpga-primer/" class="md-tabs__link">
+          
+  
+  Lab Assignments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tinyrv1-isa/" class="md-tabs__link">
+          
+  
+  Misc
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-nav__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ECE 2300 Digital Logic and Computer Organization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut00-remote-access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 0: ECE Linux Server Remote Access
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut02-git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 2: Git Distributed Version Control System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Discussion Sections
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Discussion Sections
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec02-verilog-gl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 2: Verilog Combinational Gate-Level Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec03-verilog-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 3: Verilog Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec04-lab2-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 4: Lab 2 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec05-verilog-rtl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 5: Verilog Combinational RTL Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Section 6: Lab 3 Head Start
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Section 6: Lab 3 Head Start
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-logging-into-ecelinux-with-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Logging Into ecelinux with VS Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-mux-and-adder-from-lab-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Mux and Adder from Lab 2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-implementing-and-testing-d-latch-d-flip-flops-and-register" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Implementing and Testing D Latch, D Flip-Flops, and Register
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Implementing and Testing D Latch, D Flip-Flops, and Register">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-d-latch" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 D Latch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-d-flip-flop" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 D Flip-Flop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-d-flip-flop-with-reset-and-enable" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 D Flip-Flop with Reset and Enable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-gate-level-register" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Gate-Level Register
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-implementing-and-testing-a-parameterized-rtl-register" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Implementing and Testing a Parameterized RTL Register
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Implementing and Testing a Parameterized RTL Register">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-rtl-modeling-of-sequential-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. RTL Modeling of Sequential Logic
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-parameterized-hardware-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. Parameterized Hardware Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-parameterized-rtl-register" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3. Parameterized RTL Register
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-simple-counter" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Simple Counter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-clean-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Clean Build
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec07-verilog-mem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 7: Verilog Memory Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lab Assignments
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Lab Assignments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-fpga-primer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FPGA Development Primer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p1-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts A & B): Five-Bit Numeric Display -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p2-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts C & D): Five-Bit Numeric Display -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2p1-calc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts A & B): Two-Function Calculator -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2-calc-fpga-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts C & D): Two-Function Calculator -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3ab-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts A & B): Music-Player -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D): Music-Player -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-custom-song/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D) Optional Add-On: Custom Song
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ab-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts A, B, & C) TinyRV1 Processor -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4d-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Part D) TinyRV1 Processor -- FPGA Analysis/Prototyping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ef-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts E & F) TinyRV1 Processor -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Misc
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Misc
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tinyrv1-isa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TinyRV1 ISA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-logging-into-ecelinux-with-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Logging Into ecelinux with VS Code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-mux-and-adder-from-lab-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Mux and Adder from Lab 2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-implementing-and-testing-d-latch-d-flip-flops-and-register" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Implementing and Testing D Latch, D Flip-Flops, and Register
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Implementing and Testing D Latch, D Flip-Flops, and Register">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-d-latch" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 D Latch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-d-flip-flop" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 D Flip-Flop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-d-flip-flop-with-reset-and-enable" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 D Flip-Flop with Reset and Enable
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-gate-level-register" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Gate-Level Register
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-implementing-and-testing-a-parameterized-rtl-register" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Implementing and Testing a Parameterized RTL Register
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Implementing and Testing a Parameterized RTL Register">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-rtl-modeling-of-sequential-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. RTL Modeling of Sequential Logic
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-parameterized-hardware-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. Parameterized Hardware Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-parameterized-rtl-register" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3. Parameterized RTL Register
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-simple-counter" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Simple Counter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-clean-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Clean Build
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="section-6-lab-3-head-start">Section 6: Lab 3 Head Start</h1>
+<p>In this discussion section you will use what you have learned in the
+previous discussion sections to get started on Lab 3. You will start by
+implementing a D latch, D flip-flop, D flip-flop with reset and enable,
+and a 8-bit register all at the gate-level. You will then implement a
+parameterized multi-bit register and simple counter at the
+register-transfer level. Feel free to copy any code you would like from
+your work in this discussion section into your lab group repo.</p>
+<p>In the past discussion sections, we have focused on how to use Verilog to
+model combinational logic at both the gate-level and
+register-transfer-level (RTL). In this discussion section, we will learn
+how to use Verilog to model sequential logic. Gate-level modeling of
+sequential logic largely uses similar syntax and semantics to modeling
+combinational logic at the gate level, but RTL modeling of sequential
+logic will require new syntax and semantics which we will need to
+understand and use carefully. <strong>Remember from last discussion section
+that it is critical that students <em>always</em> know what is the hardware they
+are modeling whether they are working at the gate- or register-transfer
+level.</strong></p>
+<h2 id="1-logging-into-ecelinux-with-vs-code">1. Logging Into <code>ecelinux</code> with VS Code</h2>
+<p>Follow the same process as previous discussion sections. Find a free
+workstation and log into the workstation using your NetID and standard
+NetID password. Then complete the following steps (described in more
+detail in the last discussion section):</p>
+<ul>
+<li>Start VS Code</li>
+<li>Install the Remote-SSH, Verilog, and Surfer extensions</li>
+<li>Use <em>View &gt; Command Palette</em> to execute <em>Remote-SSH: Connect Current
+    Window to Host...</em></li>
+<li>Enter <code>netid@ecelinux.ece.cornell.edu</code></li>
+<li>Install the Verilog and Surfer extensions on the server</li>
+<li>Use <em>View &gt; Explorer</em> to open your home directory on <code>ecelinux</code></li>
+<li>Use <em>View &gt; Terminal</em> to open a terminal on <code>ecelinux</code></li>
+</ul>
+<p>There is no need to fork the repo for today's discussion section. Simple
+clone the repo as follows.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>%<span class="w"> </span><span class="nb">source</span><span class="w"> </span>setup-ece2300.sh
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>%<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>%<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:cornell-ece2300/ece2300-sec06-lab3-head-start<span class="w"> </span>sec06
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>sec06
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>%<span class="w"> </span>tree
+</span></code></pre></div>
+<p>The repo includes the following files:</p>
+<ul>
+<li><code>Makefile.in</code>: Makefile for the build system</li>
+<li><code>configure</code>: Configure script for the build system</li>
+<li><code>configure.ac</code>: Used to generate the configure script</li>
+<li><code>scripts</code>: Scripts used by the build system</li>
+<li><code>Adder_8b_RTL.v</code>: 8-bit RTL adder (copy from lab 2)</li>
+<li><code>Mux2_1b_GL.v</code>: 8-bit RTL adder (copy from lab 2)</li>
+<li><code>DLatch_GL.v</code>: 1-bit D latch at gate-level</li>
+<li><code>DFF_GL.v</code>: 1-bit D flip-flop at gate-level</li>
+<li><code>DFFRE_GL.v</code>: 1-bit D flip-flop with reset and enable at gate-level</li>
+<li><code>Register_8b_GL.v</code>: 8-bit register with reset and enable at gate-level</li>
+<li><code>Register_RTL.v</code>: Parameterized register with reset and enable at RTL</li>
+<li><code>SimpleCounter_8b_RTL.v</code>: Simple counter that counts up in structural RTL</li>
+<li><code>test</code>: Directory with unit tests for each hardware module</li>
+</ul>
+<p>Go ahead and create a build directory and run configure to generate a
+Makefile.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec06
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>%<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>build
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>build
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>%<span class="w"> </span>../configure
+</span></code></pre></div>
+<p>To make it easier to cut-and-paste commands from this handout onto the
+command line, you can tell Bash to ignore the <code>%</code> character using the
+following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>%<span class="w"> </span><span class="nb">alias</span><span class="w"> </span>%<span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span></code></pre></div>
+<p>Now you can cut-and-paste a sequence of commands from this tutorial
+document and Bash will not get confused by the <code>%</code> character which begins
+each line.</p>
+<h2 id="2-mux-and-adder-from-lab-2">2. Mux and Adder from Lab 2</h2>
+<p>Copy your 1-bit 2-to-1 multiplexor and your 8-bit RTL adder from Lab 2
+into the <code>hw</code> directory for this discussion section. Verify that these
+hardware modules are working.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>% cd ${HOME}/ece2300/sec06/build
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>% make Mux2_1b_GL-test
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>% make Adder_8b_RTL-test
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>% ./Mux2_1b_GL-test
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>% ./Adder_8b_RTL-test
+</span></code></pre></div>
+<h2 id="3-implementing-and-testing-d-latch-d-flip-flops-and-register">3. Implementing and Testing D Latch, D Flip-Flops, and Register</h2>
+<p>We will start by exploring how to implement and test three different
+single-bit sequential logic gates: D latch, D flip-flop, and a D flip-flop
+with reset and enable.</p>
+<h3 id="31-d-latch">3.1 D Latch</h3>
+<p>A D latch has a data input (<code>d</code>) and a clock input (<code>clk</code>) and one output
+(<code>q</code>). A D latch is transparent when the clock is one (i.e., the input
+passes directly to the output) and is opaque with the clock is zero
+(i.e., the latch "remembers" the value right before the clock
+transitioned to zero and holds this value while the latch is opaque).</p>
+<p>We have provided you the interface a D latch in <code>DLatch_GL.v</code> and a test
+bench in <code>DLatch_GL-test.v</code>. For the test bench, we have provided you a
+template for an exhaustive test case; all you need to do is fill in the
+correct output values for each provided check. Notice that our checks
+look exactly like the simulation tables we have studied in lecture with
+an explicit column for the clock signal. You can test the D latch as
+follows.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec06/build
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>%<span class="w"> </span>make<span class="w"> </span>DLatch_GL-test
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>%<span class="w"> </span>./DLatch_GL-test
+</span></code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Activity 1: Implement and Test D Latch</p>
+<p>Create a Verilog hardware design that implements a D latch using the
+explicit gate-level modeling (do not use Boolean logic equations).
+Finish the test bench and verify that your D latch is functionally
+correct.</p>
+</div>
+<h3 id="32-d-flip-flop">3.2 D Flip-Flop</h3>
+<p>A D flip-flop has a data input (<code>d</code>) and a clock input (<code>clk</code>) and one
+output (<code>q</code>). Unlike a D latch, a D flip-flop is never transparent. A D
+flip-flop samples its input right before the positive edge of the clock
+and then holds this value for the entire clock period until the next
+rising edge. We can implement a D flip-flop with two latches: a leader
+latch and a follower latch. The leader latch uses the complement of the
+clock so that only one latch is ever transparent on either phase of the
+clock.</p>
+<p>We have provided you the interface a D flip-flop in <code>DFF_GL.v</code> and a test
+bench in <code>DFF_GL-test.v</code>. For the test bench, we have provided you a
+template for an exhaustive test case; all you need to do is fill in the
+correct output values for each provided check. You can test the D
+flip-flop as follows.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec06/build
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>%<span class="w"> </span>make<span class="w"> </span>DFF_GL-test
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>%<span class="w"> </span>./DFF_GL-test
+</span></code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Activity 2: Implement and Test D Flip-Flop</p>
+<p>Create a Verilog hardware design that implements a D flip-flop by
+instantiating two D latches and connecting them appropriately. You
+will also need a NOT gate (do not use Boolean logic equations).
+Finish the test bench and verify that your D flip-flop is
+functionally correct.</p>
+</div>
+<h3 id="33-d-flip-flop-with-reset-and-enable">3.3 D Flip-Flop with Reset and Enable</h3>
+<p>We can also add a reset (<code>rst</code>) and enable (<code>en</code>) to our D flip-flop. The
+reset signal is used to reset the D flip-flop to a known value. In our
+case we will reset the flip-flop to zero. The enable signal is used to
+decided whether or not the flip-flop is "enabled": if the flip-flop is
+enabled (i.e., <code>en</code> is one) then the flip-flop will sample a new value on
+the rising edge of the clock; but if the flip-flop is disabled then the
+flip-flop will hold the old value and not sample a new value on the
+rising edge of the clock. We can implement a D flip-fop with reset and
+enable by adding a multiplexor, AND gate, and NOT gate to our D
+flip-flop.</p>
+<p>We have provided you the interface a D flip-flop with reset and enable in
+<code>DFFRE_GL.v</code> and a test bench in <code>DFFRE_GL-test.v</code>. We have already
+provided you all of the test cases you need for the D flip-flop with
+reset and enable. You can test this new version of the D flip-flop as
+follows.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec06/build
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>%<span class="w"> </span>make<span class="w"> </span>DFFRE_GL-test
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>%<span class="w"> </span>./DFFRE_GL-test
+</span></code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Activity 3: Implement and Test D Flip-Flop with Reset and Enable</p>
+<p>Create a Verilog hardware design that implements a D flip-flop with
+reset and enable by instantiating a D flip-flop, 1-bit 2-to-1
+multiplexor, AND gate, and NOT gate and connecting them
+appropriately. Do not use Boolean logic equations. Verify that your
+new D flip-flop passes all of the provided test cases.</p>
+</div>
+<h3 id="34-gate-level-register">3.4 Gate-Level Register</h3>
+<p>To implement a multi-bit register we just need to instantiate a number of
+D flip-flops and connect them appropriately. We have provided you the
+interface an eight-bit register in <code>Register_8b_GL.v</code> and a test bench in
+<code>Register_8b_GL-test.v</code>. For the test bench, we have provided you a
+template for your test cases; all you need to do is fill in the correct
+output values for each provided check. Take a closer look at the provided
+test bench.</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="w">  </span><span class="k">task</span><span class="w"> </span><span class="n">test_case_1_basic</span><span class="p">();</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="n">t</span><span class="p">.</span><span class="n">test_case_begin</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;test_case_1_basic&quot;</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="c1">//    rst en d             q</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="n">check</span><span class="p">(</span><span class="w"> </span><span class="mh">0</span><span class="p">,</span><span class="w"> </span><span class="mh">1</span><span class="p">,</span><span class="w"> </span><span class="mh">8</span><span class="mb">&#39;b0000</span><span class="n">_0000</span><span class="p">,</span><span class="w"> </span><span class="mh">8</span><span class="mb">&#39;b0000</span><span class="n">_0000</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="n">check</span><span class="p">(</span><span class="w"> </span><span class="mh">0</span><span class="p">,</span><span class="w"> </span><span class="mh">1</span><span class="p">,</span><span class="w"> </span><span class="mh">8</span><span class="mb">&#39;b0000</span><span class="n">_0001</span><span class="p">,</span><span class="w"> </span><span class="mh">8</span><span class="mb">&#39;b0000</span><span class="n">_0000</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="n">check</span><span class="p">(</span><span class="w"> </span><span class="mh">0</span><span class="p">,</span><span class="w"> </span><span class="mh">1</span><span class="p">,</span><span class="w"> </span><span class="mh">8</span><span class="mb">&#39;b0000</span><span class="n">_0000</span><span class="p">,</span><span class="w"> </span><span class="mh">8</span><span class="mb">&#39;b0000</span><span class="n">_0001</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="n">check</span><span class="p">(</span><span class="w"> </span><span class="mh">0</span><span class="p">,</span><span class="w"> </span><span class="mh">1</span><span class="p">,</span><span class="w"> </span><span class="mh">8</span><span class="mb">&#39;b0000</span><span class="n">_0010</span><span class="p">,</span><span class="w"> </span><span class="mh">8</span><span class="mb">&#39;b0000</span><span class="n">_0000</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="n">check</span><span class="p">(</span><span class="w"> </span><span class="mh">0</span><span class="p">,</span><span class="w"> </span><span class="mh">1</span><span class="p">,</span><span class="w"> </span><span class="mh">8</span><span class="mb">&#39;b0000</span><span class="n">_0000</span><span class="p">,</span><span class="w"> </span><span class="mh">8</span><span class="mb">&#39;b0000</span><span class="n">_0010</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">  </span><span class="k">endtask</span>
+</span></code></pre></div>
+<p>Notice how we no longer explicitly include the clock signal in our
+checks. <strong>The ECE 2300 testing framework takes care of toggling the clock
+appropriately, so we can think of each check corresponding to the row in
+our simulation tables when the clock is one.</strong> We will now always have
+exactly one check per cycle. In the above basic test, we can see that the
+output <code>q</code> is updated the cycle after we set the input value <code>d</code>. This is
+because we are testing sequential logic. It is important to understand
+how this works so you can effectively write tests for sequential logic.</p>
+<p>You can run the test simulator for the register as follows.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec06/build
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>%<span class="w"> </span>make<span class="w"> </span>Register_8b_GL-test
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>%<span class="w"> </span>./Register_8b_GL-test
+</span></code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Activity 4: Implement and Test GL Register</p>
+<p>Create a Verilog hardware design that implements an eight-bit
+register with reset and enable by instantiating eight D flip-flops
+and connecting them appropriately. Finish the test bench and verify
+that your register is functionally correct.</p>
+</div>
+<h2 id="3-implementing-and-testing-a-parameterized-rtl-register">3. Implementing and Testing a Parameterized RTL Register</h2>
+<p>Our goal is to now implement a parameterized multi-bit register using RTL
+modeling, but we need to learn two new concepts before we can complete
+this task.</p>
+<h3 id="41-rtl-modeling-of-sequential-logic">4.1. RTL Modeling of Sequential Logic</h3>
+<p>In the last discussion section, we learned how to use an <code>always_comb</code>
+block for RTL modeling of combinational logic. <code>always_ff</code> is a new kind
+of always block specifically for RTL modeling of sequential logic. The
+following is an example of a D flip-flop modeled using an <code>always_ff</code>
+block.</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">module</span><span class="w"> </span><span class="n">DFF_RTL</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="p">(</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">d</span><span class="p">,</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">q</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">);</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="n">q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">d</span><span class="p">;</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">  </span><span class="k">end</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="k">endmodule</span>
+</span></code></pre></div>
+<p>An <code>always_comb</code> block executes whenever any of the inputs to that block
+change. An <code>always_ff @(posedge clk)</code> block only executes on the rising
+edge of the clock. Notice how we are using a non-block assignment (<code>&lt;=</code>)
+instead of a blocking assignment (<code>=</code>). A non-block assignment has very
+different semantics to a blocking assignment. In a non-blocking
+assignment, the right-hand side (i.e., <code>d</code>) is evaluated and saved
+<em>before</em> the rising clock edge and the left-hand side (i.e., <code>q</code>) is only
+updated <em>after</em> the rising clock edge. Critically, the right-hand side is
+evaluated and saved in <em>every</em> <code>always_ff</code> across the entire hardware
+design before updating <em>any</em> left-hand side. This effectively models all
+of these assignments happening concurrently on the rising edge of the
+clock which is exactly what happens in hardware. We should <em>only</em> use
+non-blocking assignments in <code>always_ff</code> blocks, and we should <em>only</em> use
+blocking assignments in <code>always_comb</code> blocks. We should <em>never</em> mix these
+up!</p>
+<h3 id="42-parameterized-hardware-modules">4.2. Parameterized Hardware Modules</h3>
+<p>So far all of our designs have been for a fixed bitwidth. For example, we
+have implemented various adders specifically designed for eight-bit
+inputs and outputs. If we need a new adder for 12-bit inputs and outputs
+we would need to implement and test this module from scratch. We can
+develop <em>parameterized</em> hardware modules by using Verilog parameters.
+Here is an example of how we can implement a parameterized RTL adder that
+can operate on inputs and outputs of any bitwidth.</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">module</span><span class="w"> </span><span class="n">Adder_RTL</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="p">#(</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="n">p_nbits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="p">)(</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">keep</span><span class="o">=</span><span class="mh">1</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">p_nbits</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">in0</span><span class="p">,</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">keep</span><span class="o">=</span><span class="mh">1</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">p_nbits</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">in1</span><span class="p">,</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">keep</span><span class="o">=</span><span class="mh">1</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">               </span><span class="n">cin</span><span class="p">,</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">keep</span><span class="o">=</span><span class="mh">1</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">               </span><span class="n">cout</span><span class="p">,</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">  </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">keep</span><span class="o">=</span><span class="mh">1</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">p_nbits</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">sum</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="p">);</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="p">{</span><span class="n">cout</span><span class="p">,</span><span class="n">sum</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">in1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="n">p_nbits</span><span class="o">-</span><span class="mh">1</span><span class="p">}{</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">},</span><span class="w"> </span><span class="n">cin</span><span class="w"> </span><span class="p">};</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="k">endmodule</span>
+</span></code></pre></div>
+<p>Parameters are specified as a list using <code>#()</code> after the module name. In
+the above example we have one parameter named <code>p_nbits</code> with a default
+value of 1. This parameter is then used to specify the bitwidths of the
+input ports <code>in0</code> and <code>in1</code> as well as the bitwidth of the output port
+<code>sum</code>. Notice how we are also using this parameter along with the Verilog
+repeat operator to zero-extend <code>cin</code>.</p>
+<p>You can specify parameters using <code>#()</code> when you instantiate a module.
+Here is how we would instantiate a parameterized RTL adder as an
+eight-bit adder and connect its ports to wires.</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">adder_in0</span><span class="p">;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">adder_in1</span><span class="p">;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="kt">logic</span><span class="w">       </span><span class="n">adder_cin</span><span class="p">;</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="kt">logic</span><span class="w">       </span><span class="n">adder_cout</span><span class="p">;</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">adder_sum</span><span class="p">;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span><span class="n">Adder_RTL</span><span class="p">#(</span><span class="mh">8</span><span class="p">)</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">  </span><span class="p">(</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="p">.</span><span class="n">in0</span><span class="w">  </span><span class="p">(</span><span class="n">adder_in0</span><span class="p">),</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="p">.</span><span class="n">in1</span><span class="w">  </span><span class="p">(</span><span class="n">adder_in1</span><span class="p">),</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="p">.</span><span class="n">cin</span><span class="w">  </span><span class="p">(</span><span class="n">adder_cin</span><span class="p">),</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span><span class="p">.</span><span class="n">cout</span><span class="w"> </span><span class="p">(</span><span class="n">adder_cout</span><span class="p">),</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="p">.</span><span class="n">sum</span><span class="w">  </span><span class="p">(</span><span class="n">adder_sum</span><span class="p">)</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">  </span><span class="p">);</span>
+</span></code></pre></div>
+<h3 id="43-parameterized-rtl-register">4.3. Parameterized RTL Register</h3>
+<p>We have provided you the interface for a parameterized eight-bit register
+in <code>Register_RTL.v</code>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>module Register_RTL
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>#(
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  parameter p_width = 1
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>)(
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>  input  logic               clk,
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>  input  logic               rst,
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>  input  logic               en,
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>  input  logic [p_width-1:0] d,
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>  output logic [p_width-1:0] q
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>);
+</span></code></pre></div>
+<p>We have provided you a test bench in <code>Register_RTL-test.v</code>. Notice how
+the test bench instantiates this parameterized register as an eight-bit
+register.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>  Register_RTL#(8) register
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>  (
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    .clk (clk),
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    .rst (reset || dut_rst),
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    .en  (dut_en),
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    .d   (dut_d),
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    .q   (dut_q)
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>  );
+</span></code></pre></div>
+<p>You should be able to just copy your tests from your gate-level register
+and reuse them for your RTL register. You can run the test simulator for
+the register as follows.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec06/build
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>%<span class="w"> </span>make<span class="w"> </span>Register_RTL-test
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>%<span class="w"> </span>./Register_RTL-test
+</span></code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Activity 5: Implement and Test RTL Register</p>
+<p>Use what you have learned in Section 4.1 and 4.2 to create a Verilog
+hardware design that implements a parameterized register with reset
+and enable. You should have a single <code>always_ff</code> block with an
+if/else conditional operation to handle the reset and enable signals.
+Verify that your register is functionally correct.</p>
+</div>
+<h2 id="5-simple-counter">5. Simple Counter</h2>
+<p>We now want to implement the following simple counter.</p>
+<p><img alt="" src="../img/sec06-counter.png" /></p>
+<p>The counter has a single reset input signal which should reset the
+counter register to zero. The counter then simply counts up by one every
+cycle forever. If the counter reaches the maximum value (255) it just
+rolls over back to zero.</p>
+<p>We could definitely implement this simple counter using our 8-bit
+gate-level adders from lab 2, but let's stick with just using the RTL
+adder. We will experiment with using both the gate-level and RTL register
+developed in this discussion section.</p>
+<p>We have provided you a test bench with three test cases. Notice how we
+can use a loop to test roll over:</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="w">  </span><span class="k">task</span><span class="w"> </span><span class="n">test_case_2_directed_rollover</span><span class="p">();</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="n">t</span><span class="p">.</span><span class="n">test_case_begin</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;test_case_2_directed_rollover&quot;</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mh">275</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="w"> </span><span class="p">)</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">      </span><span class="n">check</span><span class="p">(</span><span class="w"> </span><span class="mh">0</span><span class="p">,</span><span class="w"> </span><span class="mh">8</span><span class="p">&#39;(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">  </span><span class="k">endtask</span>
+</span></code></pre></div>
+<p>You can run the test simulator for the simple counter as follows.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec06/build
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>%<span class="w"> </span>make<span class="w"> </span>SimpleCounter_RTL-test
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>%<span class="w"> </span>./SimpleCounter_RTL-test
+</span></code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Activity 6: Implement and Test Simple Counter</p>
+<p>Implement a simple counter by instantiating an eight-bit register and
+the RTL adder. Try using both the gate-level and the RTL register.
+Verify that both versions are functionally correct.</p>
+</div>
+<h2 id="6-clean-build">6. Clean Build</h2>
+<p>As a final step, do a clean build to verify everything is working
+correctly.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/sec06
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>%<span class="w"> </span>trash<span class="w"> </span>build
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>%<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>build
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>build
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>%<span class="w"> </span>../configure
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>%<span class="w"> </span>make<span class="w"> </span>check
+</span></code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Christopher Batten
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../js/extras.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/skins/default.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/wavedrom.min.js"></script>
+      
+        <script src="../js/wavedrom_loader.js"></script>
+      
+    
+  </body>
+</html>

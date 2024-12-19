@@ -1,0 +1,2061 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Christopher Batten">
+      
+      
+      
+        <link rel="prev" href="../ece2300-lab2-calc-fpga-report/">
+      
+      
+        <link rel="next" href="../ece2300-lab3cd-music/">
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Lab 3 (Parts A & B): Music-Player -- Implementation and Verification - ECE 2300 Digital Logic and Computer Organization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-3-parts-a-b-music-player-implementation-and-verification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-header__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECE 2300 Digital Logic and Computer Organization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 3 (Parts A & B): Music-Player -- Implementation and Verification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tut00-remote-access/" class="md-tabs__link">
+          
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-sec01-linux/" class="md-tabs__link">
+          
+  
+  Discussion Sections
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../ece2300-fpga-primer/" class="md-tabs__link">
+          
+  
+  Lab Assignments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tinyrv1-isa/" class="md-tabs__link">
+          
+  
+  Misc
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-nav__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ECE 2300 Digital Logic and Computer Organization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut00-remote-access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 0: ECE Linux Server Remote Access
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut02-git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 2: Git Distributed Version Control System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Discussion Sections
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Discussion Sections
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec02-verilog-gl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 2: Verilog Combinational Gate-Level Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec03-verilog-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 3: Verilog Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec04-lab2-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 4: Lab 2 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec05-verilog-rtl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 5: Verilog Combinational RTL Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec06-lab3-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 6: Lab 3 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec07-verilog-mem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 7: Verilog Memory Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Lab Assignments
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Lab Assignments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-fpga-primer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FPGA Development Primer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p1-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts A & B): Five-Bit Numeric Display -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p2-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts C & D): Five-Bit Numeric Display -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2p1-calc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts A & B): Two-Function Calculator -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2-calc-fpga-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts C & D): Two-Function Calculator -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts A & B): Music-Player -- Implementation and Verification
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts A & B): Music-Player -- Implementation and Verification
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-interface-and-implementation-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Interface and Implementation Specification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Interface and Implementation Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-latches-and-flip-flops" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1. Latches and Flip-Flops
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-multi-bit-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2. Multi-Bit Registers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-eight-bit-subtractor" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3. Eight-Bit Subtractor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-count-down-counters" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4. Count-Down Counters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-note-player" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5. Note Player
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-multi-note-player" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6. Multi-Note Player
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-music-player" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7. Music Player
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Testing Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Testing Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-basic-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. Basic Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-exhaustive-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. Exhaustive Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-directed-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3. Directed Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-random-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4. Random Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3. Simulator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-lab-code-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Lab Code Submission
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D): Music-Player -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-custom-song/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D) Optional Add-On: Custom Song
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ab-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts A, B, & C) TinyRV1 Processor -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4d-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Part D) TinyRV1 Processor -- FPGA Analysis/Prototyping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ef-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts E & F) TinyRV1 Processor -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Misc
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Misc
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tinyrv1-isa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TinyRV1 ISA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-interface-and-implementation-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Interface and Implementation Specification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Interface and Implementation Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-latches-and-flip-flops" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1. Latches and Flip-Flops
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-multi-bit-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2. Multi-Bit Registers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-eight-bit-subtractor" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3. Eight-Bit Subtractor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-count-down-counters" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4. Count-Down Counters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-note-player" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5. Note Player
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-multi-note-player" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6. Multi-Note Player
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-music-player" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7. Music Player
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Testing Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Testing Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-basic-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. Basic Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-exhaustive-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. Exhaustive Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-directed-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3. Directed Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-random-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4. Random Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3. Simulator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-lab-code-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Lab Code Submission
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="lab-3-parts-a-b-music-player-implementation-and-verification">Lab 3 (Parts A &amp; B): Music Player - Implementation and Verification</h1>
+<p>Lab 3 will give you experience designing, implementing, testing, and
+prototyping combinational <em>and</em> sequential logic using the Verilog
+hardware description language. The lab reinforces several lecture topics
+including sequential logic gates, finite-state machines (FSMs), and
+sequential building blocks. More specifically, the lab will give students
+experience with: latches, flip-flops, and registers; Moore and Mealy
+FSMs; and counters. The lab will continue to provide opportunities to
+leverage the three key abstraction principles: modularity, hierarchy, and
+regularity. The lab will also enable students to better understand the
+connection between simulation and prototyping.</p>
+<p>You will be implementing a music player that takes as input a song
+selection (via the switches) and a start song signal (via a push button).
+The music player will then play the chosen song by generating a square
+wave at appropriate note frequencies suitable for use with a
+piezoelectric buzzer. An idle signal is displayed using an LED so that
+user knows when the player is ready to play a new song. The music player
+will make use of the adders and muxes from Lab 2. The song selection and
+the current note are both displayed using seven-segment displays from Lab
+1.</p>
+<p>This lab also serves as a transition from lower-level gate-level (GL)
+modeling to higher-level register-transfer-level (RTL) modeling. Some of
+parts of your design will use explicit GL modeling or Boolean
+equations, while other parts of your design will use RTL modeling.
+Students will have a chance to appreciate how RTL modeling can improve
+productivity but with less control over the final hardware
+implementation.</p>
+<p>The lab includes four parts:</p>
+<ul>
+<li>Part A: Note Player Implementation and Verification</li>
+<li>Part B: Music Player Implementation and Verification</li>
+<li>Part C: Music Player FPGA Analysis and Prototyping</li>
+<li>Part D: Music Player Report</li>
+</ul>
+<p>Parts A and B are submitted by simply pushing the appropriate code to
+GitHub. Part A is due on Thursday, October 17 at 11:59pm. Part B is due
+on Thursday, October 24 at 11:59pm. <strong>Even though Part B does not need to
+be submitted on GitHub until Thursday, October 24, students still must
+have Part B completed before their lab session during the FPGA week in
+order to complete Part C!</strong> Students can use the time after their lab
+session to continue improving their code and verification quality. Part D
+is due three days after the student's assigned lab session. All parts
+must be done with your assigned lab partner. You can confirm your
+assigned partner on Canvas (Click on <em>People</em>, then <em>Groups</em>, then search
+for your name to find your lab group).</p>
+<p>This handout assumes that you have read and understand the course
+tutorials and that you have attended the discussion sections. To get
+started, use VS Code to log into an <code>ecelinux</code> server, source the setup
+script, and clone your individual remote repository from GitHub:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w"> </span>%<span class="w"> </span><span class="nb">source</span><span class="w"> </span>setup-ece2300.sh
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w"> </span>%<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w"> </span>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w"> </span>%<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:cornell-ece2300/groupXX
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w"> </span>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w"> </span>%<span class="w"> </span>tree
+</span></code></pre></div>
+<p>where <code>XX</code> should be replaced with your group number. You can both pull
+and push to your remote repository. If you have already cloned your
+remote repository, then use <code>git pull</code> to ensure you have any recent
+updates before working on your lab assignment.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="w"> </span>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w"> </span>%<span class="w"> </span>git<span class="w"> </span>pull
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w"> </span>%<span class="w"> </span>tree
+</span></code></pre></div>
+<p>Go ahead and create a build directory in the <code>lab3-music</code> directory for
+this lab, and run configure to generate a Makefile.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>% cd ${HOME}/ece2300/groupXX/lab3-music
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>% mkdir -p build
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>% cd build
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>% ../configure
+</span></code></pre></div>
+<p>Your repo contains the following files which are part of the automated
+build system:</p>
+<ul>
+<li><code>Makefile.in</code>: Makefile for the build system</li>
+<li><code>configure</code>: Configure script for the build system</li>
+<li><code>configure.ac</code>: Used to generate the configure script</li>
+<li><code>scripts</code>: Scripts used by the build system</li>
+</ul>
+<p>The following table shows all of the hardware modules you will be working
+with in Lab 3.</p>
+<p><img alt="" src="../img/lab3-hardware-module-table.png" /></p>
+<p>Before starting, you should copy over all of the listed hardware modules
+and the associated test benches for the seven-segment display from Lab 1
+and the eight-bit ripple-carry adder and multiplexors from Lab 2. Make
+sure all of these hardware modules pass all of your test cases.</p>
+<p>Lab 3 requires implementing and verifying 23 hardware modules. While
+this might seem like a daunting task, many of these hardware modules
+require less than five lines of Verilog code. For many of the test
+benches we provide students with a template so they need only enter the
+expected outputs. Test cases are reused across the GL and RTL versions of
+the same hardware module. <strong>Start from the D latch and systematically
+work your way down the table. Implement the GL and RTL versions at the
+same time. Never move on to the next row in the table until you have
+thoroughly tested the previous row.</strong></p>
+<p>Remember that GL implementations must be implemented using either explicit
+gate-level modeling or Boolean equations. For these designs, students are
+only allowed to use these Verilog constructs:</p>
+<ul>
+<li><code>wire</code>, <code>assign</code></li>
+<li><code>not</code>, <code>and</code>, <code>nand</code>, <code>or</code>, <code>nor</code>, <code>xor</code>, <code>xnor</code></li>
+<li><code>~</code>, <code>&amp;</code>, <code>|</code>, <code>^</code></li>
+<li><code>1'b0</code>, <code>1'b1</code>, <code>1'd0</code>, <code>1'd1</code>, and other literals</li>
+<li><code>{}</code> (concatenation operator)</li>
+<li><code>{N{}}</code> (repeat operator)</li>
+<li>module instantiation</li>
+</ul>
+<p>Hardware modules marked in the table as GL* must <em>only</em> use explicit
+gate-level modeling (i.e., you cannot use <code>~</code>, <code>&amp;</code>, <code>|</code>, <code>^</code>).</p>
+<p>RTL implementations can use all of the GL constructs in addition to the
+following Verilog constructs.</p>
+<ul>
+<li><code>logic</code></li>
+<li><code>+</code>, <code>-</code></li>
+<li><code>&gt;&gt;</code>, <code>&lt;&lt;</code>, <code>&gt;&gt;&gt;</code></li>
+<li><code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code></li>
+<li><code>&amp;&amp;</code>, <code>||</code>, <code>!</code></li>
+<li><code>&amp;</code>, <code>~&amp;</code>, <code>|</code>, <code>~|</code>, <code>^</code>, <code>^~</code> (reduction operators)</li>
+<li><code>?:</code> (ternary operator)</li>
+<li><code>always_comb</code>, <code>always_ff @(posedge clk)</code></li>
+<li><code>if</code>, <code>else if</code>, <code>endif</code></li>
+<li><code>case</code>, <code>default</code>, <code>endcase</code></li>
+</ul>
+<p>Note that some hardware modules have more specific restrictions; see the
+source comments for more details. Using unallowed Verilog constructs will
+result in significant penalties for code functionality and code quality.
+If you have any questions on what Verilog constructs can and cannot be
+used, please ask an instructor. There are no restrictions on Verilog
+constructs in test benches.</p>
+<p><strong>It is critical for students to work together to complete the lab
+assignment.</strong> It is unlikely one student can complete the entire lab on
+their own. A very productive approach is to have one student work on the
+design of a few hardware modules while the other student works on the
+test benches for those same hardware modules. Then work together to test
+and debug these modules. Then switch roles and move on the next few
+modules.</p>
+<h2 id="1-interface-and-implementation-specification">1. Interface and Implementation Specification</h2>
+<p>You will be implementing and composing a variety of combinational and
+sequential hardware modules including adders, muxes, latches, flip-flops,
+registers, subtractors, and counters; ultimately you will be composing
+these hardware modules to implement a music player. This section describe
+the required <em>interface</em> (i.e., the ports for the module and the module's
+functional behavior) before describing the required <em>implementation</em>
+(i.e., what goes inside the module) for each hardware module.</p>
+<h3 id="11-latches-and-flip-flops">1.1. Latches and Flip-Flops</h3>
+<p>You will need to implement a GL latch and three GL/RTL flip-flops:</p>
+<ul>
+<li><code>DLatch</code>: D latch (level high, transparent when clock is one)</li>
+<li><code>DFF</code>: D flip-flop (positive edge triggered)</li>
+<li><code>DFFR</code>: D flip-flop with reset signal</li>
+<li><code>DFFRE</code>: D flip-flop with reset and enable signals</li>
+</ul>
+<p>You should consult the lecture notes for the GL implementation of these
+latches and flip-flops. You just need to directly map the implementation
+from the lecture notes using explicit gate-level modeling. <strong>Do not use
+Boolean equations when implementing these latches and flip-flops!</strong></p>
+<p>Recall from the discussion sections that we will need to make use of an
+<code>always_ff</code> block for RTL modeling of sequential logic. Here is an
+example of how to implement a D flip-flop using an <code>always_ff</code> block:</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="w"> </span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="n">q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">d</span><span class="p">;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="k">end</span>
+</span></code></pre></div>
+<p>This <code>always_ff</code> block will execute on the positive edge (<code>posedge</code>) of
+the clock signal (<code>clk</code>). We are using a special non-blocking assignment
+(<code>&lt;=</code>) which is meant to be used in <code>always_ff</code> blocks. The semantics of
+a non-block assignment are: (1) right before the rising edge, the
+right-hand side of every non-blocking assignment in the entire design is
+evaluated and the result is saved; (2) right after the rising edge, the
+saved values are assigned to the signal on the left-hand side. This
+enables us to model flip-flops.</p>
+<p>Note that this the <em>only</em> form of an <code>always_ff</code> block you are allowed to
+use in this course. You are not allowed to use <code>negedge</code> and you are not
+allowed to trigger an <code>always_ff</code> with any other signals (e.g., in this
+course, you are not allowed to include reset (<code>rst</code>) in the sensitivity
+list for an <code>always_ff</code>).</p>
+<p>You can use other RTL operations within an <code>always_ff</code> block. For
+example, you can use an if/else conditional operation within an
+<code>always_ff</code> block to model a D flip-flop with a (synchronous) reset
+signal:</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="w"> </span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">rst</span><span class="w"> </span><span class="p">)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">      </span><span class="n">q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="k">else</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">      </span><span class="n">q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">d</span><span class="p">;</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="k">end</span>
+</span></code></pre></div>
+<p>Note that in this course we will only allow using an <code>always_ff</code> block in
+very specific modules. Namely within the implementation of single-bit
+flip-flops (i.e., <code>DFF_RTL</code>, <code>DFFR_RTL</code>, <code>DFFRE_RTL</code>) and within the
+implementation of the multi-bit registers (e.g., <code>Register_8b_RTL</code>,
+<code>Register_16b_RTL</code>). Students are not allowed to use an <code>always_ff</code>
+anywhere else in their hardware designs. If a hardware design needs
+sequential logic, then the design should instantiate one of these
+single-bit flip-flops or multi-bit registers. This restriction is
+critical to enabling new Verilog designers to know exactly what hardware
+is being implemented. Arbitrarily using <code>always_ff</code> blocks can quickly
+lead to incredibly complicated hardware models with no hope of
+understanding what hardware we are actually implementing.</p>
+<p>Once you have finished implementing all of the latches and flip-flops,
+take a minute to appreciate the relationship between the GL and RTL
+implementations. The RTL implementations are just a different way of
+modeling the hardware within the GL implementation. The FPGA tools will
+synthesize the RTL implementation into hardware very similar to what is
+in the GL implementation.</p>
+<h3 id="12-multi-bit-registers">1.2. Multi-Bit Registers</h3>
+<p>As discussed in lecture, we can create a GL multi-bit register by simply
+instantiating a number of GL flip-flops in parallel. The data input (<code>d</code>)
+and data output (<code>q</code>) of each flip-flop should be connected to their
+corresponding bit of the register's multi-bit input and output ports. The
+clock, reset, and enable signals should be connected to each flip-flop.
+We need an GL eight-bit register for use in the GL count-down counter.</p>
+<p>For RTL multi-bit registers there is no need to instantiate a number of
+RTL flip-flops. We can instead model a multi-bit register using a single
+<code>always_ff</code> block. A single non-blocking assignment can be used to assign
+the multi-bit input to the multi-bit output on the rising edge of the
+clock. We need RTL eight-bit and 16-bit registers for use in various more
+complex RTL hardware modules.</p>
+<h3 id="13-eight-bit-subtractor">1.3. Eight-Bit Subtractor</h3>
+<p>We need a GL eight-bit subtractor to implement the count-down counter.
+Our subtractor will represent negative numbers using the two's complement
+number system, which means we can efficiently implement a two's
+complement subtractor using the same eight-bit ripple-carry adder you
+developed in Lab 2. Our subtractor does not need a carry input nor a carry
+output.</p>
+<h3 id="14-count-down-counters">1.4. Count-Down Counters</h3>
+<p>The count-down counter has the following interface:</p>
+<p><img alt="" src="../img/lab3-counter.png" /></p>
+<p>The reset input (<code>rst</code>) should reset the internal counter to zero. When
+the load input (<code>load</code>) is high, then the counter should load the value
+on the input (<code>in</code>) into the internal counter.</p>
+<p>When <code>load</code> is not high (no new value is being loaded), the counter
+should decrement by one every cycle until it reaches zero, at which point
+the done output (<code>done</code>) should be set to one. Once the counter is done,
+it should no longer decrement until a new value is loaded.</p>
+<p>The input (<code>in</code>) must be positive. Since we are using a two's complement
+number representation, the maximum allowed value for the input is 127.</p>
+<p>Here is a trace of the expected output when counting down from three.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>cyc  rst load in        in     count    count done
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  0: 0   0    00000000 (  0) &gt; 00000000 (  0) 1
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  1: 0   1    00000011 (  3) &gt; 00000000 (  0) 1
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  2: 0   0    00000000 (  0) &gt; 00000011 (  3) 0
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  3: 0   0    00000000 (  0) &gt; 00000010 (  2) 0
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  4: 0   0    00000000 (  0) &gt; 00000001 (  1) 0
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  5: 0   0    00000000 (  0) &gt; 00000000 (  0) 1
+</span></code></pre></div>
+<p>Pay careful attention to the exact cycle the output count is set to
+three and the exact cycle the done signal is set to one. Your counter
+must produce the exact same cycle-level behavior.</p>
+<p>You are responsible for designing your own GL eight-bit counter that
+meets this specification. Your GL implementation <em>must</em> make use of the
+GL muxes, GL registers, and GL subtractor. Do <em>not</em> put any logic on the
+reset signal. The reset signal should be directly attached to the reset
+input port of the register without any logic. Do <em>not</em> put any logic on
+the clock. The clock signal should be directly attached to the clock
+input port of the register without any logic. Start by drawing a
+block-level diagram. You will need to show this diagram in lab for Part C
+and include this diagram in the report for Part D.</p>
+<p>You are also responsible for designing your own RTL eight-bit and 16-bit
+counters that meet this specification. Your RTL counters <em>must</em>
+explicitly instantiate an RTL register for the sequential logic, and then
+use a single <code>always_comb</code> block for your combinational logic. You cannot
+directly use an <code>always_ff</code> block in your RTL counter. You <em>must</em>
+explicitly instantiate an RTL register. Do <em>not</em> put any logic on the
+reset signal. The reset signal should be directly attached to the reset
+input port of the register without any logic. Do <em>not</em> put any logic on
+the clock. The counters are examples of <em>flat</em> RTL modules, since they do
+not instantiate any hardware modules other than the a register.</p>
+<h3 id="15-note-player">1.5. Note Player</h3>
+<p>The note player generates a square wave at a given frequency forever. It
+includes a control unit and a count-down counter.</p>
+<p><img alt="" src="../img/lab3-note-player.png" /></p>
+<p>The clock and reset signals are not shown in the above block diagram. The
+period is provided as an input port and is assumed to never change after
+reset. The control unit should be implemented using the following
+five-state Moore FSM.</p>
+<p><img alt="" src="../img/lab3-note-player-fsm.png" /></p>
+<p>The outputs are specified in each state: cl stands for <code>count_load</code> and n
+stands for <code>note</code>. The FSM must use the following state encoding:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a> State      Encoding
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>---------------------
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a> RESET      4&#39;b0000
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a> LOAD_HIGH  4&#39;b1000
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a> WAIT_HIGH  4&#39;b0100
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a> LOAD_LOW   4&#39;b0010
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a> WAIT_LOW   4&#39;b0001
+</span></code></pre></div>
+<p>In the LOAD_HIGH state, the FSM should load the period into the
+count-down counter, set the note output to be high, and move into the
+WAIT_HIGH. In the WAIT_HIGH state, the FSM should continue to set the note
+output to be high. Once the counter is done, the FSM should move into the
+LOAD_LOW state. In the LOAD_LOW state, the FSM should load the period
+into the count-down counter, set the note output to be low, and move
+into the WAIT_LOW. In the WAIT_LOW state, the FSM should continue to set
+the note output to be low. Once the counter is again done, the FSM should
+move back to the LOAD_HIGH state to repeat the sequence.</p>
+<p>Here is a trace of the expected output when the period is five.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>cyc  rst period     state state      note
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>------------------------------------------
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  0: 0   00000101 &gt; 0000 (RESET    ) 0
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  1: 0   00000101 &gt; 1000 (LOAD_HIGH) 1
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  2: 0   00000101 &gt; 0100 (WAIT_HIGH) 1
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  3: 0   00000101 &gt; 0100 (WAIT_HIGH) 1
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>  4: 0   00000101 &gt; 0100 (WAIT_HIGH) 1
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>  5: 0   00000101 &gt; 0100 (WAIT_HIGH) 1
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>  6: 0   00000101 &gt; 0100 (WAIT_HIGH) 1
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>  7: 0   00000101 &gt; 0100 (WAIT_HIGH) 1
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>  8: 0   00000101 &gt; 0010 (LOAD_LOW ) 0
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>  9: 0   00000101 &gt; 0001 (WAIT_LOW ) 0
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a> 10: 0   00000101 &gt; 0001 (WAIT_LOW ) 0
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a> 11: 0   00000101 &gt; 0001 (WAIT_LOW ) 0
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a> 12: 0   00000101 &gt; 0001 (WAIT_LOW ) 0
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a> 13: 0   00000101 &gt; 0001 (WAIT_LOW ) 0
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a> 14: 0   00000101 &gt; 0001 (WAIT_LOW ) 0
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a> 15: 0   00000101 &gt; 1000 (LOAD_HIGH) 1
+</span></code></pre></div>
+<p>Pay careful attention to the exact cycle of each state transition and the
+exact cycles the note is high and low. When you load the count-down
+counter with the value five it will be zero on the sixth cycle. Your note
+player must produce the exact same cycle-level behavior.</p>
+<p>The GL version of the note player control unit should instantiate
+four <code>DFFRE_GL</code> modules to store the four-bit FSM state. The next state
+combinational logic and output combinational logic should be implemented
+using Boolean equations. The GL version of the note player just composes
+the GL note player control unit with the GL count-down counter.</p>
+<p>The RTL version of the note player control unit should instantiate four
+<code>DFFRE_RTL</code> modules to store the four-bit FSM state. The next state
+combinational logic should be implemented using a single, dedicated
+<code>always_comb</code> block. The output combinational logic should be implemented
+using a separate <code>always_comb</code> block. The control unit is an example of a
+<em>flat</em> RTL module, since it does not instantiate any hardware modules
+other than the flip-flops. The RTL version of the note player just
+composes the RTL note player control unit with the RTL count-down
+counter.</p>
+<h3 id="16-multi-note-player">1.6. Multi-Note Player</h3>
+<p>The multi-note player can produce one of seven notes or a rest for a
+specified duration by composing a counter, mux, register, and seven note
+players.</p>
+<p><img alt="" src="../img/lab3-multi-note-player.png" /></p>
+<p>The clock and reset signals are not shown in the above block diagram. The
+periods are provided as an input ports and are assumed to never change
+after reset. We will only be implementing an RTL version of the
+multi-note player, and so we will use the RTL version of each of these
+hardware modules. This is an example of <em>structural</em> RTL, since it does
+not directly include any <code>always_comb</code> blocks and instead just
+instantiates other RTL modules.</p>
+<p>To play a note using the multi-note player, the <code>play_note</code> input is set
+to the desired note (i.e., which of the seven note period inputs to use),
+the <code>play_duration</code> input is set to the desired duration, and the
+<code>play_load</code> input is set high for one cycle. The desired note is produced
+on the <code>note</code> output and when the duration is done the <code>play_done</code> output
+is set high. The <code>note_sel</code> output is provided for debugging.</p>
+<p>Note that when the note select (<code>note_sel</code>) is zero, then the multi-note
+player should produce a rest (i.e., the note should stay low). You will
+need to implement a RTL eight-bit 2-to-1 multiplexor and a RTL one-bit
+8-to-1 multiplexor. Once these are implemented and tested you can compose
+them with your RTL eight-bit count-down counter and your RTL note
+players.</p>
+<h3 id="17-music-player">1.7. Music Player</h3>
+<p>The music player plays a song stored in memory. It includes a control
+unit and a multi-note player.</p>
+<p><img alt="" src="../img/lab3-music-player.png" /></p>
+<p>The clock and reset signals are not shown in the above block diagram. The
+periods are provided as an input ports and are assumed to never change
+after reset. We will only be implementing an RTL version of the music
+player. The music player control unit will include a Mealy FSM which
+should be implemented using <em>flat</em> RTL.</p>
+<p>Songs are stored in memory as a sequence of notes. The memory is arranged
+as 64K 4-byte words. The memory interface has a memory request valid
+port (<code>memreq_val</code>) and a memory address port (<code>memreq_addr</code>). The memory
+address is a <em>byte</em> address. To read a value from memory, we need to set
+the memory address to the desired byte address and set the memory request
+valid signal high. The data will be returned <em>combinationally</em> (i.e., on
+that same cycle) on the <code>memresp_data</code> port.</p>
+<p>Our music payer can play songs with up to seven notes and a rest. Each
+note is stored in one 4-byte word using the following encoding:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a> NOTE      Encoding
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>------------------------
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a> REST      32&#39;h00000000
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a> NOTE_G    32&#39;h00000001
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a> NOTE_A    32&#39;h00000002
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a> NOTE_B    32&#39;h00000003
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a> NOTE_C    32&#39;h00000004
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a> NOTE_D    32&#39;h00000005
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a> NOTE_E    32&#39;h00000006
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a> NOTE_F    32&#39;h00000007
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a> SONG_END  32&#39;hffffffff
+</span></code></pre></div>
+<p>Each song can have a maximum of 128 notes. The value <code>32'hFFFF_FFFF</code>
+(i.e., all ones) is used to indicate the end of a song. The music player
+can play up to 32 songs; so the music player will only use <span class="arithmatex">\(32 \text{
+songs} \cdot \frac{128 \text{ notes}}{\text{song}} \cdot
+\frac{4B}{\text{note}} = 16KB\)</span> of storage. The song <em>memory map</em> (i.e.,
+how the songs are arranged in memory) looks like this:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a> address song note
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>-------------------
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a> 0x0000  0    0    start of song 0
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a> 0x0004  0    1
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a> 0x0008  0    2
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a> ...
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a> 0x01fc  0    127
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a> 0x0200  1    0    start of song 1
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a> 0x0204  1    1
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a> 0x0204  1    1
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a> ...
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a> 0x03fc  1    127
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a> 0x0400  2    0    start of song 2
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a> ...
+</span></code></pre></div>
+<p>The control unit will need its own memory address counter to keep track
+of the memory address of the note we are currently playing. This counter
+is initialized using the song select input (<code>song_sel</code>). From the above
+memory map, we can see that the starting memory address for a song is
+just:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>  { 2&#39;b0, song_sel, 9&#39;b0 }
+</span></code></pre></div>
+<p>The counter will then need to increment this memory by four (because we
+are using memory byte addresses and each note is four bytes) so the music
+player can read the next note. This counter should be implemented by
+instantiating a register and then using <em>flat</em> combinational logic within
+the music player. You cannot use your previously developed counter since
+you need to increment by four each time.</p>
+<p>The control unit should be implemented using the following four-state
+Mealy FSM.</p>
+<p><img alt="" src="../img/lab3-music-player-fsm.png" /></p>
+<p>The FSM must use the following state encoding:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a> State      Encoding
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>---------------------
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a> RESET      2&#39;b00
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a> IDLE       2&#39;b01
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a> SET_NOTE   2&#39;b10
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a> WAIT_NOTE  2&#39;b11
+</span></code></pre></div>
+<p>In the IDLE state, the music player should initialize the memory address
+counter to the desired song using the song select input (<code>song_sel</code>),
+wait until start song is high, and then move into the SET_NOTE state. In
+the SET_NOTE state, the FSM should read the next note from memory by
+using the address from the memory address counter and setting the memory
+request valid signal high. Since the memory is combinational, the
+SET_NOTE state should also handle the memory response. If the note read
+from memory is SONG_END, then the FSM should return to the IDLE state.
+Otherwise, the FSM should set the control signals for the multi-note
+player appropriately, increment the memory address counter, and move into
+the WAIT_NOTE state. In the WAIT_NOTE state, the FSM should wait until
+the multi-note player is done before moving back into the SET_NOTE state
+to read the next note from memory.</p>
+<p>We recommend taking an incremental approach as opposed to just
+implementing the entire FSM and counter at once. Start by implementing
+just implementing the FSM without support for playing more than one note
+nor support for playing more than one song. Have your FSM go from RESET,
+to IDLE, to SET_NOTE, to WAIT_NOTE and just stay in WAIT_NOTE forever.
+Get this working and look at the trace and waveforms to confirm that your
+FSM is moving through the states correctly and setting the control
+signals for the multi-note player correctly. Then incrementally add
+support for moving from WAIT_NOTE back to SET_NOTE but without a counter.
+This should just play the same note over and over. Once this is working,
+incrementally add support for the counter. Once this is working,
+incrementally add support for moving from SET_NOTE back to IDLE and being
+able to play more than one song.</p>
+<h2 id="2-testing-strategy">2. Testing Strategy</h2>
+<p>You are responsible for developing an effective testing strategy to
+ensure all implementations are correct. Writing tests is one of the most
+important and challenging aspects of designing hardware. Hardware
+engineers often spend far more time implementing tests than they do
+implementing the actual hardware design.</p>
+<h3 id="21-basic-testing">2.1. Basic Testing</h3>
+<p>We will be using the same lightweight testing framework from the previous
+labs. For each hardware module, we provide a test bench for you to use
+along with one basic test case. We will be using the same automated build
+system from Lab 2 to simplify linting, compiling, and running tests. You
+can run the basic tests for all hardware modules using the generated
+<code>Makefile</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab3-music/build
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>%<span class="w"> </span>make<span class="w"> </span>check
+</span></code></pre></div>
+<p>You can also build and run a single test simulator.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab3-music/build
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>%<span class="w"> </span>make<span class="w"> </span>DLatch_GL-test
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>%<span class="w"> </span>./DLatch_GL-test
+</span></code></pre></div>
+<p>You can specify which specific test case to run on the command line and
+also dump waveforms that can be viewed using Surfer.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab3-music/build
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>%<span class="w"> </span>make<span class="w"> </span>DLatch_GL-test
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>%<span class="w"> </span>./DLatch_GL-test<span class="w"> </span>+test-case<span class="o">=</span><span class="m">1</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>%<span class="w"> </span>./DLatch_GL-test<span class="w"> </span>+test-case<span class="o">=</span><span class="m">1</span><span class="w"> </span>+dump-vcd<span class="o">=</span>waves.vcd
+</span></code></pre></div>
+<h3 id="22-exhaustive-testing">2.2. Exhaustive Testing</h3>
+<p>The following test benches are for hardware modules with a limited
+number of inputs, and thus you can (and should) use exhaustive testing:</p>
+<ul>
+<li><code>DLatch_GL-test.v</code></li>
+<li><code>DFF_GL-test.v</code>, <code>DFF_RTL-test.v</code></li>
+</ul>
+<p>We provide test case templates for these test benches so all you need to
+do is fill in the expected output. You do not need to add any more test
+cases. Notice that <code>DFF_GL</code> and <code>DFF_RTL</code> have the exact same interface
+and thus will use the exact same test cases. We have refactored the test
+cases for these hardware modules into <code>DFF-test-cases.v</code> and then
+included these test cases in <code>DFF_GL-test.v</code> and <code>DFF_RTL-test.v</code>. This
+way we only need to write the test cases once.</p>
+<h3 id="23-directed-testing">2.3. Directed Testing</h3>
+<p>The remaining hardware modules all have many more inputs and thus would
+required hundreds or even thousands of checks to implement exhaustive
+testing. So for the remaining hardware modules you can use directed
+testing to check for specific corner cases.</p>
+<p>We provide test case templates for the following test benches so all you
+need to do is fill in the expected output. You do not need to add any
+more test cases.</p>
+<ul>
+<li><code>DFFR_GL-test.v</code>, <code>DFFR_RTL-test.v</code></li>
+<li><code>DFFRE_GL-test.v</code>, <code>DFFRE_RTL-test.v</code></li>
+<li><code>Register_8b_GL-test.v</code>, <code>Register_8b_RTL-test.v</code></li>
+<li><code>Register_16b_RTL-test.v</code></li>
+</ul>
+<p>For some of these these we have again refactored the test cases for these
+hardware modules into a separate <code>-test-cases.v</code> file. You must write
+your own directed test cases for the following test benches:</p>
+<ul>
+<li><code>Subtractor_8b_GL-test.v</code></li>
+<li><code>Counter_8b_GL-test.v</code>, <code>Counter_8b_RTL-test.v</code>, <code>Counter_16b_RTL-test.v</code></li>
+<li><code>Mux2_8b_RTL-test.v</code>, <code>Mux8_1b_RTL-test.v</code></li>
+<li><code>NotePlayerCtrl_GL-test.v</code>, <code>NotePlayerCtrl_RTL-test.v</code></li>
+<li><code>NotePlayer_GL-test.v</code>,<code>NotePlayer_RTL_RTL-test.v</code></li>
+<li><code>MultiNotePlayer_RTL-test.v</code></li>
+</ul>
+<p>You do not need to unit test <code>MusicPlayerCtrl_RTL</code> and we provide you
+tests for <code>MusicPlayer_RTL</code>.</p>
+<p>Remember, each directed test case should focus on testing a very specific
+kind of functionality and they should contain 2-10 checks. Be sure to add
+your tests cases to the list in the <code>initial</code> block and to check the
+output of the test simulator to confirm that your directed test cases are
+running and testing what you expect them to. Consider purposefully
+inserting a bug in your designs to see if your directed test cases will
+catch the bug.</p>
+<h3 id="24-random-testing">2.4. Random Testing</h3>
+<p>Directed testing is useful for testing the known unknowns, but what about
+the unknown unknowns? How should we test for corner cases we have not
+even thought of yet? Random testing can help increase our testing
+coverage and increase our confident that our hardware design is
+functionally correct. You should implement one random test case for each
+of the following hardware modules:</p>
+<ul>
+<li><code>Subtractor_8b_GL-test.v</code></li>
+<li><code>Counter_8b_GL-test.v</code>, <code>Counter_8b_RTL-test.v</code>, <code>Counter_16b_RTL-test.v</code></li>
+<li><code>Mux2_8b_RTL-test.v</code>, <code>Mux8_1b_RTL-test.v</code></li>
+<li><code>NotePlayer_GL-test.v</code>,<code>NotePlayer_RTL_RTL-test.v</code></li>
+</ul>
+<p>Random test cases should include a for loop. Each iteration should: (1)
+generate random input values; (2) use Verilog test code to
+programmatically determine the correct output values; and (3) use the
+<code>check</code> task to ensure the design-under-test produces the correct outputs
+give the corresponding random inputs.</p>
+<h3 id="23-simulator">2.3. Simulator</h3>
+<p>We have provided you four simulator which will emulate the FPGA prototype
+you will be demoing in Part C of the lab. After finishing implementing
+and thoroughly testing your RTL counter, you can build and run the
+simulator for the counter like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab3-music/build
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>%<span class="w"> </span>make<span class="w"> </span>counter-sim
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>%<span class="w"> </span>./counter-sim<span class="w"> </span>+switches<span class="o">=</span><span class="m">00111</span>
+</span></code></pre></div>
+<p>The switches are connected to the counter input. The counter simulator
+will display the input and the output of the count-down counter by
+showing what the six seven segment displays would look like on the FPGA
+prototype. You can press enter to emulate the clock toggling.</p>
+<p>After finishing implementing and thoroughly testing your RTL note
+player, you can build and run the simulator for the note player like
+this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>%<span class="w"> </span>make<span class="w"> </span>note-player-sim
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>%<span class="w"> </span>./note-player-sim<span class="w"> </span>+switches<span class="o">=</span>0100_0100
+</span></code></pre></div>
+<p>The switches will set the period of the note player. Here is a table
+showing the mapping from inputs to notes.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>                   period period    freq
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>switches  hex  dec (cycs)   (ms)    (Hz) note
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>0111_1011 0x7b 123    250   5.12  195.31 G3
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>0110_1101 0x6d 109    222   4.55  219.95 A3
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>0110_0001 0x61  97    198   4.06  246.61 B3
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>0101_1011 0x5b  91    186   3.81  262.52 C4
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>0101_0001 0x51  81    166   3.40  294.15 D4
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>0100_1000 0x48  72    148   3.03  329.92 E4
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>0100_0100 0x44  68    140   2.87  348.77 F4
+</span></code></pre></div>
+<p>The simulator will generate a VCD file that you can then open using
+Surfer to look at the note output waveform. You can measure period
+between rising edges of the note output to verify that the note player is
+indeed generating the note at the proper frequency. For example, this is
+what the output looks like when setting the switches to 0100_0100. The
+period is 2.86ms which is 348Hz or the note F4. Try other notes!</p>
+<p><img alt="" src="../img/lab3-note-player-sim.png" /></p>
+<p>After finishing implementing and thoroughly testing your RTL multi-note
+player, you can build and run the simulator for the multi-note player
+like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>%<span class="w"> </span>make<span class="w"> </span>multi-note-player-sim
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>%<span class="w"> </span>./multi-note-player-sim<span class="w"> </span>+switches<span class="o">=</span><span class="m">111</span>
+</span></code></pre></div>
+<p>The switches now select which note to play according to the following
+table.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>             period period    freq
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>sw  hex  dec (cycs)   (ms)    (Hz) note
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>000                                rest
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>001 0x7b 123    250   5.12  195.31 G3
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>010 0x6d 109    222   4.55  219.95 A3
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>011 0x61  97    198   4.06  246.61 B3
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>100 0x5b  91    186   3.81  262.52 C4
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>101 0x51  81    166   3.40  294.15 D4
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>110 0x48  72    148   3.03  329.92 E4
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>111 0x44  68    140   2.87  348.77 F4
+</span></code></pre></div>
+<p>This simulator will also generate a VCD file that you can then open using
+Surfer to look at the note output waveform. Try selecting different notes
+and verifying that the period is as expected.</p>
+<p>After finishing implementing and thoroughly testing your RTL music
+player, you can build and run the simulator for the music player like
+this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>%<span class="w"> </span>make<span class="w"> </span>music-player-sim
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>%<span class="w"> </span>./music-player-sim<span class="w"> </span>+switches<span class="o">=</span><span class="m">001</span>
+</span></code></pre></div>
+<p>The switches now select which song to play. Here is what the output looks
+like for song 1. You will figure out which song this is in Part C of the
+lab.</p>
+<p><img alt="" src="../img/lab3-music-player-sim.png" /></p>
+<h2 id="3-lab-code-submission">3. Lab Code Submission</h2>
+<p>Your code quality score will be based on the way you format the text in
+your source files, proper use of comments, deletion of instructor
+comments, and uploading the correct files to GitHub (only source files
+should be uploaded, no generated build files). <strong>Note that students must
+remove unnecessary comments that are provided by instructors in the code
+distributed to students. Students must not commit executable binaries or
+any other unnecessary files.</strong></p>
+<p>To submit your code you simply upload it to GitHub. Your design code will
+be assessed both in terms of functionality and code quality. Your
+functionality score will be determined by running your code against a
+series of tests developed by the instructors to test its correctness.
+Your test bench code will also be assessed both in terms of verification
+quality and code quality. Here is how we will be testing your code
+submission for Lab 3 (Part A):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>%<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/submissions
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/submissions
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>%<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:cornell-ece2300/groupXX
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/submissions/groupXX/lab3-music
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>%<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>build
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>build
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>%<span class="w"> </span>../configure
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>%<span class="w"> </span>make<span class="w"> </span>check-partA
+</span></code></pre></div>
+<p>Here is how we will be testing your code submission for Lab 3 (Part B):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>%<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/submissions
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/submissions
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>%<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:cornell-ece2300/groupXX
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/submissions/groupXX/lab3-music
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>%<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>build
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>build
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>%<span class="w"> </span>../configure
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>%<span class="w"> </span>make<span class="w"> </span>check-partB
+</span></code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Christopher Batten
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../js/extras.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/skins/default.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/wavedrom.min.js"></script>
+      
+        <script src="../js/wavedrom_loader.js"></script>
+      
+    
+  </body>
+</html>

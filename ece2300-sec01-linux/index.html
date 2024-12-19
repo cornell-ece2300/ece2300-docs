@@ -1,0 +1,2050 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Christopher Batten">
+      
+      
+      
+        <link rel="prev" href="../ece2300-tut02-git/">
+      
+      
+        <link rel="next" href="../ece2300-sec02-verilog-gl/">
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Section 1: Linux Development Environment - ECE 2300 Digital Logic and Computer Organization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-1-linux-development-environment" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-header__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECE 2300 Digital Logic and Computer Organization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Section 1: Linux Development Environment
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tut00-remote-access/" class="md-tabs__link">
+          
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  Discussion Sections
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-fpga-primer/" class="md-tabs__link">
+          
+  
+  Lab Assignments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tinyrv1-isa/" class="md-tabs__link">
+          
+  
+  Misc
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-nav__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ECE 2300 Digital Logic and Computer Organization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut00-remote-access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 0: ECE Linux Server Remote Access
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut02-git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 2: Git Distributed Version Control System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Discussion Sections
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Discussion Sections
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Section 1: Linux Development Environment
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Section 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-logging-into-ecelinux-with-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Logging Into ecelinux with PowerShell
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Logging Into ecelinux with PowerShell">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-logging-into-ecelinux-servers-with-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1. Logging into ecelinux Servers with PowerShell
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-using-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2. Using PowerShell
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-logging-into-ecelinux-with-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Logging Into ecelinux with VS Code
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Logging Into ecelinux with VS Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-logging-into-ecelinux-servers-with-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. Logging into ecelinux Servers with VS Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-using-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. Using VS Code
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-linux-command-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Linux Command Line
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Linux Command Line">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-hello-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Hello World
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-manual-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. Manual Pages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-create-view-and-list-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3. Create, View, and List Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-create-change-and-list-directories" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4. Create, Change, and List Directories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-copy-move-and-remove-files-and-directories" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5. Copy, Move, and Remove Files and Directories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-using-vs-code-to-work-with-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6. Using VS Code to Work with Files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-github-account-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. GitHub Account Setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-git-version-control-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Git Version Control System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Git Version Control System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-fork-and-clone-a-repo-from-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1. Fork and Clone a Repo from GitHub
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-adding-and-committing-files-to-local-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2. Adding and Committing Files to Local Repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-pushing-files-to-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3. Pushing Files to GitHub
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-pulling-files-from-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4. Pulling Files from GitHub
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-to-do-on-your-own" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. To-Do On Your Own
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec02-verilog-gl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 2: Verilog Combinational Gate-Level Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec03-verilog-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 3: Verilog Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec04-lab2-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 4: Lab 2 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec05-verilog-rtl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 5: Verilog Combinational RTL Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec06-lab3-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 6: Lab 3 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec07-verilog-mem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 7: Verilog Memory Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lab Assignments
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Lab Assignments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-fpga-primer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FPGA Development Primer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p1-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts A & B): Five-Bit Numeric Display -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p2-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts C & D): Five-Bit Numeric Display -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2p1-calc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts A & B): Two-Function Calculator -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2-calc-fpga-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts C & D): Two-Function Calculator -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3ab-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts A & B): Music-Player -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D): Music-Player -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-custom-song/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D) Optional Add-On: Custom Song
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ab-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts A, B, & C) TinyRV1 Processor -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4d-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Part D) TinyRV1 Processor -- FPGA Analysis/Prototyping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ef-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts E & F) TinyRV1 Processor -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Misc
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Misc
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tinyrv1-isa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TinyRV1 ISA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-logging-into-ecelinux-with-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Logging Into ecelinux with PowerShell
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Logging Into ecelinux with PowerShell">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-logging-into-ecelinux-servers-with-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1. Logging into ecelinux Servers with PowerShell
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-using-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2. Using PowerShell
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-logging-into-ecelinux-with-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Logging Into ecelinux with VS Code
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Logging Into ecelinux with VS Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-logging-into-ecelinux-servers-with-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. Logging into ecelinux Servers with VS Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-using-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. Using VS Code
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-linux-command-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Linux Command Line
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Linux Command Line">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-hello-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Hello World
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-manual-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. Manual Pages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-create-view-and-list-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3. Create, View, and List Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-create-change-and-list-directories" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4. Create, Change, and List Directories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-copy-move-and-remove-files-and-directories" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5. Copy, Move, and Remove Files and Directories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-using-vs-code-to-work-with-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6. Using VS Code to Work with Files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-github-account-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. GitHub Account Setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-git-version-control-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Git Version Control System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Git Version Control System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-fork-and-clone-a-repo-from-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1. Fork and Clone a Repo from GitHub
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-adding-and-committing-files-to-local-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2. Adding and Committing Files to Local Repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-pushing-files-to-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3. Pushing Files to GitHub
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-pulling-files-from-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4. Pulling Files from GitHub
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-to-do-on-your-own" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. To-Do On Your Own
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="section-1-linux-development-environment">Section 1: Linux Development Environment</h1>
+<p>This discussion section serves as gentle introduction to the basics of
+using the Linux development environment on the <code>ecelinux</code> servers. We
+will be using the <code>ecelinux</code> servers for all of the lab assignments. The
+<code>ecelinux</code> servers all run the Red Hat Enterprise Linux 8 operating
+system, and they all use an identical setup. Linux is the operating
+system of choice for hardware design, so becoming familiar with Linux
+will pay dividends beyond just this course. In the discussion section, we
+will learn how to log into the servers using PowerShell, how to log into
+the servers using VS Code, how to work at the Linux command line, and how
+to use Git version control.</p>
+<h2 id="1-logging-into-ecelinux-with-powershell">1. Logging Into ecelinux with PowerShell</h2>
+<p>We will start by using PowerShell to log into the <code>ecelinux</code> servers.
+Although most of the time you will be using VS Code to log into the
+<code>ecelinux</code> servers, you may occassionally need to use PowerShell (or Mac
+Terminal if you are using a Mac OS X) if VS Code stops working.</p>
+<h3 id="11-logging-into-ecelinux-servers-with-powershell">1.1. Logging into <code>ecelinux</code> Servers with PowerShell</h3>
+<p>To start PowerShell click the <em>Start</em> menu then search for <em>Windows
+PowerShell</em>. After starting PowerShell, type in the following command at
+the prompt to log into the ecelinux servers using SSH.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>%<span class="w"> </span>ssh<span class="w"> </span>netid@ecelinux.ece.cornell.edu
+</span></code></pre></div>
+<p>Replace netid with your Cornell NetID in the command above. You should
+not enter the <code>%</code> character. We use the <code>%</code> character to indicate what
+commands we should enter on the command line. Executing the command will
+prompt you to enter your Cornell NetID password, and then you should be
+connected to the ecelinux servers.</p>
+<p>The very first time you log into the ecelinux servers you may see a
+warning like this:</p>
+<div class="language-text highlight"><pre><span></span><code> The authenticity of host ’ecelinux.ece.cornell.edu (128.253.51.206)’
+ can’t be established. ECDSA key fingerprint is
+ SHA256:smwMnf9dyhs5zW5I279C5oJBrTFc5FLghIJMfBR1cxI.
+ Are you sure you want to continue connecting (yes/no)?
+</code></pre></div>
+<p>The very first time you log into the <code>ecelinux</code> servers it is okay to
+enter <code>yes</code>, but from then on if you continue to receive this warning
+please contact the course staff.</p>
+<h3 id="12-using-powershell">1.2. Using PowerShell</h3>
+<p>The very first thing you need to do after opening a terminal is source
+the course setup script. This will ensure your environment is setup with
+everything you need for working on the lab assignments. Enter the
+following command on the command line:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>%<span class="w"> </span><span class="nb">source</span><span class="w"> </span>setup-ece2300.sh
+</span></code></pre></div>
+<p>Note that you do not need to enter <code>%</code> character. In a tutorial like
+this, the <code>%</code> simply indicates what you should type at the command line.
+You should now see <code>ECE 2300</code> in your prompt which means your environment
+is setup for the course.</p>
+<p>It can be tedious to always remember to source the course setup script.
+You can also use auto setup which will automatically source the course
+setup for you when you log in. Note that if the environment for ECE 2300
+conflicts with the environment required by a different course then you
+will need to manually source the setup script when you are working on
+this course. Enter the following command on the command line to use auto
+setup:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>%<span class="w"> </span><span class="nb">source</span><span class="w"> </span>setup-ece2300.sh<span class="w"> </span>--enable-auto-setup
+</span></code></pre></div>
+<p>If at anytime you need to disable auto setup you can use the following
+command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>%<span class="w"> </span><span class="nb">source</span><span class="w"> </span>setup-ece2300.sh<span class="w"> </span>--disable-auto-setup
+</span></code></pre></div>
+<h2 id="2-logging-into-ecelinux-with-vs-code">2. Logging Into ecelinux with VS Code</h2>
+<p>While PowerShell is fine for basic work at the Linux command line, it is
+not a productive way to develop large and complicated computer
+engineering projects. We instead, recommend students use VS Code to log
+into the <code>ecelinux</code> servers. VS Code provides a nice GUI for navigating
+the directory hierarchy on <code>ecelinux</code>, great syntax highlighting for
+Verilog hardware designs, the ability to open many files at once using
+tabs, and an integrated remote terminal for running commands at the Linux
+command line. When using VS Code it is important to keep in mind that the
+GUI interface runs completely on the local workstation and then
+automatically handles copying files back and forth between the local
+workstation and the <code>ecelinux</code> servers.</p>
+<p>Note, if you have already installed VS Code on your laptop, then you
+should feel free to use your laptop for this discussion section.
+<strong>However, if you have not already installed VS Code on your laptop and
+verified it works, then please use the workstations in 225 Upson.</strong> We do
+not have time to help you setup VS Code on your own laptop in the
+discussion section.</p>
+<h3 id="21-logging-into-ecelinux-servers-with-vs-code">2.1. Logging into <code>ecelinux</code> Servers with VS Code</h3>
+<p>To start VS Code click the <em>Start</em> menu then search for <em>Visual Studio
+Code</em>. The key to VS Code is installing the correct extensions. We want
+to start by installing a special extension for the Verilog hardware
+description language (HDL). We also want to install a special extension
+which will enable remotely accessing the <code>ecelinux</code> servers using SSH.
+Choose <em>View &gt; Extensions</em> from the menubar. Enter the name of the
+extension in the "Search Extensions in Marketplace" and then click the
+blue Install button. Here are the names of the extensions to install:</p>
+<ul>
+<li>Remote - SSH (use the one from Microsoft)</li>
+<li>Verilog (use the one from Masahiro Hiramori)</li>
+<li>Surfer (use the one from surfer-project)</li>
+</ul>
+<p><img alt="" src="../img/tut00-vscode-remote-ssh.png" /></p>
+<p><img alt="" src="../img/tut00-vscode-verilog.png" /></p>
+<p><img alt="" src="../img/tut00-vscode-surfer.png" /></p>
+<p>Now we need to log into the <code>ecelinux</code> servers. Choose <em>View &gt; Command
+Palette</em> from the menubar. This will cause a little "command palette" to
+drop down where you can enter commands to control VS Code. Enter the
+following command in the command palette:</p>
+<div class="language-text highlight"><pre><span></span><code>Remote-SSH: Connect Current Window to Host...
+</code></pre></div>
+<p>As you start typing matching commands will be displayed and you can just
+click the command when you see it. VS Code will then ask you to <em>Enter
+SSH Connection Command</em>, and you should enter the following:</p>
+<div class="language-text highlight"><pre><span></span><code>netid@ecelinux.ece.cornell.edu
+</code></pre></div>
+<p>Replace <code>netid</code> with your Cornell NetID in the command above.</p>
+<p>You may see a pop-up which stays that the <em>Windows Defender Firewall as
+blocked some features of this app</em>. This is not a problem. Simply click
+<em>Cancel</em>. You might also see a drop down which asks you to choose the
+operating system of the remote server with options like <em>Linux</em> and
+<em>Windows</em>. Choose <em>Linux</em>. Finally, the very first time you log into the
+<code>ecelinux</code> servers you may see a warning like this:</p>
+<div class="language-text highlight"><pre><span></span><code>&quot;ecelinux.ece.cornell.edu&quot; has fingerprint
+&quot;SHA256:YCh2FiadeTXEzuSkC0AOdglBgPciwc8WvcCPncvr2Fs&quot;
+Are you sure you want to continue?
+Continue
+Cancel
+</code></pre></div>
+<p>Also the very first time you log into the <code>ecelinux</code> servers you will see
+a pop up dialog box in the lower right-hand corner which says <em>Setting up
+SSH host ecelinux.ece.cornell.edu (details) Initializing....</em> It might
+take up to a minute for everything to be setup; please be patient! Once
+the pop up dialog box goes away and you see <em>SSH:
+ecelinux.ece.cornell.edu</em> in the lower left-hand corner of VS Code then
+you know you are connected to the ecelinux servers.</p>
+<p><img alt="" src="../img/tut00-vscode-connected.png" /></p>
+<p>The final step is to make sure your extensions for the Verilog HDL and
+Surfer are also installed on the server. Choose <em>View &gt; Extensions</em> from
+the menubar. Use the "Search Extensions in Marketplace" to search for the
+same Verilog HDL extensions that we installed earlier. Instead of saying
+<em>Install</em> it should now say <em>Install in SSH: ecelinux.ece.cornell.edu</em>.
+Install the Verilog HDL extension on the <code>ecelinux</code> servers. You only
+need to do this once, and then next time this extension will already be
+installed on the <code>ecelinux</code> servers.</p>
+<h3 id="22-using-vs-code">2.2. Using VS Code</h3>
+<p>VS Code includes an integrated file explorer which makes it very
+productive to browse and open files. Choose <em>View &gt; Explorer</em> from the
+menubar, and then click on <em>Open Folder</em>. VS Code will then ask you to
+<em>Open File Or Folder</em> with a default of <code>/home/netid</code>. Click <em>OK</em>.</p>
+<p>You might see a pop-up which asks you <em>Do you trust the authors of the
+files in this folder?</em> Since you will only be browsing your own files on
+the <code>ecelinux</code> server, it is fine to choose <em>Yes, I trust the authors</em>.</p>
+<p>This will reload VS Code, and you should now you will see a file explore
+in the left sidebar. You can easily browse your directory hierarchy, open
+files by clicking on them, create new files, and delete files.</p>
+<p>VS Code includes an integrated terminal which will give you access to the
+Linux command line on the <code>ecelinux</code> servers. Choose <em>Terminal &gt; New
+Terminal</em> from the menubar. You should see the same kind of Linux command
+line prompt that you saw when using PowerShell.</p>
+<p>Remember, the very first thing you need to do after logging into the
+ecelinux servers is source the course setup script. If you used
+--enable-auto-setup in the last section, then the setup script is already
+sourced for you automatically when you log into the ecelinux servers. If
+not, you will need to enter the following command on the command line:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>% source setup-ece2300.sh
+</span></code></pre></div>
+<p>You should now see <code>ECE 2300</code> in your prompt which means your environment
+is setup for the course.</p>
+<h2 id="3-linux-command-line">3. Linux Command Line</h2>
+<p>We will using the <code>ecelinux</code> servers which run the Linux operating system
+for all of the lab assignments. The heart of the Linux operating system
+is the Linux command line. This is a text-based console where you can
+enter commands to interact with the operating system.</p>
+<h3 id="31-hello-world">3.1 Hello World</h3>
+<p>We begin with the ubiquitous "Hello, World" example. To display the
+message "Hello, World" we will use the <code>echo</code> command. The <code>echo</code> command
+simply "echoes" its input to the console.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>%<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Hello, World&quot;</span>
+</span></code></pre></div>
+<p>The string we provide to the echo command is called a <em>command line
+argument</em>. We use command line arguments to tell commands what they
+should operate on. Again, note that you do not need to enter <code>%</code>
+character.</p>
+<h3 id="32-manual-pages">3.2. Manual Pages</h3>
+<p>You can learn more about any Linux command by using the <code>man</code> command.
+Try using this to learn more about the <code>echo</code> command.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>%<span class="w"> </span>man<span class="w"> </span><span class="nb">echo</span>
+</span></code></pre></div>
+<p>You can use the up/down keys to scroll the manual one line at a time, the
+space bar to scroll down one page at a time, and the <code>q</code> key to quit
+viewing the manual.</p>
+<h3 id="33-create-view-and-list-files">3.3. Create, View, and List Files</h3>
+<p>We can use the echo command and a feature called <em>command output
+redirection</em> to create simple text files. Command output redirection is
+discussed more in the full tutorial. Command output redirection uses the
+<code>&gt;</code> operator to take the output from one command and "redirect" it to a
+file. The following commands will create a new file named
+<code>ece2300-sec01.txt</code> that simply contains the text "Digital Logic and
+Computer Organization".</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>%<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Digital Logic and Computer Organization&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>ece2300-sec01.txt
+</span></code></pre></div>
+<p>We can use the <code>cat</code> command to quickly display the contents of a file.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>%<span class="w"> </span>cat<span class="w"> </span>ece2300-sec01.txt
+</span></code></pre></div>
+<p>For larger files, <code>cat</code> will output the entire file to the console so it
+may be hard to read the file as it streams past. We can use the <code>less</code>
+command to show one screen-full of text at a time. You can use the
+up/down keys to scroll the file one line at a time, the space bar to
+scroll down one page at a time, and the <code>q</code> key to quit viewing the file.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>%<span class="w"> </span>less<span class="w"> </span>ece2300-sec01.txt
+</span></code></pre></div>
+<p>The <code>&gt;</code> command output redirection operator will always create a brand
+new file (even if the target output file already exists). You can use the
+<code>&gt;&gt;</code> operator to append lines to the end of a file. Let's add another
+line to our text file using the <code>&gt;&gt;</code> operator.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>%<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Using the Verilog Hardware Description Language&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>ece2300-sec01.txt
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>%<span class="w"> </span>cat<span class="w"> </span>ece2300-sec01.txt
+</span></code></pre></div>
+<p>You can use the <code>ls</code> command to list the filenames of the files you have
+created.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>%<span class="w"> </span>ls
+</span></code></pre></div>
+<p>We can provide command line options to the <code>ls</code> command to modify the
+command’s behavior. For example, we can use the <code>-1</code> (i.e., a dash
+followed by the number one) command line option to list one file per
+line, and we can we can use the <code>-l</code> (i.e., a dash followed by the letter
+l) command line option to provide a longer listing with more information
+about each file.</p>
+<h3 id="34-create-change-and-list-directories">3.4. Create, Change, and List Directories</h3>
+<p>Obviously, having all files in a single location would be hard to manage
+effectively. We can use directories (also called folders) to logically
+organize our files, just like one can use physical folders to organize
+physical pieces of paper. The mechanism for organizing files and
+directories is called the file system. When you first login to an
+<code>ecelinux</code> machine, you will be in your home directory. This is your own
+private space on the server that you can use to work on the lab
+assignments and store your files. You can use the <code>pwd</code> command to print
+the directory in which you are currently working, which is known as the
+current working directory.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>%<span class="w"> </span><span class="nb">pwd</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span>/home/netid
+</span></code></pre></div>
+<p>You should see output similar to what is shown above, but instead of
+<code>netid</code> it should show your actual NetID. The pwd command shows a
+directory path. A directory path is a list of nested directory names; it
+describes a "path" to get to a specific file or directory. So the above
+path indicates that there is a toplevel directory named home that
+contains a directory named <code>netid</code>. This is the directory path to your
+home directory. As an aside, notice that Linux uses a forward slash (<code>/</code>)
+to separate directories, while Windows uses a back slash (<code>\</code>) for the
+same purpose.</p>
+<p>We can use the <code>mkdir</code> command to make new directories. The following
+command will make a new directory named <code>ece2300</code> within your home
+directory.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>%<span class="w"> </span>mkdir<span class="w"> </span>ece2300
+</span></code></pre></div>
+<p>We can use the <code>cd</code> command to change our current working directory. The
+following command will change the current working directory to be the
+newly created <code>ece2300</code> directory, before displaying the current working
+directory with the pwd command.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>ece2300
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>%<span class="w"> </span><span class="nb">pwd</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span>/home/netid/ece2300
+</span></code></pre></div>
+<p>Use the <code>mkdir</code>, <code>cd</code>, and <code>pwd</code> commands to make another directory.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>%<span class="w"> </span>mkdir<span class="w"> </span><span class="nb">test</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="nb">test</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>%<span class="w"> </span><span class="nb">pwd</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span>/home/netid/ece2300/test
+</span></code></pre></div>
+<p>We sometimes say that <code>test</code> is a subdirectory or a child directory of
+the <code>ece2300</code> directory. We might also say that the <code>ece2300</code> directory
+is the parent directory of the <code>test</code> directory. Use the following
+command to create a new file in this child directory.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/home/netid/ece2300/test
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>%<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Digital Logic and Computer Organization&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>ece2300-sec01.txt
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>%<span class="w"> </span>mkdir<span class="w"> </span>dirA
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>%<span class="w"> </span>ls
+</span></code></pre></div>
+<p>You can use the <code>tree</code> command to visualize the directory layout and
+where files are located:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>%<span class="w"> </span>tree
+</span></code></pre></div>
+<p>Note that the tilde character (<code>~</code>) is a shortcut which always refers to
+your home directory. There are a few other very useful shortcuts. You can
+use a single dot (<code>.</code>) to refer to the current working directory, and you
+can use a double dot (<code>..</code>) to refer to the parent directory of the
+current working directory.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/test
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>%<span class="w"> </span><span class="nb">pwd</span>
+</span></code></pre></div>
+<h3 id="35-copy-move-and-remove-files-and-directories">3.5. Copy, Move, and Remove Files and Directories</h3>
+<p>We can use the <code>cp</code> command to copy files. The first argument is the name
+of the file you want to copy, and the second argument is the new name to
+give to the copy. The following commands will make two copies of the
+files we created in the previous section.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/test
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>%<span class="w"> </span>cp<span class="w"> </span>ece2300-sec01.txt<span class="w"> </span>ece2300-sec01-a.txt
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>%<span class="w"> </span>cp<span class="w"> </span>ece2300-sec01.txt<span class="w"> </span>ece2300-sec01-b.txt
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>%<span class="w"> </span>ls
+</span></code></pre></div>
+<p>Instead of copying we can also move a file with the <code>mv</code> command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/test
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>%<span class="w"> </span>mv<span class="w"> </span>ece2300-sec01.txt<span class="w"> </span>ece2300-sec01-c.txt
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>%<span class="w"> </span>ls
+</span></code></pre></div>
+<p>Finally, we can use the <code>rm</code> command to remove files.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/test
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>%<span class="w"> </span>ls
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>%<span class="w"> </span>rm<span class="w"> </span>ece2300-sec01-a.txt
+</span></code></pre></div>
+<p>We have installed a simple program called <code>trash</code> which moves files you
+wish to delete into a special subdirectory of your home directory located
+at <code>~/tmp/trash</code>. The following commands create a file and then
+deletes it using trash.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>%<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;This file will be deleted.&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>testing.txt
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>%<span class="w"> </span>trash<span class="w"> </span>testing.txt
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>%<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;This file will also be deleted.&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>testing.txt
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>%<span class="w"> </span>trash<span class="w"> </span>testing.txt
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>%<span class="w"> </span>ls<span class="w"> </span>~/tmp/trash
+</span></code></pre></div>
+<p>If you look in <code>~/tmp/trash</code> you will see subdirectories organized by
+date. Look in the subdirectory with today's date and you should two files
+corresponding to the two files you deleted. We highly recommend always
+using the <code>trash</code> command instead of <code>rm</code> since this avoids accidentally
+deleting your work.</p>
+<h3 id="36-using-vs-code-to-work-with-files">3.6. Using VS Code to Work with Files</h3>
+<p>VS Code makes it easy to create and open files for editing from the
+command line. To open an existing file for editing use the <code>code</code> command
+on the command line. For example, you can open the <code>ece2300-sec01.txt</code>
+file like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/test
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>%<span class="w"> </span>code<span class="w"> </span>ece2300-sec01.txt
+</span></code></pre></div>
+<p>Add some text of your choice to the bottom of the file. Then use <em>File &gt;
+Save</em> and then use <code>cat</code> to verify your changes through the command line.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/test
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>%<span class="w"> </span>cat<span class="w"> </span>ece2300-sec01.txt
+</span></code></pre></div>
+<p>If you use the <code>code</code> command and the file does not exist, then VS Code
+will automatically create a new file with the corresponding filename.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/test
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>%<span class="w"> </span>code<span class="w"> </span>ece2300-sec01-d.txt
+</span></code></pre></div>
+<p>Enter some text, save the file, and use <code>cat</code> to verify your chagnes
+through the command line. You can also use VS Code's integrated file
+explorer to create files and open files for editing.</p>
+<h2 id="4-github-account-setup">4. GitHub Account Setup</h2>
+<p>We will be using GitHub for centralized repository hosting. You can check
+to see if you have a GitHub account on <code>github.com</code> using this link:
+<code>https://github.com/githubid</code> where <code>githubid</code> is your GitHub username on
+<code>github.com</code>. If the above link does not work, then you do not have an
+GitHub account on <code>github.com</code>. <strong>NOTE: We are using <code>github.com</code> not the
+Cornell hosted GitHub!</strong> You will need to create one here:</p>
+<ul>
+<li><a href="https://github.com/join">https://github.com/join</a></li>
+</ul>
+<p>Your NetID makes a great GitHub username on <code>github.com</code>. If you are
+creating a new GitHub account, then be sure to use your Cornell email
+address. If you have an existing account it is fine for it to use a
+non-Cornell email address.</p>
+<p>Once your account is setup, please make sure you set your full name so we
+can know who you are on GitHub. Please also consider uploading a profile
+photo to GitHub; it makes it more fun to interact on GitHub if we all
+know what each other look like. Go to the following page and enter your
+first and last name in the Name field, and then consider uploading a
+profile photo.</p>
+<ul>
+<li><a href="https://github.com/settings/profile">https://github.com/settings/profile</a></li>
+</ul>
+<p>Once you have a GitHub username, please fill out the following online so
+the instructors know the mapping from NetID to GitHub username:</p>
+<ul>
+<li><a href="http://www.csl.cornell.edu/courses/ece2300/githubid">http://www.csl.cornell.edu/courses/ece2300/githubid</a></li>
+</ul>
+<p>Before you can begin using GitHub, you need to create an SSH key pair on
+an <code>ecelinux</code> machine and upload the corresponding SSH public key to
+GitHub. GitHub uses these keys for authentication. The course setup
+script takes care of creating an SSH key pair which you can use. View the
+contents of your public key using the following commands:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>%<span class="w"> </span>cat<span class="w"> </span>~/.ssh/ece2300-github.pub
+</span></code></pre></div>
+<p>Use the following page to upload the public key to GitHub:</p>
+<ul>
+<li><a href="https://github.com/settings/ssh">https://github.com/settings/ssh</a></li>
+</ul>
+<p>Click on <em>New SSH Key</em>, and then cut-and-paste the public key you
+displayed using cat into the key textbox. Give the key the title
+<code>ece2300-github</code>. Then click <em>Add SSH key</em>. To test things out try the
+following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>%<span class="w"> </span>ssh<span class="w"> </span>-T<span class="w"> </span>git@github.com
+</span></code></pre></div>
+<p>You may see a warning about the authenticity of the host. Don’t worry,
+this is supposed to happen the first time you access GitHub using your
+new key. Just enter <code>yes</code>. The GitHub server should output some text
+including your GitHub username. Verify that the GitHub username is
+correct, and then you should be all set.</p>
+<h2 id="5-git-version-control-system">5. Git Version Control System</h2>
+<p>In this course, we will be using Git as our revision control and source
+code management system. Git will enable us to adopt an agile development
+methodology so you (and your group) can rapidly collaborate and iterate
+on the design, verification, and evaluation of the assignments.</p>
+<h3 id="51-fork-and-clone-a-repo-from-github">5.1. Fork and Clone a Repo from GitHub</h3>
+<p>Fork'ing a repo means making a copy of that repo for your own local use.
+We won't actually be forking repos for the lab assignments, but
+it is an easy way for you to grab some example code for the discussion
+section. Go to the example repo here:</p>
+<ul>
+<li><a href="https://github.com/cornell-ece2300/ece2300-sec01-linux">https://github.com/cornell-ece2300/ece2300-sec01-linux</a></li>
+</ul>
+<p>Click on the "Fork" button. Wait a few seconds and then visit the new
+copy of this repo in your own person GitHub workspace:</p>
+<ul>
+<li><code>https://github.com/githubid/ece2300-sec01-linux</code></li>
+</ul>
+<p>Where <code>githubid</code> is your username on the public version of GitHub. Now
+let's clone your new repo to the <code>ecelinux</code> machine.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>%<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>ece2300
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>%<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:githubid/ece2300-sec01-linux<span class="w"> </span>sec01
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>sec01
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>%<span class="w"> </span>cat<span class="w"> </span>README.md
+</span></code></pre></div>
+<p>Where <code>githubid</code> is your username on the public version of GitHub.</p>
+<h3 id="52-adding-and-committing-files-to-local-repository">5.2. Adding and Committing Files to Local Repository</h3>
+<p>Now let's add some new files to the repository. Use VS Code to create a
+file named <code>warm-colors.txt</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/sec01
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>%<span class="w"> </span>code<span class="w"> </span>warm-colors.txt
+</span></code></pre></div>
+<p>Add three warm colors and save the file.</p>
+<div class="language-text highlight"><pre><span></span><code>red
+orange
+yellow
+</code></pre></div>
+<p>Now use VS Code to create a file named <code>cool-colors.txt</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/sec01
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>%<span class="w"> </span>code<span class="w"> </span>cool-colors.txt
+</span></code></pre></div>
+<p>Add three cool colors and save the file.</p>
+<div class="language-text highlight"><pre><span></span><code>blue
+green
+purple
+</code></pre></div>
+<p>Now let's add these files to our repository. First use the <code>git status</code>
+command to check on the status of the repository.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/sec01
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>%<span class="w"> </span>git<span class="w"> </span>status
+</span></code></pre></div>
+<p>You should see that git has noticed two "untracked files" which are in
+the working directory but are not currently being tracked by git. Let's
+"add" these two files to git's "staging" area so it now knows it should
+keep track of them:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/sec01
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>%<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>warm-colors.txt
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>%<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>cool-colors.txt
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>%<span class="w"> </span>git<span class="w"> </span>status
+</span></code></pre></div>
+<p>The status of these two files have changed. Git reports that both of the
+new files are ready to be committed. Let's go ahead and commit these
+changes into your local repository.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/sec01
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>%<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;add some colors&quot;</span>
+</span></code></pre></div>
+<p>Let's now use <code>echo</code> and the <code>&gt;&gt;</code> command output redirection operator to
+add <code>cyan</code> to the end of our <code>cool-colors.txt</code> file. We can then view our
+changes from the command line using <code>cat</code>, and use <code>git status</code> and then
+<code>git commit</code> to try and commit our changes.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/sec01
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>%<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;cyan&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>cool-colors.txt
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>%<span class="w"> </span>cat<span class="w"> </span>cool-colors.txt
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>%<span class="w"> </span>git<span class="w"> </span>status
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>%<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;add cyan&quot;</span>
+</span></code></pre></div>
+<p>Git will report that there are no changes added to the commit. So even
+though Git is tracking <code>cool-colors.txt</code> and knows it has changed, we
+still must explicitly add the files we want to commit. We recommend using
+the <code>-a</code> command line option with the <code>git commit</code> command to tell Git to
+add any file which has changed and was previously added to the repository
+before doing the commit.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/sec01
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>%<span class="w"> </span>git<span class="w"> </span>status
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>%<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-a<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;add cyan&quot;</span>
+</span></code></pre></div>
+<p>Now the changes are committed. You can use <code>git log</code> to see a log of the
+commits in your local repository.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/sec01
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>%<span class="w"> </span>git<span class="w"> </span>log
+</span></code></pre></div>
+<h3 id="53-pushing-files-to-github">5.3. Pushing Files to GitHub</h3>
+<p>Note that nothing has happened on GitHub yet. GitHub does <em>not</em> know
+anything about these local changes. We need to explicitly "push" our new
+commits up to GitHub like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/sec01
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>%<span class="w"> </span>git<span class="w"> </span>push
+</span></code></pre></div>
+<p>Now go to the repository page using the GitHub web interface and verify
+that there are two new files.</p>
+<ul>
+<li><code>https://github.com/githubid/ece2300-sec01-linux</code></li>
+</ul>
+<h3 id="54-pulling-files-from-github">5.4. Pulling Files from GitHub</h3>
+<p>Let's try making a change to this repository through the GitHub
+web interface.</p>
+<ul>
+<li><code>https://github.com/githubid/ece2300-sec01-linux</code></li>
+</ul>
+<p>Click on <em>Add file</em> and then <em>Create new file</em>. Name the file
+<code>logic-gates.txt</code> and add a list of logic gates:</p>
+<div class="language-text highlight"><pre><span></span><code>NOT
+AND
+OR
+NAND
+NOR
+</code></pre></div>
+<p>Now click <em>Commit new file</em>. Verify that there is a new file in the repo
+using the GitHub web interface. Now let's "pull" these new changes from
+GitHub to your local repo on <code>ecelinux</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ece2300/sec01
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>%<span class="w"> </span>git<span class="w"> </span>pull
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>%<span class="w"> </span>cat<span class="w"> </span>logic-gates.txt
+</span></code></pre></div>
+<p>This will be the basic GitHub workflow were students first use <code>clone</code> to
+get a copy of their repository, use <code>commit -a</code> to commit their code to
+the local repository, and then use <code>pull</code> and <code>push</code> to synchronize their
+repository with the repository on GitHub.</p>
+<h2 id="6-to-do-on-your-own">6. To-Do On Your Own</h2>
+<p>If you have time, add <code>maroon</code> to the <code>warm-colors.txt</code> file you created
+earlier using VS Code. Save the file and then view your changes from the
+command line using <code>cat</code>. Then use <code>git status</code> and <code>git commit -a</code> to
+add these changes to local repository, and then use <code>git push</code> to push
+these changes up to GitHub. View the changes using the GitHub web
+interface.</p>
+<p>Then try editing a file using the GitHub web interface. Click on the
+<code>warm-colors.txt</code> file and then click on the pencil in the right-hand
+corner to edit this text file. Add another warm color. Click <em>Commit
+changes</em>. Then pull these changes to the local repository on the
+<code>ecelinux</code> server and verify that your new warm color is included.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Christopher Batten
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../js/extras.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/skins/default.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/wavedrom.min.js"></script>
+      
+        <script src="../js/wavedrom_loader.js"></script>
+      
+    
+  </body>
+</html>

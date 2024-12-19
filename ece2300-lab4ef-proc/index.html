@@ -1,0 +1,2796 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Christopher Batten">
+      
+      
+      
+        <link rel="prev" href="../ece2300-lab4d-proc/">
+      
+      
+        <link rel="next" href="../ece2300-tinyrv1-isa/">
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Lab 4 (Parts E & F) TinyRV1 Processor -- FPGA Analysis/Prototyping and Report - ECE 2300 Digital Logic and Computer Organization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-4-parts-e-f-tinyrv1-processor-fpga-analysisprototype-and-report" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-header__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECE 2300 Digital Logic and Computer Organization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 4 (Parts E & F) TinyRV1 Processor -- FPGA Analysis/Prototyping and Report
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tut00-remote-access/" class="md-tabs__link">
+          
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-sec01-linux/" class="md-tabs__link">
+          
+  
+  Discussion Sections
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../ece2300-fpga-primer/" class="md-tabs__link">
+          
+  
+  Lab Assignments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tinyrv1-isa/" class="md-tabs__link">
+          
+  
+  Misc
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-nav__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ECE 2300 Digital Logic and Computer Organization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut00-remote-access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 0: ECE Linux Server Remote Access
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut02-git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 2: Git Distributed Version Control System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Discussion Sections
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Discussion Sections
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec02-verilog-gl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 2: Verilog Combinational Gate-Level Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec03-verilog-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 3: Verilog Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec04-lab2-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 4: Lab 2 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec05-verilog-rtl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 5: Verilog Combinational RTL Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec06-lab3-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 6: Lab 3 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec07-verilog-mem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 7: Verilog Memory Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Lab Assignments
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Lab Assignments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-fpga-primer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FPGA Development Primer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p1-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts A & B): Five-Bit Numeric Display -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p2-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts C & D): Five-Bit Numeric Display -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2p1-calc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts A & B): Two-Function Calculator -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2-calc-fpga-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts C & D): Two-Function Calculator -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3ab-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts A & B): Music-Player -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D): Music-Player -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-custom-song/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D) Optional Add-On: Custom Song
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ab-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts A, B, & C) TinyRV1 Processor -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4d-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Part D) TinyRV1 Processor -- FPGA Analysis/Prototyping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts E & F) TinyRV1 Processor -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts E & F) TinyRV1 Processor -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-verifying-single-cycle-tinyrv1-processor-and-accumulate-accelerator" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Verifying Single-Cycle TinyRV1 Processor and Accumulate Accelerator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-setup-quartus-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Setup Quartus Project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-three-function-calculator-tinyrv1-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Three-Function Calculator TinyRV1 Program
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Three-Function Calculator TinyRV1 Program">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-simulate-simple-tinyrv1-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1. Simulate Simple TinyRV1 Program
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-implement-two-function-calculator-tinyrv1-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. Implement Two-Function Calculator TinyRV1 Program
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-implement-three-function-calculator-tinyrv1-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3. Implement Three-Function Calculator TinyRV1 Program
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-synthesize-analyze-and-configure-single-cycle-tinyrv1-processor" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4. Synthesize, Analyze, and Configure Single-Cycle TinyRV1 Processor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-accumulate-tinyrv1-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Accumulate TinyRV1 Program
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Accumulate TinyRV1 Program">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-implement-accumulate-tinyrv1-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. Implement Accumulate TinyRV1 Program
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-synthesize-and-analyze-single-cycle-tinyrv1-processor" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. Synthesize and Analyze Single-Cycle TinyRV1 Processor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-configure-single-cycle-tinyrv1-processor-prototype" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4. Configure Single-Cycle TinyRV1 Processor Prototype
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-accumulate-accelerator" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Accumulate Accelerator
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Accumulate Accelerator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-simulate-accumulate-accelerator" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1. Simulate Accumulate Accelerator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-synthesize-and-analyze-accumulator-accelerator" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2. Synthesize and Analyze Accumulator Accelerator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-configure-accumulator-accelerator-prototype" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3. Configure Accumulator Accelerator Prototype
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-lab-report-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Lab Report Submission
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Lab Report Submission">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#section-1-introduction-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 1. Introduction (one paragraph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-2-single-cycle-tinyrv1-processor-two-paragraphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 2. Single-Cycle TinyRV1 Processor (two paragraphs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-3-accumulate-accelerator-two-paragraphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 3. Accumulate Accelerator (two paragraphs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-5-conclusion-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 5: Conclusion (one paragraph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Appendix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Misc
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Misc
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tinyrv1-isa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TinyRV1 ISA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-verifying-single-cycle-tinyrv1-processor-and-accumulate-accelerator" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Verifying Single-Cycle TinyRV1 Processor and Accumulate Accelerator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-setup-quartus-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Setup Quartus Project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-three-function-calculator-tinyrv1-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Three-Function Calculator TinyRV1 Program
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Three-Function Calculator TinyRV1 Program">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-simulate-simple-tinyrv1-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1. Simulate Simple TinyRV1 Program
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-implement-two-function-calculator-tinyrv1-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. Implement Two-Function Calculator TinyRV1 Program
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-implement-three-function-calculator-tinyrv1-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3. Implement Three-Function Calculator TinyRV1 Program
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-synthesize-analyze-and-configure-single-cycle-tinyrv1-processor" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4. Synthesize, Analyze, and Configure Single-Cycle TinyRV1 Processor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-accumulate-tinyrv1-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Accumulate TinyRV1 Program
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Accumulate TinyRV1 Program">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-implement-accumulate-tinyrv1-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. Implement Accumulate TinyRV1 Program
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-synthesize-and-analyze-single-cycle-tinyrv1-processor" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. Synthesize and Analyze Single-Cycle TinyRV1 Processor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-configure-single-cycle-tinyrv1-processor-prototype" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4. Configure Single-Cycle TinyRV1 Processor Prototype
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-accumulate-accelerator" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Accumulate Accelerator
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Accumulate Accelerator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-simulate-accumulate-accelerator" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1. Simulate Accumulate Accelerator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-synthesize-and-analyze-accumulator-accelerator" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2. Synthesize and Analyze Accumulator Accelerator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-configure-accumulator-accelerator-prototype" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3. Configure Accumulator Accelerator Prototype
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-lab-report-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Lab Report Submission
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Lab Report Submission">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#section-1-introduction-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 1. Introduction (one paragraph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-2-single-cycle-tinyrv1-processor-two-paragraphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 2. Single-Cycle TinyRV1 Processor (two paragraphs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-3-accumulate-accelerator-two-paragraphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 3. Accumulate Accelerator (two paragraphs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-5-conclusion-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 5: Conclusion (one paragraph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Appendix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="lab-4-parts-e-f-tinyrv1-processor-fpga-analysisprototype-and-report">Lab 4 (Parts E &amp; F): TinyRV1 Processor - FPGA Analysis/Prototype and Report</h1>
+<p>Lab 4 will give you experience designing, implementing, testing, and
+prototyping a single-cycle processor microarchitecture and a specialized
+accelerator. The processor will implement the TinyRV1 instruction set.
+The instruction set manual is located here:</p>
+<ul>
+<li><a href="https://cornell-ece2300.github.io/ece2300-docs/ece2300-tinyrv1-isa">https://cornell-ece2300.github.io/ece2300-docs/ece2300-tinyrv1-isa</a></li>
+</ul>
+<p>The lab reinforces several lecture topics including instruction set
+architectures, single-cycle processors, and finite-state machines. The
+lab will continue to provide opportunities to leverage the three key
+abstraction principles: modularity, hierarchy, and regularity.</p>
+<p>You should have already worked in simulation to verify all processor
+components, your single-processor, and your accumulate accelerator in
+Lab 4A, 4B, and 4C. You should also have already finished your initial
+single-cycle FPGA prototype in Lab 4D. In Lab 4E, we will first implement
+a two-function calculator assembly program before extending this program
+to support subtraction. We will then implement an accumulate assembly
+program and quantify the area and performance of this kernel running on
+your single-cycle processor. Finally, we will quantitatively compare the
+area and performance of this software implementation to a specialized
+accumulate accelerator.</p>
+<p>This handout assumes that you have read and understand the course
+tutorials, discussion sections, and successfully completed Labs 1-3. Here
+are the steps to get started:</p>
+<ul>
+<li>Step 1. Find your lab partner</li>
+<li>Step 2. Find a free workstation</li>
+<li>Step 3. Ask the TAs for a lab check-off sheet (each student needs
+    their own check-off sheet)</li>
+</ul>
+<p>Throughout this handout you will see two kinds tasks: lab check-off tasks
+and lab report tasks.</p>
+<p>For each <em>lab report task</em> you must take some notes, save a screenshot,
+and/or record some data for your lab report. Students can start working
+on their lab report during their lab session, but will likely need to
+continue working on their lab report after the lab session. The lab
+report is due on Monday, Dec 9th at 11:59pm for all groups regardless of
+your lab session.</p>
+<p>For each <em>lab check-off task</em> you must raise your hand and have a TA come
+to check-off your work. The TA will ask you the questions included as
+part of the lab check-off task and the assess your understanding using
+the following rubric: mastery; accomplished; emerging; beginning. If the
+TA and students together feel the students have not mastered the lab
+check-off task, the students are encouraged to take a few minutes and try
+again.</p>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 1: Setup FPGA Board</p>
+<p>Request an FPGA board from the TAs. The TAs will record the board
+number on your check-off sheet. Use the power cord to plug the FPGA
+board into an outlet, and use the USB cable to plug the FPGA board
+into the workstation.</p>
+</div>
+<h2 id="1-verifying-single-cycle-tinyrv1-processor-and-accumulate-accelerator">1. Verifying Single-Cycle TinyRV1 Processor and Accumulate Accelerator</h2>
+<p>Before starting to work on an FPGA prototype, you must make sure you have
+a working Verilog hardware design that has been <em>thoroughly</em> tested in
+simulation. One student should start VS Code on the workstation, log into
+the <code>ecelinux</code> servers, source the setup script, and make sure their
+group repository is up to date.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>%<span class="w"> </span><span class="nb">source</span><span class="w"> </span>setup-ece2300.sh
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>%<span class="w"> </span>git<span class="w"> </span>pull
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>%<span class="w"> </span>tree
+</span></code></pre></div>
+<p>Where <code>XX</code> is your group number. Now run all of the tests from a clean
+build to ensure your design is fully functional.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>%<span class="w"> </span>trash<span class="w"> </span>build
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>%<span class="w"> </span>mkdir<span class="w"> </span>build
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>build
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>%<span class="w"> </span>../configure
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>%<span class="w"> </span>make<span class="w"> </span>check
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>%<span class="w"> </span><span class="nb">source</span><span class="w"> </span>../scripts/lab4c-run-tests.sh
+</span></code></pre></div>
+<p>We now need to get the files for your design from <code>ecelinux</code> onto the
+workstation. This requires multiple steps.</p>
+<ul>
+<li>
+<p>Step 1. Click <em>Microsoft Edge</em> on the desktop to open a web-browser on
+   the workstation to log into GitHub and then find your repository</p>
+</li>
+<li>
+<p>Step 2. Start PowerShell by clicking the <em>Start</em> menu then searching
+   for <em>Windows PowerShell</em></p>
+</li>
+<li>
+<p>Step 3. Clone your repo onto the workstation by using this command in
+   PowerShell (where <code>netid</code> is your Cornell NetID, <strong>notice we are using
+   https!</strong>):</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>% git clone https://github.com/cornell-ece2300/groupXX
+</span></code></pre></div>
+<ul>
+<li>
+<p>Step 4. In the <em>Connect to GitHub</em> pop-up, click <em>Sign in with your
+   browser</em></p>
+</li>
+<li>
+<p>Step 5. You may be asked for your GitHub username again and you may be
+   asked to authorize the Git Credential Manager; click <em>authorize
+   git-ecosystem</em></p>
+</li>
+<li>
+<p>Step 6. Verify that you have successfully cloned your repo by changing
+   into your repo and using <code>tree</code> on the workstation:</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>% cd groupXX
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>% tree
+</span></code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 2: Verify Tests</p>
+<p>Show a TA that your hardware designs are passing all of your tests.
+Show the TA running a single test case for your accumulate
+accelerator like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>%<span class="w"> </span>make<span class="w"> </span>AccumXcel-test
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>%<span class="w"> </span>./AccumXcel-test<span class="w"> </span>+test-case<span class="o">=</span><span class="m">5</span><span class="w"> </span>+dump-vcd<span class="o">=</span>waves.vcd
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>%<span class="w"> </span>code<span class="w"> </span>waves.vcd
+</span></code></pre></div>
+<p>The final result should be 36. The TA will first ask the students to
+explain <em>why</em> the correct answer is 36. The students need to display
+the <code>clk</code>, <code>rst</code>, <code>go</code>, <code>size</code>, <code>result_val</code>, and <code>result</code> ports as
+well as the internal state register for the accumulate accelerator
+FSM in the waveforms. The TA will ask the students to show where in
+the waveforms the accelerator is producing the value 36. The TA will
+then ask the students to explain how many cycles it takes to
+calculate this result and to justify why it takes this many cycles
+using the waveform.</p>
+</div>
+<h2 id="2-setup-quartus-project">2. Setup Quartus Project</h2>
+<p>Click <em>Quartus (Quartus Prime 19.1)</em> on the desktop to start Quartus, and
+click <em>Run the Quartus Prime software</em>. You might need to try starting
+Quartus twice. Setup a new Quartus project using the <em>New Project
+Wizard</em>:</p>
+<ul>
+<li>Directory, Name, Top-Level Entity<ul>
+<li>Working directory: <code>C:\Users\netid\lab4e</code></li>
+<li>Name of this project: <code>lab4e</code></li>
+<li>Name of top-level design entity: <code>lab4e</code></li>
+<li>Click <em>Next</em></li>
+</ul>
+</li>
+<li>Directory does not exist. Do you want to create it?<ul>
+<li>Click yes</li>
+</ul>
+</li>
+<li>Project Type<ul>
+<li>Choose <em>Empty Project</em></li>
+<li>Click <em>Next</em></li>
+</ul>
+</li>
+<li>Add Files<ul>
+<li>Click triple dots to right of <em>File name</em></li>
+<li>Click on <em>This PC</em>, then navigate to your cloned repo by choosing
+   <em>Windows (C:) &gt;  Users &gt; netid &gt; netid</em> where <em>netid</em> is your
+   Cornell NetID</li>
+<li>Shift-click on every Verilog hardware design file (do not include
+   any test files)</li>
+<li>Click <em>Open</em></li>
+<li>Click <em>Next</em></li>
+</ul>
+</li>
+<li>Family, Device, and Board Settings<ul>
+<li>Click <em>Board</em> tab</li>
+<li>Family: <em>Cyclone V</em></li>
+<li>Select <em>DE0-CV Development Board</em></li>
+<li>Make sure <em>Create top-level design file</em> is checked</li>
+<li>Click <em>Next</em></li>
+</ul>
+</li>
+<li>EDA Tool Settings<ul>
+<li>Click <em>Next</em></li>
+</ul>
+</li>
+<li>Summary<ul>
+<li>Click <em>Finish</em></li>
+</ul>
+</li>
+</ul>
+<p>Since we are now using RTL modeling, there is one new step, similar to
+Labs 2 and 3. You must choose <em>Assignments &gt; Settings</em> from the menu.
+Then select the category <em>Compiler Settings &gt; Verilog HDL Input</em> and
+under <em>Verilog version</em> click <em>SystemVerilog</em>. Then click <em>OK</em>.</p>
+<h2 id="3-three-function-calculator-tinyrv1-program">3. Three-Function Calculator TinyRV1 Program</h2>
+<p>In this part, we will implement a TinyRV1 assembly program that has the
+same behavior as the two-function calculator we implemented in Lab 2, and
+then we will extend the calculator to support subtraction.</p>
+<h3 id="31-simulate-simple-tinyrv1-program">3.1. Simulate Simple TinyRV1 Program</h3>
+<p>We will be using the same simulators we used in the Lab 4D to emulate
+what will happen when your processor is configured on the FPGA. Recall
+that these simulators and the actual FPGA will use the following
+connections:</p>
+<ul>
+<li><code>in0[4:0]</code> is connected to first five switches</li>
+<li><code>in1[4:0]</code> is connected to second five switches</li>
+<li><code>in2[3:0]</code> is connected to the four push-buttons</li>
+<li><code>out0[4:0]</code> is connected to the two seven-segment displays</li>
+<li><code>out1[4:0]</code> is connected to the two seven-segment displays</li>
+<li><code>out2[4:0]</code> is connected to the two seven-segment displays</li>
+</ul>
+<p>Recall that we provided you a very simple TinyRV1 program in the
+<code>sim/proc-sim-prog1.v</code> file. Take a look at this file on <code>ecelinux</code> using
+VS Code.</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">task</span><span class="w"> </span><span class="n">proc_sim_prog1</span><span class="p">();</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="n">asm</span><span class="p">(</span><span class="w"> </span><span class="mh">&#39;h000</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;addi x1, x0, 2&quot;</span><span class="w">   </span><span class="p">);</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="n">asm</span><span class="p">(</span><span class="w"> </span><span class="mh">&#39;h004</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;addi x2, x1, 2&quot;</span><span class="w">   </span><span class="p">);</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="n">asm</span><span class="p">(</span><span class="w"> </span><span class="mh">&#39;h008</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;csrw out0, x2&quot;</span><span class="w">    </span><span class="p">);</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span><span class="n">asm</span><span class="p">(</span><span class="w"> </span><span class="mh">&#39;h00c</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jal  x0, 0x00c&quot;</span><span class="w">   </span><span class="p">);</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="k">endtask</span>
+</span></code></pre></div>
+<p>Go ahead and run this program on the FL processor simulator on <code>ecelinux</code>
+like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-fl-sim
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>%<span class="w"> </span>./proc-fl-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">1</span>
+</span></code></pre></div>
+<p>Confirm that the behavior is as expected. Now run the program on the
+single-cycle processor simulator like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-scycle-sim
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">1</span>
+</span></code></pre></div>
+<h3 id="32-implement-two-function-calculator-tinyrv1-program">3.2. Implement Two-Function Calculator TinyRV1 Program</h3>
+<p>We want our two-function calculator TinyRV1 program to exactly emulate
+the behavior of the specialized two-function calculator we implemented in
+Lab 2. The two-function calculator should take two inputs: a five-bit
+value specified with the first five switches and a five-bit value
+specified with the second five switches. The calculator should then
+display these two input values on the seven-segment displays. The
+calculator should perform addition if the push button is <em>not</em> pressed
+and should perform multiplication if the push button is pressed. The
+calculator should output the result on the final seven-segment displays.
+The pseudo-code for our two-function calculator is shown below.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  <span class="c1"># read switches and buttons</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>  <span class="n">in0</span>     <span class="o">=</span> <span class="n">read_in0</span><span class="p">()</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>  <span class="n">in1</span>     <span class="o">=</span> <span class="n">read_in1</span><span class="p">()</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>  <span class="n">buttons</span> <span class="o">=</span> <span class="n">read_in2</span><span class="p">()</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>  <span class="c1"># display inputs</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>  <span class="n">write_out0</span><span class="p">(</span><span class="n">in0</span><span class="p">)</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>  <span class="n">write_out1</span><span class="p">(</span><span class="n">in1</span><span class="p">)</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>  <span class="c1"># addition</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>  <span class="k">if</span> <span class="n">buttons</span> <span class="o">==</span> <span class="mb">0b0000</span><span class="p">:</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">in0</span> <span class="o">+</span> <span class="n">in1</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>  <span class="c1"># multiply</span>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>  <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">in0</span> <span class="o">*</span> <span class="n">in1</span>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>  <span class="c1"># display result</span>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>  <span class="n">write_out2</span><span class="p">(</span> <span class="n">result</span> <span class="p">)</span>
+</span></code></pre></div>
+<p>Implement the two-function calculator in assembly in the
+<code>sim/proc-sim-prog2.v</code> file. We recommend taking an incremental design
+approach. Start by implementing a calculator that <em>only</em> performs
+addition. Once this is working, think critically about how to implement
+an if/else conditional operator in assembly and then add support for
+multiplication. Note how the calculator is in an infinite loop. This way
+your calculator will continuously read the inputs and write the outputs.
+You can implement this with a final JAL instruction which jumps back to
+the first instruction in the assembly program.</p>
+<p>In general, we suggest writing out all of the assembly instructions but
+leave the actual instruction address values until the end. Use <code>???</code> as
+place holders for the branch and jump target addresses. Once you have all
+of the assembly instructions finished, then go through and update the
+address for each assembly instruction. The final step would be to go back
+and update the branch and jump target addresses.</p>
+<p>Always simulate your assembly program on the FL processor simulator
+first as follows:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-fl-sim
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>%<span class="w"> </span>./proc-fl-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>%<span class="w"> </span>./proc-fl-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+<p>You can single-step through each assembly instruction one at a time
+using the <code>+step</code> command line option. Press enter to execute the next
+instruction, enter <code>r</code> and then press enter to finish the program, and
+enter <code>q</code> and then press enter to quit.</p>
+<p>Once you know your assembly program is working on the FL processor
+simulator, then try it on the single-cycle processor simulator like this.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-scycle-sim
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+<p>Ideally, an effective testing strategy will ensure that your single-cycle
+processor is fully correct by the time we start using these interactive
+simulators. However, if the behavior is not as expected then you will
+have no choice but to try and debug what has gone wrong. You will need to
+use waveforms to carefully examine each cycle. You can dump waveforms
+using the <code>+dump-vcd=waves.vcd</code> command line option. You should probably
+use what you learn to add more directed tests cases.</p>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 3: Simulate Two-Function Calculator Program</p>
+<p>Show a TA your two-function calculator program running on (1) the FL
+processor simulator; and (2) the single-cycle processor simulator.
+The TA will ask you to try some different input data. Here are the
+steps you need to show the TA.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-fl-sim
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>%<span class="w"> </span>make<span class="w"> </span>proc-scycle-sim
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>%<span class="w"> </span>./proc-fl-sim<span class="w">     </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>%<span class="w"> </span>./proc-fl-sim<span class="w">     </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+</div>
+<h3 id="33-implement-three-function-calculator-tinyrv1-program">3.3. Implement Three-Function Calculator TinyRV1 Program</h3>
+<p>The two-function calculator program running on the single-cycle TinyRV1
+processor requires significantly more area and has a much longer
+execution time compared to the specialized two-function calculator
+implemented in Lab 2. The real power of a general-purpose processor is
+the ability to easily program new capabilities without adding any
+hardware. Modify your two-function calculator program to add support for
+subtraction. If the user does not press any push buttons the calculator
+should perform addition. If the user presses the first push button the
+calculator should perform multiplication. If the user presses the second
+push button the calculator should perform subtraction. Note that the
+TinyRV1 instruction set does not include a subtract instruction, so you
+will need to implement subtraction using just the available arithmetic
+instructions. Make sure your program works on the FL processor simulator
+and then verify it works on the single-cycle processor simulator.</p>
+<p>We also need to take an extra step to choose this program to actually run
+on the processor once it has been configured to the FPGA. The program
+which will run on the processor once it has been configured to the FPGA
+is located in the <code>hw/ProcMem.v</code> module. Go ahead and take a look at this
+file on <code>ecelinux</code> using VS Code. You will see a region of the module
+that looks like this although it might look different based on your work
+in Lab 4D.</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">rst</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">      </span><span class="n">mem</span><span class="p">[</span><span class="w">   </span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">32&#39;h00200093</span><span class="p">;</span><span class="w"> </span><span class="c1">// 00000000 addi x1, x0, 2</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">      </span><span class="n">mem</span><span class="p">[</span><span class="w">   </span><span class="mh">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">32&#39;h00208113</span><span class="p">;</span><span class="w"> </span><span class="c1">// 00000004 addi x2, x1, 2</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">      </span><span class="n">mem</span><span class="p">[</span><span class="w">   </span><span class="mh">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">32&#39;h7c211073</span><span class="p">;</span><span class="w"> </span><span class="c1">// 00000008 csrw out0, x2</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">      </span><span class="n">mem</span><span class="p">[</span><span class="w">   </span><span class="mh">3</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">32&#39;h0000006f</span><span class="p">;</span><span class="w"> </span><span class="c1">// 0000000c jal  x0, 0x00c</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="k">end</span>
+</span></code></pre></div>
+<p>This is where we ensure the memory has the desired program when the FPGA
+is reset. Writing this by hand would be tedious, so our simulators
+provide the <code>+dump-bin</code> command line option which will dump out what you
+need to copy into <code>hw/ProcMem.v</code>. For example,</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-fl-sim
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>%<span class="w"> </span>./proc-fl-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+dump-bin
+</span></code></pre></div>
+<p>So once you have verified one of your assembly programs works, use
+<code>+dump-bin</code> and then copy-and-paste the resulting lines into
+<code>hw/ProcMem.v</code>. You can use program number 0 to verify that the program
+currently stored in <code>hw/ProcMem.v</code> works as expected:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-scycle-sim
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">0</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Lab Report Task 1: Three-Function Calculator Assembly Program</p>
+<p>Save your three-function calculator assembly program so you can
+include it in your lab report. All assembly code should be formatted
+using a fixed-width font.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 4: Simulate Three-Function Calculator Program</p>
+<p>Show a TA your thre-function calculator program running on (1) the FL
+processor simulator; (2) the single-cycle processor simulator; and
+(3) the single-cycle processor simulator with the <code>ProcMem</code>. Here are
+the steps you need to show the TA.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-fl-sim
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>%<span class="w"> </span>make<span class="w"> </span>proc-scycle-sim
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>%<span class="w"> </span>./proc-fl-sim<span class="w">     </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>%<span class="w"> </span>./proc-fl-sim<span class="w">     </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>%<span class="w"> </span>./proc-fl-sim<span class="w">     </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0010</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">2</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0010</span>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">0</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">0</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">0</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0010</span>
+</span></code></pre></div>
+</div>
+<h3 id="34-synthesize-analyze-and-configure-single-cycle-tinyrv1-processor">3.4. Synthesize, Analyze, and Configure Single-Cycle TinyRV1 Processor</h3>
+<p>Now that we know our single-cycle processor can successfully execute the
+three-function calculator assembly program in simulation, we want to see
+if we can verify the same program running on the processor FPGA
+prototype. As in previous labs, the <em>New Project Wizard</em> creates a
+top-level Verilog module for us which has ports for all of the switches,
+LEDs, seven-segment displays, and pins on the FPGA development board.
+Here is the code you can use for your top-level design.</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk</span><span class="p">;</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span><span class="n">ClockDiv_RTL</span><span class="w"> </span><span class="n">clock_div</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span><span class="p">(</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">    </span><span class="p">.</span><span class="n">clk_in</span><span class="w">  </span><span class="p">(</span><span class="n">CLOCK_50</span><span class="p">),</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span><span class="p">.</span><span class="n">clk_out</span><span class="w"> </span><span class="p">(</span><span class="n">clk</span><span class="p">)</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst0</span><span class="p">;</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst</span><span class="p">;</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">  </span><span class="k">always</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">    </span><span class="n">rst0</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="o">~</span><span class="n">RESET_N</span><span class="p">;</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">    </span><span class="n">rst</span><span class="w">  </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">rst0</span><span class="p">;</span>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">  </span><span class="k">end</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">imemreq_val</span><span class="p">;</span>
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">imemreq_addr</span><span class="p">;</span>
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">imemresp_data</span><span class="p">;</span>
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">dmemreq_val</span><span class="p">;</span>
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">dmemreq_type</span><span class="p">;</span>
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">dmemreq_addr</span><span class="p">;</span>
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">dmemreq_wdata</span><span class="p">;</span>
+</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">dmemresp_rdata</span><span class="p">;</span>
+</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>
+</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">proc_out0</span><span class="p">;</span>
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">proc_out1</span><span class="p">;</span>
+</span><span id="__span-16-28"><a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">proc_out2</span><span class="p">;</span>
+</span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a>
+</span><span id="__span-16-30"><a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a><span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">proc_trace_val_unused</span><span class="p">;</span>
+</span><span id="__span-16-31"><a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">proc_trace_addr_unused</span><span class="p">;</span>
+</span><span id="__span-16-32"><a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">proc_trace_data_unused</span><span class="p">;</span>
+</span><span id="__span-16-33"><a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a>
+</span><span id="__span-16-34"><a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a><span class="w">  </span><span class="n">ProcScycle</span><span class="w"> </span><span class="n">proc</span>
+</span><span id="__span-16-35"><a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a><span class="w">  </span><span class="p">(</span>
+</span><span id="__span-16-36"><a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a><span class="w">    </span><span class="p">.</span><span class="n">clk</span><span class="w">             </span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+</span><span id="__span-16-37"><a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a><span class="w">    </span><span class="p">.</span><span class="n">rst</span><span class="w">             </span><span class="p">(</span><span class="n">rst</span><span class="p">),</span>
+</span><span id="__span-16-38"><a id="__codelineno-16-38" name="__codelineno-16-38" href="#__codelineno-16-38"></a>
+</span><span id="__span-16-39"><a id="__codelineno-16-39" name="__codelineno-16-39" href="#__codelineno-16-39"></a><span class="w">    </span><span class="p">.</span><span class="n">imemreq_val</span><span class="w">     </span><span class="p">(</span><span class="n">imemreq_val</span><span class="p">),</span>
+</span><span id="__span-16-40"><a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a><span class="w">    </span><span class="p">.</span><span class="n">imemreq_addr</span><span class="w">    </span><span class="p">(</span><span class="n">imemreq_addr</span><span class="p">),</span>
+</span><span id="__span-16-41"><a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a><span class="w">    </span><span class="p">.</span><span class="n">imemresp_data</span><span class="w">   </span><span class="p">(</span><span class="n">imemresp_data</span><span class="p">),</span>
+</span><span id="__span-16-42"><a id="__codelineno-16-42" name="__codelineno-16-42" href="#__codelineno-16-42"></a>
+</span><span id="__span-16-43"><a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a><span class="w">    </span><span class="p">.</span><span class="n">dmemreq_val</span><span class="w">     </span><span class="p">(</span><span class="n">dmemreq_val</span><span class="p">),</span>
+</span><span id="__span-16-44"><a id="__codelineno-16-44" name="__codelineno-16-44" href="#__codelineno-16-44"></a><span class="w">    </span><span class="p">.</span><span class="n">dmemreq_type</span><span class="w">    </span><span class="p">(</span><span class="n">dmemreq_type</span><span class="p">),</span>
+</span><span id="__span-16-45"><a id="__codelineno-16-45" name="__codelineno-16-45" href="#__codelineno-16-45"></a><span class="w">    </span><span class="p">.</span><span class="n">dmemreq_addr</span><span class="w">    </span><span class="p">(</span><span class="n">dmemreq_addr</span><span class="p">),</span>
+</span><span id="__span-16-46"><a id="__codelineno-16-46" name="__codelineno-16-46" href="#__codelineno-16-46"></a><span class="w">    </span><span class="p">.</span><span class="n">dmemreq_wdata</span><span class="w">   </span><span class="p">(</span><span class="n">dmemreq_wdata</span><span class="p">),</span>
+</span><span id="__span-16-47"><a id="__codelineno-16-47" name="__codelineno-16-47" href="#__codelineno-16-47"></a><span class="w">    </span><span class="p">.</span><span class="n">dmemresp_rdata</span><span class="w">  </span><span class="p">(</span><span class="n">dmemresp_rdata</span><span class="p">),</span>
+</span><span id="__span-16-48"><a id="__codelineno-16-48" name="__codelineno-16-48" href="#__codelineno-16-48"></a>
+</span><span id="__span-16-49"><a id="__codelineno-16-49" name="__codelineno-16-49" href="#__codelineno-16-49"></a><span class="w">    </span><span class="p">.</span><span class="n">in0</span><span class="w">             </span><span class="p">({</span><span class="mh">27</span><span class="mb">&#39;b0</span><span class="p">,</span><span class="n">SW</span><span class="p">[</span><span class="mh">9</span><span class="o">:</span><span class="mh">5</span><span class="p">]}),</span>
+</span><span id="__span-16-50"><a id="__codelineno-16-50" name="__codelineno-16-50" href="#__codelineno-16-50"></a><span class="w">    </span><span class="p">.</span><span class="n">in1</span><span class="w">             </span><span class="p">({</span><span class="mh">27</span><span class="mb">&#39;b0</span><span class="p">,</span><span class="n">SW</span><span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]}),</span>
+</span><span id="__span-16-51"><a id="__codelineno-16-51" name="__codelineno-16-51" href="#__codelineno-16-51"></a><span class="w">    </span><span class="p">.</span><span class="n">in2</span><span class="w">             </span><span class="p">({</span><span class="mh">31</span><span class="mb">&#39;b0</span><span class="p">,</span><span class="o">~</span><span class="n">KEY</span><span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]}),</span>
+</span><span id="__span-16-52"><a id="__codelineno-16-52" name="__codelineno-16-52" href="#__codelineno-16-52"></a>
+</span><span id="__span-16-53"><a id="__codelineno-16-53" name="__codelineno-16-53" href="#__codelineno-16-53"></a><span class="w">    </span><span class="p">.</span><span class="n">out0</span><span class="w">            </span><span class="p">(</span><span class="n">proc_out0</span><span class="p">),</span>
+</span><span id="__span-16-54"><a id="__codelineno-16-54" name="__codelineno-16-54" href="#__codelineno-16-54"></a><span class="w">    </span><span class="p">.</span><span class="n">out1</span><span class="w">            </span><span class="p">(</span><span class="n">proc_out1</span><span class="p">),</span>
+</span><span id="__span-16-55"><a id="__codelineno-16-55" name="__codelineno-16-55" href="#__codelineno-16-55"></a><span class="w">    </span><span class="p">.</span><span class="n">out2</span><span class="w">            </span><span class="p">(</span><span class="n">proc_out2</span><span class="p">),</span>
+</span><span id="__span-16-56"><a id="__codelineno-16-56" name="__codelineno-16-56" href="#__codelineno-16-56"></a>
+</span><span id="__span-16-57"><a id="__codelineno-16-57" name="__codelineno-16-57" href="#__codelineno-16-57"></a><span class="w">    </span><span class="p">.</span><span class="n">trace_val</span><span class="w">       </span><span class="p">(</span><span class="n">proc_trace_val_unused</span><span class="p">),</span>
+</span><span id="__span-16-58"><a id="__codelineno-16-58" name="__codelineno-16-58" href="#__codelineno-16-58"></a><span class="w">    </span><span class="p">.</span><span class="n">trace_addr</span><span class="w">      </span><span class="p">(</span><span class="n">proc_trace_addr_unused</span><span class="p">),</span>
+</span><span id="__span-16-59"><a id="__codelineno-16-59" name="__codelineno-16-59" href="#__codelineno-16-59"></a><span class="w">    </span><span class="p">.</span><span class="n">trace_data</span><span class="w">      </span><span class="p">(</span><span class="n">proc_trace_data_unused</span><span class="p">)</span>
+</span><span id="__span-16-60"><a id="__codelineno-16-60" name="__codelineno-16-60" href="#__codelineno-16-60"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-16-61"><a id="__codelineno-16-61" name="__codelineno-16-61" href="#__codelineno-16-61"></a>
+</span><span id="__span-16-62"><a id="__codelineno-16-62" name="__codelineno-16-62" href="#__codelineno-16-62"></a><span class="w">  </span><span class="n">ProcMem</span><span class="w"> </span><span class="n">mem</span>
+</span><span id="__span-16-63"><a id="__codelineno-16-63" name="__codelineno-16-63" href="#__codelineno-16-63"></a><span class="w">  </span><span class="p">(</span>
+</span><span id="__span-16-64"><a id="__codelineno-16-64" name="__codelineno-16-64" href="#__codelineno-16-64"></a><span class="w">    </span><span class="p">.</span><span class="n">clk</span><span class="w">             </span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+</span><span id="__span-16-65"><a id="__codelineno-16-65" name="__codelineno-16-65" href="#__codelineno-16-65"></a><span class="w">    </span><span class="p">.</span><span class="n">rst</span><span class="w">             </span><span class="p">(</span><span class="n">rst</span><span class="p">),</span>
+</span><span id="__span-16-66"><a id="__codelineno-16-66" name="__codelineno-16-66" href="#__codelineno-16-66"></a>
+</span><span id="__span-16-67"><a id="__codelineno-16-67" name="__codelineno-16-67" href="#__codelineno-16-67"></a><span class="w">    </span><span class="p">.</span><span class="n">imemreq_val</span><span class="w">     </span><span class="p">(</span><span class="n">imemreq_val</span><span class="p">),</span>
+</span><span id="__span-16-68"><a id="__codelineno-16-68" name="__codelineno-16-68" href="#__codelineno-16-68"></a><span class="w">    </span><span class="p">.</span><span class="n">imemreq_addr</span><span class="w">    </span><span class="p">(</span><span class="n">imemreq_addr</span><span class="p">),</span>
+</span><span id="__span-16-69"><a id="__codelineno-16-69" name="__codelineno-16-69" href="#__codelineno-16-69"></a><span class="w">    </span><span class="p">.</span><span class="n">imemresp_data</span><span class="w">   </span><span class="p">(</span><span class="n">imemresp_data</span><span class="p">),</span>
+</span><span id="__span-16-70"><a id="__codelineno-16-70" name="__codelineno-16-70" href="#__codelineno-16-70"></a>
+</span><span id="__span-16-71"><a id="__codelineno-16-71" name="__codelineno-16-71" href="#__codelineno-16-71"></a><span class="w">    </span><span class="p">.</span><span class="n">dmemreq_val</span><span class="w">     </span><span class="p">(</span><span class="n">dmemreq_val</span><span class="p">),</span>
+</span><span id="__span-16-72"><a id="__codelineno-16-72" name="__codelineno-16-72" href="#__codelineno-16-72"></a><span class="w">    </span><span class="p">.</span><span class="n">dmemreq_type</span><span class="w">    </span><span class="p">(</span><span class="n">dmemreq_type</span><span class="p">),</span>
+</span><span id="__span-16-73"><a id="__codelineno-16-73" name="__codelineno-16-73" href="#__codelineno-16-73"></a><span class="w">    </span><span class="p">.</span><span class="n">dmemreq_addr</span><span class="w">    </span><span class="p">(</span><span class="n">dmemreq_addr</span><span class="p">),</span>
+</span><span id="__span-16-74"><a id="__codelineno-16-74" name="__codelineno-16-74" href="#__codelineno-16-74"></a><span class="w">    </span><span class="p">.</span><span class="n">dmemreq_wdata</span><span class="w">   </span><span class="p">(</span><span class="n">dmemreq_wdata</span><span class="p">),</span>
+</span><span id="__span-16-75"><a id="__codelineno-16-75" name="__codelineno-16-75" href="#__codelineno-16-75"></a><span class="w">    </span><span class="p">.</span><span class="n">dmemresp_rdata</span><span class="w">  </span><span class="p">(</span><span class="n">dmemresp_rdata</span><span class="p">)</span>
+</span><span id="__span-16-76"><a id="__codelineno-16-76" name="__codelineno-16-76" href="#__codelineno-16-76"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-16-77"><a id="__codelineno-16-77" name="__codelineno-16-77" href="#__codelineno-16-77"></a>
+</span><span id="__span-16-78"><a id="__codelineno-16-78" name="__codelineno-16-78" href="#__codelineno-16-78"></a><span class="w">  </span><span class="c1">// Out Displays</span>
+</span><span id="__span-16-79"><a id="__codelineno-16-79" name="__codelineno-16-79" href="#__codelineno-16-79"></a>
+</span><span id="__span-16-80"><a id="__codelineno-16-80" name="__codelineno-16-80" href="#__codelineno-16-80"></a><span class="w">  </span><span class="n">Display_GL</span><span class="w"> </span><span class="n">proc_out0_display</span>
+</span><span id="__span-16-81"><a id="__codelineno-16-81" name="__codelineno-16-81" href="#__codelineno-16-81"></a><span class="w">  </span><span class="p">(</span>
+</span><span id="__span-16-82"><a id="__codelineno-16-82" name="__codelineno-16-82" href="#__codelineno-16-82"></a><span class="w">    </span><span class="p">.</span><span class="n">in</span><span class="w">       </span><span class="p">(</span><span class="n">proc_out0</span><span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]),</span>
+</span><span id="__span-16-83"><a id="__codelineno-16-83" name="__codelineno-16-83" href="#__codelineno-16-83"></a><span class="w">    </span><span class="p">.</span><span class="n">seg_tens</span><span class="w"> </span><span class="p">(</span><span class="n">HEX5</span><span class="p">),</span>
+</span><span id="__span-16-84"><a id="__codelineno-16-84" name="__codelineno-16-84" href="#__codelineno-16-84"></a><span class="w">    </span><span class="p">.</span><span class="n">seg_ones</span><span class="w"> </span><span class="p">(</span><span class="n">HEX4</span><span class="p">)</span>
+</span><span id="__span-16-85"><a id="__codelineno-16-85" name="__codelineno-16-85" href="#__codelineno-16-85"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-16-86"><a id="__codelineno-16-86" name="__codelineno-16-86" href="#__codelineno-16-86"></a>
+</span><span id="__span-16-87"><a id="__codelineno-16-87" name="__codelineno-16-87" href="#__codelineno-16-87"></a><span class="w">  </span><span class="n">Display_GL</span><span class="w"> </span><span class="n">proc_out1_display</span>
+</span><span id="__span-16-88"><a id="__codelineno-16-88" name="__codelineno-16-88" href="#__codelineno-16-88"></a><span class="w">  </span><span class="p">(</span>
+</span><span id="__span-16-89"><a id="__codelineno-16-89" name="__codelineno-16-89" href="#__codelineno-16-89"></a><span class="w">    </span><span class="p">.</span><span class="n">in</span><span class="w">       </span><span class="p">(</span><span class="n">proc_out1</span><span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]),</span>
+</span><span id="__span-16-90"><a id="__codelineno-16-90" name="__codelineno-16-90" href="#__codelineno-16-90"></a><span class="w">    </span><span class="p">.</span><span class="n">seg_tens</span><span class="w"> </span><span class="p">(</span><span class="n">HEX3</span><span class="p">),</span>
+</span><span id="__span-16-91"><a id="__codelineno-16-91" name="__codelineno-16-91" href="#__codelineno-16-91"></a><span class="w">    </span><span class="p">.</span><span class="n">seg_ones</span><span class="w"> </span><span class="p">(</span><span class="n">HEX2</span><span class="p">)</span>
+</span><span id="__span-16-92"><a id="__codelineno-16-92" name="__codelineno-16-92" href="#__codelineno-16-92"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-16-93"><a id="__codelineno-16-93" name="__codelineno-16-93" href="#__codelineno-16-93"></a>
+</span><span id="__span-16-94"><a id="__codelineno-16-94" name="__codelineno-16-94" href="#__codelineno-16-94"></a><span class="w">  </span><span class="n">Display_GL</span><span class="w"> </span><span class="n">proc_out2_display</span>
+</span><span id="__span-16-95"><a id="__codelineno-16-95" name="__codelineno-16-95" href="#__codelineno-16-95"></a><span class="w">  </span><span class="p">(</span>
+</span><span id="__span-16-96"><a id="__codelineno-16-96" name="__codelineno-16-96" href="#__codelineno-16-96"></a><span class="w">    </span><span class="p">.</span><span class="n">in</span><span class="w">       </span><span class="p">(</span><span class="n">proc_out2</span><span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]),</span>
+</span><span id="__span-16-97"><a id="__codelineno-16-97" name="__codelineno-16-97" href="#__codelineno-16-97"></a><span class="w">    </span><span class="p">.</span><span class="n">seg_tens</span><span class="w"> </span><span class="p">(</span><span class="n">HEX1</span><span class="p">),</span>
+</span><span id="__span-16-98"><a id="__codelineno-16-98" name="__codelineno-16-98" href="#__codelineno-16-98"></a><span class="w">    </span><span class="p">.</span><span class="n">seg_ones</span><span class="w"> </span><span class="p">(</span><span class="n">HEX0</span><span class="p">)</span>
+</span><span id="__span-16-99"><a id="__codelineno-16-99" name="__codelineno-16-99" href="#__codelineno-16-99"></a><span class="w">  </span><span class="p">);</span>
+</span></code></pre></div>
+<p>Spend a few minutes making sure you understand this top-level
+composition. Our timing analysis in Lab 4D showed that the single-cycle
+processor cannot meet timing with a 50MHz clock (i.e., clock constraint
+of 20ns). So we are using a clock divider which divides the 50MHz clock
+by four to produce a 12.5MHz clock (i.e., clock constraint of 80ns). We
+are now using a <em>reset synchronizer</em> which should help address some of
+the flakiness that students were seeing Lab 4D. Prof. Batten will talk
+more about reset synchronizers in lecture, but you can also read about
+synchronizers in Sections 3.5.4 and 3.5.5 of Harris and Harris.</p>
+<p>Once you are happy with your understanding, you just need to copy this
+code into the <em>DE0_CV_golden_top.v</em>. As in previous labs, we need to
+create a <em>timing constraint</em> file. Here are the steps to create an
+initial timing constraint file:</p>
+<ul>
+<li>Choose <em>File &gt; New</em> from the menu</li>
+<li>Click <em>Synopsys Design Constraints File</em></li>
+<li>Click <em>OK</em></li>
+<li>Enter the constraints shown below</li>
+<li>Click <em>File &gt; Save</em> from the menu</li>
+<li>Name the file <em>timing.sdc</em></li>
+<li>Save the file in the <em>lab4</em> directory</li>
+</ul>
+<p>We will use the following initial constraints:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>set_max_delay -from [all_inputs] -to [all_outputs] 20
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>set_min_delay -from [all_inputs] -to [all_outputs] 0
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>create_clock -period 20 [get_ports {CLOCK_50}]
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>create_clock -name clk -period 80 [get_nets {ClockDiv_RTL:clock_div|count[1]}]
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>set_output_delay -add_delay -clock clk -max 0 [all_outputs]
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>set_output_delay -add_delay -clock clk -min 0 [all_outputs]
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>set_input_delay -add_delay -clock clk -max 0 [all_inputs]
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>set_input_delay -add_delay -clock clk -min 0 [all_inputs]
+</span></code></pre></div>
+<p>These constraints tell the FPGA tools that:</p>
+<ul>
+<li>Our critical path delay constraint is <code>80ns</code> from all inputs to all
+   outputs</li>
+<li>We have a clock signal named <code>clk</code><ul>
+<li>There should be no setup time violations with respect to
+  <code>clk</code> when the period is <code>80ns</code></li>
+<li>There should be no hold time violations with respect to <code>clk</code></li>
+</ul>
+</li>
+<li>The output ports have a setup time of 0 (max constraint) and a hold
+   time of 0 (min constraint)</li>
+<li>The input ports have clock-to-port propagation delay of 0 (max
+   constraint) and a clock-to-port contamination delay of 0 (min
+   constraint)</li>
+</ul>
+<p>Make sure to copy-and-paste the three-function calculator program into
+<code>hw/ProcMem.v</code> within Quartus. Choose <em>Processing &gt; Start Compilation</em>
+from the menu to synthesize your design. You will need to wait 5-10
+minutes for synthesis to complete. Be patient! <strong>Students should continue
+on and start developing their accumulate program on <code>ecelinux</code> while
+waiting for synthesis to complete.</strong></p>
+<p><strong>Once synthesis is done, double check that your design does not have any
+inferred latches!</strong> The compilation will emit warnings not errors
+regarding inferred latches, but you must remove all inferred latches.
+These warnings are confusingly in green text. <a href="https://edstem.org/us/courses/62248/discussion/5740183">Check out this Ed
+post</a> for some
+more information on how to fix common issues, including inferred latches,
+we saw in Lab 4D.</p>
+<p>Now we can configure the FPGA:</p>
+<ul>
+<li>Choose <em>Tools &gt; Programmer</em> from the menu</li>
+<li>Click <em>Hardware Setup</em></li>
+<li>Currently selected hardware: <em>USB-Blaster [USB-0]</em></li>
+<li>Click <em>Close</em></li>
+<li>Click <em>Start</em></li>
+</ul>
+<p>You probably need to press the reset buttons on the FPGA board to start
+the execution of the assembly program. Confirm that the seven-segment
+displays show the exact same output as the simulation.</p>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 5: Demonstrate TinyRV1 Processor Running Three-Function Calculator Program</p>
+<p>First, show the TA the same simulation you did earlier on <code>ecelinux</code>
+like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-scycle-sim
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">0</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00011</span><span class="w"> </span>+in1-switches<span class="o">=</span><span class="m">00010</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span></code></pre></div>
+<p>Then press the reset buttons the FPGA board to show the TA that your
+FPGA prototype produces the expected output. The TA will ask you to
+perform different functions on different input data and to compare
+the output between your simulator and the FPGA prototype.
+Qualitatively discuss the advantages and disadvantages of your
+software calculator running on the single-cycle processor compared to
+the specialized hardware calculator you implemented in Lab 2.</p>
+</div>
+<h2 id="4-accumulate-tinyrv1-program">4. Accumulate TinyRV1 Program</h2>
+<p>In this part, we will implement a TinyRV1 assembly program that
+accumulates values stored in an array.</p>
+<h3 id="41-implement-accumulate-tinyrv1-program">4.1. Implement Accumulate TinyRV1 Program</h3>
+<p>Our program should wait for a buttons press and then read the number of
+elements to accumulate from the first five switches. The program should
+output the size to the seven-segment displays and output the bottom five
+bits of the final result to the seven-segment displays. The pseudo-code
+for our accumulate program is shown below.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>  <span class="c1"># set out1 to zero</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>  <span class="n">write_out1</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>  <span class="c1"># wait for go</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="n">wait</span><span class="p">:</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>  <span class="n">size</span>    <span class="o">=</span> <span class="n">read_in0</span><span class="p">()</span>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>  <span class="n">buttons</span> <span class="o">=</span> <span class="n">read_in2</span><span class="p">()</span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>  <span class="k">if</span> <span class="n">buttons</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>    <span class="n">goto</span> <span class="n">wait</span>
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>  <span class="c1"># display size</span>
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>  <span class="n">write_out0</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>
+</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>  <span class="c1"># calc</span>
+</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>
+</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>  <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a>  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>    <span class="nb">sum</span> <span class="o">=</span> <span class="nb">sum</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span><span id="__span-19-22"><a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a>
+</span><span id="__span-19-23"><a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a>  <span class="c1"># done</span>
+</span><span id="__span-19-24"><a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a>
+</span><span id="__span-19-25"><a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a>  <span class="n">write_out1</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+</span><span id="__span-19-26"><a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a>
+</span><span id="__span-19-27"><a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a>  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-19-28"><a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a>    <span class="k">pass</span>
+</span></code></pre></div>
+<p>Implement the accumulate program in assembly in the
+<code>sim/proc-sim-prog3.v</code> file. Use the following template which takes care
+of the wait loop, writing the result, and initializing the input data as
+an array starting at address 0x080 with 32 elements. The comment next to
+each element in the array specifies the value of the bottom five bits of
+the result (i.e., what the seven-segment display should show for a
+correct execution).</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>task proc_sim_prog3();
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>  // set out1 to zero
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>  asm( &#39;h000, &quot;csrw out1, x0&quot;      );
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>  // wait for go
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>  asm( &#39;h004, &quot;csrr x1, in0&quot;       );
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>  asm( &#39;h008, &quot;csrr x2, in2&quot;       );
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>  asm( &#39;h00c, &quot;addi x3, x0, 1&quot;     );
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>  asm( &#39;h010, &quot;bne  x2, x3, 0x004&quot; );
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>  // display size
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>  asm( &#39;h014, &quot;csrw out0, x1&quot; );
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>  // fill in the accumulate loop here
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>  // done (assumes result is in x4)
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>  asm( ?????, &quot;csrw out1, x4&quot;      ); // set address appropriately
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>  asm( ?????, &quot;jal  x0, ?????&quot;     ); // set address appropriately
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a>
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a>  // Input array
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a>
+</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a>                     //  size result seven_seg
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a>  data( &#39;h080, 36 ); //     1     36  4
+</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a>  data( &#39;h084, 26 ); //     2     62 30
+</span><span id="__span-20-30"><a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a>  data( &#39;h088, 69 ); //     3    131  3
+</span><span id="__span-20-31"><a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a>  data( &#39;h08c, 57 ); //     4    188 28
+</span><span id="__span-20-32"><a id="__codelineno-20-32" name="__codelineno-20-32" href="#__codelineno-20-32"></a>  data( &#39;h090, 11 ); //     5    199  7
+</span><span id="__span-20-33"><a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a>  data( &#39;h094, 68 ); //     6    267 11
+</span><span id="__span-20-34"><a id="__codelineno-20-34" name="__codelineno-20-34" href="#__codelineno-20-34"></a>  data( &#39;h098, 41 ); //     7    308 20
+</span><span id="__span-20-35"><a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a>  data( &#39;h09c, 90 ); //     8    398 14
+</span><span id="__span-20-36"><a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a>  data( &#39;h0a0, 32 ); //     9    430 14
+</span><span id="__span-20-37"><a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a>  data( &#39;h0a4, 76 ); //    10    506 26
+</span><span id="__span-20-38"><a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a>  data( &#39;h0a8, 44 ); //    11    550  6
+</span><span id="__span-20-39"><a id="__codelineno-20-39" name="__codelineno-20-39" href="#__codelineno-20-39"></a>  data( &#39;h0ac, 19 ); //    12    569 25
+</span><span id="__span-20-40"><a id="__codelineno-20-40" name="__codelineno-20-40" href="#__codelineno-20-40"></a>  data( &#39;h0b0, 17 ); //    13    586 10
+</span><span id="__span-20-41"><a id="__codelineno-20-41" name="__codelineno-20-41" href="#__codelineno-20-41"></a>  data( &#39;h0b4, 59 ); //    14    645  5
+</span><span id="__span-20-42"><a id="__codelineno-20-42" name="__codelineno-20-42" href="#__codelineno-20-42"></a>  data( &#39;h0b8, 99 ); //    15    744  8
+</span><span id="__span-20-43"><a id="__codelineno-20-43" name="__codelineno-20-43" href="#__codelineno-20-43"></a>  data( &#39;h0bc, 49 ); //    16    793 25
+</span><span id="__span-20-44"><a id="__codelineno-20-44" name="__codelineno-20-44" href="#__codelineno-20-44"></a>  data( &#39;h0c0, 65 ); //    17    858 26
+</span><span id="__span-20-45"><a id="__codelineno-20-45" name="__codelineno-20-45" href="#__codelineno-20-45"></a>  data( &#39;h0c4, 12 ); //    18    870  6
+</span><span id="__span-20-46"><a id="__codelineno-20-46" name="__codelineno-20-46" href="#__codelineno-20-46"></a>  data( &#39;h0c8, 55 ); //    19    925 29
+</span><span id="__span-20-47"><a id="__codelineno-20-47" name="__codelineno-20-47" href="#__codelineno-20-47"></a>  data( &#39;h0cc,  0 ); //    20    925 29
+</span><span id="__span-20-48"><a id="__codelineno-20-48" name="__codelineno-20-48" href="#__codelineno-20-48"></a>  data( &#39;h0d0, 51 ); //    21    976 16
+</span><span id="__span-20-49"><a id="__codelineno-20-49" name="__codelineno-20-49" href="#__codelineno-20-49"></a>  data( &#39;h0d4, 42 ); //    22   1018 26
+</span><span id="__span-20-50"><a id="__codelineno-20-50" name="__codelineno-20-50" href="#__codelineno-20-50"></a>  data( &#39;h0d8, 82 ); //    23   1100 12
+</span><span id="__span-20-51"><a id="__codelineno-20-51" name="__codelineno-20-51" href="#__codelineno-20-51"></a>  data( &#39;h0dc, 23 ); //    24   1123  3
+</span><span id="__span-20-52"><a id="__codelineno-20-52" name="__codelineno-20-52" href="#__codelineno-20-52"></a>  data( &#39;h0e0, 21 ); //    25   1144 24
+</span><span id="__span-20-53"><a id="__codelineno-20-53" name="__codelineno-20-53" href="#__codelineno-20-53"></a>  data( &#39;h0e4, 54 ); //    26   1198 14
+</span><span id="__span-20-54"><a id="__codelineno-20-54" name="__codelineno-20-54" href="#__codelineno-20-54"></a>  data( &#39;h0e8, 83 ); //    27   1281  1
+</span><span id="__span-20-55"><a id="__codelineno-20-55" name="__codelineno-20-55" href="#__codelineno-20-55"></a>  data( &#39;h0ec, 31 ); //    28   1312  0
+</span><span id="__span-20-56"><a id="__codelineno-20-56" name="__codelineno-20-56" href="#__codelineno-20-56"></a>  data( &#39;h0f0, 16 ); //    29   1328 16
+</span><span id="__span-20-57"><a id="__codelineno-20-57" name="__codelineno-20-57" href="#__codelineno-20-57"></a>  data( &#39;h0f4, 76 ); //    30   1404 28
+</span><span id="__span-20-58"><a id="__codelineno-20-58" name="__codelineno-20-58" href="#__codelineno-20-58"></a>  data( &#39;h0f8, 21 ); //    31   1425 17
+</span><span id="__span-20-59"><a id="__codelineno-20-59" name="__codelineno-20-59" href="#__codelineno-20-59"></a>  data( &#39;h0fc,  4 ); //    32   1429 21
+</span><span id="__span-20-60"><a id="__codelineno-20-60" name="__codelineno-20-60" href="#__codelineno-20-60"></a>
+</span><span id="__span-20-61"><a id="__codelineno-20-61" name="__codelineno-20-61" href="#__codelineno-20-61"></a>endtask
+</span></code></pre></div>
+<p>We recommend taking an incremental design approach. Start by ignoring the
+wait loop. Simply write a loop to accumulate the first four elements in
+the array, output the result to the seven-segment displays, and end with
+an infinite loop. Use the <code>+step</code> command line option to ensure the
+processor is executing the instructions as you expect. Once this is
+working, add support for the initial wait loop. Use the <code>+buttons=00000</code>
+and <code>+step</code> command line option to ensure the processor is executing the
+instructions as you expect when it is waiting for a button to be pushed.</p>
+<p>In general, we suggest writing out all of the assembly instructions but
+leave the actual instruction address values until the end. Use <code>???</code> as
+place holders for the branch and jump target addresses. Once you have all
+of the assembly instructions finished, then go through and update the
+address for each assembly instruction. The final step would be to go back
+and update the branch and jump target addresses.</p>
+<p>Always simulate your assembly program on the FL processor simulator
+first as follows:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-fl-sim
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>%<span class="w"> </span>./proc-fl-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">3</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>%<span class="w"> </span>./proc-fl-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">3</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+<p>From the comment above, the result when accumulating the first four
+elements should be 188 and the seven-segment display should shown 28.
+Once you know your assembly program is working on the FL processor
+simulator, then try it on the single-cycle processor simulator like this.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-scycle-sim
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">3</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">3</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+<p>Once you have verified your assembly program works, use <code>+dump-bin</code> and
+then copy-and-paste the resulting lines into <code>hw/ProcMem.v</code>. You can use
+program number 0 to verify that the program currently stored in
+<code>hw/ProcMem.v</code> works as expected:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-scycle-sim
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">0</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">0</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+<p>Let's run a full experiment to accumulate 31 elements.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-scycle-sim
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">0</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">11111</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+<p>The correct result is 1425 and the seven-segment display should show 17.
+The simulator will print out the <code>cycle_count</code>. This is the number of
+cycles it takes to execute the accumulate program. You will be working to
+fill in this data table:</p>
+<ul>
+<li><a href="https://docs.google.com/spreadsheets/d/1u30pax9gSaYgxfGzijZ16sxKd5bPucyl2BFsVvLCns4">https://docs.google.com/spreadsheets/d/1u30pax9gSaYgxfGzijZ16sxKd5bPucyl2BFsVvLCns4</a></li>
+</ul>
+<p>Make a copy of this table, and enter in the cycle count for your
+single-cycle processor into the <em>fpga-perf-data</em> tab. The cycle count
+starts from the beginning of the program and stops once out1 is no longer
+zero.</p>
+<div class="admonition note">
+<p class="admonition-title">Lab Report Task 2: Accumulate Assembly Program and Cycle Count</p>
+<p>Save your accumulate assembly program so you can include it in your
+lab report. All assembly code should be formatted using a fixed-width
+font. Make sure to save your completed data table with the cycle
+count number for accumulating 31 elements.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 6: Simulate Accumulate Program</p>
+<p>Show a TA your accumulate program running on (1) the FL processor
+simulator; (2) the single-cycle processor simulator; and (3) the
+single-cycle processor simulator with the <code>ProcMem</code>. The TA will ask
+you why the cycle count is reasonable if the given size if 4. The TA
+will ask you to try a different size. Here are the steps you need to
+show the TA.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-fl-sim
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>%<span class="w"> </span>make<span class="w"> </span>proc-scycle-sim
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>%<span class="w"> </span>./proc-fl-sim<span class="w">     </span>+prog-num<span class="o">=</span><span class="m">3</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>%<span class="w"> </span>./proc-fl-sim<span class="w">     </span>+prog-num<span class="o">=</span><span class="m">3</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">3</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">3</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">0</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">0</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+</div>
+<h3 id="42-synthesize-and-analyze-single-cycle-tinyrv1-processor">4.2. Synthesize and Analyze Single-Cycle TinyRV1 Processor</h3>
+<p>Now that we know our single-cycle processor can successfully execute the
+accumulate assembly program in simulation, we want to see if we can
+verify the same program running on the processor FPGA prototype.
+Copy-and-paste the accumulate program into <code>hw/ProcMem.v</code> within Quartus.
+Choose <em>Processing &gt; Start Compilation</em> from the menu to synthesize your
+design. You will need to wait 5-10 minutes for synthesis to complete. Be
+patient! <strong>Students should continue on and start experimenting with the
+accumulate accelerator interactive simulator on <code>ecelinux</code> while waiting
+for synthesis to complete.</strong></p>
+<ul>
+<li>RTL Viewer<ul>
+<li>Choose <em>Tools &gt; Netlist Viewer &gt; RTL Viewer</em> from the menu</li>
+<li>Use the Netlist Navigator to gradually drill down in the hierarchy as follows:</li>
+<li>ProcScycle</li>
+<li>ProcScycleDpath</li>
+<li>ALU_GL</li>
+<li>Adder_32b_GL</li>
+<li>AdderCarrySelect_8b_GL</li>
+<li>AdderRippleCarry_4b_GL</li>
+<li>FullAdder_GL</li>
+<li><strong>Appreciate how far we have come this semester!</strong></li>
+<li>Choose <em>File &gt; Close</em> from menu to close the RTL viewer</li>
+</ul>
+</li>
+<li>Chip Planner<ul>
+<li>Choose <em>Tools &gt; Chip Planner</em> from the menu</li>
+<li>Identify where the logic used to implement your design is located
+   in the FPGA</li>
+<li>Choose <em>File &gt; Close</em> from the menu to close the chip planner</li>
+</ul>
+</li>
+</ul>
+<p>The next step is to analyze the area of your design.</p>
+<ul>
+<li>Choose <em>Processing -&gt; Compilation Report</em> from the menu</li>
+<li>Under <em>Table of Contents</em> choose <em>Fitter &gt; Resource Section &gt; Resource
+   Usage Summary</em></li>
+<li>Look through the report to determine the number of combinational ALUTs
+   (configurable look-up tables) that are used for your design</li>
+<li>Look through the report to determine the number of dedicated logic
+   registers that are used for your design</li>
+</ul>
+<p>Add the area data to the data table. You can find the number of 7-input
+ALUTs, 6-input ALUTs, etc in the area report. You can find the dedicated
+logic registers also in the area report.</p>
+<p>The final step is to analyze the timing (i.e., the critical path delay)
+of your design. We will analyze timing for the <em>Slow 1100mV 85C Model</em>
+which is the default choice in the Timing Analyzer.</p>
+<ul>
+<li>Choose <em>Tools &gt; Timing Analyzer</em> from the menu</li>
+<li>Double-click <em>Update Timing Netlist</em></li>
+<li>Choose <em>Reports &gt; Custom Reports &gt; Report Timing</em> from the menu</li>
+<li>Report Timing<ul>
+<li>Clocks - From clock: <em>clk</em></li>
+<li>Clocks - To clock: <em>clk</em></li>
+<li>Targets - From: <em>[get_registers *]</em></li>
+<li>Targets - To: <em>[get_registers *]</em></li>
+<li>Report number of paths: <em>1</em></li>
+<li>Check next to <em>File name</em> and enter <em>proc-critical-path.txt</em></li>
+<li>Click <em>Report Timing</em></li>
+</ul>
+</li>
+<li>Identify the "slack" and the "data delay" of the displayed path</li>
+<li>Look at the actual critical path (i.e., <em>Data Arrival Path</em>) which
+    shows the longest path from one register to another register</li>
+<li>Choose <em>File &gt; Close</em> from the menu to close the timing analyzer</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Lab Report Task 3: Collect Data for Single-Cycle Processor</p>
+<p>Save your completed data table with your analysis of your
+single-cycle processor and include it in your lab report. Take a
+screenshot of the entire RTL viewer window; it must clearly show the
+Netlist Navigator with the full hierarchy from the top to the full
+adder on the left and the gate-level implementation of the full adder
+on the right. Save a screenshot of the chip planner clearly showing
+where the logic used to implement your design is located on the FPGA.
+Save the critical path report and use it to highlight the critical
+path on the processor datapath diagram; annotate the delays of the
+various components along the critical path. Remember, if you select
+multiple cells in the <em>Incr</em> column of the timing report and hover
+your mouse it will display a pop-up showing the sum of the delays
+along that portion of the path.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 7: Discuss Single-Cycle Processor</p>
+<p>Show a TA your completed data table with the area and performance
+results. Show a TA the screenshot of the full adder and explain how
+the full adder fits into the complete single-cycle processor. Show a
+TA the single-cycle processor datapath with the highlighted critical
+path and annotated delays. Is the critical path as expected?</p>
+</div>
+<h3 id="44-configure-single-cycle-tinyrv1-processor-prototype">4.4. Configure Single-Cycle TinyRV1 Processor Prototype</h3>
+<p>Now we can configure the FPGA:</p>
+<ul>
+<li>Choose <em>Tools &gt; Programmer</em> from the menu</li>
+<li>Click <em>Hardware Setup</em></li>
+<li>Currently selected hardware: <em>USB-Blaster [USB-0]</em></li>
+<li>Click <em>Close</em></li>
+<li>Click <em>Start</em></li>
+</ul>
+<p>You probably need to press the reset button on the FPGA board to start
+the execution of the assembly program. Confirm that the seven-segment
+displays show the exact same output as the simulation. Don't forget to
+actually press the push button to start the kernel!</p>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 8: Demonstrate TinyRV1 Processor Running Accumulate Program</p>
+<p>First, show the TA the same simulation you did earlier on <code>ecelinux</code>
+like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>%<span class="w"> </span>make<span class="w"> </span>proc-scycle-sim
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>%<span class="w"> </span>./proc-scycle-sim<span class="w"> </span>+prog-num<span class="o">=</span><span class="m">0</span><span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+<p>Then press the reset button the FPGA board to show the TA that your
+FPGA prototype produces the expected output. The TA will ask you to
+try a different size and to compare the output between your simulator
+and the FPGA prototype.</p>
+</div>
+<h2 id="5-accumulate-accelerator">5. Accumulate Accelerator</h2>
+<p>In this part, we will simulate, synthesize, analyze, and configure your
+accumulate accelerator. The accelerator is specialized so it should have
+lower area and higher performance compared to the general-purpose
+processor; but of course since it is specialized it can only do one
+thing!</p>
+<h3 id="51-simulate-accumulate-accelerator">5.1. Simulate Accumulate Accelerator</h3>
+<p>We provide you an interactive accumulate accelerator simulator which
+emulates the eventual FPGA prototype. You can run the interactive
+simulator as follows:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>%<span class="w"> </span>make<span class="w"> </span>accum-xcel-sim
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>%<span class="w"> </span>./accum-xcel-sim<span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>%<span class="w"> </span>./accum-xcel-sim<span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+<p>The accumulate accelerator is setup to use the exact same data as the
+accumulate assembly program so it should display the same values for a
+given size. As with the accumulate assembly program, the result when
+accumulating the first four elements should be 188 and the seven-segment
+display should shown 28.</p>
+<p>Let's run a full experiment to accumulate 31 elements.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>%<span class="w"> </span>make<span class="w"> </span>accum-xcel-sim
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>%<span class="w"> </span>./accum-xcel-sim<span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">11111</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+<p>The correct result is 1425 and the seven-segment display should show 17.
+The simulator will print out the <code>cycle_count</code>. This is the number of
+cycles it takes for the accumulate accelerator to finish. Add this cycle
+count to the data table.</p>
+<div class="admonition note">
+<p class="admonition-title">Lab Report Task 4: Accumulate Accelerator and Cycle Count</p>
+<p>Make sure to save your completed data table with the cycle count
+number for accumulating 31 elements. You will also need to include a
+datapath diagram and a FSM diagram of your accumulate accelerator in
+your lab report.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 9: Simulate Accumulate Accelerator</p>
+<p>Start by showing a TA the datapath and FSM diagram for your
+accumulate accelerator. Clearly explain how your accumulate
+accelerator works by describing the interaction between the datapath
+and control unit. Then show a TA your accumulate accelerator working
+in simulation. The TA will ask you why the cycle count is reasonable
+if the given size is 4. Here are the steps you need to show the TA.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>%<span class="w"> </span>make<span class="w"> </span>accum-xcel-sim
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>%<span class="w"> </span>./accum-xcel-sim<span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0000</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>%<span class="w"> </span>./accum-xcel-sim<span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+</div>
+<h3 id="52-synthesize-and-analyze-accumulator-accelerator">5.2. Synthesize and Analyze Accumulator Accelerator</h3>
+<p>Now that we know our accumulate accelerator is fully functional, we can
+synthesize and analyze the accumulate accelerator using the FPGA tools.
+Here is the code you can use for your top-level design.</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="w">  </span><span class="c1">// replace this with the clock divider if you do not meet timing</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk</span><span class="p">;</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">clk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CLOCK_50</span><span class="p">;</span>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst0</span><span class="p">;</span>
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst</span><span class="p">;</span>
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">  </span><span class="k">always</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="w">    </span><span class="n">rst0</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="o">~</span><span class="n">RESET_N</span><span class="p">;</span>
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="w">    </span><span class="n">rst</span><span class="w">  </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">rst0</span><span class="p">;</span>
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="w">  </span><span class="k">end</span>
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>
+</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">xcel_go</span><span class="p">;</span>
+</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">13</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">xcel_size</span><span class="p">;</span>
+</span><span id="__span-30-14"><a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a><span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">xcel_result_val</span><span class="p">;</span>
+</span><span id="__span-30-15"><a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">xcel_result</span><span class="p">;</span>
+</span><span id="__span-30-16"><a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a>
+</span><span id="__span-30-17"><a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a><span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">memreq_val</span><span class="p">;</span>
+</span><span id="__span-30-18"><a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">memreq_addr</span><span class="p">;</span>
+</span><span id="__span-30-19"><a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">memresp_data</span><span class="p">;</span>
+</span><span id="__span-30-20"><a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a>
+</span><span id="__span-30-21"><a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">xcel_go</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">~</span><span class="n">KEY</span><span class="p">[</span><span class="mh">0</span><span class="p">];</span>
+</span><span id="__span-30-22"><a id="__codelineno-30-22" name="__codelineno-30-22" href="#__codelineno-30-22"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">xcel_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SW</span><span class="p">[</span><span class="mh">9</span><span class="o">:</span><span class="mh">5</span><span class="p">];</span>
+</span><span id="__span-30-23"><a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a>
+</span><span id="__span-30-24"><a id="__codelineno-30-24" name="__codelineno-30-24" href="#__codelineno-30-24"></a><span class="w">  </span><span class="n">AccumXcel</span><span class="w"> </span><span class="n">xcel</span>
+</span><span id="__span-30-25"><a id="__codelineno-30-25" name="__codelineno-30-25" href="#__codelineno-30-25"></a><span class="w">  </span><span class="p">(</span>
+</span><span id="__span-30-26"><a id="__codelineno-30-26" name="__codelineno-30-26" href="#__codelineno-30-26"></a><span class="w">    </span><span class="p">.</span><span class="n">clk</span><span class="w">          </span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+</span><span id="__span-30-27"><a id="__codelineno-30-27" name="__codelineno-30-27" href="#__codelineno-30-27"></a><span class="w">    </span><span class="p">.</span><span class="n">rst</span><span class="w">          </span><span class="p">(</span><span class="n">rst</span><span class="p">),</span>
+</span><span id="__span-30-28"><a id="__codelineno-30-28" name="__codelineno-30-28" href="#__codelineno-30-28"></a><span class="w">    </span><span class="p">.</span><span class="n">go</span><span class="w">           </span><span class="p">(</span><span class="n">xcel_go</span><span class="p">),</span>
+</span><span id="__span-30-29"><a id="__codelineno-30-29" name="__codelineno-30-29" href="#__codelineno-30-29"></a><span class="w">    </span><span class="p">.</span><span class="n">size</span><span class="w">         </span><span class="p">(</span><span class="n">xcel_size</span><span class="p">),</span>
+</span><span id="__span-30-30"><a id="__codelineno-30-30" name="__codelineno-30-30" href="#__codelineno-30-30"></a><span class="w">    </span><span class="p">.</span><span class="n">result_val</span><span class="w">   </span><span class="p">(</span><span class="n">xcel_result_val</span><span class="p">),</span>
+</span><span id="__span-30-31"><a id="__codelineno-30-31" name="__codelineno-30-31" href="#__codelineno-30-31"></a><span class="w">    </span><span class="p">.</span><span class="n">result</span><span class="w">       </span><span class="p">(</span><span class="n">xcel_result</span><span class="p">),</span>
+</span><span id="__span-30-32"><a id="__codelineno-30-32" name="__codelineno-30-32" href="#__codelineno-30-32"></a><span class="w">    </span><span class="p">.</span><span class="n">memreq_val</span><span class="w">   </span><span class="p">(</span><span class="n">memreq_val</span><span class="p">),</span>
+</span><span id="__span-30-33"><a id="__codelineno-30-33" name="__codelineno-30-33" href="#__codelineno-30-33"></a><span class="w">    </span><span class="p">.</span><span class="n">memreq_addr</span><span class="w">  </span><span class="p">(</span><span class="n">memreq_addr</span><span class="p">),</span>
+</span><span id="__span-30-34"><a id="__codelineno-30-34" name="__codelineno-30-34" href="#__codelineno-30-34"></a><span class="w">    </span><span class="p">.</span><span class="n">memresp_data</span><span class="w"> </span><span class="p">(</span><span class="n">memresp_data</span><span class="p">)</span>
+</span><span id="__span-30-35"><a id="__codelineno-30-35" name="__codelineno-30-35" href="#__codelineno-30-35"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-30-36"><a id="__codelineno-30-36" name="__codelineno-30-36" href="#__codelineno-30-36"></a>
+</span><span id="__span-30-37"><a id="__codelineno-30-37" name="__codelineno-30-37" href="#__codelineno-30-37"></a><span class="w">  </span><span class="n">AccumXcelMem</span><span class="w"> </span><span class="n">mem</span>
+</span><span id="__span-30-38"><a id="__codelineno-30-38" name="__codelineno-30-38" href="#__codelineno-30-38"></a><span class="w">  </span><span class="p">(</span>
+</span><span id="__span-30-39"><a id="__codelineno-30-39" name="__codelineno-30-39" href="#__codelineno-30-39"></a><span class="w">    </span><span class="p">.</span><span class="n">clk</span><span class="w">          </span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+</span><span id="__span-30-40"><a id="__codelineno-30-40" name="__codelineno-30-40" href="#__codelineno-30-40"></a><span class="w">    </span><span class="p">.</span><span class="n">rst</span><span class="w">          </span><span class="p">(</span><span class="n">rst</span><span class="p">),</span>
+</span><span id="__span-30-41"><a id="__codelineno-30-41" name="__codelineno-30-41" href="#__codelineno-30-41"></a><span class="w">    </span><span class="p">.</span><span class="n">memreq_val</span><span class="w">   </span><span class="p">(</span><span class="n">memreq_val</span><span class="p">),</span>
+</span><span id="__span-30-42"><a id="__codelineno-30-42" name="__codelineno-30-42" href="#__codelineno-30-42"></a><span class="w">    </span><span class="p">.</span><span class="n">memreq_addr</span><span class="w">  </span><span class="p">(</span><span class="n">memreq_addr</span><span class="p">),</span>
+</span><span id="__span-30-43"><a id="__codelineno-30-43" name="__codelineno-30-43" href="#__codelineno-30-43"></a><span class="w">    </span><span class="p">.</span><span class="n">memresp_data</span><span class="w"> </span><span class="p">(</span><span class="n">memresp_data</span><span class="p">)</span>
+</span><span id="__span-30-44"><a id="__codelineno-30-44" name="__codelineno-30-44" href="#__codelineno-30-44"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-30-45"><a id="__codelineno-30-45" name="__codelineno-30-45" href="#__codelineno-30-45"></a>
+</span><span id="__span-30-46"><a id="__codelineno-30-46" name="__codelineno-30-46" href="#__codelineno-30-46"></a><span class="w">  </span><span class="c1">// Size Display</span>
+</span><span id="__span-30-47"><a id="__codelineno-30-47" name="__codelineno-30-47" href="#__codelineno-30-47"></a>
+</span><span id="__span-30-48"><a id="__codelineno-30-48" name="__codelineno-30-48" href="#__codelineno-30-48"></a><span class="w">  </span><span class="n">Display_GL</span><span class="w"> </span><span class="n">xcel_size_display</span>
+</span><span id="__span-30-49"><a id="__codelineno-30-49" name="__codelineno-30-49" href="#__codelineno-30-49"></a><span class="w">  </span><span class="p">(</span>
+</span><span id="__span-30-50"><a id="__codelineno-30-50" name="__codelineno-30-50" href="#__codelineno-30-50"></a><span class="w">    </span><span class="p">.</span><span class="n">in</span><span class="w">       </span><span class="p">(</span><span class="n">xcel_size</span><span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]),</span>
+</span><span id="__span-30-51"><a id="__codelineno-30-51" name="__codelineno-30-51" href="#__codelineno-30-51"></a><span class="w">    </span><span class="p">.</span><span class="n">seg_tens</span><span class="w"> </span><span class="p">(</span><span class="n">HEX5</span><span class="p">),</span>
+</span><span id="__span-30-52"><a id="__codelineno-30-52" name="__codelineno-30-52" href="#__codelineno-30-52"></a><span class="w">    </span><span class="p">.</span><span class="n">seg_ones</span><span class="w"> </span><span class="p">(</span><span class="n">HEX4</span><span class="p">)</span>
+</span><span id="__span-30-53"><a id="__codelineno-30-53" name="__codelineno-30-53" href="#__codelineno-30-53"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-30-54"><a id="__codelineno-30-54" name="__codelineno-30-54" href="#__codelineno-30-54"></a>
+</span><span id="__span-30-55"><a id="__codelineno-30-55" name="__codelineno-30-55" href="#__codelineno-30-55"></a><span class="w">  </span><span class="c1">// Result Display</span>
+</span><span id="__span-30-56"><a id="__codelineno-30-56" name="__codelineno-30-56" href="#__codelineno-30-56"></a>
+</span><span id="__span-30-57"><a id="__codelineno-30-57" name="__codelineno-30-57" href="#__codelineno-30-57"></a><span class="w">  </span><span class="n">Display_GL</span><span class="w"> </span><span class="n">xcel_result_display</span>
+</span><span id="__span-30-58"><a id="__codelineno-30-58" name="__codelineno-30-58" href="#__codelineno-30-58"></a><span class="w">  </span><span class="p">(</span>
+</span><span id="__span-30-59"><a id="__codelineno-30-59" name="__codelineno-30-59" href="#__codelineno-30-59"></a><span class="w">    </span><span class="p">.</span><span class="n">in</span><span class="w">       </span><span class="p">(</span><span class="n">xcel_result</span><span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]),</span>
+</span><span id="__span-30-60"><a id="__codelineno-30-60" name="__codelineno-30-60" href="#__codelineno-30-60"></a><span class="w">    </span><span class="p">.</span><span class="n">seg_tens</span><span class="w"> </span><span class="p">(</span><span class="n">HEX3</span><span class="p">),</span>
+</span><span id="__span-30-61"><a id="__codelineno-30-61" name="__codelineno-30-61" href="#__codelineno-30-61"></a><span class="w">    </span><span class="p">.</span><span class="n">seg_ones</span><span class="w"> </span><span class="p">(</span><span class="n">HEX2</span><span class="p">)</span>
+</span><span id="__span-30-62"><a id="__codelineno-30-62" name="__codelineno-30-62" href="#__codelineno-30-62"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-30-63"><a id="__codelineno-30-63" name="__codelineno-30-63" href="#__codelineno-30-63"></a>
+</span><span id="__span-30-64"><a id="__codelineno-30-64" name="__codelineno-30-64" href="#__codelineno-30-64"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">LEDR</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xcel_result_val</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Spend a few minutes making sure you understand this top-level
+composition. Notice we are not using a clock divider since we should be
+able to meet timing using a 50MHz clock. We are again using a <em>reset
+synchronizer</em> which should help address some of the flakiness that
+students were seeing Lab 4D. We have connected the <code>xcel_result_val</code>
+signal to one of the LEDs.</p>
+<p>Once you are happy with your understanding, you just need to copy this
+code into the <em>DE0_CV_golden_top.v</em>. We also need to update our
+constraints to be as follows:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>set_max_delay -from [all_inputs] -to [all_outputs] 20
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>set_min_delay -from [all_inputs] -to [all_outputs] 0
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>create_clock -name clk -period 20 [get_ports {CLOCK_50}]
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>set_output_delay -add_delay -clock clk -max 0 [all_outputs]
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>set_output_delay -add_delay -clock clk -min 0 [all_outputs]
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>set_input_delay -add_delay -clock clk -max 0 [all_inputs]
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>set_input_delay -add_delay -clock clk -min 0 [all_inputs]
+</span></code></pre></div>
+<p>This is similar to the processor except without the clock divider. Choose
+<em>Processing &gt; Start Compilation</em> from the menu to synthesize your design.
+You will need to wait 2-3 minutes for synthesis to complete. Be patient!</p>
+<p>If your design does not meet timing then you have two options: (1) you
+can change your design to try and reduce the critical path; or (2) you
+can increase the clock constraint (i.e., your accelerator will run at a
+lower clock frequency). For this lab let's go with option (2). You can
+instantiate a clock divider at the top-level just like you did for the
+processor earlier in the lab. The clock divider will increase the clock
+constraint to 80ns (i.e., the target clock frequency will be 12.5MHz
+instead of 50MHz). After instantiating the clock divider make sure you
+also change the timing constraints to be the same as what you used with
+the processor. Then try synthesizing your design again.</p>
+<p><strong>Once synthesis is done, double check that your design does not have any
+inferred latches!</strong> The compilation will emit warnings not errors
+regarding inferred latches, but you must remove all inferred latches.
+These warnings are confusingly in green text. <a href="https://edstem.org/us/courses/62248/discussion/5740183">Check out this Ed
+post</a> for some
+more information on how to fix common issues, including inferred latches,
+we saw in Lab 4D.</p>
+<p>The next step is to analyze the area of your design.</p>
+<ul>
+<li>Choose <em>Processing -&gt; Compilation Report</em> from the menu</li>
+<li>Under <em>Table of Contents</em> choose <em>Fitter &gt; Resource Section &gt; Resource
+   Usage Summary</em></li>
+<li>Look through the report to determine the number of combinational ALUTs
+   (configurable look-up tables) that are used for your design</li>
+<li>Look through the report to determine the number of dedicated logic
+   registers that are used for your design</li>
+</ul>
+<p>Add the area data to the data table. You can find the number of 7-input
+ALUTs, 6-input ALUTs, etc in the area report. You can find the dedicated
+logic registers also in the area report.</p>
+<p>The final step is to analyze the timing (i.e., the critical path delay)
+of your design. We will analyze timing for the <em>Slow 1100mV 85C Model</em>
+which is the default choice in the Timing Analyzer.</p>
+<ul>
+<li>Choose <em>Tools &gt; Timing Analyzer</em> from the menu</li>
+<li>Double-click <em>Update Timing Netlist</em></li>
+<li>Choose <em>Reports &gt; Custom Reports &gt; Report Timing</em> from the menu</li>
+<li>Report Timing<ul>
+<li>Clocks - From clock: <em>clk</em></li>
+<li>Clocks - To clock: <em>clk</em></li>
+<li>Targets - From: <em>[get_registers *]</em></li>
+<li>Targets - To: <em>[get_registers *]</em></li>
+<li>Report number of paths: <em>1</em></li>
+<li>Check next to <em>File name</em> and enter <em>xcel-critical-path.txt</em></li>
+<li>Click <em>Report Timing</em></li>
+</ul>
+</li>
+<li>Identify the "slack" and the "data delay" of the displayed path</li>
+<li>Look at the actual critical path (i.e., <em>Data Arrival Path</em>) which
+    shows the longest path from one register to another register</li>
+<li>Choose <em>File &gt; Close</em> from the menu to close the timing analyzer</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Lab Report Task 5: Collect Data for Accumulate Accelerator</p>
+<p>Save your completed data table with your analysis of your
+single-cycle processor and include it in your lab report. Save the
+critical path report and use it to highlight the critical path on the
+accumulate accelerator datapath diagram; annotate the delays of the
+various components along the critical path. Remember, if you select
+multiple cells in the <em>Incr</em> column of the timing report and hover
+your mouse it will display a pop-up showing the sum of the delays
+along that portion of the path.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 10: Discuss Accumulate Accelerator</p>
+<p>Show a TA your completed data table with the area and performance
+results. Show a TA your accumulate accelerator datapath with the
+highlighted critical path and annotated delays. Is the critical path
+as expected? Discuss the trade-off between more general-purpose
+hardware (e.g., our TinyRV1 processor) and more specialized hardware
+(e.g., our accumulate accelerator).</p>
+</div>
+<h3 id="53-configure-accumulator-accelerator-prototype">5.3. Configure Accumulator Accelerator Prototype</h3>
+<p>Now we can configure the FPGA:</p>
+<ul>
+<li>Choose <em>Tools &gt; Programmer</em> from the menu</li>
+<li>Click <em>Hardware Setup</em></li>
+<li>Currently selected hardware: <em>USB-Blaster [USB-0]</em></li>
+<li>Click <em>Close</em></li>
+<li>Click <em>Start</em></li>
+</ul>
+<p>You might need to press the reset button on the FPGA board. Confirm that
+the seven-segment displays show the exact same output as the simulation.
+Don't forget to actually press the push button to start the accelerator!</p>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 11: Demonstrate Accumulate Accelerator</p>
+<p>First, show the TA the same simulation you did earlier on <code>ecelinux</code>
+like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/groupXX/lab4-proc/build
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>%<span class="w"> </span>make<span class="w"> </span>accum-xcel-sim
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>%<span class="w"> </span>./accum-xcel-sim<span class="w"> </span>+in0-switches<span class="o">=</span><span class="m">00100</span><span class="w"> </span>+buttons<span class="o">=</span><span class="m">0001</span>
+</span></code></pre></div>
+<p>Then press the reset button the FPGA board to show the TA that your
+FPGA prototype produces the expected output. The TA will ask you to
+try a different size and to compare the output between your simulator
+and the FPGA prototype.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 12: Turn In FPGA Board</p>
+<p>When you are finished with your demo, pack up your FPGA development
+board. Neatly put the board, power cable, and USB cable back in the
+box. Return the box to a TA who will then record the board number on
+your check-off sheet, initial the final check-off, and then collect
+your check-off sheet.</p>
+</div>
+<h2 id="6-lab-report-submission">6. Lab Report Submission</h2>
+<p>Students should work with their partner to prepare a short lab report
+that conveys what they have learned in this lab assignment. The lab
+report should start with no more than two pages of text. Students should
+include all figures, tables, and diagrams after these two pages in an
+appendix. The appendix can be as many pages as necessary. Do not
+interleave the text, figures, tables, and diagrams. There should be two
+pages of text and then the appendix with all of the text, figures,
+tables, and diagrams.</p>
+<p>There are no restrictions on font size, margins, or line spacing, but
+please make sure your report is readable. We recommend using 10pt Times
+or 10pt Palintino with 0.75in to 1in margins. Please make sure you
+include a title, your names, and your NetIDs at the top of the first
+page. Do not include a title page.</p>
+<p>The lab report must include the following numbered sections. Please
+number your sections and use these specific titles. Please follow the
+guidelines on the number of paragraphs, the content of each paragraph,
+and which figures/tables to include. Some paragraphs might just be 2-3
+sentences.</p>
+<h4 id="section-1-introduction-one-paragraph">Section 1. Introduction (one paragraph)</h4>
+<ul>
+<li>Include 2-3 sentences explaining what the lab involves</li>
+<li>Include one sentence explaining the purpose of this lab (why are
+    students doing this lab?)</li>
+<li>Include one sentence explicitly connecting the lab to one or more
+    lecture topics; be specific on which lecture topics this lab
+    reinforces with experiential learning</li>
+</ul>
+<h4 id="section-2-single-cycle-tinyrv1-processor-two-paragraphs">Section 2. Single-Cycle TinyRV1 Processor (two paragraphs)</h4>
+<ul>
+<li>
+<p>Paragraph 1: Accumulate Assembly Program</p>
+<ul>
+<li>Include a sentence referencing your accumulate assembly program
+   listing in the appendix</li>
+<li>Include 2-3 sentences clearly describing how the accumulate
+   assembly program works</li>
+</ul>
+</li>
+<li>
+<p>Paragraph 2: Single-Cycle TinyRV1 Processor FPGA Implementation</p>
+<ul>
+<li>Include a sentence referencing the data tables in the appendix</li>
+<li>Include a sentence discussing the area of the processor</li>
+<li>Include 2-3 sentences referencing your annotated processor datapath
+   diagram in the appendix, clearly describing where the critical
+   path is in your processor, and discussing if this is the expected
+   path</li>
+<li>Include a sentence discussing the number of cycles required for the
+   processor to accumulate 31 elements; clearly justify this cycle
+   count</li>
+<li>Include a sentence discussing the total execution time in
+   nanoseconds required for the processor to accumulate 31 elements</li>
+</ul>
+</li>
+</ul>
+<h4 id="section-3-accumulate-accelerator-two-paragraphs">Section 3. Accumulate Accelerator (two paragraphs)</h4>
+<ul>
+<li>
+<p>Paragraph 1: Accumulate Accelerator Design</p>
+<ul>
+<li>Include a sentence referencing your datapath and FSM diagram</li>
+<li>Include several sentences that clearly explain how your accumulate
+  accelerator works by describing the interaction between the
+  datapath and control unit; be sure to clearly explain how the
+  accelerator starts and stops</li>
+</ul>
+</li>
+<li>
+<p>Paragraph 2: Accumulate Accelerator FPGA implementation</p>
+<ul>
+<li>Include a sentence referencing the data tables in the appendix</li>
+<li>Include a sentence discussing the area of the accelerator</li>
+<li>Include 2-3 sentences referencing your annotated accelerator
+   datapath diagram in the appendix, clearly describing where the
+   critical path is in your accelerator, and discussing if this is
+   the expected path</li>
+<li>Include a sentence discussing the number of cycles required for the
+   accelerator to accumulate 31 elements; clearly justify this cycle
+   count</li>
+<li>Include a sentence discussing the total execution time in
+   nanoseconds required for the accelerator to accumulate 31 elements</li>
+</ul>
+</li>
+</ul>
+<h4 id="section-5-conclusion-one-paragraph">Section 5: Conclusion (one paragraph)</h4>
+<ul>
+<li>Include a sentence that provides a clear quantitative comparison in
+    terms of area and performance between using a general-purpose
+    processor vs. specialized hardware for this accumulate kernel</li>
+<li>Include a sentence that provides a clear qualitative comparison in
+    terms of design complexity and generality between using a
+    general-purpose processor vs. specialized hardware</li>
+<li>Include a sentence that draws a high-level conclusion; how has what
+    you have learned impact your perspective of computer engineering</li>
+</ul>
+<h4 id="appendix">Appendix</h4>
+<ul>
+<li>Complex TinyRV1 program worksheet (from Lab 4D)</li>
+<li>Three-function calculator assembly program</li>
+<li>Accumulate assembly program</li>
+<li>FPGA Area and Performance Data Tables</li>
+<li>RTL viewer showing complete hierarchy on left and full adder gate-level
+    implementation on the right</li>
+<li>Chip planner showing location of logic used to implement processor</li>
+<li>Processor datapath diagram with highlighted critical path and
+     annotated delays</li>
+<li>Accumulate accelerator datapath diagram with highlighted critical path
+     and annotated delays</li>
+<li>Accumulate accelerator FSM diagram</li>
+<li><strong>You do not need to include the actual critical path reports!</strong></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Christopher Batten
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../js/extras.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/skins/default.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/wavedrom.min.js"></script>
+      
+        <script src="../js/wavedrom_loader.js"></script>
+      
+    
+  </body>
+</html>
