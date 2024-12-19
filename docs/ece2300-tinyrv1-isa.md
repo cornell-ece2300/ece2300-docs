@@ -412,7 +412,7 @@ in undefined behavior.
  - Semantics:
  - $R[\texttt{rd}] \leftarrow PC + 4$
    {: .semantics_list }
- - $PC \leftarrow PC + \text{sext}(\texttt{imm})$
+ - $PC \leftarrow \texttt{addr}$
    {: .semantics_list }
 
 <script type="WaveDrom">
@@ -458,7 +458,7 @@ results in undefined behavior.
  - Assembly: `bne rs1, rs2, addr`
  - Format: S-type, B-immediate
  - Semantics:
- - $\text{if}(R[\texttt{rs1}] \neq R[\texttt{rs2}]) \ PC \leftarrow PC + \text{sext}(\texttt{imm})$
+ - $\text{if}(R[\texttt{rs1}] \neq R[\texttt{rs2}]) \ PC \leftarrow \texttta{addr}$
    {: .semantics_list }
  - $\text{else}\qquad\qquad\qquad\ \ \ \ \,           PC \leftarrow PC + 4$
    {: .semantics_list }
