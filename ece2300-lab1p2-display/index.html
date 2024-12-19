@@ -1,0 +1,2163 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Christopher Batten">
+      
+      
+      
+        <link rel="prev" href="../ece2300-lab1p1-display/">
+      
+      
+        <link rel="next" href="../ece2300-lab2p1-calc/">
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Lab 1 (Parts C & D): Five-Bit Numeric Display -- FPGA Analysis/Prototyping and Report - ECE 2300 Digital Logic and Computer Organization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-1-five-bit-numeric-display-fpga-and-report" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-header__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECE 2300 Digital Logic and Computer Organization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 1 (Parts C & D): Five-Bit Numeric Display -- FPGA Analysis/Prototyping and Report
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tut00-remote-access/" class="md-tabs__link">
+          
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-sec01-linux/" class="md-tabs__link">
+          
+  
+  Discussion Sections
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../ece2300-fpga-primer/" class="md-tabs__link">
+          
+  
+  Lab Assignments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tinyrv1-isa/" class="md-tabs__link">
+          
+  
+  Misc
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-nav__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ECE 2300 Digital Logic and Computer Organization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut00-remote-access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 0: ECE Linux Server Remote Access
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut02-git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 2: Git Distributed Version Control System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Discussion Sections
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Discussion Sections
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec02-verilog-gl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 2: Verilog Combinational Gate-Level Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec03-verilog-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 3: Verilog Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec04-lab2-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 4: Lab 2 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec05-verilog-rtl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 5: Verilog Combinational RTL Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec06-lab3-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 6: Lab 3 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec07-verilog-mem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 7: Verilog Memory Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Lab Assignments
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Lab Assignments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-fpga-primer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FPGA Development Primer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p1-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts A & B): Five-Bit Numeric Display -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts C & D): Five-Bit Numeric Display -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts C & D): Five-Bit Numeric Display -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-simulation-of-five-bit-numeric-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Simulation of Five-Bit Numeric Display
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-setup-quartus-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Setup Quartus Project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-integrate-synthesize-analyze-unoptimized-five-bit-numeric-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Integrate, Synthesize, Analyze Unoptimized Five-Bit Numeric Display
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Integrate, Synthesize, Analyze Unoptimized Five-Bit Numeric Display">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-integrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1. Integrate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-synthesize-and-analyze" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. Synthesize and Analyze
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-iterate" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3. Iterate
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-integrate-synthesize-analyze-optimized-five-bit-numeric-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Integrate, Synthesize, Analyze Optimized Five-Bit Numeric Display
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Integrate, Synthesize, Analyze Optimized Five-Bit Numeric Display">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-integrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. Integrate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-synthesize-and-analyze" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. Synthesize and Analyze
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-iterate" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3. Iterate
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-configure-five-bit-numeric-display-fpga-prototype" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Configure Five-Bit Numeric Display FPGA Prototype
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-lab-report-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Lab Report Submission
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Lab Report Submission">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#section-1-introduction-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 1. Introduction (one paragraph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-2-optimizing-a-binary-to-seven-segment-converter-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 2: Optimizing a Binary-to-Seven-Segment Converter (one paragraph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-3-comparative-analysis-three-paragraphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 3: Comparative Analysis (three paragraphs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-4-conclusion-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 4: Conclusion (one paragraph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Appendix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2p1-calc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts A & B): Two-Function Calculator -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2-calc-fpga-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts C & D): Two-Function Calculator -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3ab-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts A & B): Music-Player -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D): Music-Player -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-custom-song/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D) Optional Add-On: Custom Song
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ab-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts A, B, & C) TinyRV1 Processor -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4d-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Part D) TinyRV1 Processor -- FPGA Analysis/Prototyping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ef-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts E & F) TinyRV1 Processor -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Misc
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Misc
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tinyrv1-isa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TinyRV1 ISA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-simulation-of-five-bit-numeric-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Simulation of Five-Bit Numeric Display
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-setup-quartus-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Setup Quartus Project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-integrate-synthesize-analyze-unoptimized-five-bit-numeric-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Integrate, Synthesize, Analyze Unoptimized Five-Bit Numeric Display
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Integrate, Synthesize, Analyze Unoptimized Five-Bit Numeric Display">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-integrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1. Integrate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-synthesize-and-analyze" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. Synthesize and Analyze
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-iterate" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3. Iterate
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-integrate-synthesize-analyze-optimized-five-bit-numeric-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Integrate, Synthesize, Analyze Optimized Five-Bit Numeric Display
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Integrate, Synthesize, Analyze Optimized Five-Bit Numeric Display">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-integrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. Integrate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-synthesize-and-analyze" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. Synthesize and Analyze
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-iterate" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3. Iterate
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-configure-five-bit-numeric-display-fpga-prototype" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Configure Five-Bit Numeric Display FPGA Prototype
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-lab-report-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Lab Report Submission
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Lab Report Submission">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#section-1-introduction-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 1. Introduction (one paragraph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-2-optimizing-a-binary-to-seven-segment-converter-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 2: Optimizing a Binary-to-Seven-Segment Converter (one paragraph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-3-comparative-analysis-three-paragraphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 3: Comparative Analysis (three paragraphs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-4-conclusion-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section 4: Conclusion (one paragraph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Appendix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="lab-1-five-bit-numeric-display-fpga-and-report">Lab 1: Five-Bit Numeric Display (FPGA and Report)</h1>
+<p>Lab 1 is a warmup designed to give you experience designing,
+implementing, testing, and prototyping a simple Verilog hardware design.
+This lab will leverage the concepts from lecture across two key
+abstraction layers: logic gates and boolean equations.</p>
+<p>You will continue to explore a five-bit numeric display that takes as
+input a five-bit binary value and displays this value as a decimal number
+using two seven-segment displays. Your implementation should exclusively
+used combinational logic gates and/or Boolean equations. This five-bit
+numeric display will be reused extensively across all of the remaining
+labs. You will also gain experience optimizing your design. Lab 1.1
+focuses on using simulation to test your design, while Lab 1.2 will
+explore integrating, synthesizing, analyzing, and configuring your design
+for an FPGA prototype. <strong>Lab 1.1 must be done individually without a
+partner; Lab 1.2 must be done with a randomly assigned partner.</strong></p>
+<p>This handout assumes that you have read and understand the course
+tutorials and that you have attended the discussion sections. This
+handout assumes you have completed the FPGA development primer, and you
+have successfully completed all parts of Lab 1.1. For Lab 1.1, both
+students worked individually, so for Lab 1.2, you should choose one
+student's code to use for the FPGA prototype. Obviously only choose code
+which is fully functional, but also choose whichever student's
+implementation of <code>BinaryToSevenSegOpt_GL</code> seems to be more aggressively
+optimized.</p>
+<p>Here are the steps to get started:</p>
+<ul>
+<li>Step 1. Check Canvas for your randomly assigned lab partner (Click
+    on <em>People</em>, then <em>Groups</em>, then search for your name to find your
+    Lab 1.2 group)</li>
+<li>Step 2. Find your randomly assigned lab partner</li>
+<li>Step 3. Find a free workstation</li>
+<li>Step 4. Ask the TAs for a lab check-off sheet (each student needs
+    their own check-off sheet)</li>
+</ul>
+<p>Throughout this handout you will see two kinds tasks: lab check-off tasks
+and lab report tasks.</p>
+<p>For each <em>lab report task</em> you must take some notes, save a screenshot,
+and/or record some data for your lab report. Students can start working
+on their lab report during their lab session, but will likely need to
+continue working on their lab report after the lab session. The lab
+report is due on Thursday at 11:59pm.</p>
+<p>For each <em>lab check-off task</em> you must raise your hand and have a TA come
+to check-off your work. The TA will ask you the questions included as
+part of the lab check-off task and the assess your understanding using
+the following rubric: mastery; accomplished; emerging; beginning. If the
+TA and students together feel the students have not mastered the lab
+check-off task, the students are encouraged to take a few minutes and try
+again.</p>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 1: Setup FPGA Board</p>
+<p>Request an FPGA board from the TAs. The TAs will record the board
+number on your check-off sheet. Use the power cord to plug the FPGA
+board into an outlet, and use the USB cable to plug the FPGA board
+into the workstation.</p>
+</div>
+<h2 id="1-simulation-of-five-bit-numeric-display">1. Simulation of Five-Bit Numeric Display</h2>
+<p>Before starting to work on an FPGA prototype, you must make sure you have
+a working Verilog hardware design that has been <em>thoroughly</em> tested in
+simulation. The student whose code will be used for Lab 1.2, should start
+VS Code on the workstation, log into an <code>ecelinux</code> server, source the
+setup script, and make sure their individual remote repository is up to
+date.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>%<span class="w"> </span><span class="nb">source</span><span class="w"> </span>setup-ece2300.sh
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/netid
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>%<span class="w"> </span>git<span class="w"> </span>pull
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>%<span class="w"> </span>tree
+</span></code></pre></div>
+<p>Where <code>netid</code> is your Cornell NetID. Now run all of the tests to ensure
+your design is fully functional.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>%<span class="w"> </span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/ece2300/netid
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>%<span class="w"> </span>verilator<span class="w"> </span>-Wall<span class="w"> </span>--lint-only<span class="w"> </span>BinaryToSevenSegUnopt_GL.v
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>%<span class="w"> </span>iverilog<span class="w"> </span>-Wall<span class="w"> </span>-g2012<span class="w"> </span>-o<span class="w"> </span>BinaryToSevenSegUnopt_GL-test<span class="w"> </span>BinaryToSevenSegUnopt_GL-test.v
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>%<span class="w"> </span>./BinaryToSevenSegUnopt_GL-test
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>%<span class="w"> </span>verilator<span class="w"> </span>-Wall<span class="w"> </span>--lint-only<span class="w"> </span>BinaryToSevenSegOpt_GL.v
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>%<span class="w"> </span>iverilog<span class="w"> </span>-Wall<span class="w"> </span>-g2012<span class="w"> </span>-o<span class="w"> </span>BinaryToSevenSegOpt_GL-test<span class="w"> </span>BinaryToSevenSegOpt_GL-test.v
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>%<span class="w"> </span>./BinaryToSevenSegOpt_GL-test
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>%<span class="w"> </span>verilator<span class="w"> </span>-Wall<span class="w"> </span>--lint-only<span class="w"> </span>BinaryToBinCodedDec_GL.v
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>%<span class="w"> </span>iverilog<span class="w"> </span>-Wall<span class="w"> </span>-g2012<span class="w"> </span>-o<span class="w"> </span>BinaryToBinCodedDec_GL-test<span class="w"> </span>BinaryToBinCodedDec_GL-test.v
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>%<span class="w"> </span>./BinaryToBinCodedDec_GL-test
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>%<span class="w"> </span>verilator<span class="w"> </span>-Wall<span class="w"> </span>--lint-only<span class="w"> </span>DisplayUnopt_GL.v
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>%<span class="w"> </span>iverilog<span class="w"> </span>-Wall<span class="w"> </span>-g2012<span class="w"> </span>-o<span class="w"> </span>DisplayUnopt_GL-test<span class="w"> </span>DisplayUnopt_GL-test.v
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>%<span class="w"> </span>./DisplayUnopt_GL-test
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>%<span class="w"> </span>verilator<span class="w"> </span>-Wall<span class="w"> </span>--lint-only<span class="w"> </span>DisplayOpt_GL.v
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>%<span class="w"> </span>iverilog<span class="w"> </span>-Wall<span class="w"> </span>-g2012<span class="w"> </span>-o<span class="w"> </span>DisplayOpt_GL-test<span class="w"> </span>DisplayOpt_GL-test.v
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>%<span class="w"> </span>./DisplayOpt_GL-test
+</span></code></pre></div>
+<p>We now need to get the files for your design from <code>ecelinux</code> onto the
+workstation. This requires multiple steps.</p>
+<ul>
+<li>
+<p>Step 1. Click <em>Microsoft Edge</em> on the desktop to open a web-browser on
+   the workstation to log into GitHub and then find your repository</p>
+</li>
+<li>
+<p>Step 2. Start PowerShell by clicking the <em>Start</em> menu then searching
+   for <em>Windows PowerShell</em></p>
+</li>
+<li>
+<p>Step 3. Clone your repo onto the workstation by using this command in
+   PowerShell (where <code>netid</code> is your Cornell NetID, <strong>notice we are using
+   https!</strong>):</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>% git clone https://github.com/cornell-ece2300/netid
+</span></code></pre></div>
+<ul>
+<li>
+<p>Step 4. In the <em>Connect to GitHub</em> pop-up, click <em>Sign in with your
+   browser</em></p>
+</li>
+<li>
+<p>Step 5. You may be asked for your GitHub username again and you may be
+   asked to authorize the Git Credential Manager; click <em>authorize
+   git-ecosystem</em></p>
+</li>
+<li>
+<p>Step 6. Verify that you have successfully cloned your repo by changing
+   into your repo and using <code>tree</code> on the workstation:</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>% cd netid
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>% tree
+</span></code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 2: Verify Test Simulations, Discuss Optimizations</p>
+<p>Show a TA that your hardware design is passing all five tests on
+<code>ecelinux</code>. The TA will ask <em>both students</em> to explain how they
+optimized their designs for the binary-to-seven-segment converter.
+Explain which outputs you ended up optimizing and how you used either
+Boolean theorems or a Karnaugh map to simplify the logic. Hypothesize
+how much you think these optimizations will reduce the overall area
+of the design and/or the critical path delay.</p>
+</div>
+<h2 id="2-setup-quartus-project">2. Setup Quartus Project</h2>
+<p>Click <em>Quartus (Quartus Prime 19.1)</em> on the desktop to start Quartus, and
+click <em>Run the Quartus Prime software</em>. You might need to try starting
+Quartus twice. Setup a new Quartus project using the <em>New Project
+Wizard</em>:</p>
+<ul>
+<li>Directory, Name, Top-Level Entity<ul>
+<li>Working directory: <code>C:\Users\netid\lab1</code></li>
+<li>Name of this project: <code>lab1</code></li>
+<li>Name of top-level design entity: <code>lab1</code></li>
+<li>Click <em>Next</em></li>
+</ul>
+</li>
+<li>Directory does not exist. Do you want to create it?<ul>
+<li>Click yes</li>
+</ul>
+</li>
+<li>Project Type<ul>
+<li>Choose <em>Empty Project</em></li>
+<li>Click <em>Next</em></li>
+</ul>
+</li>
+<li>Add Files<ul>
+<li>Click triple dots to right of <em>File name</em></li>
+<li>Click on <em>This PC</em>, then navigate to your cloned repo by choosing
+   <em>Windows (C:) &gt;  Users &gt; netid &gt; netid</em> where <em>netid</em> is your
+   Cornell NetID</li>
+<li>Shift-click on every Verilog hardware design file (do not include
+   any test files)</li>
+<li>Click <em>Open</em></li>
+<li>Click <em>Next</em></li>
+</ul>
+</li>
+<li>Family, Device, and Board Settings<ul>
+<li>Click <em>Board</em> tab</li>
+<li>Family: <em>Cyclone V</em></li>
+<li>Select <em>DE0-CV Development Board</em></li>
+<li>Make sure <em>Create top-level design file</em> is checked</li>
+<li>Click <em>Next</em></li>
+</ul>
+</li>
+<li>EDA Tool Settings<ul>
+<li>Click <em>Next</em></li>
+</ul>
+</li>
+<li>Summary<ul>
+<li>Click <em>Finish</em></li>
+</ul>
+</li>
+</ul>
+<h2 id="3-integrate-synthesize-analyze-unoptimized-five-bit-numeric-display">3. Integrate, Synthesize, Analyze Unoptimized Five-Bit Numeric Display</h2>
+<p>We will start by integrating, synthesizing, and analyzing the unoptimized
+version of your five-bit numeric display. Refer back to the FPGA
+development primer for more details on each step.</p>
+<h3 id="31-integrate">3.1. Integrate</h3>
+<p>Start by spending a few minutes identifying the location of the input
+switches and the seven-segment displays on the board.</p>
+<p><img alt="" src="https://www.terasic.com.tw/attachment/archive/921/image/image_68_thumb.jpg" /></p>
+<p>The ten switches are numbered from right to left. Switch <code>SW[0]</code> is the
+right-most switch, and switch <code>SW[9]</code> is the left-most switch. The
+seven-segment displays are also numbered from right to levet.
+Seven-segment display <code>HEX0</code> is the right-most display, and seven-segment
+display <code>HEX5</code> is the left-most display.</p>
+<p>The <em>New Project Wizard</em> creates a top-level Verilog module for us which
+has ports for all of the switches, LEDs, seven-segment displays, and pins
+on the FPGA development board. You need to instantiate whatever design
+you want to synthesize and analyze in this top-level Verilog module and
+connect the ports appropriately.</p>
+<ul>
+<li>Double-click on <em>DE0_CV_golden_top</em></li>
+<li>Instantiate <em>DisplayUnopt_GL</em> in the top-level module</li>
+<li>Connect the ports as shown below</li>
+<li>Choose <em>File &gt; Save</em> from the menu</li>
+</ul>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">DisplayUnopt_GL</span><span class="w"> </span><span class="n">display</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="p">(</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="p">.</span><span class="n">in</span><span class="w">       </span><span class="p">(</span><span class="n">SW</span><span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]),</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="p">.</span><span class="n">seg_tens</span><span class="w"> </span><span class="p">(</span><span class="n">HEX1</span><span class="p">),</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="p">.</span><span class="n">seg_ones</span><span class="w"> </span><span class="p">(</span><span class="n">HEX0</span><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">);</span>
+</span></code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 3: Explain Top-Level Connections</p>
+<p>Show a TA the location of switches <code>SW[0]</code> through <code>SW[4]</code> on the
+board. Show the TA the location of seven-segment displays <code>HEX0</code> and
+<code>HEX1</code> on the board. Show the TA your top-level connections in
+Verilog, and clearly explain how the inputs and outputs of your
+<code>DisplayUnopt_GL</code> Verilog module will be hooked up to the physical
+switches and seven-segment displays on the board. Explain to the TA
+what is the expected behavior (i.e., when we flip these switches, we
+expect this to happen).</p>
+</div>
+<h3 id="32-synthesize-and-analyze">3.2. Synthesize and Analyze</h3>
+<p>Before we synthesize and analyze the unoptimized display unit, we need to
+create a <em>timing constraint</em> file. It is critical to understand that the
+FPGA tools do not synthesize the design to just run as fast as possible.
+The way the FPGA tools work, is that the designer provides a <em>timing
+constraint</em> on the critical path delay, and the tools work as hard as
+they can (but no harder!) to meet this critical path delay constraint.
+When finished, the design will either "meet timing" (i.e., the actual
+critical path delay is less than the constraint) or "not meet timing"
+(i.e., the actual critical path delay is greater than the contraint).</p>
+<p>Here are the steps to create a timing constraint file:</p>
+<ul>
+<li>Choose <em>File &gt; New</em> from the menu</li>
+<li>Click <em>Synopsys Design Constraints File</em></li>
+<li>Click <em>OK</em></li>
+<li>Enter the constraints shown below</li>
+<li>Click <em>File &gt; Save</em> from the menu</li>
+<li>Name the file <em>timing.sdc</em></li>
+<li>Save the file in the <em>lab1</em> directory</li>
+</ul>
+<p>We will use the following initial constraints:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>set_time_format -unit ns -decimal_places 3
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>create_clock -period 20 [get_ports {CLOCK_50}]
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>set_input_delay -add_delay -clock { CLOCK_50 } -max 0 [get_ports SW*]
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>set_input_delay -add_delay -clock { CLOCK_50 } -min 0 [get_ports SW*]
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>set_output_delay -add_delay -clock { CLOCK_50 } -max 0 [get_ports HEX*]
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>set_output_delay -add_delay -clock { CLOCK_50 } -min 0 [get_ports HEX*]
+</span></code></pre></div>
+<p>These constraints tell the FPGA tools that our critical path delay
+constraint is 20ns and that the FPGA tools should analyze all paths from
+every input switches (<code>SW*</code>) to every seven-segment display (<code>HEX*</code>).</p>
+<p>Now use the following steps to synthesize your design and then look at
+the RTL viewer, technology map viewer, and chip planner.</p>
+<ul>
+<li>Choose <em>Processing &gt; Start Compilation</em> from the menu</li>
+<li>Wait 2-3 minutes for synthesis to complete</li>
+<li>RTL Viewer<ul>
+<li>Choose <em>Tools &gt; Netlist Viewer &gt; RTL Viewer</em> from the menu</li>
+<li>Drill down in the hierarchy to see the netlist for <code>BinaryToSevenSegUnopt_GL</code></li>
+<li>Choose <em>File &gt; Close</em> from menu to close the RTL viewer</li>
+</ul>
+</li>
+<li>Technology Map Viewer<ul>
+<li>Choose <em>Tools &gt; Netlist Viewer &gt; Technology Map Viewer (Post-Fitting)</em></li>
+<li>Click + for a new tab</li>
+<li>In <em>Netlist Navigator</em> choose <em>DE0_CV_golden_top &gt; Instances &gt; DisplayUnopt_GL</em></li>
+<li>Drag <em>DisplayUnopt_GL</em> into the empty tab</li>
+<li>Drill down in the hierarchy to see the implementation of <code>BinaryToSevenSegUnopt_GL</code></li>
+<li>Choose <em>File &gt; Close</em> from the menu to close the technology map viewer</li>
+</ul>
+</li>
+<li>Chip Planner<ul>
+<li>Choose <em>Tools &gt; Chip Planner</em> from the menu</li>
+<li>Identify where the logic used to implement your design is located in the FPGA</li>
+<li>Choose <em>File &gt; Close</em> from the menu to close the chip planner</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Lab Report Task 1: RTL Viewer for Unoptimized Design</p>
+<p>Save a screenshot of the RTL viewer for just
+<code>BinaryToSevenSegUnopt_GL</code> for your lab report. Press the <em>Fn + Print
+Screen</em> key to save a screenshot to the clipboard, then paste the
+screenshot into a Google Doc and crop appropriately for your lab
+report.</p>
+</div>
+<p>The next step is to analyze the area of your design.</p>
+<ul>
+<li>Choose <em>Processing -&gt; Compilation Report</em> from the menu. Under <em>Table
+   of Contents</em> choose <em>Fitter &gt; Resource Section &gt; Resource Usage
+   Summary</em></li>
+<li>Look through the report to determine the number of combinational ALUTs
+   (configurable look-up tables) are used for your design</li>
+</ul>
+<p>The final step is to analyze the timing (i.e., the critical path delay)
+of your design. We will analyze timing for the <em>Slow 1100mV 85C Model</em>
+which is the default choice in the Timing Analyzer.</p>
+<ul>
+<li>Choose <em>Tools &gt; Timing Analyzer</em> from the menu</li>
+<li>Double-click <em>Update Timing Netlist</em></li>
+<li>Choose <em>Reports &gt; Custom Reports &gt; Report Timing</em> from the menu</li>
+<li>Report Timing<ul>
+<li>From: <em>[get_keepers SW*]</em></li>
+<li>To: <em>[get_keepers HEX*]</em></li>
+<li>Report number of paths: <em>100</em></li>
+<li>Click <em>Report Timing</em></li>
+</ul>
+</li>
+<li>Identify the propagation delay of the longest path</li>
+<li>Look at the actual critical path (i.e., <em>Data Arrival Path</em>) which
+    shows the longest path from one of the input switches through your
+    design to one of the seven-segment displays</li>
+<li>Choose <em>File &gt; Close</em> from the menu to close the timing analyzer</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Lab Report Task 2: Critical Path for Unoptimized Design</p>
+<p>Save a screenshot of just the critical path of your unoptimized
+design for your lab report. Press the <em>Fn + Print Screen</em> key to save
+a screenshot to the clipboard, then paste the screenshot into a
+Google Doc and crop appropriately for your lab report. The screenshot
+should clearly show the total delay, incremental delay, location, and
+element for each gate along the critical path.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 4: Discuss RTL Viewer and Critical Path for Unoptimized Design</p>
+<p>Show a TA your screenshot of the RTL viewer for just
+<code>BinaryToSevenSegUnopt_GL</code>. Explain how the RTL viewer connects back
+to the Verilog for your design. Show a TA your screenshot of the
+critical path. Explain how the critical path connects back to the
+Verilog code for your design (i.e., where does the critical path
+start and end? what modules does the critical path go through?).
+Explain what is the actual delay of every single gate in the real
+FPGA along the critical path. What kind of delay model (i.e., a
+zero-delay model? a constant-delay model? a more complex delay
+model?) are the FPGA tools using to analyze the delay?</p>
+</div>
+<h3 id="33-iterate">3.3. Iterate</h3>
+<p>Your design will almost certainly meet timing with a critical path delay
+constraint of 20ns. We are interested in the limit on the critical path
+delay (i.e., what is the true minimum critical path delay) so we can
+compare our unoptimized and optimized designs. To find the limit, we need
+to iteratively reduce the critical path timing constraint until we no
+longer meet timing. We can consider the shortest critical path delay
+while still meeting timing as the "true minimum critical path delay".</p>
+<p>You can iteratively reduce the critical path delay, by changing <em>20</em> in
+the timing constraint file to something smaller. So the iterative process
+will look like this:</p>
+<ul>
+<li>Edit the timing constraints file to reduce the critical path delay constraint</li>
+<li>Choose <em>Processing &gt; Start Compilation</em> from the menu</li>
+<li>Wait 2-3 minutes for synthesis to complete</li>
+<li>Analyze the area of your design</li>
+<li>Analyze the timing of your design</li>
+</ul>
+<p>You will be working to fill in this table:</p>
+<ul>
+<li><a href="https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=0#gid=0">https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=0#gid=0</a></li>
+</ul>
+<p>Make a copy of this table, and enter in the data for your unoptimized
+design with a 20ns critical path delay constraint. You can find the
+number of 7-input ALUts, 6-input ALUts, etc in the area report. The
+critical path delay is just the <em>Data Delay</em> of the slowest path in the
+timing report.</p>
+<p>Then iteratively reduce the timing constraint until your design no longer
+meets timing. Then the "true minimum critical path delay" is the shortest
+critical path across all experiments that meet timing. You should enter
+at least four rows into the table, but you can enter more if you need to.</p>
+<div class="admonition note">
+<p class="admonition-title">Lab Report Task 3: Unoptimized Analysis Data Table</p>
+<p>Save your completed data table with your analysis of the unoptimized
+design and include it in your report.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 5: Discuss Area and Delay Analysis for Unoptimized Design</p>
+<p>Show a TA your completed data table with your analysis of the
+unoptimized design. Explain if the number ALUTs (i.e., configurable
+truth tables) either does or does not match your expectation given
+your Verilog code. Discuss what you found for the "true minimum
+critical path delay" of your unoptimized design.</p>
+</div>
+<h2 id="4-integrate-synthesize-analyze-optimized-five-bit-numeric-display">4. Integrate, Synthesize, Analyze Optimized Five-Bit Numeric Display</h2>
+<p>Now we will integrate, synthesize, and analyze the optimized version of
+your five-bit numeric display. Refer back to the FPGA development primer
+for more details on each step.</p>
+<h3 id="41-integrate">4.1. Integrate</h3>
+<p>We will not create a new project, but we will instead simply change which
+module is being instantiated in the top-level Verilog module provided for
+us by the <em>New Project Wizard</em>.</p>
+<ul>
+<li>Double-click on <em>DE0_CV_golden_top</em></li>
+<li>Instantiate <em>DisplayOpt_GL</em> in the top-level module</li>
+<li>Connect the ports as shown below</li>
+<li>Choose <em>File &gt; Save</em> from the menu</li>
+</ul>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">DisplayOpt_GL</span><span class="w"> </span><span class="n">display</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="p">(</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="p">.</span><span class="n">in</span><span class="w">       </span><span class="p">(</span><span class="n">SW</span><span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]),</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="p">.</span><span class="n">seg_tens</span><span class="w"> </span><span class="p">(</span><span class="n">HEX1</span><span class="p">),</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="p">.</span><span class="n">seg_ones</span><span class="w"> </span><span class="p">(</span><span class="n">HEX0</span><span class="p">)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">);</span>
+</span></code></pre></div>
+<h3 id="42-synthesize-and-analyze">4.2. Synthesize and Analyze</h3>
+<p>We will repeat the steps we did to synthesize and analyze the unoptimized
+design, except now for the optimized design. Start by resetting the
+timing constraint file to use a 20ns critical path delay constraint:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>set_time_format -unit ns -decimal_places 3
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>create_clock -period 20 [get_ports {CLOCK_50}]
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>set_input_delay -add_delay -clock { CLOCK_50 } -max 0 [get_ports SW*]
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>set_input_delay -add_delay -clock { CLOCK_50 } -min 0 [get_ports SW*]
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>set_output_delay -add_delay -clock { CLOCK_50 } -max 0 [get_ports HEX*]
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>set_output_delay -add_delay -clock { CLOCK_50 } -min 0 [get_ports HEX*]
+</span></code></pre></div>
+<p>Now use the following steps to synthesize your design and then look at
+the RTL viewer, technology map viewer, and chip planner.</p>
+<ul>
+<li>Choose <em>Processing &gt; Start Compilation</em> from the menu</li>
+<li>Wait 2-3 minutes for synthesis to complete</li>
+<li>RTL Viewer<ul>
+<li>Choose <em>Tools &gt; Netlist Viewer &gt; RTL Viewer</em> from the menu</li>
+<li>Drill down in the hierarchy to see the netlist for <code>BinaryToSevenSegOpt_GL</code></li>
+<li>How does this compare to your unoptimized design?</li>
+<li>Choose <em>File &gt; Close</em> from menu to close the RTL viewer</li>
+</ul>
+</li>
+<li>Technology Map Viewer<ul>
+<li>Choose <em>Tools &gt; Netlist Viewer &gt; Technology Map Viewer (Post-Fitting)</em></li>
+<li>Click + for a new tab</li>
+<li>In <em>Netlist Navigator</em> choose <em>DE0_CV_golden_top &gt; Instances &gt; DisplayOpt_GL</em></li>
+<li>Drag <em>DisplayOpt_GL</em> into the empty tab</li>
+<li>Drill down in the hierarchy to see the implementation of <code>BinaryToSevenSegOpt_GL</code></li>
+<li>How does this compare to your unoptimized design?</li>
+<li>Choose <em>File &gt; Close</em> from the menu to close the technology map viewer</li>
+</ul>
+</li>
+<li>Chip Planner<ul>
+<li>Choose <em>Tools &gt; Chip Planner</em> from the menu</li>
+<li>Identify where the logic used to implement your design is located in the FPGA</li>
+<li>How does this compare to your unoptimized design?</li>
+<li>Choose <em>File &gt; Close</em> from the menu to close the chip planner</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Lab Report Task 4: RTL Viewer for Optimized Design</p>
+<p>Save a screenshot of the RTL viewer for just <code>BinaryToSevenSegOpt_GL</code>
+for your lab report. Press the <em>Fn + Print Screen</em> key to save a
+screenshot to the clipboard, then paste the screenshot into a Google
+Doc and crop appropriately for your lab report.</p>
+</div>
+<p>The next step is to analyze the area of your design.</p>
+<ul>
+<li>In <em>Table of Contents</em> choose <em>Fitter &gt; Resource Section &gt; Resource Usage Summary</em></li>
+<li>Look through the report to determine the number of combinational ALUs
+   (configurable look-up tables) are used for your design</li>
+<li><strong>How does this compare to your unoptimized design?</strong></li>
+</ul>
+<p>The final step is to analyze the timing (i.e., the critical path delay)
+of your design. Once again, we analyze the timing for the <strong>Slow 1100mV 85C Model</strong> which is the default choice in the Timing Analyzer.</p>
+<ul>
+<li>Choose <em>Tools &gt; Timing Analyzer</em> from the menu</li>
+<li>Double-click <em>Update Timing Netlist</em></li>
+<li>Choose <em>Reports &gt; Custom Reports &gt; Report Timing</em> from the menu</li>
+<li>Report Timing<ul>
+<li>From: <em>[get_keepers SW*]</em></li>
+<li>To: <em>[get_keepers HEX*]</em></li>
+<li>Report number of paths: <em>100</em></li>
+<li>Click <em>Report Timing</em></li>
+</ul>
+</li>
+<li>Identify the propagation delay of the longest path</li>
+<li>Look at the actual critical path (i.e., <em>Data Arrival Path</em>) which
+    shows the longest path from one of the input switches through your
+    design to one of the seven-segment displays</li>
+<li><strong>How does this compare to your unoptimized design?</strong></li>
+<li>Choose <em>File &gt; Close</em> from the menu to close the timing analyzer</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Lab Report Task 5: Critical Path for Optimized Design</p>
+<p>Save a screenshot of just the critical path of your optimized design
+for your lab report. Press the <em>Fn + Print Screen</em> key to save a
+screenshot to the clipboard, then paste the screenshot into a Google
+Doc and crop appropriately for your lab report. The screenshot should
+clearly show the total delay, incremental delay, location, and
+element for each gate along the critical path.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 6: Discuss RTL Viewer and Critical Path for Optimized Design</p>
+<p>Show a TA your screenshot of the RTL viewer for just
+<code>BinaryToSevenSegOpt_GL</code>. Explain how the RTL viewer connects back to
+the Verilog for your design. Show a TA your screenshot of the
+critical path. Explain how the critical path connects back to the
+Verilog code for your design (i.e., where does the critical path
+start and end? what modules does the critical path go through?).
+Explain what is the actual delay of every single gate in the real
+FPGA along the critical path.</p>
+</div>
+<h3 id="43-iterate">4.3. Iterate</h3>
+<p>We are beginning to be able to compare our unoptmized and optimized
+designs, but need to find the "true minimum critical path delay" of the
+optimized design for a rigorous comparison. As with the unoptimized
+design, you can iteratively reduce the critical path delay, by changing
+<em>20</em> in the timing constraint file to something smaller. The iterative
+process looks like this:</p>
+<ul>
+<li>Edit the timing constraints file to reduce the critical path delay constraint</li>
+<li>Choose <em>Processing &gt; Start Compilation</em> from the menu</li>
+<li>Wait 2-3 minutes for synthesis to complete</li>
+<li>Analyze the area of your design</li>
+<li>Analyze the timing of your design</li>
+</ul>
+<p>You will be working to fill out the rest of this table:</p>
+<ul>
+<li><a href="https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=0#gid=0">https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=0#gid=0</a></li>
+</ul>
+<p>Work on the same copy of this table you made earlier, and enter in the
+data for your optimized design with a 20ns critical path delay
+constraint. Then iteratively reduce the timing constraint until your
+design no longer meets timing, updating the table as you go along. You
+should enter at least four rows into the table, but you can enter more if
+you need to.</p>
+<div class="admonition note">
+<p class="admonition-title">Lab Report Task 6: Optimized Analysis Data Table</p>
+<p>Save your completed data table with your analysis of the optimized
+design and include it in your report.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 7: Discuss Area and Delay Analysis for Optimized Design</p>
+<p>Show a TA your completed data table with your analysis of the
+optimized design. Discuss in detail your findings comparing the
+unoptimized vs. optimized implementations. What conclusions can we
+draw in terms of how much effort we should spend trying to optimize
+the gate-level implementation and/or Boolean equations in our Verilog
+hardware designs?</p>
+</div>
+<h2 id="5-configure-five-bit-numeric-display-fpga-prototype">5. Configure Five-Bit Numeric Display FPGA Prototype</h2>
+<p>We now have a fully verified Verilog hardware design, and we have
+finished a rigorous comparative analysis of the area and timing for both
+an unoptimized and optimized implementation. The last step is to
+configure the FPGA with our optimized design and demostrate the final
+FPGA prototype!</p>
+<ul>
+<li>Choose <em>Tools &gt; Programmer</em> from the menu</li>
+<li>Click <em>Hardware Setup</em></li>
+<li>Currently selected hardware: <em>USB-Blaster [USB-0]</em></li>
+<li>Click <em>Close</em></li>
+<li>Click <em>Start</em></li>
+</ul>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 8: Final Five-Bit Numeric Display Demo</p>
+<p>Show a TA your final five-bit numeric display demo. The TA will ask
+you to enter at least two specific binary numbers using the switches.
+<strong>You must determine the correct decimal value first, tell the TA
+what the correct decimal value should be, and only then set the
+switches to confirm correct operation.</strong></p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Lab Check-Off Task 9: Turn In FPGA Board</p>
+<p>When you are finished with your demo, pack up your FPGA development
+board. Neatly put the board, power cable, and USB cable back in the
+box. Return the box to a TA who will then record the board number on
+your check-off sheet, initial the final check-off, and then collect
+your check-off sheet.</p>
+</div>
+<h2 id="6-lab-report-submission">6. Lab Report Submission</h2>
+<p>Students should work with their partner to prepare a short lab report
+that conveys what they have learned in this lab assignment. Before
+starting the lab report, pick one student's code and create a Verilog
+data table using this template:</p>
+<ul>
+<li><a href="https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=446446324">https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=446446324</a></li>
+</ul>
+<p>Count the number of logic gates with a specific number of inputs in your
+Verilog code and enter these counts in the table. Count the number of
+logic gates along the critical path and enter these counts in the table.
+The provided template uses a very simple area/delay model where the
+area/delay of a gate is equal to the number of inputs to that gate. This
+data should enable you to make a very simplistic estimate of the total
+area and critical path delay of the unoptimized and optimized designs.
+There is no "right way" to count gates from Verilog. Students must use
+their judgement to estimate the number of gates. The key is to be
+consistent so you can make a comparison between your unoptimized and
+optimized design from just the Verilog code.</p>
+<p>Note that you cannot directly compare the area/delay estimated using your
+simple Verilog area/delay model to the area/delay reported by the FPGA
+tools; these are completely different ways to estimate area/delay.
+However, you can relate the two comparisions when using the same
+methodology: is design A better than design B when using the Verilog
+area/delay model but then design A is worse than design B based on the
+FPGA tools? or maybe design A and B are similar when using the Verilog
+area/delay model but they are different when using the FPGA tools? So
+while directly comparing numbers from your simple Verilog area/delay
+model and the area/delay reported by the FPGA tools is not possible, it
+<em>is</em> possible to discuss if the comparisons using the same model are
+similar or different.</p>
+<p>The lab report should start with no more than two pages of text. Students
+should include all figures, tables, and diagrams after these two pages in
+an appendix. The appendix can be as many pages as necessary. Do not
+interleave the text, figures, tables, and diagrams. There should be two
+pages of text and then the appendix with all of the text, figures,
+tables, and diagrams.</p>
+<p>There are no restrictions on font size, margins, or line spacing, but
+please make sure your report is readable. We recommend using 10pt Times
+or 10pt Palintino with 0.75in to 1in margins. Please make sure you
+include a title, your names, and your NetIDs at the top of the first
+page. Do not include a title page.</p>
+<p>The lab report must include the following numbered sections. Please
+number your sections and use these specific titles. Please follow the
+guidelines on the number of paragraphs, the content of each paragraph,
+and which figures/tables to include. Some paragraphs might just be 2-3
+sentences.</p>
+<h4 id="section-1-introduction-one-paragraph">Section 1. Introduction (one paragraph)</h4>
+<ul>
+<li>Include 2-3 sentences explaining what the lab involves</li>
+<li>Include one sentence explaining the purpose of this lab (why are
+    students doing this lab?)</li>
+<li>Include one sentence explicitly connecting the lab to one or more
+    lecture topics; be specific on which lecture topics this lab
+    reinforces with experiential learning</li>
+</ul>
+<h4 id="section-2-optimizing-a-binary-to-seven-segment-converter-one-paragraph">Section 2: Optimizing a Binary-to-Seven-Segment Converter (one paragraph)</h4>
+<ul>
+<li>Choose one student's code to feature in this section</li>
+<li>Include a figure in the appendix illustrating the K-maps or your
+    Boolean simplifications</li>
+<li>Include 2-3 sentences describing your K-maps or Boolean
+    simplifications</li>
+<li>Include a sentence describing <em>why</em> the result of your K-maps or
+    Boolean simplifications should hopefully result in a more
+    optimized implementation</li>
+</ul>
+<h4 id="section-3-comparative-analysis-three-paragraphs">Section 3: Comparative Analysis (three paragraphs)</h4>
+<ul>
+<li>
+<p>Paragraph 1: Verilog Comparison</p>
+<ul>
+<li>Include the <a href="https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=446446324">Verilog data
+   table</a>
+   mentioned above in the appendix</li>
+<li>Include the RTL Viewer screenshots for both the unoptimized and
+   optimized designs in the appendix</li>
+<li>Include a sentence referencing the Verilog data table</li>
+<li>Include a sentence comparing the total area of the unoptimized
+   vs optimized designs using the simple Verilog area model</li>
+<li>Include a sentence comparing the total delay of the unoptimized
+   vs optimized designs using the simple Verilog delay model</li>
+<li>Include 2-3 sentences comparing and contrasting the unoptimized
+   vs optimized designs based just on the original Verilog</li>
+<li>Include a sentence discussing the RTL Viewer screenshots</li>
+</ul>
+</li>
+<li>
+<p>Paragraph 2: FPGA Area Comparison</p>
+<ul>
+<li>Include the <a href="https://docs.google.com/spreadsheets/d/1lJkyLqEPCzKxX4zA0fiVSmTuxLOED7eDWVi5F_9yAC0/edit?gid=0#gid=0">FPGA data
+   table</a>
+   in the appendix</li>
+<li>Include a sentence referencing the area data in the FPGA data
+   table</li>
+<li>Include a sentence comparing the area of the unoptimized vs
+   optimized designs using the FPGA area data</li>
+<li>Include a sentence relating this FPGA comparison to your comparison
+   based purely on the simple Verilog area model.</li>
+</ul>
+</li>
+<li>
+<p>Paragraph 3: FPGA Delay Comparison</p>
+<ul>
+<li>Include the critical path screenshots for both the unoptimized
+   and optimized design in the appendix</li>
+<li>Include a sentence referencing the delay data in the FPGA data
+   table</li>
+<li>Include a sentence describing where the critical path goes
+   through the design (at a high-level) for both the unoptimized
+   and optimized designs</li>
+<li>Include a sentence comparing the critical path delay of the
+   unoptimized vs optimized designs using the FPGA delay data</li>
+<li>Include a sentence relating this FPGA comparison to your comparison
+   based purely on the simple Verilog delay model</li>
+</ul>
+</li>
+</ul>
+<h4 id="section-4-conclusion-one-paragraph">Section 4: Conclusion (one paragraph)</h4>
+<ul>
+<li>Include 2-3 sentences that summarizes all of the data and analysis
+    in this lab assignment</li>
+<li>Include a sentence that draws a high-level conclusion; how will
+    what you have learned impact your design work throughout the rest
+    of the semester?</li>
+</ul>
+<h4 id="appendix">Appendix</h4>
+<ul>
+<li>Figure illustrating K-maps or Boolean simplifications</li>
+<li>Verilog data table</li>
+<li>Screenshot of RTL Viewer for unoptimized design</li>
+<li>Screenshot of RTL Viewer for optimized design</li>
+<li>FPGA data table</li>
+<li>Screenshot of critical path for unoptimized design</li>
+<li>Screenshot of critical path for optimized design</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Christopher Batten
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../js/extras.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/skins/default.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/wavedrom.min.js"></script>
+      
+        <script src="../js/wavedrom_loader.js"></script>
+      
+    
+  </body>
+</html>

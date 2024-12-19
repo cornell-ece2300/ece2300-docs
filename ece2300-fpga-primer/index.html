@@ -1,0 +1,1872 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Christopher Batten">
+      
+      
+      
+        <link rel="prev" href="../ece2300-sec07-verilog-mem/">
+      
+      
+        <link rel="next" href="../ece2300-lab1p1-display/">
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>FPGA Development Primer - ECE 2300 Digital Logic and Computer Organization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fpga-development-primer" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-header__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECE 2300 Digital Logic and Computer Organization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              FPGA Development Primer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tut00-remote-access/" class="md-tabs__link">
+          
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-sec01-linux/" class="md-tabs__link">
+          
+  
+  Discussion Sections
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  Lab Assignments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tinyrv1-isa/" class="md-tabs__link">
+          
+  
+  Misc
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-nav__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ECE 2300 Digital Logic and Computer Organization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut00-remote-access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 0: ECE Linux Server Remote Access
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut02-git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 2: Git Distributed Version Control System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Discussion Sections
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Discussion Sections
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec02-verilog-gl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 2: Verilog Combinational Gate-Level Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec03-verilog-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 3: Verilog Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec04-lab2-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 4: Lab 2 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec05-verilog-rtl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 5: Verilog Combinational RTL Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec06-lab3-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 6: Lab 3 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec07-verilog-mem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 7: Verilog Memory Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Lab Assignments
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Lab Assignments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    FPGA Development Primer
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    FPGA Development Primer
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-setting-up-a-quartus-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Setting up a Quartus Project
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Setting up a Quartus Project">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-creating-a-new-quartus-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1. Creating a New Quartus Project
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-the-top-level-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2. The Top-Level Module
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-integrating-a-hardware-design-into-quartus" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Integrating a Hardware Design into Quartus
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Integrating a Hardware Design into Quartus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-implementing-hardware-directly-within-quartus" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. Implementing Hardware Directly within Quartus
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-connecting-to-the-top-level-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. Connecting to the Top-Level Module
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-adding-timing-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3. Adding Timing Information
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-synthesizing-a-hardware-design-using-quartus" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Synthesizing a Hardware Design using Quartus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-analyzing-a-hardware-design-using-quartus" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Analyzing a Hardware Design using Quartus
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Analyzing a Hardware Design using Quartus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-rtl-viewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. RTL Viewer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-technology-map-viewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. Technology Map Viewer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-chip-planner" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3. Chip Planner
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-area-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4. Area Reports
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-timing-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5. Timing Reports
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-configuring-a-hardware-design-onto-the-fpga" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Configuring a Hardware Design onto the FPGA
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p1-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts A & B): Five-Bit Numeric Display -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p2-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts C & D): Five-Bit Numeric Display -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2p1-calc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts A & B): Two-Function Calculator -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2-calc-fpga-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts C & D): Two-Function Calculator -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3ab-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts A & B): Music-Player -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D): Music-Player -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-custom-song/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D) Optional Add-On: Custom Song
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ab-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts A, B, & C) TinyRV1 Processor -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4d-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Part D) TinyRV1 Processor -- FPGA Analysis/Prototyping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ef-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts E & F) TinyRV1 Processor -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Misc
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Misc
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tinyrv1-isa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TinyRV1 ISA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-setting-up-a-quartus-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Setting up a Quartus Project
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Setting up a Quartus Project">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-creating-a-new-quartus-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1. Creating a New Quartus Project
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-the-top-level-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2. The Top-Level Module
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-integrating-a-hardware-design-into-quartus" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Integrating a Hardware Design into Quartus
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Integrating a Hardware Design into Quartus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-implementing-hardware-directly-within-quartus" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. Implementing Hardware Directly within Quartus
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-connecting-to-the-top-level-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. Connecting to the Top-Level Module
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-adding-timing-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3. Adding Timing Information
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-synthesizing-a-hardware-design-using-quartus" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Synthesizing a Hardware Design using Quartus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-analyzing-a-hardware-design-using-quartus" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Analyzing a Hardware Design using Quartus
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Analyzing a Hardware Design using Quartus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-rtl-viewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. RTL Viewer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-technology-map-viewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. Technology Map Viewer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-chip-planner" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3. Chip Planner
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-area-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4. Area Reports
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-timing-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5. Timing Reports
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-configuring-a-hardware-design-onto-the-fpga" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Configuring a Hardware Design onto the FPGA
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="fpga-development-primer">FPGA Development Primer</h1>
+<p>Before jumping into Lab 1, it's important to understand the tools we'll be
+working with. All lab assignments will include an FPGA component, where
+you'll emulate your design. FPGAs (short for Field Programmable Gate
+Arrays) are a special type of hardware that can be configured to represent
+any digital logic function. When we configure an FPGA to represent a
+specific piece of hardware, the FPGA is <em>emulating</em> our design, and will
+perform the same logic functions. Because of this, FPGAs are used
+extensively for early prototyping of designs; since they are actual
+hardware, they can run much faster than simulations and without forcing
+a designer to fabricate their design. In this primer, we'll become
+familiar with using FPGAs by emulating a design from lecture.</p>
+<h2 id="1-setting-up-a-quartus-project">1. Setting up a Quartus Project</h2>
+<p>FPGAs often come with <em>development environments</em>. These environments are
+large pieces of software that help get your design from a hardware
+description language to something that can be configured on the FPGA. This
+includes:</p>
+<ul>
+<li>Determining what resources are needed to represent your design (known
+   as <strong>synthesis</strong>). An example of this would be determining that your
+   design needs 3 AND gates and 2 OR gates.</li>
+<li><strong>Placing</strong> your design - determining which FPGA resources will be
+   used to represent your design</li>
+<li><strong>Routing</strong> the different logic components together to represent your
+   design</li>
+</ul>
+<p>For this class, we will be using Quartus Prime ("Quartus")
+development environment. Quartus is installed on all lab machines, and
+will be used during the FPGA portions of lab assignments to put your 
+design on the FPGA.</p>
+<h3 id="11-creating-a-new-quartus-project">1.1. Creating a New Quartus Project</h3>
+<p>First, let's use Quartus to create our project. To start Quartus, 
+double-click on the Quartus Prime icon on the Desktop of a lab machine:</p>
+<p><img alt="" src="../img/lab1-primer-quartus-prime.png" /></p>
+<div class="admonition info">
+<p class="admonition-title">Quartus Start-Up</p>
+<p>You may see the following prompt when starting Quartus:
+<img alt="" src="../img/lab1-primer-quartus-start.png" />
+Select "Run the Quartus Prime software", then click <em>OK</em>. We've found
+that Quartus often quits the first time after this, so you may need to
+re-open the application.</p>
+</div>
+<p>After starting Quartus, go to <em>File -&gt; New Project Wizard</em>. This will
+start an interactive prompt menu to help create your project. In the
+menu:</p>
+<ul>
+<li><strong>Directory, Name, Top-Level Entity</strong>:<ul>
+<li>Using the file searcher, create a new directory for your project
+  in your Documents. Name it <code>lab1-primer</code>. Select this as the 
+  "working directory" for your project - the path should look like
+  <code>C:/Users/netid/Documents/lab1-primer</code></li>
+<li>Name your project <code>lab1-primer</code> by typing in the appropriate field.
+  The "top-level design entity" should be automatically filled 
+  appropriately</li>
+<li>Click <em>Next</em>
+   <img alt="" src="../img/lab1-primer-quartus-directory.png" /></li>
+</ul>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Incorrect Folder</p>
+<p>If Quartus gives an error that it can't create the project, make sure
+that you're creating the project in your <code>Documents</code> folder. Quartus
+will give a default location of its installation folder - make sure
+to change this.</p>
+</div>
+<ul>
+<li><strong>Project Type</strong>:<ul>
+<li>Select "Empty Project</li>
+<li>Click <em>Next</em>
+   <img alt="" src="../img/lab1-primer-quartus-projecttype.png" /></li>
+</ul>
+</li>
+<li><strong>Add Files</strong>:<ul>
+<li>Skip this for now; we'll add our design files later</li>
+<li>Click <em>Next</em></li>
+</ul>
+</li>
+<li><strong>Family, Device &amp; Board Settings</strong>:<ul>
+<li>Switch to the <em>Board</em> tab:</li>
+<li>Make sure "Family" is set to <em>Cyclone V</em> and "Development Kit" is
+     set to <em>Any</em></li>
+<li>Select <em>DE0-CV Development Board</em> (this is the FPGA board for the
+     class)</li>
+<li>Make sure "Create top-level design file" is checked</li>
+<li>Click <em>Next</em>
+   <img alt="" src="../img/lab1-primer-quartus-board.png" /></li>
+</ul>
+</li>
+<li><strong>EDA Tool Settings</strong>:<ul>
+<li>Skip this section for now. These are extra tools that can be used
+  to analyze your design, but we won't be using them</li>
+<li>Click <em>Next</em></li>
+</ul>
+</li>
+<li><strong>Summary</strong>:<ul>
+<li>Click <em>Finish</em> to finish creating your project</li>
+</ul>
+</li>
+</ul>
+<p>Wait for Quartus to set up your project. After that, you'll be left with
+a blank project to work on and configure as we wish.</p>
+<h3 id="12-the-top-level-module">1.2. The Top-Level Module</h3>
+<p>One of the hardest parts of working with FPGAs is making sure that the
+development environment knows how to map your design to the physical
+pins on the board. Luckily, Quartus was able to do this for us - when we
+selected "Create top-level design file", Quartus automatically created
+a template module, and hooked up all of the pins correctly in its
+configuration. This module is now the <strong>top-level module</strong>; it is the
+module that will actually be put on the board. If we want to create any
+extra logic, it must be contained within this module.</p>
+<p>To see what this module looks like, go to the <em>Project Navigator</em>, and
+change the entities from <em>Hierarchy</em> to <em>Files</em>. You should see a file
+named <code>DE0_CV_golden_top.v</code>; this is the file where our top-level module
+was generated. Double-click the listing to open the file in Quartus.</p>
+<div class="admonition warning">
+<p class="admonition-title">Missing Top-Level File</p>
+<p>If this file is missing, you may not have selected the <em>DE0-CV 
+Development Board</em>, or may not have checked "Create top-level design
+file" when creating your project.</p>
+</div>
+<p>The module should look very similar to Verilog modules that you've seen
+in lecture, although with <em>many</em> inputs and outputs. These represent all
+of the possible inputs and outputs of our FPGA hardware. We won't use all
+of these right now, but will instead focus on two signals in particular:</p>
+<ul>
+<li><code>SW</code>: The physical switches on the board. These are a logical <code>1</code> or 
+         <code>0</code> depending on whether the switch is up or down, respectively.
+         These are coming into our FPGA hardware, and are therefore 
+         <em>inputs</em> to the top-level module.</li>
+<li><code>LEDR</code>: The (red) LEDs on the board. These are "on" or "off" depending
+           on whether our logic sets them to a <code>1</code> or <code>0</code>, respectively.
+           These are going out of our FPGA hardware, and are therefore
+           <em>outputs</em> of the top-level module.</li>
+</ul>
+<p>These signals are <em>arrays</em>; they represent a collection of multiple
+wires. You can access an individual signal using the bracket notation,
+similar to many programming languages. For example, if you wanted to
+set the 0th LED (the first one in the array, starting at 0) to the
+logical AND of the 0th and 1st switches, you might write</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">and</span><span class="p">(</span><span class="n">LEDR</span><span class="p">[</span><span class="mh">0</span><span class="p">],</span><span class="w"> </span><span class="n">SW</span><span class="p">[</span><span class="mh">0</span><span class="p">],</span><span class="w"> </span><span class="n">SW</span><span class="p">[</span><span class="mh">1</span><span class="p">]);</span>
+</span></code></pre></div>
+<p>Let's make a module so that we can perform logic with our switch and
+LED signals!</p>
+<h2 id="2-integrating-a-hardware-design-into-quartus">2. Integrating a Hardware Design into Quartus</h2>
+<p>In this section, we'll add logic corresponding to the following gate-level
+network:</p>
+<p><img alt="" src="../img/sec02-pair-triple-gl-network.jpg" /></p>
+<div class="admonition info">
+<p class="admonition-title">Code Re-Use</p>
+<p>This gate-level network should look familiar; we used this in
+<a href="../ece2300-sec02-verilog-gl/">Section 2</a>. Feel free to re-use your
+code from then; if you haven't already, make sure to try out the
+<a href="../ece2300-sec02-verilog-gl/#7-to-do-on-your-own">Boolean Equations</a>,
+as we'll be using them in Lab 1 and beyond.</p>
+</div>
+<p>To add our own logic, we'll create a new module, and instantiate it within
+our top-level module. It's good practice to have only one module in a file
+(with the filename being the same as the name of the module it contains),
+so let's first add a new file to our project</p>
+<h3 id="21-implementing-hardware-directly-within-quartus">2.1. Implementing Hardware Directly within Quartus</h3>
+<p>To create a new file within your Quartus project:</p>
+<ul>
+<li>Go to <em>File -&gt; New</em></li>
+<li>Click on <em>Verilog HDL File</em>, then select <em>OK</em></li>
+<li>You should now see a blank Verilog file. Go to <em>File -&gt; Save As</em>, and
+   save this file as <code>PairTripleDetector_GL.v</code> within your <code>lab1-primer</code> 
+   directory</li>
+</ul>
+<p>We now have a new Verilog file that's included as part of our design - 
+from here, we can add or new logic inside of it</p>
+<div class="admonition info">
+<p class="admonition-title">Existing Files</p>
+<p>For this primer, we'll be creating and editing our design files
+directly within Quartus. However, this won't be the case for the
+labs, where you will be downloading and using the design you've
+already simulated/tested on <code>ecelinux</code>. Later on, when you wish to add
+files that already exist, you can do so by going to 
+<em>Project -&gt; Add/Remove Files in Project</em></p>
+</div>
+<p>When we add new blocks of logic, we want to add them as <em>modules</em>. This
+involves first creating the module, and then instantiating it wherever we
+want that logic.</p>
+<p>First, let's define our module. In <code>PairTripleDetector_GL.v</code>, define a module
+named <code>PairTripleDetector_GL</code> that represents the gate-level network above, 
+exactly as done in <a href="https://github.com/cornell-ece2300/ece2300-sec02-verilog-gl">section</a>.</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">module</span><span class="w"> </span><span class="n">PairTripleDetector_GL</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="p">(</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="n">in0</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="n">in1</span><span class="p">,</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="n">in2</span><span class="p">,</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="n">out</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">);</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="p">...</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="k">endmodule</span>
+</span></code></pre></div>
+<p>Make sure that it has three inputs (<code>in0</code>, <code>in1</code>, and <code>in2</code>), and one
+output (<code>out</code>). Make sure that it contains the logic to implement the
+gate-level network above. Lastly, make sure to save the file when
+you're done (<em>File -&gt; Save</em>)</p>
+<h3 id="22-connecting-to-the-top-level-module">2.2. Connecting to the Top-Level Module</h3>
+<p>From here, we can <em>instantiate</em> this module - create an instance of the
+hardware it represents. In your <code>DE0_CV_golden_top.v</code> (which contains
+the top-level <code>DE0_CV_golden_top</code> module), if you scroll to the bottom,
+you'll notice the module doesn't contain any
+logic yet. Let's add some functionality by <em>instantiating</em> our
+<code>PairTripleDetector_GL</code> module within the <code>DE0_CV_golden_top</code> module - let's
+give it the name <code>detector</code>.</p>
+<p>The module should have the following connections:</p>
+<ul>
+<li><code>in0</code> should be connected to the 0th switch (<code>SW[0]</code>)</li>
+<li><code>in1</code> should be connected to the 1st switch (<code>SW[1]</code>)</li>
+<li><code>in2</code> should be connected to the 2nd switch (<code>SW[2]</code>)</li>
+<li><code>out</code> should be connected to the 0th LED (<code>LEDR[0]</code>)</li>
+</ul>
+<p>Once you're done, your top-level module should look like the following:</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">module</span><span class="w"> </span><span class="n">DE0_CV_golden_top</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="p">...</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">);</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="n">PairTripleDetector_GL</span><span class="w"> </span><span class="n">detector</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="p">.</span><span class="n">in0</span><span class="w"> </span><span class="p">(</span><span class="n">SW</span><span class="p">[</span><span class="mh">0</span><span class="p">]),</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="p">.</span><span class="n">in1</span><span class="w"> </span><span class="p">(</span><span class="n">SW</span><span class="p">[</span><span class="mh">1</span><span class="p">]),</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="p">.</span><span class="n">in2</span><span class="w"> </span><span class="p">(</span><span class="n">SW</span><span class="p">[</span><span class="mh">2</span><span class="p">]),</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="p">.</span><span class="n">out</span><span class="w"> </span><span class="p">(</span><span class="n">LEDR</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="p">);</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="k">endmodule</span>
+</span></code></pre></div>
+<p>Make sure to save this file as well.</p>
+<h3 id="23-adding-timing-information">2.3. Adding Timing Information</h3>
+<p>In addition to the above, we need to give Quartus information about our
+timing constraints, so that it can properly analyze the timing of our
+design and analyze the critical path.</p>
+<ul>
+<li>Similar to before, go to <em>File -&gt; New</em> to create a new file. This time,
+   select "Synopsys Design Constraints File"</li>
+<li>Inside the file, add the following Tcl commands:</li>
+</ul>
+<div class="language-tcl highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">set_time_format</span><span class="w"> </span><span class="o">-</span>unit<span class="w"> </span>ns<span class="w"> </span><span class="o">-</span>decimal_places<span class="w"> </span><span class="mi">3</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">create_clock</span><span class="w"> </span><span class="o">-</span>period<span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span><span class="k">{</span><span class="nv">CLOCK_50</span><span class="k">}]</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nv">set_input_delay</span><span class="w"> </span><span class="o">-</span>add_delay<span class="w"> </span><span class="o">-</span>clock<span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">CLOCK_50</span><span class="w"> </span><span class="k">}</span><span class="w"> </span><span class="o">-</span>max<span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>SW<span class="o">*</span><span class="k">]</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nv">set_input_delay</span><span class="w"> </span><span class="o">-</span>add_delay<span class="w"> </span><span class="o">-</span>clock<span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">CLOCK_50</span><span class="w"> </span><span class="k">}</span><span class="w"> </span><span class="o">-</span>min<span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>SW<span class="o">*</span><span class="k">]</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nv">set_output_delay</span><span class="w"> </span><span class="o">-</span>add_delay<span class="w"> </span><span class="o">-</span>clock<span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">CLOCK_50</span><span class="w"> </span><span class="k">}</span><span class="w"> </span><span class="o">-</span>max<span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>LEDR<span class="o">*</span><span class="k">]</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nv">set_output_delay</span><span class="w"> </span><span class="o">-</span>add_delay<span class="w"> </span><span class="o">-</span>clock<span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">CLOCK_50</span><span class="w"> </span><span class="k">}</span><span class="w"> </span><span class="o">-</span>min<span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>LEDR<span class="o">*</span><span class="k">]</span>
+</span></code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Timing Commands</p>
+<p>We won't delve into these commands too much, but at a high-level,
+we're telling Quartus to not factor in delay from these ports, so out
+timing results should only represent the delay in our design. We also
+tell Quartus to analyze our timing for a "clock period" of 20
+nanoseconds. We'll learn much more about clocks when we cover
+sequential logic, but for right now, you can think of this as saying
+that our logic paths should take no longer than 20 nanoseconds.</p>
+</div>
+<ul>
+<li>Go to <em>File -&gt; Save As</em>, and save this file as <code>timing.sdc</code> within your
+   <code>lab1-primer</code> directory</li>
+</ul>
+<p>With the timing information and our design logic, we should be good to
+start putting our design on the FPGA!</p>
+<h2 id="3-synthesizing-a-hardware-design-using-quartus">3. Synthesizing a Hardware Design using Quartus</h2>
+<p>From here, we can "synthesize" our design for the FPGA. The "synthesis"
+step includes:</p>
+<ul>
+<li><strong>synthesis</strong> (determining what resources we need for our design)</li>
+<li><strong>placement</strong> (determining which FPGA resources will be used)</li>
+<li><strong>routing</strong> (connecting the FPGA resources as appropriate)</li>
+</ul>
+<p>At the end, we'll be left with a synthesized version that can be immediately
+put on the FPGA - this is known as a <em>bitstream</em>.</p>
+<p>In Quartus, you can perform the synthesis step by going to
+<em>Processing -&gt; Start Compilation</em>, or clicking the blue "play" button in
+the top toolbar. This will start the synthesis step - here, the FPGA is 
+using many complicated tools, so the entire process may take a few
+minutes. You can keep track of the progress in the <em>Tasks</em> bar on the 
+left-hand side, as well as with the verbose output log in the bottom. If 
+you made any static errors (such as incorrect syntax, or mixing up inputs
+and outputs), this is where Quartus will let you know with an errors. 
+However, it can't check for dynamic behavior (errors in the logic of your
+design), as it doesn't know the correct logic - that's up to you as a
+designer.</p>
+<p>If you get no errors, after a few minutes, you should see the following
+output in the log produced at the bottom of Quartus:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Quartus Prime Full Compilation was successful
+</span></code></pre></div>
+<h2 id="4-analyzing-a-hardware-design-using-quartus">4. Analyzing a Hardware Design using Quartus</h2>
+<p>Once we've synthesized our design, Quartus will also give us some reports
+about our design. These are <em>CRITICAL</em> for us as designers to understand
+the tradeoffs between our different designs, and can help us analyze which
+one might be "better" in different circumstances.</p>
+<h3 id="41-rtl-viewer">4.1. RTL Viewer</h3>
+<p>First, Quartus can help us visualize what logic our RTL design maps to.
+Go to <em>Tools -&gt; Netlist Viewers -&gt; RTL Viewer</em>. This should open up a
+new window to view how Quartus implemented our design.</p>
+<p><img alt="" src="../img/lab1-primer-rtl-top.png" /></p>
+<p>We can see that our RTL design takes in some of the switches as inputs,
+and outputs to an LED.</p>
+<p>Our modules are initially represented as boxes (abstracting away the
+internal logic), but we can also click the "+" to open up the design
+and see the underlying gate-level network that Quartus mapped our
+design to. Compare this gate-level network to the one above - they should
+be the same!</p>
+<p><img alt="" src="../img/lab1-primer-rtl-gates.png" /></p>
+<p>When you're finished, you can close this pop-up window.</p>
+<h3 id="42-technology-map-viewer">4.2. Technology Map Viewer</h3>
+<p>The RTL Viewer showed us the gate-level network, but what if we want to
+visualize exactly which resources were used on the FPGA? The 
+<em>Technology Map Viewer</em> can help us with this.</p>
+<ul>
+<li>Go to <em>Tools -&gt; Netlist Viewers -&gt; Technology Map Viewer (Post-Fitting)</em>.
+   This should open up a pop-up window that shows our <em>entire</em> design that
+   came with our template top-level module.</li>
+<li>To focus on our design:<ul>
+<li>Click the "+" at the top to open up a new tab.</li>
+<li>In the "Netlist Navigator" panel on the left-hand side, under
+  <em>DE0_CV_golden_top -&gt; Instances</em>, drag the instance of 
+  <em>PairTripleDetector_GL</em> to the new tab</li>
+</ul>
+</li>
+<li>Click the "+" on the module instance to show the underlying FPGA
+   resources</li>
+</ul>
+<p>You should see only one block that makes up the logic. This is known as a
+"LUT" (Look-Up Table), but we'll reference this as a 
+<em>reconfigurable truth table</em>. When we configure our FPGA, we tell this
+table what outputs it should have for every input, to represent our
+design. This design is relatively simple, so it only needs one truth
+table, but later designs will require more due to increasing complexity.</p>
+<p><img alt="" src="../img/lab1-primer-tech-mapper.png" /></p>
+<p>When you're finished, you can close this pop-up window.</p>
+<h3 id="43-chip-planner">4.3. Chip Planner</h3>
+<p>Next, let's see if we can visualize exactly which portions of the FPGA are
+being used! Navigate to <em>Tools -&gt; Chip Planner</em> to open up the Chip
+Planner window.</p>
+<p><img alt="" src="../img/lab1-primer-planner-top.png" /></p>
+<p>This helps us visualize exactly which portions of the chip are being
+utilized - the highlighted portions are being used for our design.
+Our design isn't too large, so very few resources are being used.
+Quartus also has different granularities for how much logic is being
+used - each of these rectangles is a <em>"LAB"</em> (Logic Array Block)</p>
+<p>We can also see what each of these LABs are doing. The upper LAB
+was a ground signal that Quartus created, but the other LAB was the
+reconfigurable truth table that Quartus used to implement our design.
+Zoom on on this block (<em>View -&gt; Zoom In</em>, or <code>Ctrl + Space</code>), and click
+on the highlighted portion within it. The smaller highlighted portion
+is an <em>"ALM"</em> (Adaptive Logic Module) - each LAB contains multiple ALMs.
+Each ALM contains multiple reconfigurable truth tables - you can start
+to get a sense of how much logic our FPGA can represent!</p>
+<p><img alt="" src="../img/lab1-primer-planner-lut.png" /></p>
+<p>On the side, you should be able to see what the ALM is used for
+(indicated in the name), as well as the Boolean logic equation that it
+implements. In this case, our ALM is determining what the <code>out</code> port of
+our <code>detector</code> module should be.</p>
+<p>When you're finished, you can close this pop-up window.</p>
+<h3 id="44-area-reports">4.4. Area Reports</h3>
+<p>Quartus also generates reports for us to gain numerical results for our
+design. The first one we'll look at is the <em>area report</em> - we want to know
+how many resources our design needs. For this class, we'll approximate a
+design's area by how many FPGA resources it uses.</p>
+<p>Navigate to <em>Processing -&gt; Compilation Report</em>. In the tab that opens up,
+under <em>Fitter -&gt; Resource Section</em>, click on <em>Resource Usage Summary</em>.
+This will open up a report that shows you how many resources are being
+used on the FPGA. Here, we can see that 1 ALM is needed for our logic, and
+2 LABs are used for logic, matching what we saw in the Chip Planner. While
+we could tell our utilization from the Chip Planner in this case, this
+report will be much more useful later on when our designs become more
+complicated and use more resources.</p>
+<p><img alt="" src="../img/lab1-primer-area-report.png" /></p>
+<h3 id="45-timing-reports">4.5. Timing Reports</h3>
+<p>Lastly, we can view the timing associated with our design. This can help
+tell us how long each path takes. In lecture, we represented this as an
+abstract timing unit tau, but now that we have an actual design, we can
+represent our path times in <em>nanoseconds</em>.</p>
+<ul>
+<li>Navitage to <em>Tools -&gt; Timing Analyzer</em>. This will open up a pop-up
+   window for analyzing the timing of our design.</li>
+<li>Under the <em>Tasks</em> panel on the left-hand side:<ul>
+<li>Double-click "Update Timing Netlist" to update the netlist for
+  our design</li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="../img/lab1-primer-timing-overview.png" /></p>
+<ul>
+<li>Navigate to <em>Reports -&gt; Custom Reports -&gt; Report Timing</em> to create a
+   timing report. This will open up a pop-up for us to tell Quartus what
+   paths to analyze:<ul>
+<li>In <em>Targets</em>, under "From", put <code>[get_keepers SW*]</code>. This tells
+  Quartus to analyze paths starting from our switch signals</li>
+<li>In <em>Targets</em>, under "To", put <code>[get_keepers LEDR*]</code>. This tells
+  Quartus to analyze paths ending at our LED signals</li>
+<li>In <em>Paths</em>, under "Report number of paths", put <code>100</code> - this is
+  the number of paths that Quartus will report</li>
+<li>Click <em>Report Timing</em></li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="../img/lab1-primer-timing-config.png" /></p>
+<p>This will generate a timing report for our design:</p>
+<ul>
+<li>In the top-panel, you should see three paths that Quartus found. They
+   should each start at one of the switches, and end at our LED signal.
+   Note that the "Data Delay" is how long each path takes - the path with
+   the longest delay is the <em>critical path</em>. Right now, the delay may be
+   longer than needed because we told the tools that logic can take up to
+   20 nanoseconds. If we wanted to be more representative, we'd push the
+   tools to fit the logic in less time. We'll explore this more in Lab 1.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">No Paths</p>
+<p>If Quartus didn't find any paths, it's likely that you may have
+missed something in the pop-up window, or in your <code>timing.sdc</code> file.
+Make sure to go back and double-check them!</p>
+</div>
+<ul>
+<li>Click on the critical path, then look at the <em>Data Arrival Path</em> panel.
+   This panel shows how long it takes <em>in nanoseconds</em> for the signal to
+   reach each portion of the logic:<ul>
+<li>The <em>Total</em> and <em>Incr</em> columns show the total and incremental delay
+  for each portion of the path</li>
+<li>The <em>Location</em> column shows what type of FPGA resource the signal is
+  going through</li>
+<li>The <em>Element</em> column shows what signal name corresponds to the FPGA
+  resource. Some of these may be generated by Quartus, but you should
+  still be able to see the switch signal, LED signal, and the logic
+  inside your <code>detector</code> module</li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="../img/lab1-primer-timing-report.png" /></p>
+<p>When you're finished, you can close this pop-up window.</p>
+<h2 id="5-configuring-a-hardware-design-onto-the-fpga">5. Configuring a Hardware Design onto the FPGA</h2>
+<p>With our design synthesized, all that's left is to configure our FPGA for
+our design. First, make sure your FPGA is turned on and plugged into the
+workstation via the USB Blaster.</p>
+<p><img alt="" src="../img/lab1-primer-fpga-setup.png" /></p>
+<p>Go to <em>Tools -&gt; Programmer</em>. This should open a new window for configuring
+the FPGA:</p>
+<ul>
+<li>Click on <em>Hardware Setup</em>. Under "Currently selected hardware", you
+   should see your FPGA as an option (appearing as <em>USB Blaster [USB-0]</em>). 
+   Select your FPGA, then click <em>Close</em></li>
+<li>Click on <em>Start</em>. This should configure the FPGA - notice how this is a
+   lot quicker than the synthesis step. Quartus has already done the
+   difficult part of figuring out <em>how</em> the FPGA should represent our
+   design, so all this step needs to do is communicate that information
+   to the FPGA. You can check when it's done by looking at the "Progress"
+   bar in the top-right.</li>
+</ul>
+<p>Once that's done, your FPGA should now emulate your design! You should
+verify this; try all possible switch combinations, and create the truth
+table that they represent. Does this match what you expect?</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Christopher Batten
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../js/extras.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/skins/default.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/wavedrom.min.js"></script>
+      
+        <script src="../js/wavedrom_loader.js"></script>
+      
+    
+  </body>
+</html>

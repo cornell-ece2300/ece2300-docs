@@ -1,0 +1,2323 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Christopher Batten">
+      
+      
+      
+        <link rel="prev" href="../ece2300-lab4ef-proc/">
+      
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>TinyRV1 ISA - ECE 2300 Digital Logic and Computer Organization</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tinyrv1-isa" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-header__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECE 2300 Digital Logic and Computer Organization
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TinyRV1 ISA
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-tut00-remote-access/" class="md-tabs__link">
+          
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-sec01-linux/" class="md-tabs__link">
+          
+  
+  Discussion Sections
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ece2300-fpga-primer/" class="md-tabs__link">
+          
+  
+  Lab Assignments
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  Misc
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ECE 2300 Digital Logic and Computer Organization" class="md-nav__button md-logo" aria-label="ECE 2300 Digital Logic and Computer Organization" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ECE 2300 Digital Logic and Computer Organization
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cornell-ece2300/ece2300-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cornell-ece2300/ece2300-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut00-remote-access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 0: ECE Linux Server Remote Access
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-tut02-git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial 2: Git Distributed Version Control System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Discussion Sections
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Discussion Sections
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec01-linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 1: Linux Development Environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec02-verilog-gl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 2: Verilog Combinational Gate-Level Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec03-verilog-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 3: Verilog Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec04-lab2-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 4: Lab 2 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec05-verilog-rtl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 5: Verilog Combinational RTL Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec06-lab3-head-start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 6: Lab 3 Head Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-sec07-verilog-mem/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Section 7: Verilog Memory Arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lab Assignments
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Lab Assignments
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-fpga-primer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FPGA Development Primer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p1-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts A & B): Five-Bit Numeric Display -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab1p2-display/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 1 (Parts C & D): Five-Bit Numeric Display -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2p1-calc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts A & B): Two-Function Calculator -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab2-calc-fpga-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 2 (Parts C & D): Two-Function Calculator -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3ab-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts A & B): Music-Player -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-music/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D): Music-Player -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab3cd-custom-song/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 3 (Parts C & D) Optional Add-On: Custom Song
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ab-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts A, B, & C) TinyRV1 Processor -- Implementation and Verification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4d-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Part D) TinyRV1 Processor -- FPGA Analysis/Prototyping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ece2300-lab4ef-proc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab 4 (Parts E & F) TinyRV1 Processor -- FPGA Analysis/Prototyping and Report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Misc
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Misc
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    TinyRV1 ISA
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    TinyRV1 ISA
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-architectural-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Architectural State
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Architectural State">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-data-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1: Data Formats
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-general-purpose-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2: General-Purpose Registers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3: Memory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-tinyrv1-instruction-and-immediate-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. TinyRV1 Instruction and Immediate Encoding
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. TinyRV1 Instruction and Immediate Encoding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-tinyrv1-instruction-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1: TinyRV1 Instruction Formats
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1: TinyRV1 Instruction Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#r-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      R-type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      I-type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      S-type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#u-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      U-type
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-tinyrv1-immediate-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2: TinyRV1 Immediate Formats
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2: TinyRV1 Immediate Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#i-immediate" class="md-nav__link">
+    <span class="md-ellipsis">
+      I-immediate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s-immediate" class="md-nav__link">
+    <span class="md-ellipsis">
+      S-immediate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#j-immediate" class="md-nav__link">
+    <span class="md-ellipsis">
+      J-immediate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-immediate" class="md-nav__link">
+    <span class="md-ellipsis">
+      B-immediate
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-tinyrv1-instruction-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. TinyRV1 Instruction Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. TinyRV1 Instruction Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#csrr" class="md-nav__link">
+    <span class="md-ellipsis">
+      CSRR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csrw" class="md-nav__link">
+    <span class="md-ellipsis">
+      CSRW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add" class="md-nav__link">
+    <span class="md-ellipsis">
+      ADD
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addi" class="md-nav__link">
+    <span class="md-ellipsis">
+      ADDI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mul" class="md-nav__link">
+    <span class="md-ellipsis">
+      MUL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lw" class="md-nav__link">
+    <span class="md-ellipsis">
+      LW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sw" class="md-nav__link">
+    <span class="md-ellipsis">
+      SW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jal" class="md-nav__link">
+    <span class="md-ellipsis">
+      JAL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jr" class="md-nav__link">
+    <span class="md-ellipsis">
+      JR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bne" class="md-nav__link">
+    <span class="md-ellipsis">
+      BNE
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tinyrv1-privileged-isa" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. TinyRV1 Privileged ISA
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. TinyRV1 Privileged ISA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reset-vector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reset Vector
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlstatus-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Control/Status Registers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#address-translation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Address Translation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-tinyrv1-pseudo-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. TinyRV1 Pseudo-Instructions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-architectural-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Architectural State
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Architectural State">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-data-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1: Data Formats
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-general-purpose-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2: General-Purpose Registers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3: Memory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-tinyrv1-instruction-and-immediate-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. TinyRV1 Instruction and Immediate Encoding
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. TinyRV1 Instruction and Immediate Encoding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-tinyrv1-instruction-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1: TinyRV1 Instruction Formats
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1: TinyRV1 Instruction Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#r-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      R-type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      I-type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      S-type
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#u-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      U-type
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-tinyrv1-immediate-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2: TinyRV1 Immediate Formats
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2: TinyRV1 Immediate Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#i-immediate" class="md-nav__link">
+    <span class="md-ellipsis">
+      I-immediate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#s-immediate" class="md-nav__link">
+    <span class="md-ellipsis">
+      S-immediate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#j-immediate" class="md-nav__link">
+    <span class="md-ellipsis">
+      J-immediate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-immediate" class="md-nav__link">
+    <span class="md-ellipsis">
+      B-immediate
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-tinyrv1-instruction-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. TinyRV1 Instruction Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. TinyRV1 Instruction Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#csrr" class="md-nav__link">
+    <span class="md-ellipsis">
+      CSRR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csrw" class="md-nav__link">
+    <span class="md-ellipsis">
+      CSRW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add" class="md-nav__link">
+    <span class="md-ellipsis">
+      ADD
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addi" class="md-nav__link">
+    <span class="md-ellipsis">
+      ADDI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mul" class="md-nav__link">
+    <span class="md-ellipsis">
+      MUL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lw" class="md-nav__link">
+    <span class="md-ellipsis">
+      LW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sw" class="md-nav__link">
+    <span class="md-ellipsis">
+      SW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jal" class="md-nav__link">
+    <span class="md-ellipsis">
+      JAL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jr" class="md-nav__link">
+    <span class="md-ellipsis">
+      JR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bne" class="md-nav__link">
+    <span class="md-ellipsis">
+      BNE
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tinyrv1-privileged-isa" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. TinyRV1 Privileged ISA
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. TinyRV1 Privileged ISA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reset-vector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reset Vector
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlstatus-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Control/Status Registers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#address-translation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Address Translation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-tinyrv1-pseudo-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. TinyRV1 Pseudo-Instructions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="tinyrv1-isa">TinyRV1 ISA</h1>
+<p>In Lab 4, you will be implementing the TinyRV1 ISA on your processor. The
+TinyRV1 ISA is a very limited subset of the
+<a href="https://web.csl.cornell.edu/courses/ece2300/resources/waterman-riscv-isa-vol1-2p1.pdf">RISC-V ISA</a>,
+an open-source instruction set architecture that has gained significant
+popularity in the last decade.</p>
+<h2 id="1-architectural-state">1. Architectural State</h2>
+<h3 id="11-data-formats">1.1: Data Formats</h3>
+<p>TinyRV1 only supports 4B (four-byte) signed and unsigned integer values.
+There are no byte nor half-word values and no floating-point.</p>
+<h3 id="12-general-purpose-registers">1.2: General-Purpose Registers</h3>
+<p>There are 31 general-purpose registers (GPRs) <code>x1</code>-<code>x31</code> (called x
+registers), which hold integer values. Register <code>x0</code> is hardwired to the
+constant zero. Each register is 32 bits wide. TinyRV1 uses the same calling
+convention and symbolic register names as RISC-V:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>+----------+----------+--------------------------------------------------------+
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>| Register | ABI Name | Description                                            |
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>|----------|----------|--------------------------------------------------------|
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>| x0       | zero     | The constant value 0                                   |
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>| x1       | ra       | Return address (caller saved)                          |
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>| x2       | sp       | Stack pointer (callee saved)                           |
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>| x3       | gp       | Global pointer                                         |
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>| x4       | tp       | Thread pointer                                         |
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>| x5       | t0       | Temporary registers (caller saved)                     |
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>| x6       | t1       | ↑                                                      |
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>| x7       | t2       | ↑                                                      |
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>| x8       | s0/fp    | Saved register or frame pointer (callee saved)         |
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>| x9       | s1       | Saved register (callee saved)                          |
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>| x10      | a0       | Function arguments and/or return values (caller saved) |
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>| x11      | a1       | ↑                                                      |
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>| x12      | a2       | Function arguments (caller saved)                      |
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>| x13      | a3       | ↑                                                      |
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>| x14      | a4       | ↑                                                      |
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>| x15      | a5       | ↑                                                      |
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>| x16      | a6       | ↑                                                      |
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>| x17      | a7       | ↑                                                      |
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>| x18      | s2       | Saved registers (callee saved)                         |
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>| x19      | s3       | ↑                                                      |
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>| x20      | s4       | ↑                                                      |
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>| x21      | s5       | ↑                                                      |
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>| x22      | s6       | ↑                                                      |
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>| x23      | s7       | ↑                                                      |
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>| x24      | s8       | ↑                                                      |
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>| x25      | s9       | ↑                                                      |
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>| x26      | s10      | ↑                                                      |
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>| x27      | s11      | ↑                                                      |
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>| x28      | t3       | Temporary registers (caller saved)                     |
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>| x29      | t4       | ↑                                                      |
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>| x30      | t5       | ↑                                                      |
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>| x31      | t6       | ↑                                                      |
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>+----------+----------+--------------------------------------------------------+
+</span></code></pre></div>
+<h3 id="13-memory">1.3: Memory</h3>
+<p>TinyRV1 only supports a 1MB virtual memory address space from
+<code>0x00000000</code> to <code>0x000fffff</code>. The result of memory accesses to addresses
+larger than <code>0x000fffff</code> are undefined. TinyRV1 uses a
+<a href="https://en.wikipedia.org/wiki/Endianness">little endian memory system</a>.</p>
+<h2 id="2-tinyrv1-instruction-and-immediate-encoding">2. TinyRV1 Instruction and Immediate Encoding</h2>
+<p>The TinyRV1 ISA uses the same instruction encoding as RISC-V. There
+are four instruction types and four immediate encodings. Each instruction
+has a specific instruction type, and if that instruction includes an
+immediate, then it will also have an immediate type.</p>
+<h3 id="21-tinyrv1-instruction-formats">2.1: TinyRV1 Instruction Formats</h3>
+<h4 id="r-type">R-type</h4>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7, name: "opcode"},
+    {bits: 5, name: "rd",      type: 2},
+    {bits: 3, name: "funct3"},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 5, name: "rs2",     type: 7},
+    {bits: 7, name: "funct7"}
+  ]}
+</script>
+
+<h4 id="i-type">I-type</h4>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7,  name: "opcode"},
+    {bits: 5,  name: "rd",      type: 2},
+    {bits: 3,  name: "funct3"},
+    {bits: 5,  name: "rs1",     type: 3},
+    {bits: 12, name: "imm",     type: 5}
+  ]}
+</script>
+
+<h4 id="s-type">S-type</h4>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7, name: "opcode"},
+    {bits: 5, name: "imm",     type: 5},
+    {bits: 3, name: "funct3"},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 5, name: "rs2",     type: 7},
+    {bits: 7, name: "imm",     type: 5}
+  ]}
+</script>
+
+<h4 id="u-type">U-type</h4>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7,  name: "opcode"},
+    {bits: 5,  name: "rd",      type: 2},
+    {bits: 20, name: "imm",     type: 5}
+  ]}
+</script>
+
+<h3 id="22-tinyrv1-immediate-formats">2.2: TinyRV1 Immediate Formats</h3>
+<p>RISC-V has an asymmetric immediate encoding which means that the
+immediates are formed by concatenating different bits in an asymmetric
+order based on the specific immediate formats. Note that in RISC-V, all
+immediates are always sign extended, and the sign-bit for the immediate
+is always in bit 31 of the instruction.</p>
+<p>For this, let's separate out the different sections of an
+instruction:</p>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7, name: '',        type: 1},
+    {bits: 1, name: '[7]',     type: 2},
+    {bits: 4, name: '[11:8]',  type: 4},
+    {bits: 8, name: '[19:12]', type: 5},
+    {bits: 1, name: '[20]'            },
+    {bits: 4, name: '[24:21]', type: 6},
+    {bits: 6, name: '[30:25]', type: 7},
+    {bits: 1, name: '[31]'            }
+  ]}
+</script>
+
+<p>The following diagrams represent how to re-arrange these sections to
+create different immediates, based on the encoding for the particular
+instruction. Here:</p>
+<ul>
+<li><code>0</code> is used to indicate that a particular bit is 0</li>
+<li><code>&lt;-[n]-&gt;</code> is used to indicate that bit <code>n</code> should be replicated for
+   all bits in the field</li>
+</ul>
+<h4 id="i-immediate">I-immediate</h4>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 1, name: '[20]'            },
+    {bits: 4, name: '[24:21]', type: 6},
+    {bits: 6, name: '[30:25]', type: 7},
+    {bits: 21, name: '<-[31]->'       }
+  ]}
+</script>
+
+<h4 id="s-immediate">S-immediate</h4>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 1, name: '[7]',     type: 2},
+    {bits: 4, name: '[11:8]',  type: 4},
+    {bits: 6, name: '[30:25]', type: 7},
+    {bits: 21, name: '<-[31]->'       }
+  ]}
+</script>
+
+<h4 id="j-immediate">J-immediate</h4>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 1, name: '0',       type: 1},
+    {bits: 4, name: '[24:21]', type: 6},
+    {bits: 6, name: '[30:25]', type: 7},
+    {bits: 1, name: '[20]'            },
+    {bits: 8, name: '[19:12]', type: 5},
+    {bits: 12, name: '<-[31]->'       }
+  ]}
+</script>
+
+<h4 id="b-immediate">B-immediate</h4>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 1, name: '0',       type: 1},
+    {bits: 4, name: '[11:8]',  type: 4},
+    {bits: 6, name: '[30:25]', type: 7},
+    {bits: 1, name: '[7]',     type: 2},
+    {bits: 20, name: '<-[31]->'       }
+  ]}
+</script>
+
+<h2 id="3-tinyrv1-instruction-details">3. TinyRV1 Instruction Details</h2>
+<p>For each instruction we include a brief summary, assembly syntax,
+instruction semantics, instruction and immediate encoding format, and the
+actual encoding for the instruction. We use the following conventions
+when specifying the instruction semantics:</p>
+<ul>
+<li><span class="arithmatex">\(R[\texttt{rx}]\)</span>: general-purpose register value for register specifier <code>rx</code></li>
+<li><span class="arithmatex">\(CSR[\texttt{csr}]\)</span>: control/status register value for register specifier <code>csr</code></li>
+<li><span class="arithmatex">\(\text{sext}\)</span>: sign extend to 32 bits</li>
+<li><span class="arithmatex">\(M[\texttt{addr}]\)</span> : 4-byte memory value at address <code>addr</code></li>
+<li><span class="arithmatex">\(PC\)</span>: current program counter</li>
+<li><span class="arithmatex">\(\texttt{imm}\)</span>: immediate according to the immediate type</li>
+</ul>
+<style>
+  .semantics_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<h4 id="csrr">CSRR</h4>
+<ul>
+<li>Summary: Move value in control/status register to GPR</li>
+<li>Assembly: <code>csrr rd, csr</code></li>
+<li>Format: I-type, I-immediate</li>
+<li>Semantics:</li>
+<li class="semantics_list"><span class="arithmatex">\(R[\texttt{rd}] \leftarrow CSR[\texttt{csr}]\)</span></li>
+<li class="semantics_list"><span class="arithmatex">\(PC \leftarrow PC + 4\)</span></li>
+</ul>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7, name: 0b1110011},
+    {bits: 5, name: "rd",      type: 2},
+    {bits: 3, name: 0b1010},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 12, name: "csr",    type: 5}
+  ]}
+</script>
+
+<p>The control/status register read instruction is used to read a CSR and
+write the result to a GPR. The CSRs supported in TinyRV1 are listed in
+Section 4. Note that in RISC-V, <code>CSRR</code> is really a pseudo-instruction for a
+specific usage of <code>CSRRS</code>, but in TinyRV1 we only support the subset of
+<code>CSRRS</code> captured by <code>CSRR</code>. See Section 5 for more details about
+pseudo-instructions.</p>
+<h4 id="csrw">CSRW</h4>
+<ul>
+<li>Summary: Move value in GPR to control/status register</li>
+<li>Assembly: <code>csrw csr, rs1</code></li>
+<li>Format: I-type, I-immediate</li>
+<li>Semantics:</li>
+<li class="semantics_list"><span class="arithmatex">\(CSR[\texttt{csr}] \leftarrow R[\texttt{rs1}]\)</span></li>
+<li class="semantics_list"><span class="arithmatex">\(PC \leftarrow PC + 4\)</span></li>
+</ul>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7, name: 0b1110011},
+    {bits: 5, name: "rd",      type: 2},
+    {bits: 3, name: 0b1001},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 12, name: "csr",    type: 5}
+  ]}
+</script>
+
+<p>The control/status register write instruction is used to read a GPR and
+write the result to a CSR. The CSRs supported in TinyRV1 are listed in
+Section 4. Note that in RISC-V, <code>CSRW</code> is really a pseudo-instruction for a
+specific usage of <code>CSRRW</code>, but in TinyRV1 we only support the subset of
+<code>CSRRW</code> captured by <code>CSRW</code>. See Section 5 for more details about
+pseudo-instructions.</p>
+<h4 id="add">ADD</h4>
+<ul>
+<li>Summary: Addition with 3 GPRs (no overflow)</li>
+<li>Assembly: <code>add rd, rs1, rs2</code></li>
+<li>Format: R-type</li>
+<li>Semantics:</li>
+<li class="semantics_list"><span class="arithmatex">\(R[\texttt{rd}] \leftarrow R[\texttt{rs1}] + R[\texttt{rs2}]\)</span></li>
+<li class="semantics_list"><span class="arithmatex">\(PC \leftarrow PC + 4\)</span></li>
+</ul>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7, name: 0b0110011},
+    {bits: 5, name: "rd",      type: 2},
+    {bits: 3, name: 0b1000},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 5, name: "rs2",     type: 7},
+    {bits: 7, name: 0b10000000}
+  ]}
+</script>
+
+<h4 id="addi">ADDI</h4>
+<ul>
+<li>Summary: Add constant</li>
+<li>Assembly: <code>addi rd, rs1, imm</code></li>
+<li>Format: I-type, I-immediate</li>
+<li>Semantics:</li>
+<li class="semantics_list"><span class="arithmatex">\(R[\texttt{rd}] \leftarrow R[\texttt{rs1}] + \text{sext}(\texttt{imm})\)</span></li>
+<li class="semantics_list"><span class="arithmatex">\(PC \leftarrow PC + 4\)</span></li>
+</ul>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7,  name: 0b0010011},
+    {bits: 5,  name: "rd",      type: 2},
+    {bits: 3,  name: 0b1000},
+    {bits: 5,  name: "rs1",     type: 3},
+    {bits: 12, name: "imm",     type: 5}
+  ]}
+</script>
+
+<h4 id="mul">MUL</h4>
+<ul>
+<li>Summary: Signed multiplication with 3 GPRs (no overflow)</li>
+<li>Assembly: <code>mul rd, rs1, imm</code></li>
+<li>Format: R-type</li>
+<li>Semantics:</li>
+<li class="semantics_list"><span class="arithmatex">\(R[\texttt{rd}] \leftarrow R[\texttt{rs1}] \times R[\texttt{rs2}]\)</span></li>
+<li class="semantics_list"><span class="arithmatex">\(PC \leftarrow PC + 4\)</span></li>
+</ul>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7, name: 0b0110011},
+    {bits: 5, name: "rd",      type: 2},
+    {bits: 3, name: 0b1000},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 5, name: "rs2",     type: 7},
+    {bits: 7, name: 0b10000001}
+  ]}
+</script>
+
+<h4 id="lw">LW</h4>
+<ul>
+<li>Summary: Load word from memory</li>
+<li>Assembly: <code>lw rd, imm(rs1)</code></li>
+<li>Format: I-type, I-immediate</li>
+<li>Semantics:</li>
+<li class="semantics_list"><span class="arithmatex">\(R[\texttt{rd}] \leftarrow M\left[R[\texttt{rs1}] + \text{sext}(\texttt{imm})\right]\)</span></li>
+<li class="semantics_list"><span class="arithmatex">\(PC \leftarrow PC + 4\)</span></li>
+</ul>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7,  name: 0b0000011},
+    {bits: 5,  name: "rd",      type: 2},
+    {bits: 3,  name: 0b1010},
+    {bits: 5,  name: "rs1",     type: 3},
+    {bits: 12, name: "imm",     type: 5}
+  ]}
+</script>
+
+<p>TinyRV1 does not support unaligned memory access. The address used in any
+LW instruction must be 4-byte aligned (i.e., the bottom two bits must be
+zero). An unaligned LW address results in undefined behavior.</p>
+<h4 id="sw">SW</h4>
+<ul>
+<li>Summary: Store word in memory</li>
+<li>Assembly: <code>sw rs2, imm(rs1)</code></li>
+<li>Format: S-type, S-immediate</li>
+<li>Semantics:</li>
+<li class="semantics_list"><span class="arithmatex">\(M\left[R[\texttt{rs1}] + \text{sext}(\texttt{imm})\right] \leftarrow R[\texttt{rs2}]\)</span></li>
+<li class="semantics_list"><span class="arithmatex">\(PC \leftarrow PC + 4\)</span></li>
+</ul>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7, name: 0b0100011},
+    {bits: 5, name: "imm",     type: 5},
+    {bits: 3, name: 0b1010},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 5, name: "rs2",     type: 7},
+    {bits: 7, name: "imm",     type: 5}
+  ]}
+</script>
+
+<p>TinyRV1 does not support self-modifying code. Using a SW instruction to
+writing memory locations which will eventually be fetched as instructions
+results in undefined behavior. TinyRV1 does not support unaligned memory
+access. The address used in any SW instruction must be 4-byte aligned
+(i.e., the bottom two bits must be zero). An unaligned SW address results
+in undefined behavior.</p>
+<h4 id="jal">JAL</h4>
+<ul>
+<li>Summary: Jump to address, place return address in GPR</li>
+<li>Assembly: <code>jal rd, addr</code></li>
+<li>Format: U-type, J-immediate</li>
+<li>Semantics:</li>
+<li class="semantics_list"><span class="arithmatex">\(R[\texttt{rd}] \leftarrow PC + 4\)</span></li>
+<li class="semantics_list"><span class="arithmatex">\(PC \leftarrow \texttt{addr}\)</span></li>
+</ul>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7,  name: 0b1101111},
+    {bits: 5,  name: "rd",      type: 2},
+    {bits: 20, name: "imm",     type: 5}
+  ]}
+</script>
+
+<p>The encoded immediate <code>imm</code> is calculated during assembly such that <span class="arithmatex">\(PC +
+\text{sext}(\texttt{imm}) = \texttt{addr}\)</span>. TinyRV1 requires the JAL
+target address to always be four-byte aligned (i.e., the bottom two bits
+must be zero). An unaligned JAL target address results in undefined
+behavior.</p>
+<h4 id="jr">JR</h4>
+<ul>
+<li>Summary: Jump to address</li>
+<li>Assembly: <code>jr rs1</code></li>
+<li>Format: I-type</li>
+<li>Semantics:</li>
+<li class="semantics_list"><span class="arithmatex">\(PC \leftarrow R[\texttt{rs1}]\)</span></li>
+</ul>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7,  name: 0b1100111},
+    {bits: 5,  name: 0b100000  },
+    {bits: 3,  name: 0b1000    },
+    {bits: 5,  name: "rs1",     type: 3},
+    {bits: 12, name: 0b1000000000000   },
+  ]}
+</script>
+
+<p>TinyRV1 requires the JR target address to always be four-byte aligned
+(i.e., the bottom two bits must be zero). An unaligned JR target address
+results in undefined behavior.</p>
+<h4 id="bne">BNE</h4>
+<ul>
+<li>Summary: Branch if two GPRs are not equal</li>
+<li>Assembly: <code>bne rs1, rs2, addr</code></li>
+<li>Format: S-type, B-immediate</li>
+<li>Semantics:</li>
+<li class="semantics_list"><span class="arithmatex">\(\text{if}(R[\texttt{rs1}] \neq R[\texttt{rs2}]) \ PC \leftarrow \texttt{addr}\)</span></li>
+<li class="semantics_list"><span class="arithmatex">\(\text{else}\qquad\qquad\qquad\ \ \ \ \,           PC \leftarrow PC + 4\)</span></li>
+</ul>
+<script type="WaveDrom">
+  {reg: [
+    {bits: 7, name: 0b1100011},
+    {bits: 5, name: "imm",     type: 5},
+    {bits: 3, name: 0b1001},
+    {bits: 5, name: "rs1",     type: 3},
+    {bits: 5, name: "rs2",     type: 7},
+    {bits: 7, name: "imm",     type: 5}
+  ]}
+</script>
+
+<p>The encoded immediate <code>imm</code> is calculated during assembly such that <span class="arithmatex">\(PC +
+\text{sext}(\texttt{imm}) = \texttt{addr}\)</span>. TinyRV1 requires the BNE
+target address to always be four-byte aligned (i.e., the bottom two bits
+must be zero). An unaligned BNE target address results in undefined
+behavior.</p>
+<h2 id="4-tinyrv1-privileged-isa">4. TinyRV1 Privileged ISA</h2>
+<p>TinyRV1 does not support any kind of distinction between user and
+privileged mode. Using the terminology in the RISC-V vol 2 ISA manual,
+TinyRV1 only supports M-mode.</p>
+<h4 id="reset-vector">Reset Vector</h4>
+<p>RISC-V specifies that on reset, <span class="arithmatex">\(PC\)</span> will reset to an
+implementation-defined value. TinyRV1 defines this to be at <code>0x00000000</code>.
+This is where assembly tests should reside.</p>
+<h4 id="controlstatus-registers">Control/Status Registers</h4>
+<p>TinyRV1 includes six non-standard CSRs. Here is the mapping:</p>
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th>CSR Name</th>
+<th>Privilege</th>
+<th>Read/Write</th>
+<th>CSR Num</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>in0</code></td>
+<td>M</td>
+<td>R</td>
+<td><code>0xFC2</code></td>
+<td>non-standard</td>
+</tr>
+<tr>
+<td><code>in1</code></td>
+<td>M</td>
+<td>R</td>
+<td><code>0xFC3</code></td>
+<td>non-standard</td>
+</tr>
+<tr>
+<td><code>in2</code></td>
+<td>M</td>
+<td>R</td>
+<td><code>0xFC4</code></td>
+<td>non-standard</td>
+</tr>
+<tr>
+<td><code>out0</code></td>
+<td>M</td>
+<td>R/W</td>
+<td><code>0x7C2</code></td>
+<td>non-standard</td>
+</tr>
+<tr>
+<td><code>out1</code></td>
+<td>M</td>
+<td>R/W</td>
+<td><code>0x7C3</code></td>
+<td>non-standard</td>
+</tr>
+<tr>
+<td><code>out2</code></td>
+<td>M</td>
+<td>R/W</td>
+<td><code>0x7C4</code></td>
+<td>non-standard</td>
+</tr>
+</tbody>
+</table>
+<p></center></p>
+<p>These are chosen to conform to the guidelines in Section 2.1 of the
+RISC-V vol 2 ISA manual. Here is a description of each of these six
+CSRs.</p>
+<ul>
+<li><code>in0</code>/<code>in1</code>/<code>in2</code><ul>
+<li>Used to communicate data to the processor from an external
+  manager. These registers have register-mapped FIFO-dequeue
+  semantics, meaning reading the registers essentially dequeues
+  the data from the head of a FIFO. Reading the registers will
+  stall if the FIFO has no valid data. Writing the registers is
+  undefined.</li>
+</ul>
+</li>
+<li><code>out0</code>/<code>out1</code>/<code>out2</code><ul>
+<li>Used to communicate data from an external manager to the processor.
+  These registers have register-mapped FIFO-enqueue semantics, meaning
+  writing the registers essentially enqueues the data on the tail of a
+  FIFO. Writing the registers will stall if the FIFO is not ready.
+  Reading the registers is undefined.</li>
+</ul>
+</li>
+</ul>
+<h4 id="address-translation">Address Translation</h4>
+<p>TinyRV1 only supports the most basic form of address translation.
+Every logical address is directly mapped to the corresponding physical
+address. As mentioned above, TinyRV1 only supports a 1MB virtual
+memory address space from <code>0x00000000</code> to <code>0x000fffff</code>, and thus TinyRV1
+only supports a <span class="arithmatex">\(1MB\)</span> physical memory address space. In the RISC-V vol 2
+ISA manual this is called a <code>Mbare</code> addressing environment.</p>
+<h2 id="5-tinyrv1-pseudo-instructions">5. TinyRV1 Pseudo-Instructions</h2>
+<p>It is very important to understand the relationship between the "real"
+instructions presented in this manual, the "real" instructions in the
+official RISC-V ISA manual, and pseudo-instructions. There are two
+instructions we need to be careful with: <code>NOP</code> and <code>JR</code>. The
+following table illustrates which ISAs contain which of these two
+instructions, and whether or not the instruction is considered a "real"
+instruction or a "pseudo-instruction".</p>
+<style>
+  thead {
+    background-color: var(--md-primary-fg-color);
+    color: var(--md-primary-bg-color);
+  }
+</style>
+
+<p><center></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>TinyRV1</th>
+<th>RISC-V</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NOP</code></td>
+<td>pseudo</td>
+<td>pseudo</td>
+</tr>
+<tr>
+<td><code>JR</code></td>
+<td>real</td>
+<td>pseudo</td>
+</tr>
+<tr>
+<td><code>CSRR</code></td>
+<td>real</td>
+<td>pseudo</td>
+</tr>
+<tr>
+<td><code>CSRW</code></td>
+<td>real</td>
+<td>pseudo</td>
+</tr>
+</tbody>
+</table>
+<p></center></p>
+<p><code>NOP</code> is always a pseudo-instruction. It is always equivalent to the
+following use of the <code>ADDI</code> instruction:</p>
+<div class="arithmatex">\[\begin{align}
+  \texttt{nop} \equiv \texttt{addi x0, x0, 0}
+\end{align}\]</div>
+<p><code>JR</code> is a "real" instruction in TinyRV1, but it is a pseudo-instruction in
+RISC-V for the following use of the <code>JALR</code> instruction:</p>
+<div class="arithmatex">\[\begin{align}
+  \texttt{jr rs1} \equiv \texttt{jalr x0, rs1, 0}
+\end{align}\]</div>
+<p><code>CSRR</code> and <code>CSSRW</code> are real instructions in TinyRV1 but they are
+pseudo-instructions for the following use of the <code>CSRRS</code> and <code>CSRRW</code>:</p>
+<div class="arithmatex">\[\begin{align}
+  \texttt{csrr rd, csr}  &amp;\equiv \texttt{csrrs rd, csr, x0} \\
+  \texttt{csrw csr, rs1} &amp;\equiv \texttt{csrrw x0, csr, rs1}
+\end{align}\]</div>
+<p>None of this changes the encodings. In TinyRV1, <code>JR</code> is encoded the same
+way as the corresponding use of the <code>JALR</code> instruction in RISC-V.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Christopher Batten
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../js/extras.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/skins/default.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/3.1.0/wavedrom.min.js"></script>
+      
+        <script src="../js/wavedrom_loader.js"></script>
+      
+    
+  </body>
+</html>
